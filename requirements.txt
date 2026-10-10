@@ -1,0 +1,12 @@
+# Blender Previs 依赖清单
+# 说明：这些是 mcp-for-blender server 的运行时依赖。
+# 实际部署时用独立 venv 安装（见 README），而不是全局装。
+
+# mcp-for-blender server 依赖（Python >= 3.10）
+mcp>=1.26.0,<2
+httpx>=0.27.0
+
+# 前端后端 server.py 无第三方依赖（纯标准库）
+
+# 本机 SSH 自动化（可选，仅开发调试用）
+# paramiko
