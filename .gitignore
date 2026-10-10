@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 敏感信息（API key、密钥）
+.env
+*.key
+*.pem
+hermes/.env
+secrets/
+
+# 运行时产物（渲染输出、视频、帧序列）
+render_out/
+*.mp4
+*.png
+*.jpg
+frames/
+output/
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# 本地调试脚本
+scripts/ssh_*.py
+test_*.py
+inventory*.py
+build_project.py
+dump_code.py
+list_models.py
+
+# Blender
+*.blend1
+*.blend2
+
+# 日志
+*.log
