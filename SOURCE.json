@@ -56,5 +56,12 @@
       3
     ]
   },
-  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-101959-single-character-v1"
+  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-143659-dual-character-ik-v1",
+  "single_baseline_full_backup": "/root/rivermind-data/bamo-backups/20261012-101959-single-character-v1",
+  "full_same_machine_backup_verified": true,
+  "full_same_machine_backup_files": 36458,
+  "full_same_machine_backup_bytes": 6034765014,
+  "implementation_commit": "d2be765d5b60731bac8caefe23295bb46b0a17eb",
+  "release_tag": "dual-character-ik-v1-20261012",
+  "private_complete_snapshot_uploaded": false
 }
