@@ -1,0 +1,715 @@
+{
+  "checks": [
+    {
+      "case": "fall_pov_A",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 240,
+        "actors_independent": true,
+        "min_camera_margin": 0.07123,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 0.0,
+        "max_joint_speed_m_s": 7.228,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 23,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 24,
+            "reaction_sync_frames": 1,
+            "reaction": "recoil",
+            "recoil_step_m": 0.0
+          },
+          {
+            "event": "e02",
+            "frame": 70,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 71,
+            "reaction_sync_frames": 1,
+            "reaction": "stagger",
+            "recoil_step_m": 0.4915
+          },
+          {
+            "event": "e03",
+            "frame": 154,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 155,
+            "reaction_sync_frames": 1,
+            "reaction": "knockdown",
+            "recoil_step_m": 0.34,
+            "final_head_height_m": 0.1544,
+            "final_hip_height_m": 0.1575
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -0.8034104704856873,
+            -0.9911207556724548,
+            -0.008052414283156395
+          ],
+          "max": [
+            3.4411652088165283,
+            0.5883603692054749,
+            1.7170121669769287
+          ],
+          "ortho_scale": 5.358848768919322,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.08035253955852319
+        },
+        "camera_frames": {
+          "full": 219,
+          "pov": 21
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 12.91
+      }
+    },
+    {
+      "case": "fall_pov_B",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 240,
+        "actors_independent": true,
+        "min_camera_margin": 0.07605,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 0.0,
+        "max_joint_speed_m_s": 7.228,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 23,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 24,
+            "reaction_sync_frames": 1,
+            "reaction": "recoil",
+            "recoil_step_m": 0.0
+          },
+          {
+            "event": "e02",
+            "frame": 70,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 71,
+            "reaction_sync_frames": 1,
+            "reaction": "stagger",
+            "recoil_step_m": 0.4915
+          },
+          {
+            "event": "e03",
+            "frame": 154,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 155,
+            "reaction_sync_frames": 1,
+            "reaction": "knockdown",
+            "recoil_step_m": 0.34,
+            "final_head_height_m": 0.1544,
+            "final_hip_height_m": 0.1575
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -3.4411652088165283,
+            -0.5883603692054749,
+            -0.008080009371042252
+          ],
+          "max": [
+            0.803410530090332,
+            0.9911207556724548,
+            1.7058511972427368
+          ],
+          "ortho_scale": 5.336983998616537,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.07889134655620222
+        },
+        "camera_frames": {
+          "full": 219,
+          "pov": 21
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 12.74
+      }
+    },
+    {
+      "case": "pursuit_kick_A",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 150,
+        "actors_independent": true,
+        "min_camera_margin": 0.07934,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 7e-05,
+        "max_joint_speed_m_s": 7.873,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 28,
+            "outcome": "hit",
+            "target_error_m": 0.0001,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 29,
+            "reaction_sync_frames": 1,
+            "reaction": "stagger",
+            "recoil_step_m": 0.5652
+          },
+          {
+            "event": "e02",
+            "frame": 79,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 80,
+            "reaction_sync_frames": 1,
+            "reaction": "recoil",
+            "recoil_step_m": 0.0
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -0.8666906952857971,
+            -0.657085120677948,
+            -0.01209687814116478
+          ],
+          "max": [
+            1.3686354160308838,
+            0.4408654272556305,
+            1.697274088859558
+          ],
+          "ortho_scale": 4.554246069540965,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.09849657248374503
+        },
+        "camera_frames": {
+          "full": 150,
+          "pov": 0
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 6.85
+      }
+    },
+    {
+      "case": "pursuit_kick_B",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 150,
+        "actors_independent": true,
+        "min_camera_margin": 0.07766,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 8e-05,
+        "max_joint_speed_m_s": 7.872,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 28,
+            "outcome": "hit",
+            "target_error_m": 0.0001,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 29,
+            "reaction_sync_frames": 1,
+            "reaction": "stagger",
+            "recoil_step_m": 0.5652
+          },
+          {
+            "event": "e02",
+            "frame": 79,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 80,
+            "reaction_sync_frames": 1,
+            "reaction": "recoil",
+            "recoil_step_m": 0.0
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -1.3686355352401733,
+            -0.441560834646225,
+            -0.012096923775970936
+          ],
+          "max": [
+            0.8668086528778076,
+            0.6570940017700195,
+            1.6995556354522705
+          ],
+          "ortho_scale": 4.5591763439720605,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.0985531896387142
+        },
+        "camera_frames": {
+          "full": 150,
+          "pov": 0
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 6.98
+      }
+    },
+    {
+      "case": "pursuit_uppercut_A",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 150,
+        "actors_independent": true,
+        "min_camera_margin": 0.07213,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 0.0,
+        "max_joint_speed_m_s": 4.765,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 28,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 29,
+            "reaction_sync_frames": 1,
+            "reaction": "stagger",
+            "recoil_step_m": 0.4915
+          },
+          {
+            "event": "e02",
+            "frame": 79,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 80,
+            "reaction_sync_frames": 1,
+            "reaction": "recoil",
+            "recoil_step_m": 0.0
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -0.8073476552963257,
+            -0.3293599784374237,
+            -0.005650315433740616
+          ],
+          "max": [
+            1.2949105501174927,
+            0.3664988875389099,
+            1.6933512687683105
+          ],
+          "ortho_scale": 4.261147698690725,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.10527153046583126
+        },
+        "camera_frames": {
+          "full": 150,
+          "pov": 0
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 7.01
+      }
+    },
+    {
+      "case": "pursuit_hook_B",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 150,
+        "actors_independent": true,
+        "min_camera_margin": 0.07524,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 0.0,
+        "max_joint_speed_m_s": 4.765,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 28,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 29,
+            "reaction_sync_frames": 1,
+            "reaction": "stagger",
+            "recoil_step_m": 0.4915
+          },
+          {
+            "event": "e02",
+            "frame": 79,
+            "outcome": "hit",
+            "target_error_m": 0.0,
+            "passed": true,
+            "surface_error_m": 0.0,
+            "reaction_onset_frame": 80,
+            "reaction_sync_frames": 1,
+            "reaction": "recoil",
+            "recoil_step_m": 0.0
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -1.2949105501174927,
+            -0.3661781847476959,
+            -0.004942141007632017
+          ],
+          "max": [
+            0.8071808218955994,
+            0.37924546003341675,
+            1.6931650638580322
+          ],
+          "ortho_scale": 4.289004845828665,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.10476119721943976
+        },
+        "camera_frames": {
+          "full": 150,
+          "pov": 0
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 7.06
+      }
+    },
+    {
+      "case": "no_hit_block",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 90,
+        "actors_independent": true,
+        "min_camera_margin": 0.07001,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 0.0,
+        "max_joint_speed_m_s": 1.611,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 28,
+            "outcome": "block",
+            "target_error_m": 0.0,
+            "passed": true,
+            "block_error_m": 0.0
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -0.8034104108810425,
+            -0.3293599784374237,
+            -0.00029459752840921283
+          ],
+          "max": [
+            0.8034104704856873,
+            0.329204797744751,
+            1.6931649446487427
+          ],
+          "ortho_scale": 4.108191275781439,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.10858091727761228
+        },
+        "camera_frames": {
+          "full": 90,
+          "pov": 0
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 4.68
+      }
+    },
+    {
+      "case": "no_hit_dodge",
+      "passed": true,
+      "errors": [],
+      "quality": {
+        "passed": true,
+        "frame_count": 90,
+        "actors_independent": true,
+        "min_camera_margin": 0.07064,
+        "max_stance_error_m": 0.0,
+        "max_ik_error_m": 0.0,
+        "max_joint_speed_m_s": 2.938,
+        "camera_failures": [],
+        "stance_failures": [],
+        "ik_failures": [],
+        "contacts": [
+          {
+            "event": "e01",
+            "frame": 28,
+            "outcome": "dodge",
+            "target_error_m": 0.0,
+            "passed": true,
+            "dodge_clearance_m": 0.3459
+          }
+        ],
+        "body_overlap_failures": [],
+        "occlusion_failures": [],
+        "joint_flip_failures": [],
+        "ground_failures": [],
+        "shot_failures": [],
+        "visual_review_required": true,
+        "limitations": [
+          "Geometry checks do not certify realism or all self-collisions; preview review required."
+        ],
+        "camera_bounds": {
+          "min": [
+            -0.804432213306427,
+            -0.37923476099967957,
+            -0.0003690712619572878
+          ],
+          "max": [
+            0.8034104704856873,
+            0.5911133289337158,
+            1.6931649446487427
+          ],
+          "ortho_scale": 4.29512166853715,
+          "requested_azimuth_deg": -68,
+          "actual_azimuth_deg": -68,
+          "min_body_separation_in_frame": 0.07811440148804222
+        },
+        "camera_frames": {
+          "full": 90,
+          "pov": 0
+        },
+        "effective_move_distances_m": {},
+        "asset_sha256": {
+          "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+          "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+          "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+          "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+          "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+        },
+        "blender_version": "5.2.2 LTS",
+        "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+        "engine_sources_sha256": {
+          "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+          "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+          "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+          "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+        },
+        "build_seconds": 4.0
+      }
+    }
+  ],
+  "scope": "True Blender geometry and saved camera/visibility/IK state; visual review remains required.",
+  "passed": true,
+  "elapsed_seconds": 64.73
+}

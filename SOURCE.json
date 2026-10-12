@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-10-12T14:27:35.916624+08:00",
+  "exported_at": "2026-10-12T16:13:34.494920+08:00",
   "source_directory": "/root/rivermind-data/bamo",
   "target_repository": "https://github.com/hiraeth9/bamobamo.git",
   "hermes_upstream": "https://gitee.com/wuyuancunmin/hermes-agent.git",
@@ -23,7 +23,9 @@
     "structured motion and interaction knowledge",
     "IK controller and dynamic event planner",
     "automatic actor count protocol",
-    "acceptance reports and implementation record"
+    "acceptance reports and implementation record",
+    "impact/recoil/pursuit/knockdown controller",
+    "saved cinematic camera cuts and attacker POV"
   ],
   "stored_in_full_backup": [
     "Blender binary runtime",
@@ -35,7 +37,7 @@
   ],
   "optional_mirror_repository": "https://gitee.com/hiraeth9/bamo.git",
   "remote_main_before_upload": "357b158a1de583bd3aaf79639212ad9b1df2d1e3",
-  "version": "dual-character-ik-v1",
+  "version": "dual-character-impact-v2",
   "source_branch": "feature/dual-character-fight",
   "single_baseline_commit": "19fd67d59faf46e86397334ec2f273012a2c82c5",
   "single_baseline_tag": "single-character-v1-20261012",
@@ -54,14 +56,23 @@
       1,
       2,
       3
-    ]
+    ],
+    "impact_blender_cases": 8,
+    "pure_python_checks": 28,
+    "new_natural_api_video_job": "c6727f98213e49d0",
+    "new_natural_api_model": "qwen3.8-max",
+    "final_engine_sources_sha256": {
+      "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+      "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+      "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+      "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+    },
+    "natural_recheck_scope": "Re-execution of the existing 60 plans against this final controller; not 60 new Max sessions."
   },
-  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-143659-dual-character-ik-v1",
   "single_baseline_full_backup": "/root/rivermind-data/bamo-backups/20261012-101959-single-character-v1",
-  "full_same_machine_backup_verified": true,
-  "full_same_machine_backup_files": 36458,
-  "full_same_machine_backup_bytes": 6034765014,
-  "implementation_commit": "d2be765d5b60731bac8caefe23295bb46b0a17eb",
-  "release_tag": "dual-character-ik-v1-20261012",
-  "private_complete_snapshot_uploaded": false
+  "release_tag": "dual-character-impact-v2-20261012",
+  "private_complete_snapshot_uploaded": false,
+  "previous_release_commit": "d2be765d5b60731bac8caefe23295bb46b0a17eb",
+  "previous_release_tag": "dual-character-ik-v1-20261012",
+  "previous_full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-143659-dual-character-ik-v1"
 }

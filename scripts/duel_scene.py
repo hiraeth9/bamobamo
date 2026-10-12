@@ -16,13 +16,18 @@ from pathlib import Path
 
 import bpy
 from mathutils import Matrix, Vector, Quaternion
+from mathutils.bvhtree import BVHTree
 from bpy_extras.object_utils import world_to_camera_view
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from duel_plan import PROJECT, atomic_json, asset_manifest, catalog, validate_plan, interaction_rules
+from duel_impacts import strike_reach, reaction_kind, response_amount, step_distance, recoil_step_progress
+from duel_cameras import install_shots, shot_at
 
 PREFIX = 'mixamorig:'
 CODE_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+ENGINE_SHA256 = {name: hashlib.sha256((Path(__file__).parent / name).read_bytes()).hexdigest()
+                for name in ('duel_scene.py', 'duel_impacts.py', 'duel_cameras.py', 'duel_plan.py')}
 REGION_BONES = {'head': 'Head', 'body': 'Spine1', 'abdomen': 'Spine', 'chest': 'Spine2'}
 
 
@@ -52,13 +57,15 @@ def target(name, location):
 
 class MotionSources:
     """Cache local transforms from FBX. Providers share a bone-transform contract."""
-    def __init__(self, definitions):
+    def __init__(self, definitions, needs_fall=False):
         self.definitions = definitions
         self.poses = {}
         self.ends = {}
         self.template = None
         self.meshes = []
         for name, definition in definitions.items():
+            if definition['category'] == 'reaction' and not needs_fall:
+                continue
             if not definition.get('asset'):
                 continue
             before = set(bpy.data.objects)
@@ -134,6 +141,14 @@ class Actor:
             mesh.data.materials.append(material)
             mesh['actor_id'] = actor_id
             self.meshes.append(mesh)
+        self.surface_polygons = {}
+        for mesh in self.meshes:
+            masks = {}
+            for region, names in {'head': {'Head', 'Neck'}, 'body': {'Hips', 'Spine', 'Spine1', 'Spine2'}}.items():
+                groups = {g.index for g in mesh.vertex_groups if g.name.removeprefix(PREFIX) in names}
+                selected = {v.index for v in mesh.data.vertices if any(g.group in groups and g.weight >= .25 for g in v.groups)}
+                masks[region] = [tuple(p.vertices) for p in mesh.data.polygons if all(i in selected for i in p.vertices)]
+            self.surface_polygons[mesh.name] = masks
         self.forward = Vector((math.sin(yaw), -math.cos(yaw), 0))
         self.lateral = Vector((math.cos(yaw), math.sin(yaw), 0))
         self.goals = {}
@@ -273,7 +288,11 @@ def prepare_feet(actor, moving, active, phase, definitions, move_origins, frame_
             lift_weight = smooth(phase / .15) * smooth((1 - phase) / .15)
             desired[key] = actor.anchors[key].lerp(point(actor.arm, key), lift_weight) if swing else actor.anchors[key].copy()
         (frame_info['swing'] if swing else frame_info['stance'])[actor.id + ':' + key] = list(desired[key])
-    lowering = min(.18, support_lowering(actor, desired, frame_info['stance']))
+    reachable = dict(frame_info['stance'])
+    kicking = active and active['kind'] == 'strike' and active['actor'] == actor.id and definitions[active['motion']]['limb'] == 'foot'
+    if actor.id in moving and not kicking:
+        reachable.update(frame_info['swing'])
+    lowering = min(.24 if actor.id in moving else .18, support_lowering(actor, desired, reachable))
     actor.hip_offset(Vector((0, 0, -lowering)))
     frame_info.setdefault('support_crouch_m', {})[actor.id] = lowering
     bpy.context.view_layer.update()
@@ -282,6 +301,57 @@ def prepare_feet(actor, moving, active, phase, definitions, move_origins, frame_
 
 def blend_pose(a, b, weight):
     return {name: (a[name][0].lerp(b[name][0], weight), a[name][1].slerp(b[name][1], weight), a[name][2].lerp(b[name][2], weight)) for name in a}
+
+
+def region_center(actor, region):
+    bone = actor.arm.pose.bones[PREFIX + REGION_BONES[region]]
+    return actor.arm.matrix_world @ bone.head.lerp(bone.tail, .55 if region == 'head' else .4)
+
+
+def surface_trees(actor, region):
+    depsgraph = bpy.context.evaluated_depsgraph_get()
+    for mesh in actor.meshes:
+        polygons = actor.surface_polygons[mesh.name]['head' if region == 'head' else 'body']
+        if polygons:
+            evaluated = mesh.evaluated_get(depsgraph)
+            vertices = [evaluated.matrix_world @ v.co for v in evaluated.data.vertices]
+            yield BVHTree.FromPolygons(vertices, polygons)
+
+
+def surface_contact(actor, region, from_position):
+    center = region_center(actor, region)
+    direction = from_position - center
+    direction.normalize()
+    origin = center + direction * 1.5
+    hits = []
+    for tree in surface_trees(actor, region):
+        hit, normal, _, distance = tree.ray_cast(origin, -direction, 2)
+        if hit is not None:
+            hits.append((distance, hit, normal))
+    if hits:
+        _, hit, normal = min(hits, key=lambda value: value[0])
+        return hit, normal, 'skinned_mesh_raycast'
+    return center + actor.forward * (.11 if region == 'head' else .14), actor.forward.copy(), 'bone_surface_fallback'
+
+
+def surface_distance(actor, region, position):
+    values = [tree.find_nearest(position)[3] for tree in surface_trees(actor, region)]
+    return min((v for v in values if v is not None), default=float('inf'))
+
+
+def rotate_world(actor, bone_name, axis, angle):
+    bone = actor.arm.pose.bones[PREFIX + bone_name]
+    world = actor.arm.matrix_world.to_3x3() @ bone.matrix.to_3x3()
+    local_axis = world.inverted() @ axis
+    bone.rotation_quaternion @= Quaternion(local_axis.normalized(), angle)
+
+
+def close_fists(actor, sources):
+    fist = sources.sample('jab', sources.definitions['jab']['source_peak'])
+    mirrored = sources.sample('jab', sources.definitions['jab']['source_peak'], True)
+    for name in fist:
+        if 'Hand' in name and any(finger in name for finger in ('Thumb', 'Index', 'Middle', 'Ring', 'Pinky')):
+            actor.arm.pose.bones[name].rotation_quaternion = (fist if 'Left' in name else mirrored)[name][1]
 
 
 def source_frame(event, definition, time_seconds, end):
@@ -381,7 +451,7 @@ def build(plan, folder):
     started = time.monotonic()
     bpy.ops.wm.read_factory_settings(use_empty=True)
     definitions = catalog()['motions']
-    sources = MotionSources(definitions)
+    sources = MotionSources(definitions, any(e.get('reaction') == 'knockdown' for e in plan['events']))
     initial_distance = .8
     for event in plan['events']:
         if event['kind'] == 'strike':
@@ -405,17 +475,21 @@ def build(plan, folder):
     contact_records = []
     # Freeze targets at event commitment. Not linked to the victim's moving bones.
     committed_targets = {}
+    committed_normals = {}
     current_positions = {'A': Vector((-initial_distance / 2, 0, 0)), 'B': Vector((initial_distance / 2, 0, 0))}
     random_source = random.Random(plan['seed'])
     guard_offsets = {key: random_source.uniform(-.15, .15) for key in actors}
     move_origins = {}
     effective_moves = {}
+    strike_origins = {}
+    impact_states = {}
     previous_event = None
     for frame in range(1, scene.frame_end + 1):
         scene.frame_set(frame)
         seconds = (frame - 1) / plan['fps']
         active = next((e for e in plan['events'] if e['start'] <= seconds <= e['end']), None)
         phase = (seconds - active['start']) / (active['end'] - active['start']) if active else 0
+        fall_weights = {}
         for actor in actors.values():
             for constraint in actor.constraints.values():
                 constraint.influence = 0
@@ -428,7 +502,20 @@ def build(plan, folder):
                 if definition.get('asset'):
                     f = source_frame(active, definition, seconds, sources.ends[active['motion']])
                     pose = blend_pose(pose, sources.sample(active['motion'], f, active['side'] != definition['side']), weight)
+            impact = impact_states.get(actor.id)
+            if impact and reaction_kind(impact['event']) == 'knockdown':
+                dt = seconds - impact['contact_time']
+                weight = smooth((dt - .08) / .22)
+                fall_weights[actor.id] = weight
+                source_time = min(1, max(0, (dt - .08) / 1.85))
+                falling = sources.sample('fall_back', 1 + (sources.ends['fall_back'] - 1) * source_time)
+                hip_key = PREFIX + 'Hips'
+                first = sources.poses['fall_back'][0][hip_key][0]
+                falling[hip_key] = (falling[hip_key][0] - first + idle[hip_key][0], falling[hip_key][1], falling[hip_key][2])
+                pose = blend_pose(pose, falling, weight)
             actor.set_pose(pose)
+            if fall_weights.get(actor.id, 0) < .5:
+                close_fists(actor, sources)
             actor.root.location = current_positions[actor.id]
         bpy.context.view_layer.update()
         if previous_event and previous_event['kind'] == 'move' and active != previous_event:
@@ -453,6 +540,34 @@ def build(plan, folder):
                 actor.root.location = move_origins[event_id][actor.id] + delta * smooth(phase)
                 moving[actor.id] = (delta, phase, False)
                 current_positions[actor.id] = actor.root.location.copy()
+        if active and active['kind'] == 'strike':
+            attacker = actors[active['actor']]
+            defender = actors['B' if active['actor'] == 'A' else 'A']
+            event_id = active['id']
+            if event_id not in strike_origins:
+                delta = current_positions[defender.id] - current_positions[attacker.id]
+                distance = max(0, delta.xy.length - .8)
+                direction = Vector((delta.x, delta.y, 0)).normalized()
+                strike_origins[event_id] = (current_positions[attacker.id].copy(), direction * distance)
+            origin, delta = strike_origins[event_id]
+            approach = smooth((seconds - active['start']) / max(.08, active['peak'] - .20 - active['start']))
+            if delta.length > .001:
+                attacker.root.location = origin + delta * approach
+                current_positions[attacker.id] = attacker.root.location.copy()
+                moving[attacker.id] = (delta, approach, False)
+            contact_time = round(active['peak'] * plan['fps']) / plan['fps']
+            if active['outcome'] == 'hit' and seconds >= contact_time and (defender.id not in impact_states or impact_states[defender.id]['event']['id'] != event_id):
+                direction = Vector((defender.root.location.x - attacker.root.location.x, defender.root.location.y - attacker.root.location.y, 0)).normalized()
+                impact_states[defender.id] = {'event': active, 'contact_time': contact_time, 'origin': defender.root.location.copy(), 'direction': direction}
+        for actor_id, impact in impact_states.items():
+            event = impact['event']
+            if impact['contact_time'] <= seconds <= event['end'] and step_distance(event) > 0:
+                actor = actors[actor_id]
+                progress = recoil_step_progress(event, seconds, plan['fps'])
+                delta = impact['direction'] * step_distance(event)
+                actor.root.location = impact['origin'] + delta * progress
+                current_positions[actor_id] = actor.root.location.copy()
+                moving[actor_id] = (delta, progress, False)
         for actor in actors.values():
             actor.face(current_positions['B' if actor.id == 'A' else 'A'])
         bpy.context.view_layer.update()
@@ -490,21 +605,49 @@ def build(plan, folder):
                     defender.root.location += displacement * amplitude
                     moving[defender.id] = (displacement, amplitude, True)
                     defender.hip_offset(Vector((0, 0, -.04 * amplitude)))
-            elif active['outcome'] == 'hit':
-                if seconds >= active['peak'] - 1 / plan['fps']:
-                    response = math.sin(math.pi * min(1, (seconds - active['peak'] + 1 / plan['fps']) / max(.2, active['end'] - active['peak'])))
-                    defender.hip_offset(attacker.forward * (.08 + .08 * active['intensity']) * response + Vector((0, 0, -.05 * response)))
-                    defender.arm.pose.bones[PREFIX + 'Spine'].rotation_quaternion @= Quaternion((1, 0, 0), -.14 * response)
             bpy.context.view_layer.update()
+        for actor_id, impact in impact_states.items():
+            actor = actors[actor_id]
+            event = impact['event']
+            response = response_amount(seconds - impact['contact_time']) * (1 - fall_weights.get(actor_id, 0))
+            if response > .005:
+                strength = event['intensity']
+                axis = Vector((-impact['direction'].y, impact['direction'].x, 0))
+                actor.hip_offset(impact['direction'] * (.045 + .11 * strength) * response + Vector((0, 0, -.055 * response)))
+                bend = 1 if event['region'] == 'head' else -1
+                rotate_world(actor, 'Spine', axis, bend * .14 * strength * response)
+                rotate_world(actor, 'Spine1', axis, bend * .16 * strength * response)
+                rotate_world(actor, 'Spine2', axis, bend * .12 * strength * response)
+                if event['region'] == 'head':
+                    rotate_world(actor, 'Head', axis, .24 * strength * response)
+                    if event['motion'] == 'hook':
+                        rotate_world(actor, 'Neck', Vector((0, 0, 1)), .20 * strength * response * (1 if event['side'] == 'right' else -1))
         bpy.context.view_layer.update()
-        frame_info = {'frame': frame, 'stance': {}, 'swing': {}, 'event': active['id'] if active else None}
-        foot_goals = {actor.id: prepare_feet(actor, moving, active, phase, definitions, move_origins, frame_info) for actor in actors.values()}
+        for actor_id, weight in fall_weights.items():
+            if weight > 0:
+                actor = actors[actor_id]
+                ground = min(p.z for p in evaluated_corners(actor.meshes))
+                if ground < -.008:
+                    actor.hip_offset(Vector((0, 0, -.008 - ground)))
+        bpy.context.view_layer.update()
+        frame_info = {'frame': frame, 'stance': {}, 'swing': {}, 'event': active['id'] if active else None,
+                      'fall_weights': fall_weights, 'roots': {k: list(a.root.location) for k, a in actors.items()},
+                      'reactions': {k: {'event': i['event']['id'], 'type': reaction_kind(i['event']), 'amount': response_amount(seconds-i['contact_time'])} for k,i in impact_states.items()}}
+        foot_goals = {}
+        for actor in actors.values():
+            if fall_weights.get(actor.id, 0) > 0:
+                foot_goals[actor.id] = {key: point(actor.arm, key) for key in ('LeftFoot', 'RightFoot')}
+                frame_info.setdefault('support_crouch_m', {})[actor.id] = 0
+            else:
+                foot_goals[actor.id] = prepare_feet(actor, moving, active, phase, definitions, move_origins, frame_info)
         if active and active['kind'] == 'strike':
             # Contact follows the prepared recipient pose until commitment/impact.
             # Dodge freezes at launch; hit/block freeze at peak. No bone-target cycles.
             if active['id'] not in committed_targets or (active['outcome'] != 'dodge' and seconds <= active['peak']):
-                region = REGION_BONES[active['region']]
-                committed_targets[active['id']] = point(defender.arm, region) + defender.forward * (.11 if region == 'Head' else .14)
+                hit, normal, method = surface_contact(defender, active['region'], point(attacker.arm, active['side'].title() + 'Arm'))
+                committed_targets[active['id']] = hit
+                committed_normals[active['id']] = normal
+                frame_info['surface_method'] = method
             frame_info['contact_target'] = list(committed_targets[active['id']])
         for actor in actors.values():
             natural = {key: point(actor.arm, key) for key in actor.goals}
@@ -525,14 +668,19 @@ def build(plan, folder):
                 goal = committed_targets[active['id']].copy()
                 if actor == attacker:
                     peak_phase = (active['peak'] - active['start']) / (active['end'] - active['start'])
-                    reach = bell(phase, peak_phase)
+                    reach = strike_reach(active, seconds, definition['limb'])
                     tip_vector = point(actor.arm, actor.tip_names[limb]) - natural[limb]
-                    contact_offset = actor.forward * tip_vector.length
+                    contact_direction = -committed_normals[active['id']]
+                    if contact_direction.dot(actor.forward) < 0:
+                        contact_direction = -contact_direction
+                    contact_offset = contact_direction * tip_vector.length
                     wrist_goal = goal - contact_offset
-                    aimed = tip_vector.rotation_difference(actor.forward) @ rotations[limb]
+                    aimed = tip_vector.rotation_difference(contact_direction) @ rotations[limb]
                     rotations[limb] = rotations[limb].slerp(aimed, reach)
                     if definition['limb'] == 'foot':
                         if actor.id + ':' + limb in frame_info['swing']:
+                            clearance = .13 * smooth(min(phase / .2, (1 - phase) / .2))
+                            desired[limb].z = max(desired[limb].z, actor.anchors[limb].z + clearance)
                             desired[limb] = desired[limb].lerp(wrist_goal, reach)
                             arc_phase = phase / peak_phase if phase <= peak_phase else (phase - peak_phase) / (1 - peak_phase)
                             desired[limb] += actor.forward * (.20 * math.sin(math.pi * arc_phase))
@@ -561,7 +709,8 @@ def build(plan, folder):
                         direction = Vector((delta.x, delta.y, 0)).normalized()
                         actor.hip_offset(direction * correction)
                         bpy.context.view_layer.update()
-                        extra_lowering = min(.18 - lowering, support_lowering(actor, desired, frame_info['stance']))
+                        reachable = {**frame_info['stance'], **frame_info['swing']}
+                        extra_lowering = min(.24 - lowering, support_lowering(actor, desired, reachable))
                         actor.hip_offset(Vector((0, 0, -extra_lowering)))
                         bpy.context.view_layer.update()
                         frame_info['support_crouch_m'][actor.id] += extra_lowering
@@ -575,10 +724,13 @@ def build(plan, folder):
                 pole = actor.poles[key]
                 pole.location = actor.pole_location(side, middle, start, desired[key])
                 pole.keyframe_insert('location', frame=frame)
-                actor.constraints[key].influence = 1
+                influence = 1 - fall_weights.get(actor.id, 0)
+                actor.constraints[key].influence = influence
+                actor.constraints[key].keyframe_insert('influence', frame=frame)
                 goal.rotation_quaternion = actor.foot_rotations[key] if end == 'Foot' and actor.id + ':' + key in frame_info['stance'] else rotations[key]
                 goal.keyframe_insert('rotation_quaternion', frame=frame)
-                actor.rotation_constraints[key].influence = 1
+                actor.rotation_constraints[key].influence = influence
+                actor.rotation_constraints[key].keyframe_insert('influence', frame=frame)
             actor.bake_pose(frame)
         frame_metadata.append(frame_info)
         if frame % 60 == 0:
@@ -591,13 +743,16 @@ def build(plan, folder):
     setup_stage()
     meshes = [mesh for actor in actors.values() for mesh in actor.meshes]
     camera_bounds = setup_camera(meshes, plan, actors)
+    camera_counts = install_shots(plan, actors, scene.camera)
     # Evaluate the exact saved trajectories on every frame.
     quality = check_quality(plan, actors, frame_metadata, committed_targets)
     quality['camera_bounds'] = camera_bounds
+    quality['camera_frames'] = camera_counts
     quality['effective_move_distances_m'] = effective_moves
     quality['asset_sha256'] = asset_manifest()
     quality['blender_version'] = bpy.app.version_string
     quality['scene_code_sha256'] = CODE_SHA256
+    quality['engine_sources_sha256'] = dict(ENGINE_SHA256)
     quality['build_seconds'] = round(time.monotonic() - started, 2)
     atomic_json(folder / 'quality.json', quality)
     atomic_json(folder / 'trajectory.json', {'frames': frame_metadata, 'targets': {k: list(v) for k, v in committed_targets.items()}})
@@ -617,6 +772,7 @@ def check_quality(plan, actors, metadata, goals):
     stance_tolerance = rules['stance_tolerance_height'] * height
     camera_violations, stance_violations, reach_violations, contact_records = [], [], [], []
     body_violations, occlusion_violations, flip_violations = [], [], []
+    ground_violations, shot_violations = [], []
     max_stance, max_reach, max_joint_velocity = 0, 0, 0
     previous = {}
     previous_joints = {}
@@ -624,6 +780,10 @@ def check_quality(plan, actors, metadata, goals):
     for record in metadata:
         frame = record['frame']
         scene.frame_set(frame)
+        shot = shot_at(plan, frame)
+        expected_camera = 'Duel_FullCamera' if shot['kind'] == 'full' else 'POV_' + shot['actor']
+        if scene.camera.name != expected_camera:
+            shot_violations.append({'frame': frame, 'expected': expected_camera, 'actual': scene.camera.name})
         body_centers = []
         screen_centers = []
         for actor in actors.values():
@@ -639,18 +799,28 @@ def check_quality(plan, actors, metadata, goals):
                     if angle > math.radians(65):
                         flip_violations.append({'frame': frame, 'joint': joint_id, 'angle_deg': round(math.degrees(angle), 2)})
                 previous_joints[joint_id] = rotation.copy()
-            for corner in evaluated_corners(actor.meshes):
-                uv = world_to_camera_view(scene, scene.camera, corner)
-                margin = min(uv.x, uv.y, 1 - uv.x, 1 - uv.y)
-                margins.append(margin)
-                if margin < rules['camera_margin'] - 1e-4 or uv.z < 0:
-                    camera_violations.append({'frame': frame, 'actor': actor.id})
-                    break
+            corners = evaluated_corners(actor.meshes)
+            if min(c.z for c in corners) < -.045:
+                ground_violations.append({'frame': frame, 'actor': actor.id, 'min_z': round(min(c.z for c in corners), 4)})
+            if shot['kind'] == 'full':
+                for corner in corners:
+                    uv = world_to_camera_view(scene, scene.camera, corner)
+                    margin = min(uv.x, uv.y, 1 - uv.x, 1 - uv.y)
+                    margins.append(margin)
+                    if margin < rules['camera_margin'] - 1e-4 or uv.z < 0:
+                        camera_violations.append({'frame': frame, 'actor': actor.id})
+                        break
+            elif actor.id != shot['actor']:
+                visible = [world_to_camera_view(scene, scene.camera, region_center(actor, region)) for region in ('head', 'chest')]
+                if not any(uv.z > 0 and 0 <= uv.x <= 1 and 0 <= uv.y <= 1 for uv in visible):
+                    camera_violations.append({'frame': frame, 'actor': actor.id, 'reason': 'opponent outside POV'})
             for key, goal in actor.goals.items():
                 actual = point(actor.arm, key)
                 error = (actual - goal.location).length
-                max_reach = max(max_reach, error)
-                if error > contact_tolerance:
+                falling = record['fall_weights'].get(actor.id, 0) > 0
+                if not falling:
+                    max_reach = max(max_reach, error)
+                if not falling and error > contact_tolerance:
                     reach_violations.append({'frame': frame, 'actor': actor.id, 'limb': key, 'error_m': round(error, 4)})
                 name = actor.id + ':' + key
                 if name in record['stance']:
@@ -664,7 +834,7 @@ def check_quality(plan, actors, metadata, goals):
                 previous[name] = actual.copy()
         if (body_centers[0] - body_centers[1]).length < .30:
             body_violations.append({'frame': frame, 'center_distance_m': round((body_centers[0] - body_centers[1]).length, 4)})
-        if abs(screen_centers[0].x - screen_centers[1].x) < .035:
+        if shot['kind'] == 'full' and abs(screen_centers[0].x - screen_centers[1].x) < .035:
             occlusion_violations.append({'frame': frame})
         for event in plan['events']:
             if event['kind'] != 'strike' or frame != round(event['peak'] * plan['fps']) + 1:
@@ -681,24 +851,36 @@ def check_quality(plan, actors, metadata, goals):
                 entry['block_error_m'] = round((point(defender.arm, defense_limb) - goals[event['id']]).length, 4)
                 entry['passed'] &= entry['block_error_m'] <= contact_tolerance
             if event['outcome'] == 'hit':
-                center = point(defender.arm, REGION_BONES[event['region']])
-                surface = center + defender.forward * (.11 if event['region'] == 'head' else .14)
-                entry['surface_error_m'] = round((attack - surface).length, 4)
+                entry['surface_error_m'] = round(surface_distance(defender, event['region'], attack), 4)
                 entry['passed'] &= entry['surface_error_m'] <= contact_tolerance
-                entry['reaction_onset_frame'] = math.ceil(event['peak'] * plan['fps'])
-                entry['reaction_sync_frames'] = abs(entry['reaction_onset_frame'] - frame)
+                onset = next((r['frame'] for r in metadata if r['reactions'].get(defender.id, {}).get('event') == event['id'] and r['reactions'][defender.id]['amount'] > .05), None)
+                entry['reaction_onset_frame'] = onset
+                entry['reaction_sync_frames'] = abs(onset - frame) if onset is not None else 999
                 entry['passed'] &= entry['reaction_sync_frames'] <= 2
+                entry['reaction'] = reaction_kind(event)
+                end_frame = min(len(metadata), round(event['end'] * plan['fps']) + 1)
+                recoil = (Vector(metadata[end_frame-1]['roots'][defender.id]) - Vector(record['roots'][defender.id])).xy.length
+                entry['recoil_step_m'] = round(recoil, 4)
+                if reaction_kind(event) == 'stagger':
+                    entry['passed'] &= recoil >= step_distance(event) * .9
+                if reaction_kind(event) == 'knockdown':
+                    scene.frame_set(scene.frame_end)
+                    entry['final_head_height_m'] = round(region_center(defender, 'head').z, 4)
+                    entry['final_hip_height_m'] = round(point(defender.arm, 'Hips').z, 4)
+                    entry['passed'] &= entry['final_head_height_m'] < .45 and entry['final_hip_height_m'] < .35
+                    scene.frame_set(frame)
             if event['outcome'] == 'dodge':
                 region = point(defender.arm, REGION_BONES[event['region']])
                 entry['dodge_clearance_m'] = round((attack - region).length, 4)
                 entry['passed'] &= entry['dodge_clearance_m'] >= .20
             contact_records.append(entry)
-    passed = not any((camera_violations, stance_violations, reach_violations, body_violations, occlusion_violations, flip_violations)) and all(r['passed'] for r in contact_records)
+    passed = not any((camera_violations, stance_violations, reach_violations, body_violations, occlusion_violations, flip_violations, ground_violations, shot_violations)) and all(r['passed'] for r in contact_records)
     return {'passed': passed, 'frame_count': len(metadata), 'actors_independent': actors['A'].arm.data != actors['B'].arm.data,
-            'min_camera_margin': round(min(margins), 5), 'max_stance_error_m': round(max_stance, 5), 'max_ik_error_m': round(max_reach, 5),
+            'min_camera_margin': round(min(margins), 5) if margins else None, 'max_stance_error_m': round(max_stance, 5), 'max_ik_error_m': round(max_reach, 5),
             'max_joint_speed_m_s': round(max_joint_velocity, 3), 'camera_failures': camera_violations[:20],
             'stance_failures': stance_violations[:20], 'ik_failures': reach_violations[:20], 'contacts': contact_records,
             'body_overlap_failures': body_violations[:20], 'occlusion_failures': occlusion_violations[:20], 'joint_flip_failures': flip_violations[:20],
+            'ground_failures': ground_violations[:20], 'shot_failures': shot_violations[:20],
             'visual_review_required': True, 'limitations': ['Geometry checks do not certify realism or all self-collisions; preview review required.']}
 
 

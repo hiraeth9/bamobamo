@@ -1,7 +1,7 @@
 {
   ".env.example": {
-    "bytes": 151,
-    "sha256": "413deb8ffee30268ee64abba9f2e00d089e739bbb8e9d9e3fd6aeb8e1c0a3683"
+    "bytes": 103,
+    "sha256": "dab46af49d4a4b062059e14d2483e5c8f315f0cfd56d6b88b015b50743b60b80"
   },
   ".gitignore": {
     "bytes": 407,
@@ -16,12 +16,12 @@
     "sha256": "64f394ad2617c4898271b5238cdef0317c0da1a9db42bf07053f0c5bdd4cf4d6"
   },
   "README.md": {
-    "bytes": 6992,
-    "sha256": "70127ad4367dc200dd34993f0e459e43635a62b539184257c768e50a5190de96"
+    "bytes": 8909,
+    "sha256": "87634e1310131b440ffbe5ea5fc0a5b56df6ae69320774f2bd22e7aff22d701e"
   },
   "SOURCE.json": {
-    "bytes": 2523,
-    "sha256": "eff3ce96c944d978eac7e96d0ef8a7de66df87640d7452a548d589974bcdcaa4"
+    "bytes": 3261,
+    "sha256": "c20f07ff2031689c4424305b4637c27dfacd9b85d24541466972156803370059"
   },
   "blender": {
     "bytes": 515,
@@ -36,8 +36,8 @@
     "sha256": "eb0facf69781a30e69792532087d8d41c6a14fcd323353250abe7988ee297fa5"
   },
   "config/hermes-config.example.yaml": {
-    "bytes": 257,
-    "sha256": "4530f1b9a62fe9f45c120fc0c322b19d6c0355ab5fa1798a3b23dbaebb1e3c65"
+    "bytes": 596,
+    "sha256": "a61f355afd136fe4bdb294eac3a6ebb4e0b714c6024b215db1df138c53122008"
   },
   "ffmpeg": {
     "bytes": 214,
@@ -38200,16 +38200,16 @@
     "sha256": "28377d27fe46f626e7512210b8cefeeb56b1b1026fc43c51d3efc356e1ec2ce5"
   },
   "knowledge/interaction_rules/duel.json": {
-    "bytes": 665,
-    "sha256": "27970c6dff91e72c98a177b5d51ac404bf8f0c07297f6e8c6d01f7dcafde29c3"
+    "bytes": 826,
+    "sha256": "e72aa168025bc70a5b721c9cc8aba59bcec3bc643e7d208034a23640bacd9dcb"
   },
   "knowledge/motion_providers/providers.json": {
-    "bytes": 563,
-    "sha256": "0e463fbad6ff9bff453c983f2a03b5f80234262cf29c38331dda1a6fba3f60e9"
+    "bytes": 835,
+    "sha256": "f60eb3bc3798a5a9c6fb73489e5cf31da40896ecf534f320a17c631d2df728b0"
   },
   "knowledge/motions/duel.json": {
-    "bytes": 2835,
-    "sha256": "e203ab25ef8b28d7ef1784a1cb6eea776d5b303d011a838a03170e771f5a1e4b"
+    "bytes": 3245,
+    "sha256": "f173e50983225858334301288bb2aec8e2d6c5ce43aed36c098e95cbd717b0dc"
   },
   "mixamo_fbx/basic/Falling.fbx": {
     "bytes": 2571056,
@@ -38468,12 +38468,24 @@
     "sha256": "5bc254895e5a814a51077d1ea8ac5e382bf63066f6e93b7121a2607baf714994"
   },
   "reports/duel_blender_regression.json": {
-    "bytes": 218444,
-    "sha256": "a73d65c21a3bc22921fa5f08ed257afd515ad6885d7d9ec965a7a4a44a789d78"
+    "bytes": 286141,
+    "sha256": "b80bff92268e276cb69e9c3f1075e1ea38d372273ec04b0358854a71689edc8b"
+  },
+  "reports/duel_impact_natural_result.json": {
+    "bytes": 11521,
+    "sha256": "f60d3aa50b7a9df5054cb07130a7fb3e9af1b2a6d4ffb40b1a0d04efd178b137"
+  },
+  "reports/duel_impact_performance.json": {
+    "bytes": 336,
+    "sha256": "5914cc3c301f8ae67ebba92bf95c89d669b7a92a7c3792ca4700151257ad25d6"
+  },
+  "reports/duel_impact_regression.json": {
+    "bytes": 26745,
+    "sha256": "29f1e45d38e3235379eed32f8e502ecde3ea16088c813b37f11f572a8345ac0a"
   },
   "reports/duel_natural_regression.json": {
-    "bytes": 304694,
-    "sha256": "392775dd698a8f422bd750e85255b043ba18d8e8c775bf240c403f9e777b4397"
+    "bytes": 351986,
+    "sha256": "276b0f318ef366e26d53b416ca24343fc4c73ce8c06f65733da72da6cf26de07"
   },
   "reports/duel_performance.json": {
     "bytes": 585,
@@ -38487,6 +38499,26 @@
     "bytes": 2971,
     "sha256": "a67e1db97eb0dca8607aac85a28716bb52eacc1832d51ec99bb1bee60c00f55d"
   },
+  "reports/v1/duel_blender_regression.json": {
+    "bytes": 218444,
+    "sha256": "a73d65c21a3bc22921fa5f08ed257afd515ad6885d7d9ec965a7a4a44a789d78"
+  },
+  "reports/v1/duel_natural_regression.json": {
+    "bytes": 304694,
+    "sha256": "392775dd698a8f422bd750e85255b043ba18d8e8c775bf240c403f9e777b4397"
+  },
+  "reports/v1/duel_performance.json": {
+    "bytes": 585,
+    "sha256": "5ce82adcf033b332c0937d5e9244d199c51f71a30b16bc3a9c41d34d7779437e"
+  },
+  "reports/v1/duel_release_media.json": {
+    "bytes": 649,
+    "sha256": "cd343cb8e8b6a83e323b78a4bbc2852f6b68d2b640ef6a721b409093f8746337"
+  },
+  "reports/v1/duel_release_quality.json": {
+    "bytes": 2971,
+    "sha256": "a67e1db97eb0dca8607aac85a28716bb52eacc1832d51ec99bb1bee60c00f55d"
+  },
   "requirements.txt": {
     "bytes": 13,
     "sha256": "35fde835d2cdf4ccbfb67738c7e5d2f8829fd441d3cbcb34b1f4c948a0a11cd4"
@@ -38495,17 +38527,25 @@
     "bytes": 2671,
     "sha256": "c0a57238a3e4fca1342f8809c462800225997084684fe19024df4cb4abce8ff3"
   },
+  "scripts/duel_cameras.py": {
+    "bytes": 4447,
+    "sha256": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b"
+  },
+  "scripts/duel_impacts.py": {
+    "bytes": 1841,
+    "sha256": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275"
+  },
   "scripts/duel_plan.py": {
-    "bytes": 9887,
-    "sha256": "74b2271f7633cb1bdb12cf19b5fdeeed6999af3acae1b18019509b9fe2c3bf32"
+    "bytes": 15074,
+    "sha256": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
   },
   "scripts/duel_scene.py": {
-    "bytes": 39324,
-    "sha256": "eaa718c6d6c72f57b8412d70ed457548a6a67f01f71384d78132377e8bd37f42"
+    "bytes": 50871,
+    "sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c"
   },
   "scripts/duel_worker.py": {
-    "bytes": 17711,
-    "sha256": "e55a1137b7ba66e56692d05ff1b6609812b4788d0f7a3a788f525dd9bd9eb5ca"
+    "bytes": 17823,
+    "sha256": "dd4e1a0215a7d587aa3008738f8b340974b48640218b37259db80f79b1b6ada0"
   },
   "scripts/preload_helpers.py": {
     "bytes": 16005,
@@ -38520,8 +38560,8 @@
     "sha256": "6b509b3a8449f5a95c76470cb3a24748feeff8d8ab0ce5b2aab552f811992bcb"
   },
   "scripts/rollback_to_single.py": {
-    "bytes": 2281,
-    "sha256": "89d471227de99bdbba62e77bde6b59f3abfad479927b22d51717b5255b11a796"
+    "bytes": 2327,
+    "sha256": "be46a5835abce1fa06293c9a65ea0f3b13646809c33bc2e2502335e463bff5e6"
   },
   "scripts/scene_cast.py": {
     "bytes": 3072,
@@ -38544,8 +38584,8 @@
     "sha256": "ace52f9886852548479751d9b087f161e88fa075d26d916e81a64d8c15792552"
   },
   "tests/recheck_duel_regression.py": {
-    "bytes": 5252,
-    "sha256": "6cfaa5ac1624ea06554a3125339094ae215191778e465443deb5722dc04d212c"
+    "bytes": 5611,
+    "sha256": "ab6f57f2e524e7081122247da314f52d33caa1ecdec48c277a523291bb071bed"
   },
   "tests/run_duel_natural_regression.py": {
     "bytes": 4979,
@@ -38558,6 +38598,14 @@
   "tests/test_duel_blender.py": {
     "bytes": 3121,
     "sha256": "dc94a83ac2c3bc96a62a845e66a3924e9285a0b7b2ae8516b5bd5f3550465f2d"
+  },
+  "tests/test_duel_impact_blender.py": {
+    "bytes": 5892,
+    "sha256": "263679acf17b5433c18959f9192e7438966fb399932f371992bc51756eb41989"
+  },
+  "tests/test_duel_impacts.py": {
+    "bytes": 3958,
+    "sha256": "9c53361497e419ad35eb9bffc5c59bd043c76d340728962fe4aa227207291ebf"
   },
   "tests/test_duel_plan.py": {
     "bytes": 4896,
@@ -38588,12 +38636,12 @@
     "sha256": "04cbb02fff085a7b9dd8d05ae6dfac790c2674d957723a3e62d80fe3a1c8e647"
   },
   "white-model-director/SKILL.md": {
-    "bytes": 11653,
-    "sha256": "95aa3e2d3b0001710d254599db100e69e108c26d4e0aa6d10cbebcfa5b487053"
+    "bytes": 12627,
+    "sha256": "11a98b15e4552166d9fd0d8c043e16c17497eefd348ff7909e636dc9a73f3469"
   },
   "双人打斗实现与验收记录.md": {
-    "bytes": 9046,
-    "sha256": "350cd3aa462e99fbae2c8106f77c124ab50a4f033d42cedb871be5d2cc119e12"
+    "bytes": 13161,
+    "sha256": "7035ab2c006f5280945aea5127c3e8c76fa0a6315773b63c019557a464eb540d"
   },
   "双人打斗开发计划书.docx": {
     "bytes": 423276,

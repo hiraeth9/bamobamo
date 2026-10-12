@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct Blender white-model (greybox/clay) reference video generation from Mixamo animations. Use when the user wants a 白膜/白模/素模/greybox/clay reference video, an action preview, a character animation render, or any prompt describing a character action plus camera/composition intent."
-version: 2.0.0
+version: 2.1.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -67,9 +67,11 @@ metadata:
 - 上勾拳、格挡、闪避与迈步有程序化运动来源；IK 控制落点和支撑，不是凭空生成任意动作的模型。
 - 可改变进攻者、顺序、左右侧、头/躯干部位、命中/格挡/闪避和节奏。反击用角色交换后的新攻击事件表达。
 - 各攻击只播放一次，保留准备、出招、接触、回收。空档维持格斗姿势。移动用独立 move 事件。
-- 命中共享固定接触点并协调反应；格挡先到接触点；闪避冻结攻击目标，让防守者离开，禁止追踪必中。
-- 两名标准角色，平地徒手，固定斜侧全景。时长独立于镜头，默认15秒，30FPS，最终1280×720。
-- 武器、摔投、倒地、多人和外部文本动作模型尚未接入。关键要求不支持时说明限制，不能静默省略。
+- 接触点从变形后的身体表面获取；出拳在接触前加速，接触后产生短促躯干与头部反应。重拳可后退迈步站稳，下一次攻击自动追近；不要把激烈打斗编排成全部格挡或闪避，除非用户明确要求。
+- 持续激烈交锋使用内部 pace=intense，0.8秒内开打，单次攻击0.8至1.4秒，相邻攻击间隔最多0.6秒，优先0.1至0.3秒。击倒后的展示允许保留时间。明确只要少数动作时使用standard，不为填充时长添加无关攻击；用户仍只输入自然语言。
+- 命中可指定 reaction=recoil（原地冲击）、stagger（后退站稳）或 knockdown（后仰倒地）；knockdown必须为最后一次交锋，至少留2秒完成倒地，此后保持落地，不能继续攻击或起身再战。
+- 两名标准角色，平地徒手，默认固定斜侧全景。明确要求第一视角时使用 cinematic shots，在重击前后短暂切到出拳者第一视角，再切全景观察对手后退或倒地。镜头由自然语言自动编排，用户无需选择模式。第一视角不能同时保证双方全身，全景片段继续检查全身边距。
+- 时长独立于镜头，默认15秒，30FPS，最终1280×720。武器、摔投、地面缠斗、多人、起身和外部文本动作模型尚未接入。关键要求不支持时说明限制，不能静默省略。
 - 资源、提供器和交互规则位于项目 `knowledge/`；执行结果保存 `output/jobs/<job_id>/` 的 plan、scene、quality、preview 和 result。
 - 自动几何检查不等于动作自然度和所有碰撞检查。返回结果时保留预览及视觉核验说明。
 

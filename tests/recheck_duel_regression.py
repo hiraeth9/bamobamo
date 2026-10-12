@@ -59,14 +59,14 @@ def intent_errors(case, plan):
     return errors
 
 
-def recheck(record, code_hash):
+def recheck(record, code_hash, engine_hashes):
     folder = job_directory(record['job_id'])
     plan = json.loads((folder / 'plan.json').read_text())
     record['intent_errors'] = intent_errors(record['case'], plan)
     with (folder / 'final_regression_build.log').open('w') as log:
         built = subprocess.run([str(PROJECT / 'blender'), '-b', '-t', '4', '--python-exit-code', '1', '--python', str(PROJECT / 'scripts' / 'duel_scene.py'), '--', '--plan', str(folder / 'plan.json')], cwd=PROJECT, env=child_environment(), stdout=log, stderr=subprocess.STDOUT, timeout=300)
     record['quality'] = json.loads((folder / 'quality.json').read_text())
-    record['passed'] = built.returncode == 0 and record['quality']['passed'] and not record['intent_errors'] and record['quality']['scene_code_sha256'] == code_hash
+    record['passed'] = built.returncode == 0 and record['quality']['passed'] and not record['intent_errors'] and record['quality']['scene_code_sha256'] == code_hash and record['quality'].get('engine_sources_sha256') == engine_hashes
     return record
 
 
@@ -75,11 +75,13 @@ if __name__ == '__main__':
     report = json.loads(path.read_text())
     atomic_json(path.with_name('duel_natural_regression_initial.json'), report)
     code_hash = hashlib.sha256((PROJECT / 'scripts' / 'duel_scene.py').read_bytes()).hexdigest()
+    engine_hashes = {name: hashlib.sha256((PROJECT / 'scripts' / name).read_bytes()).hexdigest()
+                     for name in ('duel_scene.py', 'duel_impacts.py', 'duel_cameras.py', 'duel_plan.py')}
     records = report['records']
     report['records'] = []
     started = time.time()
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futures = [pool.submit(recheck, dict(record), code_hash) for record in records]
+        futures = [pool.submit(recheck, dict(record), code_hash, engine_hashes) for record in records]
         for future in as_completed(futures):
             result = future.result()
             report['records'].append(result)
@@ -90,6 +92,7 @@ if __name__ == '__main__':
     report['unique_event_sequences'] = len(signatures)
     report['passed'] = report['passed_count'] == 60 and len(signatures) >= 10
     report['final_scene_code_sha256'] = code_hash
+    report['final_engine_sources_sha256'] = engine_hashes
     report['recheck_elapsed_seconds'] = round(time.time() - started, 2)
     atomic_json(path, report)
     sys.exit(0 if report['passed'] else 1)

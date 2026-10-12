@@ -1,9 +1,18 @@
-# Example only: fill private settings outside Git.
+# Example only. Store your real key in ~/.hermes/.env, outside Git.
 model:
-  default: qwen3.8-flash
-  provider: custom
+  default: qwen3.8-max
+  provider: custom:qwen-token-plan
   api_mode: chat_completions
-  base_url: YOUR_OPENAI_COMPATIBLE_BASE_URL
+  base_url: https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1
+custom_providers:
+  - name: qwen-token-plan
+    model: qwen3.8-max
+    models: [qwen3.8-max]
+    base_url: https://token-plan.maas.qianwenaiapi.com/compatible-mode/v1
+    key_env: QWEN_TOKEN_PLAN_API_KEY
+    api_mode: chat_completions
+    extra_body:
+      enable_thinking: false
 mcp_servers:
   blender:
     command: uvx

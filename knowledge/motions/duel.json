@@ -105,6 +105,15 @@
         ]
       }
     },
+    "fall_back": {
+      "category": "reaction",
+      "provider": "fbx",
+      "asset": "mixamo_fbx/combat_reaction/Death.fbx",
+      "sha256": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff",
+      "source_frames": [1, 92],
+      "description": "同标准骨架的后退失衡、仰面倒地和落地保持；用作击倒反应，不代表必须死亡",
+      "loop_allowed": false
+    },
     "uppercut": {
       "category": "attack",
       "provider": "procedural",

@@ -172,9 +172,9 @@ def run_job(job_id, already_planned=False):
                     if not candidate.exists():
                         raise RuntimeError('Hermes 未提交有效修正计划')
                     proposed = validate_plan(json.loads(candidate.read_text()), job_id)
-                    before = [(e['actor'],e['motion'],e['region'],e['outcome'],e['side']) for e in plan['events'] if e['kind']=='strike']
-                    after = [(e['actor'],e['motion'],e['region'],e['outcome'],e['side']) for e in proposed['events'] if e['kind']=='strike']
-                    if before != after or plan['duration_seconds'] != proposed['duration_seconds']:
+                    before = [(e['actor'],e['motion'],e['region'],e['outcome'],e['side'],e.get('reaction')) for e in plan['events'] if e['kind']=='strike']
+                    after = [(e['actor'],e['motion'],e['region'],e['outcome'],e['side'],e.get('reaction')) for e in proposed['events'] if e['kind']=='strike']
+                    if before != after or plan['duration_seconds'] != proposed['duration_seconds'] or plan['camera'] != proposed['camera'] or plan['pace'] != proposed['pace']:
                         raise RuntimeError('修正改变了明确的攻击要求，拒绝替换')
                     plan = proposed
                     atomic_json(folder / 'plan.json', plan)

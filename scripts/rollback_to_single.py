@@ -11,7 +11,8 @@ BASELINE = PROJECT.parent / 'bamo-backups/20261012-101959-single-character-v1'
 
 def active_jobs():
     scripts = {'duel_worker.py', 'duel_scene.py', 'render_saved_scene.py', 'render_white_model.py',
-               'test_duel_blender.py', 'run_duel_natural_regression.py', 'recheck_duel_regression.py'}
+               'test_duel_blender.py', 'test_duel_impact_blender.py',
+               'run_duel_natural_regression.py', 'recheck_duel_regression.py'}
     found = []
     for path in Path('/proc').iterdir():
         if not path.name.isdigit():

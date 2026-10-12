@@ -5,7 +5,7 @@
   "stance_tolerance_height": 0.01,
   "camera_margin": 0.05,
   "max_repairs": 2,
-  "hit": "receiver torso reaction begins within two frames of contact",
+  "hit": "raycast against the deformed head/torso surface; rapid torso/head impulse within two frames of contact; strong hits take a persistent recovery step, explicit final knockdowns use a falling motion and remain on the ground",
   "block": "shared world goal; receiver guard arrives before attacker; no cyclic bone targets",
   "dodge": "goal frozen at commitment, receiver moves out; never follow displaced target",
   "transition": "continuous guard coverage, smooth position/rotation/velocity; no repeat on attacks",

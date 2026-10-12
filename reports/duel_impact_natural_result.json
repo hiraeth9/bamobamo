@@ -1,0 +1,441 @@
+{
+  "job_id": "c6727f98213e49d0",
+  "model": "qwen3.8-max",
+  "input": "两个人徒手激烈对打，15秒。开场A快速轻拳试探，B格挡并立刻用重拳反击，命中A时让A明显后退并迈步站稳；双方继续紧凑交换拳脚，穿插少量格挡和闪避，但要有多次真正的有效命中，别一直打空，也别长时间停着。最后B追近，用一记重勾拳将A打倒，A仰面落地并保持倒地。B最后出拳前切到B第一视角，看见B自己的拳头击中A，再迅速切回全景，看清A后退和倒地。全景镜头始终完整显示双方全身，第一视角只是最后重拳时的短镜头。",
+  "cast": {
+    "version": 1,
+    "job_id": "c6727f98213e49d0",
+    "actors": [
+      {
+        "id": "A",
+        "name": "先手试探者"
+      },
+      {
+        "id": "B",
+        "name": "反击终结者"
+      }
+    ],
+    "actor_count": 2,
+    "supported": true,
+    "engine": "duel",
+    "message": "识别到 2 名人物"
+  },
+  "plan": {
+    "version": 1,
+    "duration_seconds": 15,
+    "fps": 30,
+    "seed": 20261012,
+    "pace": "intense",
+    "actors": [
+      {
+        "id": "A"
+      },
+      {
+        "id": "B"
+      }
+    ],
+    "camera": {
+      "policy": "cinematic",
+      "azimuth_deg": -68,
+      "margin": 0.05,
+      "shots": [
+        {
+          "kind": "full",
+          "start": 0,
+          "end": 11.4
+        },
+        {
+          "kind": "pov",
+          "start": 11.4,
+          "end": 12.4,
+          "actor": "B",
+          "fov": 75
+        },
+        {
+          "kind": "full",
+          "start": 12.4,
+          "end": 15
+        }
+      ]
+    },
+    "events": [
+      {
+        "kind": "strike",
+        "actor": "A",
+        "motion": "jab",
+        "side": "right",
+        "region": "head",
+        "outcome": "block",
+        "start": 0.4,
+        "end": 1.2,
+        "peak": 0.8,
+        "intensity": 0.4,
+        "id": "e01",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "B",
+        "motion": "jab",
+        "side": "left",
+        "region": "body",
+        "outcome": "hit",
+        "start": 1.3,
+        "end": 2.1,
+        "peak": 1.7,
+        "intensity": 0.85,
+        "reaction": "stagger",
+        "id": "e02",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "A",
+        "motion": "hook",
+        "side": "right",
+        "region": "head",
+        "outcome": "hit",
+        "start": 2.4,
+        "end": 3.2,
+        "peak": 2.8,
+        "intensity": 0.7,
+        "reaction": "recoil",
+        "id": "e03",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "B",
+        "motion": "kick",
+        "side": "left",
+        "region": "abdomen",
+        "outcome": "hit",
+        "start": 3.5,
+        "end": 4.3,
+        "peak": 3.9,
+        "intensity": 0.75,
+        "reaction": "stagger",
+        "id": "e04",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "A",
+        "motion": "jab",
+        "side": "left",
+        "region": "head",
+        "outcome": "dodge",
+        "start": 4.6,
+        "end": 5.4,
+        "peak": 5.0,
+        "intensity": 0.5,
+        "dodge": "back",
+        "id": "e05"
+      },
+      {
+        "kind": "strike",
+        "actor": "B",
+        "motion": "hook",
+        "side": "right",
+        "region": "chest",
+        "outcome": "hit",
+        "start": 5.6,
+        "end": 6.4,
+        "peak": 6.0,
+        "intensity": 0.8,
+        "reaction": "stagger",
+        "id": "e06",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "A",
+        "motion": "uppercut",
+        "side": "left",
+        "region": "head",
+        "outcome": "block",
+        "start": 6.6,
+        "end": 7.4,
+        "peak": 7.0,
+        "intensity": 0.6,
+        "id": "e07",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "A",
+        "motion": "jab",
+        "side": "right",
+        "region": "body",
+        "outcome": "hit",
+        "start": 7.6,
+        "end": 8.4,
+        "peak": 8.0,
+        "intensity": 0.7,
+        "reaction": "recoil",
+        "id": "e08",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "B",
+        "motion": "jab",
+        "side": "left",
+        "region": "head",
+        "outcome": "hit",
+        "start": 8.6,
+        "end": 9.4,
+        "peak": 9.0,
+        "intensity": 0.65,
+        "reaction": "recoil",
+        "id": "e09",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "A",
+        "motion": "kick",
+        "side": "right",
+        "region": "body",
+        "outcome": "dodge",
+        "start": 9.6,
+        "end": 10.4,
+        "peak": 10.0,
+        "intensity": 0.6,
+        "dodge": "side",
+        "id": "e10"
+      },
+      {
+        "kind": "strike",
+        "actor": "B",
+        "motion": "jab",
+        "side": "right",
+        "region": "head",
+        "outcome": "hit",
+        "start": 10.6,
+        "end": 11.4,
+        "peak": 11.0,
+        "intensity": 0.6,
+        "reaction": "recoil",
+        "id": "e11",
+        "dodge": "side"
+      },
+      {
+        "kind": "strike",
+        "actor": "B",
+        "motion": "hook",
+        "side": "left",
+        "region": "head",
+        "outcome": "hit",
+        "start": 11.6,
+        "end": 12.8,
+        "peak": 12.2,
+        "intensity": 1.0,
+        "reaction": "knockdown",
+        "id": "e12",
+        "dodge": "side"
+      }
+    ],
+    "job_id": "c6727f98213e49d0",
+    "frame_count": 450
+  },
+  "quality": {
+    "passed": true,
+    "frame_count": 450,
+    "actors_independent": true,
+    "min_camera_margin": 0.08546,
+    "max_stance_error_m": 0.0,
+    "max_ik_error_m": 8e-05,
+    "max_joint_speed_m_s": 11.902,
+    "camera_failures": [],
+    "stance_failures": [],
+    "ik_failures": [],
+    "contacts": [
+      {
+        "event": "e01",
+        "frame": 25,
+        "outcome": "block",
+        "target_error_m": 0.0,
+        "passed": true,
+        "block_error_m": 0.0
+      },
+      {
+        "event": "e02",
+        "frame": 52,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 53,
+        "reaction_sync_frames": 1,
+        "reaction": "stagger",
+        "recoil_step_m": 0.4545
+      },
+      {
+        "event": "e03",
+        "frame": 85,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 86,
+        "reaction_sync_frames": 1,
+        "reaction": "recoil",
+        "recoil_step_m": 0.0
+      },
+      {
+        "event": "e04",
+        "frame": 118,
+        "outcome": "hit",
+        "target_error_m": 0.0001,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 119,
+        "reaction_sync_frames": 1,
+        "reaction": "stagger",
+        "recoil_step_m": 0.4801
+      },
+      {
+        "event": "e05",
+        "frame": 151,
+        "outcome": "dodge",
+        "target_error_m": 0.0,
+        "passed": true,
+        "dodge_clearance_m": 0.4705
+      },
+      {
+        "event": "e06",
+        "frame": 181,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 182,
+        "reaction_sync_frames": 1,
+        "reaction": "stagger",
+        "recoil_step_m": 0.436
+      },
+      {
+        "event": "e07",
+        "frame": 211,
+        "outcome": "block",
+        "target_error_m": 0.0,
+        "passed": true,
+        "block_error_m": 0.0
+      },
+      {
+        "event": "e08",
+        "frame": 241,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 242,
+        "reaction_sync_frames": 1,
+        "reaction": "recoil",
+        "recoil_step_m": 0.0
+      },
+      {
+        "event": "e09",
+        "frame": 271,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 272,
+        "reaction_sync_frames": 1,
+        "reaction": "recoil",
+        "recoil_step_m": 0.0
+      },
+      {
+        "event": "e10",
+        "frame": 301,
+        "outcome": "dodge",
+        "target_error_m": 0.0,
+        "passed": true,
+        "dodge_clearance_m": 0.3201
+      },
+      {
+        "event": "e11",
+        "frame": 331,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 332,
+        "reaction_sync_frames": 1,
+        "reaction": "recoil",
+        "recoil_step_m": 0.0
+      },
+      {
+        "event": "e12",
+        "frame": 367,
+        "outcome": "hit",
+        "target_error_m": 0.0,
+        "passed": true,
+        "surface_error_m": 0.0,
+        "reaction_onset_frame": 368,
+        "reaction_sync_frames": 1,
+        "reaction": "knockdown",
+        "recoil_step_m": 0.34,
+        "final_head_height_m": 0.1544,
+        "final_hip_height_m": 0.1575
+      }
+    ],
+    "body_overlap_failures": [],
+    "occlusion_failures": [],
+    "joint_flip_failures": [],
+    "ground_failures": [],
+    "shot_failures": [],
+    "visual_review_required": true,
+    "limitations": [
+      "Geometry checks do not certify realism or all self-collisions; preview review required."
+    ],
+    "camera_bounds": {
+      "min": [
+        -2.949665069580078,
+        -0.6195060610771179,
+        -0.012096799910068512
+      ],
+      "max": [
+        1.1034103631973267,
+        0.9911208152770996,
+        1.71095871925354
+      ],
+      "ortho_scale": 5.327246909917787,
+      "requested_azimuth_deg": -68,
+      "actual_azimuth_deg": -68,
+      "min_body_separation_in_frame": 0.07648645681528284
+    },
+    "camera_frames": {
+      "full": 420,
+      "pov": 30
+    },
+    "effective_move_distances_m": {},
+    "asset_sha256": {
+      "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+      "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+      "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+      "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+      "mixamo_fbx/combat_reaction/Death.fbx": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff"
+    },
+    "blender_version": "5.2.2 LTS",
+    "scene_code_sha256": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+    "engine_sources_sha256": {
+      "duel_scene.py": "faffe0fee4bdf0e1e7a636f062c27230d0082c9d034b2bea3eadc5a4e3ecc65c",
+      "duel_impacts.py": "7e114559a62c1bafad5c9f3751c48f743874ae989b4b714ed00b8b4c4d19a275",
+      "duel_cameras.py": "866811ad46d3b5b75c981afe10c7d08d7d1b0e1fffbce271ca19341a5bd1943b",
+      "duel_plan.py": "d2a49ee8ccc6fba0464a872bca274b027f0cdf4c85d3319342fb576b23dcf01d"
+    },
+    "build_seconds": 24.7
+  },
+  "media": {
+    "width": 1280,
+    "height": 720,
+    "r_frame_rate": "30/1",
+    "duration": "15.000000",
+    "nb_read_frames": "450"
+  },
+  "video_url": "/output/duel_c6727f98213e49d0.mp4",
+  "scope": "One actual natural-language API job, independently rendered preview and final, full media decode; subjective realism needs viewer review."
+}

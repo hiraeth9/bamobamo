@@ -1,0 +1,10 @@
+{
+  "job_id": "c6727f98213e49d0",
+  "blender_version": "5.2.2 LTS",
+  "fps": 30,
+  "frame_count": 450,
+  "build_seconds": 24.7,
+  "preview_window_seconds": 38.21,
+  "final_window_seconds": 106.02,
+  "method": "Render windows are artifact timestamps and include stage overhead, not GPU-only timing; excludes Hermes and queue waiting."
+}
