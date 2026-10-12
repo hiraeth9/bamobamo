@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct Blender white-model (greybox/clay) reference video generation from Mixamo animations. Use when the user wants a 白膜/白模/素模/greybox/clay reference video, an action preview, a character animation render, or any prompt describing a character action plus camera/composition intent."
-version: 1.1.0
+version: 2.0.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -49,6 +49,37 @@ metadata:
 ⚠️ 素材角色是 Mixamo 的 **Beta** 角色，每个 FBX 单文件自带角色+动画。
 
 ## 完整工作流（每一步单独一次 execute_code）
+
+### 统一网页入口的人物识别
+
+网页只接收自然语言，不让用户选择单人或双人模式。任务使用自动协议时，先理解人物数量与身份，调用 `bpy.wm_scene_cast(job_id, {"actors":[{"id":"A","name":"人物身份"}, ...]})`。
+“一个人出两次拳”是1人；“张三和李四对打”是2人。根据语义区分人数、动作次数和姓名。1人转单人协议，2人转双人协议；3人及以上保留实际人数，返回明确能力限制，不能省略人物。人物解析和动作计划可在一次 execute_code 中依次保存。
+
+### 双人流程（优先于下面的单人流程）
+
+两个人、双人、双方攻防的需求使用动态计划与 Blender IK，不使用单人动作轮播。
+任务提示会给出 job_id、已安装动作来源和计划结构；根据自然语言生成事件顺序，不使用固定整段套路。
+通过 MCP execute_code 调用 `print(bpy.wm_duel_plan(job_id, plan))`，检查 `ok`。
+失败时根据 message 修正，最多两次；成功即结束规划。后台任务管理器负责独立创建双人场景、保存、预览、检查、正式渲染与媒体核验。
+不在 MCP 内等待整段渲染，不清空共享场景，不用单人 wm_render 生成双人视频。
+
+- 可用：直拳、勾拳、踢击、程序化上勾拳，以及格挡、侧闪、后撤、下潜、迈步和反击。
+- 上勾拳、格挡、闪避与迈步有程序化运动来源；IK 控制落点和支撑，不是凭空生成任意动作的模型。
+- 可改变进攻者、顺序、左右侧、头/躯干部位、命中/格挡/闪避和节奏。反击用角色交换后的新攻击事件表达。
+- 各攻击只播放一次，保留准备、出招、接触、回收。空档维持格斗姿势。移动用独立 move 事件。
+- 命中共享固定接触点并协调反应；格挡先到接触点；闪避冻结攻击目标，让防守者离开，禁止追踪必中。
+- 两名标准角色，平地徒手，固定斜侧全景。时长独立于镜头，默认15秒，30FPS，最终1280×720。
+- 武器、摔投、倒地、多人和外部文本动作模型尚未接入。关键要求不支持时说明限制，不能静默省略。
+- 资源、提供器和交互规则位于项目 `knowledge/`；执行结果保存 `output/jobs/<job_id>/` 的 plan、scene、quality、preview 和 result。
+- 自动几何检查不等于动作自然度和所有碰撞检查。返回结果时保留预览及视觉核验说明。
+
+### 网页单人任务
+
+任务带 job_id 时，优先使用异步单人协议：根据自然语言选择真实动作路径和镜头，调用 `print(bpy.wm_single_plan(job_id, plan))`；返回 ok=true 即结束，不在 MCP 中等待视频。
+结构为 version=1、animations=[真实 FBX 路径...]、duration_seconds(1..15)、camera_policy(fixed/orbit)、pitch_deg、distance_ratio、fov。全身优先参数 0 / 3.5 / 50；未要求环绕使用 fixed。
+后台仍执行原有单人动作混合与渲染，不承诺单人已获得双人 IK 控制。只有明确需要直接操作常驻场景时使用以下原流程。
+
+### 原单人场景流程
 
 Blender 里已预置 `bpy.wm_*` helper 函数，你只需按顺序调用，**不要手写底层 Blender API**：
 

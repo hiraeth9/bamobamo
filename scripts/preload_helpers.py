@@ -310,9 +310,16 @@ def wm_render(output_name, fbx_rel_path=None, pitch_deg=None, distance_ratio=Non
     fov_v = _STATE["fov"] if fov is None else fov
 
     out_path = os.path.join(PROJECT, "output", output_name + ".mp4")
+    if output_name.startswith('single_'):
+        from duel_plan import job_directory
+        from duel_worker import set_status
+        job_id = output_name[len('single_'):]
+        if job_directory(job_id).exists():
+            set_status(job_directory(job_id), 'rendering', '正在渲染单人视频…')
 
     cmd = [
         os.path.join(PROJECT, "blender"), "-b",
+        "--python-exit-code", "1",
         "--python", os.path.join(PROJECT, "scripts", "render_white_model.py"),
         "--",
         "--fbx", fbx_arg,
@@ -352,5 +359,48 @@ bpy.wm_clay = wm_clay
 bpy.wm_lighting = wm_lighting
 bpy.wm_camera = wm_camera
 bpy.wm_render = wm_render
+
+# Dual-person jobs use independent saved scenes; no long render on the MCP thread.
+def wm_duel_plan(job_id, plan, revision=0):
+    try:
+        from duel_plan import write_plan
+        accepted = write_plan(job_id, plan, revision)
+        return {"ok": True, "job_id": job_id, "message": "动态计划已提交，任务管理器将检查并渲染", "events": len(accepted['events'])}
+    except (ValueError, TypeError, KeyError) as error:
+        return {"ok": False, "message": str(error)}
+
+
+def wm_duel_status(job_id):
+    try:
+        from duel_worker import status
+        return {"ok": True, **status(job_id)}
+    except (ValueError, FileNotFoundError) as error:
+        return {"ok": False, "message": str(error)}
+
+
+bpy.wm_duel_plan = wm_duel_plan
+bpy.wm_duel_status = wm_duel_status
+
+def wm_single_plan(job_id, plan):
+    try:
+        from single_plan import write_single
+        accepted = write_single(job_id, plan)
+        return {'ok': True, 'job_id': job_id, 'message': '单人计划已提交，后台将独立渲染', 'animations': accepted['animations']}
+    except (ValueError, TypeError, KeyError) as error:
+        return {'ok': False, 'message': str(error)}
+
+
+bpy.wm_single_plan = wm_single_plan
+
+def wm_scene_cast(job_id, cast):
+    try:
+        from scene_cast import write_cast
+        accepted = write_cast(job_id, cast)
+        return {'ok': True, **accepted}
+    except (ValueError, TypeError, KeyError) as error:
+        return {'ok': False, 'message': str(error)}
+
+
+bpy.wm_scene_cast = wm_scene_cast
 
 _log("preload_helpers 已加载，helper 函数已挂到 bpy")

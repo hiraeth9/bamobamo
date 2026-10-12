@@ -31,7 +31,7 @@ if ss -tln 2>/dev/null | grep -q ':9876'; then
     echo "Blender(9876) 已在监听，跳过"
 else
     # 清掉残留 blender 进程（可能活着但 socket 挂了）
-    for pid in $(pgrep -f "blender-5.2.2-linux-x64/blender"); do kill -9 "$pid" 2>/dev/null; done
+    # Restart only the managed GUI session; independent render workers keep running.
     tmux kill-session -t blender 2>/dev/null
     sleep 1
     tmux new-session -d -s blender \

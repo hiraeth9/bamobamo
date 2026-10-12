@@ -1,5 +1,5 @@
 {
-  "exported_at": "2026-10-12T10:37:03.623932+08:00",
+  "exported_at": "2026-10-12T14:27:35.916624+08:00",
   "source_directory": "/root/rivermind-data/bamo",
   "target_repository": "https://github.com/hiraeth9/bamobamo.git",
   "hermes_upstream": "https://gitee.com/wuyuancunmin/hermes-agent.git",
@@ -11,7 +11,6 @@
   "mcp_for_blender_version": "2.1.9",
   "flask_version": "3.1.3",
   "animation_assets": 63,
-  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-101959-single-character-v1",
   "embedded": [
     "project source",
     "Hermes tracked source with current uv.lock",
@@ -20,7 +19,11 @@
     "director Skill",
     "tests",
     "report and figures",
-    "startup scripts and executable wrappers"
+    "startup scripts and executable wrappers",
+    "structured motion and interaction knowledge",
+    "IK controller and dynamic event planner",
+    "automatic actor count protocol",
+    "acceptance reports and implementation record"
   ],
   "stored_in_full_backup": [
     "Blender binary runtime",
@@ -31,5 +34,27 @@
     "original private handoff"
   ],
   "optional_mirror_repository": "https://gitee.com/hiraeth9/bamo.git",
-  "remote_main_before_upload": "357b158a1de583bd3aaf79639212ad9b1df2d1e3"
+  "remote_main_before_upload": "357b158a1de583bd3aaf79639212ad9b1df2d1e3",
+  "version": "dual-character-ik-v1",
+  "source_branch": "feature/dual-character-fight",
+  "single_baseline_commit": "19fd67d59faf46e86397334ec2f273012a2c82c5",
+  "single_baseline_tag": "single-character-v1-20261012",
+  "supported_actor_counts": [
+    1,
+    2
+  ],
+  "user_entry": "One natural-language entry; Hermes interprets actor count before choosing an internal engine",
+  "verification": {
+    "ik_matrix_cases": 96,
+    "natural_prompts": 20,
+    "plans_per_session": 3,
+    "natural_executable_plans": 60,
+    "full_video_scope": "Separate representative 4/6/15-second jobs; 60 plans are not 60 encoded movies",
+    "semantic_count_cases": [
+      1,
+      2,
+      3
+    ]
+  },
+  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-101959-single-character-v1"
 }

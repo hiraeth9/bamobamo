@@ -16,12 +16,12 @@
     "sha256": "64f394ad2617c4898271b5238cdef0317c0da1a9db42bf07053f0c5bdd4cf4d6"
   },
   "README.md": {
-    "bytes": 3050,
-    "sha256": "6d134e7a989403ea3760847d04fccd52b08ebeff65501b5bb10272405b0a762a"
+    "bytes": 6992,
+    "sha256": "70127ad4367dc200dd34993f0e459e43635a62b539184257c768e50a5190de96"
   },
   "SOURCE.json": {
-    "bytes": 1236,
-    "sha256": "2feea79554ebd628dbd8822dabdb0eef5dde215e229550ae1b69f5c8fdce02b2"
+    "bytes": 2112,
+    "sha256": "a3fa651b4c4fda5cacd5e0a6d40185afe618e699ce5a69bfd22007a5ab64afda"
   },
   "blender": {
     "bytes": 515,
@@ -1135,70 +1135,6 @@
     "bytes": 20026,
     "sha256": "a870cb8df69c158c9439227ec57983d921ac80284b7e6d6e6654b69ed8186e6c"
   },
-  "hermes/apps/bootstrap-installer/src/app.tsx": {
-    "bytes": 1151,
-    "sha256": "176bd4d906c4e0501f1fb49fcf5ebe5ab3916aa2208410642c73eadd1169224d"
-  },
-  "hermes/apps/bootstrap-installer/src/components/brand-mark.tsx": {
-    "bytes": 598,
-    "sha256": "d78701b2ac397ebdc57418301a111d329bb661141401d9d722f6f32929112142"
-  },
-  "hermes/apps/bootstrap-installer/src/components/button.tsx": {
-    "bytes": 3505,
-    "sha256": "378224902f5e048e7516787747fe5685bd68762c97cdfb37b6c1a95636837d5b"
-  },
-  "hermes/apps/bootstrap-installer/src/components/hackery-button.tsx": {
-    "bytes": 1378,
-    "sha256": "a970a521b2dbf60e45cd9fdfc65ed10c9e9502a3e1c7f180ad2897fb82d724ff"
-  },
-  "hermes/apps/bootstrap-installer/src/components/loader.tsx": {
-    "bytes": 4299,
-    "sha256": "3a661ea435ee48ce725c9071a225c521aae0df824c9db29d66e52fe7fe3ee7c8"
-  },
-  "hermes/apps/bootstrap-installer/src/lib/format.ts": {
-    "bytes": 1213,
-    "sha256": "294df52dcb39746b57f2d3a6e5c30583b066e455323186fe2b102d7d011930b3"
-  },
-  "hermes/apps/bootstrap-installer/src/lib/utils.ts": {
-    "bytes": 402,
-    "sha256": "f98cd7be8220e3a81fc2b6df067e4658d57fea0a043d2af852ee466377f1941e"
-  },
-  "hermes/apps/bootstrap-installer/src/main.tsx": {
-    "bytes": 498,
-    "sha256": "01d5586cf71bb2996c830da735bfb447c87a00ae3ff066100e8dbecf709dc267"
-  },
-  "hermes/apps/bootstrap-installer/src/routes/failure.tsx": {
-    "bytes": 2604,
-    "sha256": "7830692173eb5fed3f4c723701775933a7b4466f3ce03d8b388e28fef8c8d9ed"
-  },
-  "hermes/apps/bootstrap-installer/src/routes/progress.tsx": {
-    "bytes": 7515,
-    "sha256": "43a78dda7528844476d2e08a04ee764906a1928040c6c33328f56a5544d6039d"
-  },
-  "hermes/apps/bootstrap-installer/src/routes/success.tsx": {
-    "bytes": 2887,
-    "sha256": "1394a34d8ee6b970b624ac056819d8b4efa9f6fed4f672e5995db6b5a0044748"
-  },
-  "hermes/apps/bootstrap-installer/src/routes/welcome.tsx": {
-    "bytes": 1849,
-    "sha256": "c46ec7da88ed833d30f4bc4e729b1a1b069308e52780d1845fd52ab6adb5ddae"
-  },
-  "hermes/apps/bootstrap-installer/src/store.ts": {
-    "bytes": 14095,
-    "sha256": "772063684d12cffb01fdcb375e9a4df78b624d0f1cfa4db88169ac0665b5349f"
-  },
-  "hermes/apps/bootstrap-installer/src/styles.css": {
-    "bytes": 3453,
-    "sha256": "70ac322c2cee26f27a7351aac881e43ee588828c50305c82c05676cf8a9cf7c6"
-  },
-  "hermes/apps/bootstrap-installer/src/theme.ts": {
-    "bytes": 2011,
-    "sha256": "6b161756c5c2127977d49c5aea0ef5de1f25707ce99b7a12c4d03087ebe099b6"
-  },
-  "hermes/apps/bootstrap-installer/src/vite-env.d.ts": {
-    "bytes": 38,
-    "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
-  },
   "hermes/apps/bootstrap-installer/src-tauri/Cargo.toml": {
     "bytes": 2293,
     "sha256": "a6d04b843a90d6c724d45386e6159d1c1e417aa0ea8d42d66a9d87da35e0cf5f"
@@ -1270,6 +1206,70 @@
   "hermes/apps/bootstrap-installer/src-tauri/tauri.conf.json": {
     "bytes": 1717,
     "sha256": "d2c83818ea4809e06b0980deb26a1397d5123280117cf84636b32aacadce8c63"
+  },
+  "hermes/apps/bootstrap-installer/src/app.tsx": {
+    "bytes": 1151,
+    "sha256": "176bd4d906c4e0501f1fb49fcf5ebe5ab3916aa2208410642c73eadd1169224d"
+  },
+  "hermes/apps/bootstrap-installer/src/components/brand-mark.tsx": {
+    "bytes": 598,
+    "sha256": "d78701b2ac397ebdc57418301a111d329bb661141401d9d722f6f32929112142"
+  },
+  "hermes/apps/bootstrap-installer/src/components/button.tsx": {
+    "bytes": 3505,
+    "sha256": "378224902f5e048e7516787747fe5685bd68762c97cdfb37b6c1a95636837d5b"
+  },
+  "hermes/apps/bootstrap-installer/src/components/hackery-button.tsx": {
+    "bytes": 1378,
+    "sha256": "a970a521b2dbf60e45cd9fdfc65ed10c9e9502a3e1c7f180ad2897fb82d724ff"
+  },
+  "hermes/apps/bootstrap-installer/src/components/loader.tsx": {
+    "bytes": 4299,
+    "sha256": "3a661ea435ee48ce725c9071a225c521aae0df824c9db29d66e52fe7fe3ee7c8"
+  },
+  "hermes/apps/bootstrap-installer/src/lib/format.ts": {
+    "bytes": 1213,
+    "sha256": "294df52dcb39746b57f2d3a6e5c30583b066e455323186fe2b102d7d011930b3"
+  },
+  "hermes/apps/bootstrap-installer/src/lib/utils.ts": {
+    "bytes": 402,
+    "sha256": "f98cd7be8220e3a81fc2b6df067e4658d57fea0a043d2af852ee466377f1941e"
+  },
+  "hermes/apps/bootstrap-installer/src/main.tsx": {
+    "bytes": 498,
+    "sha256": "01d5586cf71bb2996c830da735bfb447c87a00ae3ff066100e8dbecf709dc267"
+  },
+  "hermes/apps/bootstrap-installer/src/routes/failure.tsx": {
+    "bytes": 2604,
+    "sha256": "7830692173eb5fed3f4c723701775933a7b4466f3ce03d8b388e28fef8c8d9ed"
+  },
+  "hermes/apps/bootstrap-installer/src/routes/progress.tsx": {
+    "bytes": 7515,
+    "sha256": "43a78dda7528844476d2e08a04ee764906a1928040c6c33328f56a5544d6039d"
+  },
+  "hermes/apps/bootstrap-installer/src/routes/success.tsx": {
+    "bytes": 2887,
+    "sha256": "1394a34d8ee6b970b624ac056819d8b4efa9f6fed4f672e5995db6b5a0044748"
+  },
+  "hermes/apps/bootstrap-installer/src/routes/welcome.tsx": {
+    "bytes": 1849,
+    "sha256": "c46ec7da88ed833d30f4bc4e729b1a1b069308e52780d1845fd52ab6adb5ddae"
+  },
+  "hermes/apps/bootstrap-installer/src/store.ts": {
+    "bytes": 14095,
+    "sha256": "772063684d12cffb01fdcb375e9a4df78b624d0f1cfa4db88169ac0665b5349f"
+  },
+  "hermes/apps/bootstrap-installer/src/styles.css": {
+    "bytes": 3453,
+    "sha256": "70ac322c2cee26f27a7351aac881e43ee588828c50305c82c05676cf8a9cf7c6"
+  },
+  "hermes/apps/bootstrap-installer/src/theme.ts": {
+    "bytes": 2011,
+    "sha256": "6b161756c5c2127977d49c5aea0ef5de1f25707ce99b7a12c4d03087ebe099b6"
+  },
+  "hermes/apps/bootstrap-installer/src/vite-env.d.ts": {
+    "bytes": 38,
+    "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
   },
   "hermes/apps/bootstrap-installer/tsconfig.json": {
     "bytes": 638,
@@ -4063,6 +4063,14 @@
     "bytes": 5728,
     "sha256": "20702ec28f24cfc7f44ac2da151e31f84056a169fc6087d7b4c549d8feb59a22"
   },
+  "hermes/apps/desktop/src/app/session-picker-overlay.tsx": {
+    "bytes": 1016,
+    "sha256": "02ddd766a0234e41f56eddac854fb03d7b978a2c797c25878f423e6b402b9a3b"
+  },
+  "hermes/apps/desktop/src/app/session-switcher.tsx": {
+    "bytes": 2959,
+    "sha256": "ca060a54a3e605bfe63439054dcd559d6f84e479a64f3603cddd9a554f772d4e"
+  },
   "hermes/apps/desktop/src/app/session/hooks/preview-open.test.tsx": {
     "bytes": 6503,
     "sha256": "970b717404ccc52ea00225b9d579cb6aec679a62f121f3681b52c5ccf669eee7"
@@ -4263,6 +4271,10 @@
     "bytes": 13843,
     "sha256": "fbca5a8c9c96a92ae36fa0151b7febd906e6b24aa3d0f555cbc3ee786295430f"
   },
+  "hermes/apps/desktop/src/app/session/hooks/use-session-actions.test.tsx": {
+    "bytes": 91096,
+    "sha256": "477e6ea9f9eda301dc9e0e40f7761f870ac3e33049327b970004e22fd9809cb8"
+  },
   "hermes/apps/desktop/src/app/session/hooks/use-session-actions/index.ts": {
     "bytes": 76073,
     "sha256": "9e6c7a1bdefddf0e20ec1113af77e3f3a0bcb21c02a1517d1088d822939f6a8c"
@@ -4282,10 +4294,6 @@
   "hermes/apps/desktop/src/app/session/hooks/use-session-actions/utils.ts": {
     "bytes": 58977,
     "sha256": "7ed351308ae0b217feb986718e02d25ba64ebf618ed871328c9c002e3984396b"
-  },
-  "hermes/apps/desktop/src/app/session/hooks/use-session-actions.test.tsx": {
-    "bytes": 91096,
-    "sha256": "477e6ea9f9eda301dc9e0e40f7761f870ac3e33049327b970004e22fd9809cb8"
   },
   "hermes/apps/desktop/src/app/session/hooks/use-session-list-actions.test.tsx": {
     "bytes": 23029,
@@ -4318,14 +4326,6 @@
   "hermes/apps/desktop/src/app/session/workspace-session-target.ts": {
     "bytes": 2046,
     "sha256": "dc78ef1904285a26b65a4e552bfd5b0f766956366be0cc441f6ad7535c9ebce7"
-  },
-  "hermes/apps/desktop/src/app/session-picker-overlay.tsx": {
-    "bytes": 1016,
-    "sha256": "02ddd766a0234e41f56eddac854fb03d7b978a2c797c25878f423e6b402b9a3b"
-  },
-  "hermes/apps/desktop/src/app/session-switcher.tsx": {
-    "bytes": 2959,
-    "sha256": "ca060a54a3e605bfe63439054dcd559d6f84e479a64f3603cddd9a554f772d4e"
   },
   "hermes/apps/desktop/src/app/settings/about-settings.tsx": {
     "bytes": 6283,
@@ -5103,6 +5103,10 @@
     "bytes": 2480,
     "sha256": "48d6ca0cb7f3b9a91f4f3682f82fe5bbe2a532ae5cd3613abbc08cbd5de85340"
   },
+  "hermes/apps/desktop/src/components/assistant-ui/thread-remount.test.tsx": {
+    "bytes": 3950,
+    "sha256": "d248a47f8af87d05c99c6f1ed507855a75f5c30a59fdc0bedbe10552cf79af24"
+  },
   "hermes/apps/desktop/src/components/assistant-ui/thread/agent-delivery.test.tsx": {
     "bytes": 1812,
     "sha256": "06ff3e4e8a7eb739241b83c8c67b9ed06040c54846b7c6e4d337f3234405bf9b"
@@ -5279,10 +5283,6 @@
     "bytes": 24749,
     "sha256": "7dc751ebb116710bf71cf34f71ee5b49f36b2c9678d7701b552624af38e35956"
   },
-  "hermes/apps/desktop/src/components/assistant-ui/thread-remount.test.tsx": {
-    "bytes": 3950,
-    "sha256": "d248a47f8af87d05c99c6f1ed507855a75f5c30a59fdc0bedbe10552cf79af24"
-  },
   "hermes/apps/desktop/src/components/assistant-ui/tool/approval.test.tsx": {
     "bytes": 6971,
     "sha256": "db20da3f09272f69c3def350bab922208e17e93f1fb2c2ef779872815e5e125d"
@@ -5303,6 +5303,10 @@
     "bytes": 6057,
     "sha256": "376690fdc02555770f14d720df719612723aff3e250048baf0ba60e993cf2545"
   },
+  "hermes/apps/desktop/src/components/assistant-ui/tool/fallback-model.test.ts": {
+    "bytes": 16188,
+    "sha256": "5d3b0e3b8bd6fcd09ce2621f9343e7116d17ae67f7bb8fc262c60ceb52939d3d"
+  },
   "hermes/apps/desktop/src/components/assistant-ui/tool/fallback-model/format.ts": {
     "bytes": 3283,
     "sha256": "79754edfab18a45821fc1490515edb0180e2291bd8c077d97f473ab9f57e4821"
@@ -5318,10 +5322,6 @@
   "hermes/apps/desktop/src/components/assistant-ui/tool/fallback-model/types.ts": {
     "bytes": 2150,
     "sha256": "6e93042ae30fc922fe3dbdea3f5e8c29b84b2960b4a250474995d4697f2adb29"
-  },
-  "hermes/apps/desktop/src/components/assistant-ui/tool/fallback-model.test.ts": {
-    "bytes": 16188,
-    "sha256": "5d3b0e3b8bd6fcd09ce2621f9343e7116d17ae67f7bb8fc262c60ceb52939d3d"
   },
   "hermes/apps/desktop/src/components/assistant-ui/tool/fallback-preview-scope.test.tsx": {
     "bytes": 2496,
@@ -11155,6 +11155,14 @@
     "bytes": 1326,
     "sha256": "44672d71d89bba1700728fb68b7d6d54cdd93eef8fbb014b2ae7878d0e88606a"
   },
+  "hermes/docker-compose.windows.yml": {
+    "bytes": 1073,
+    "sha256": "6893f7e6df21115fb1a92f8f2aafbe24e33b48b356d0e9b2fded68bdeb1d389e"
+  },
+  "hermes/docker-compose.yml": {
+    "bytes": 3454,
+    "sha256": "cf2cd030fcb516e904a422eb64619164636db3724199c912fa2883f072bcf9ad"
+  },
   "hermes/docker/SOUL.md": {
     "bytes": 514,
     "sha256": "29993087d2d7a0fb9f71c589f878b3c5b28c67f61765d51a13f9740fcf82e189"
@@ -11226,14 +11234,6 @@
   "hermes/docker/tini-shim.sh": {
     "bytes": 2733,
     "sha256": "c69e6b6004cabe7fbd18594c0db83a16482b1551109d7dc7490363d85a4d0a6e"
-  },
-  "hermes/docker-compose.windows.yml": {
-    "bytes": 1073,
-    "sha256": "6893f7e6df21115fb1a92f8f2aafbe24e33b48b356d0e9b2fded68bdeb1d389e"
-  },
-  "hermes/docker-compose.yml": {
-    "bytes": 3454,
-    "sha256": "cf2cd030fcb516e904a422eb64619164636db3724199c912fa2883f072bcf9ad"
   },
   "hermes/docs/ADR.md": {
     "bytes": 4315,
@@ -13355,6 +13355,10 @@
     "bytes": 4830,
     "sha256": "2cd47e5be9b807522ddb030484563a1a9b9163668a815c7f5fcaf58d32857c0a"
   },
+  "hermes/optional-skills/creative/baoyu-article-illustrator/references/styles.md": {
+    "bytes": 9385,
+    "sha256": "e619cc16e970b2cc00ba840f2e0e3698396ce37b2b74c8303874df716a08b29c"
+  },
   "hermes/optional-skills/creative/baoyu-article-illustrator/references/styles/blueprint.md": {
     "bytes": 1844,
     "sha256": "4836bdd8c4fcb17694b3010fd21c091e0b2234dca2aafe0ac5fd046d5fb24f67"
@@ -13446,10 +13450,6 @@
   "hermes/optional-skills/creative/baoyu-article-illustrator/references/styles/watercolor.md": {
     "bytes": 1815,
     "sha256": "d66b08079ea4d99d80691fe2a0aef6075ad58ec7adcc1f8976d7ac0249804cb4"
-  },
-  "hermes/optional-skills/creative/baoyu-article-illustrator/references/styles.md": {
-    "bytes": 9385,
-    "sha256": "e619cc16e970b2cc00ba840f2e0e3698396ce37b2b74c8303874df716a08b29c"
   },
   "hermes/optional-skills/creative/baoyu-article-illustrator/references/usage.md": {
     "bytes": 1834,
@@ -15711,14 +15711,6 @@
     "bytes": 253,
     "sha256": "c0dc65bd8ecf3644c3dbffa920a4eb1d377a5e507eb8fdee2860d7f96de8d544"
   },
-  "hermes/plugins/image_gen/openai/__init__.py": {
-    "bytes": 14369,
-    "sha256": "a5922e743c61b45df985325db0c961c6c02dd2f459039a6ca3a1e2000859073e"
-  },
-  "hermes/plugins/image_gen/openai/plugin.yaml": {
-    "bytes": 212,
-    "sha256": "8f2bd0290c5a83a1146d13b08b0ecbd8d9f9437be06a6f7ecfea218864cd8b89"
-  },
   "hermes/plugins/image_gen/openai-codex/__init__.py": {
     "bytes": 23069,
     "sha256": "580ecedd2b9a02be9ad63fbe9da847bccf6df96c3e86e231a1e44499d94ea9d9"
@@ -15726,6 +15718,14 @@
   "hermes/plugins/image_gen/openai-codex/plugin.yaml": {
     "bytes": 247,
     "sha256": "df5cb472b37eaf1f5e928f843e982fb4ce15d3191eff9ff615a26668b6d70277"
+  },
+  "hermes/plugins/image_gen/openai/__init__.py": {
+    "bytes": 14369,
+    "sha256": "a5922e743c61b45df985325db0c961c6c02dd2f459039a6ca3a1e2000859073e"
+  },
+  "hermes/plugins/image_gen/openai/plugin.yaml": {
+    "bytes": 212,
+    "sha256": "8f2bd0290c5a83a1146d13b08b0ecbd8d9f9437be06a6f7ecfea218864cd8b89"
   },
   "hermes/plugins/image_gen/openrouter/__init__.py": {
     "bytes": 20659,
@@ -15947,14 +15947,6 @@
     "bytes": 115,
     "sha256": "27abc9036060a968d6b5be84bbd03734554133e1186378caf76dedc1d913279b"
   },
-  "hermes/plugins/model-providers/alibaba/__init__.py": {
-    "bytes": 380,
-    "sha256": "ff7284308aedf1ad56ff3533231c9260003038fe81b17f6d86b9331b743dfcde"
-  },
-  "hermes/plugins/model-providers/alibaba/plugin.yaml": {
-    "bytes": 128,
-    "sha256": "ef778d2319a617c2a30a7ca47c159ca6e46e73c0a9e8690189505ad12ecc4e14"
-  },
   "hermes/plugins/model-providers/alibaba-coding-plan/__init__.py": {
     "bytes": 832,
     "sha256": "75a9c87fb7ee0ee5258239bec79c58ede067b18714aff7200ae6dc88031fd67d"
@@ -15962,6 +15954,14 @@
   "hermes/plugins/model-providers/alibaba-coding-plan/plugin.yaml": {
     "bytes": 132,
     "sha256": "672b7972ac1dbafa98407b59b1c359d9789c3e00aa22a5564261dbf0125cce1b"
+  },
+  "hermes/plugins/model-providers/alibaba/__init__.py": {
+    "bytes": 380,
+    "sha256": "ff7284308aedf1ad56ff3533231c9260003038fe81b17f6d86b9331b743dfcde"
+  },
+  "hermes/plugins/model-providers/alibaba/plugin.yaml": {
+    "bytes": 128,
+    "sha256": "ef778d2319a617c2a30a7ca47c159ca6e46e73c0a9e8690189505ad12ecc4e14"
   },
   "hermes/plugins/model-providers/anthropic/__init__.py": {
     "bytes": 1717,
@@ -16003,14 +16003,6 @@
     "bytes": 185,
     "sha256": "05d894a4fa8fd37e1884e64d29f51eb4ccf130fa13640f592aff9c0cfb6ada6d"
   },
-  "hermes/plugins/model-providers/copilot/__init__.py": {
-    "bytes": 3041,
-    "sha256": "ce15b8957da0c056248f9566408bbac6cb6f8ce5682133a23ee6a29f27d0185b"
-  },
-  "hermes/plugins/model-providers/copilot/plugin.yaml": {
-    "bytes": 109,
-    "sha256": "a2088e3678c6dc868d8529c87b0460e03cc617738f33f685783784666d53d8a6"
-  },
   "hermes/plugins/model-providers/copilot-acp/__init__.py": {
     "bytes": 1081,
     "sha256": "131272603202c2fd03bba15571e57ab5d5cf716459616509066e864433b5b17b"
@@ -16018,6 +16010,14 @@
   "hermes/plugins/model-providers/copilot-acp/plugin.yaml": {
     "bytes": 132,
     "sha256": "8fd88e454bfc1ca60fd791479d2b47172079ea3aa8d65412cf8a0d492d6288f3"
+  },
+  "hermes/plugins/model-providers/copilot/__init__.py": {
+    "bytes": 3041,
+    "sha256": "ce15b8957da0c056248f9566408bbac6cb6f8ce5682133a23ee6a29f27d0185b"
+  },
+  "hermes/plugins/model-providers/copilot/plugin.yaml": {
+    "bytes": 109,
+    "sha256": "a2088e3678c6dc868d8529c87b0460e03cc617738f33f685783784666d53d8a6"
   },
   "hermes/plugins/model-providers/custom/__init__.py": {
     "bytes": 4297,
@@ -16935,6 +16935,10 @@
     "bytes": 17827,
     "sha256": "311880a29522466b00adaf5175230d6346844e5ca3ff5beac9479a87d95d6752"
   },
+  "hermes/scripts/desktop-update.ps1": {
+    "bytes": 604,
+    "sha256": "1905baa8e7b440fc3be91674c497aa1cc91cbcb53133f7dd3f3513673c99769d"
+  },
   "hermes/scripts/desktop-update/posix.sh": {
     "bytes": 25842,
     "sha256": "5b73817847dcc5d98294b371f887e8d3b0b86547bd9b9673c4ae46f6f963901d"
@@ -16954,10 +16958,6 @@
   "hermes/scripts/desktop-update/windows.ps1": {
     "bytes": 38874,
     "sha256": "9c97aacbd24a6634b52aaedb6cb533b96e11e6b46e3bb048291aeab89db13a65"
-  },
-  "hermes/scripts/desktop-update.ps1": {
-    "bytes": 604,
-    "sha256": "1905baa8e7b440fc3be91674c497aa1cc91cbcb53133f7dd3f3513673c99769d"
   },
   "hermes/scripts/dev-sandbox.sh": {
     "bytes": 23950,
@@ -19122,6 +19122,46 @@
   "hermes/sqlite_leak_fix.png": {
     "bytes": 832292,
     "sha256": "799acf3c53bde94eeea870c56dd60cb9e73d39472ab664a8a81634fcdda15bee"
+  },
+  "hermes/tests-js/allow-scripts-sync.test.ts": {
+    "bytes": 5183,
+    "sha256": "6b5b59bd55af81b01ddc7687f72b433d933fa3d89f9b78a4bce81f702eea6452"
+  },
+  "hermes/tests-js/assistant-ui-tap-compat.test.ts": {
+    "bytes": 6487,
+    "sha256": "86d36c4124295fb37d643c24cc1f12a9ae3be5b13d10b746903cfee275fd4cb2"
+  },
+  "hermes/tests-js/bootstrap-installer-stage-timer.test.ts": {
+    "bytes": 1909,
+    "sha256": "8e7745495d385a814ccd7f4ac21f10d3869c9953c18f116b6e3465b348a47fd8"
+  },
+  "hermes/tests-js/desktop-mac-entitlements.test.ts": {
+    "bytes": 3578,
+    "sha256": "644ff665562a4cd513c515513a487467b23601404fa355ce50d338688f25c2c6"
+  },
+  "hermes/tests-js/eslint.config.mjs": {
+    "bytes": 81,
+    "sha256": "615eac03ab2044e381f277e8e12527d372c40d0dc8d7e1082bb992478562ccee"
+  },
+  "hermes/tests-js/package-json-lazy-deps.test.ts": {
+    "bytes": 6448,
+    "sha256": "956dacc6c059ae937425d40c62d0052a7fe72261720e7ebdb28848a904bf5b4d"
+  },
+  "hermes/tests-js/package.json": {
+    "bytes": 453,
+    "sha256": "08657cd581bcaacec53c834c703cd6254579db0223c45d2d9a21b629060acec5"
+  },
+  "hermes/tests-js/react-dom-pair-compat.test.ts": {
+    "bytes": 4241,
+    "sha256": "88685b5024e995a925952c3938318cf5c5de845fa4eae7fbaa09c60ad531620b"
+  },
+  "hermes/tests-js/tsconfig.json": {
+    "bytes": 288,
+    "sha256": "4d875783ef16f623f8b6580cb8bb91ee506667f166f228a768845a5ad27e1bdb"
+  },
+  "hermes/tests-js/vitest.config.ts": {
+    "bytes": 150,
+    "sha256": "26a0c30316f5d25222bb8b6e012a009d3d7be6c9551e22be9d5282d310ce3c5a"
   },
   "hermes/tests/__init__.py": {
     "bytes": 0,
@@ -31691,46 +31731,6 @@
     "bytes": 4607,
     "sha256": "7c83ae1c46cc70ab843b19e5ecebea37193778b395fb530d26837eeb3ee55e19"
   },
-  "hermes/tests-js/allow-scripts-sync.test.ts": {
-    "bytes": 5183,
-    "sha256": "6b5b59bd55af81b01ddc7687f72b433d933fa3d89f9b78a4bce81f702eea6452"
-  },
-  "hermes/tests-js/assistant-ui-tap-compat.test.ts": {
-    "bytes": 6487,
-    "sha256": "86d36c4124295fb37d643c24cc1f12a9ae3be5b13d10b746903cfee275fd4cb2"
-  },
-  "hermes/tests-js/bootstrap-installer-stage-timer.test.ts": {
-    "bytes": 1909,
-    "sha256": "8e7745495d385a814ccd7f4ac21f10d3869c9953c18f116b6e3465b348a47fd8"
-  },
-  "hermes/tests-js/desktop-mac-entitlements.test.ts": {
-    "bytes": 3578,
-    "sha256": "644ff665562a4cd513c515513a487467b23601404fa355ce50d338688f25c2c6"
-  },
-  "hermes/tests-js/eslint.config.mjs": {
-    "bytes": 81,
-    "sha256": "615eac03ab2044e381f277e8e12527d372c40d0dc8d7e1082bb992478562ccee"
-  },
-  "hermes/tests-js/package-json-lazy-deps.test.ts": {
-    "bytes": 6448,
-    "sha256": "956dacc6c059ae937425d40c62d0052a7fe72261720e7ebdb28848a904bf5b4d"
-  },
-  "hermes/tests-js/package.json": {
-    "bytes": 453,
-    "sha256": "08657cd581bcaacec53c834c703cd6254579db0223c45d2d9a21b629060acec5"
-  },
-  "hermes/tests-js/react-dom-pair-compat.test.ts": {
-    "bytes": 4241,
-    "sha256": "88685b5024e995a925952c3938318cf5c5de845fa4eae7fbaa09c60ad531620b"
-  },
-  "hermes/tests-js/tsconfig.json": {
-    "bytes": 288,
-    "sha256": "4d875783ef16f623f8b6580cb8bb91ee506667f166f228a768845a5ad27e1bdb"
-  },
-  "hermes/tests-js/vitest.config.ts": {
-    "bytes": 150,
-    "sha256": "26a0c30316f5d25222bb8b6e012a009d3d7be6c9551e22be9d5282d310ce3c5a"
-  },
   "hermes/tools/__init__.py": {
     "bytes": 726,
     "sha256": "f20d844ea0b00d501fe11de2f44768277257d0fa929bda2c39d7c08cc445a4c7"
@@ -32947,6 +32947,10 @@
     "bytes": 13649,
     "sha256": "500f54a2a9ee5c634d479da72e09dbb551e9640c14eeaaf99a1a3bc3b65f14e6"
   },
+  "hermes/ui-tui/packages/hermes-ink/src/ink/termio.ts": {
+    "bytes": 1035,
+    "sha256": "fb8ce9d3b6023caeafb3bb1093f90252b961b23bfae1d5732ad02e58ff70bb68"
+  },
   "hermes/ui-tui/packages/hermes-ink/src/ink/termio/ansi.ts": {
     "bytes": 1488,
     "sha256": "d54a65ba74755fab1d08e5728616ffd4006126878d4bf7f99faa6a3e0c1a2fe8"
@@ -32994,10 +32998,6 @@
   "hermes/ui-tui/packages/hermes-ink/src/ink/termio/types.ts": {
     "bytes": 7023,
     "sha256": "ce586d6e080674457dddd5c1892bde9da807f9382a800d66b9949640db609142"
-  },
-  "hermes/ui-tui/packages/hermes-ink/src/ink/termio.ts": {
-    "bytes": 1035,
-    "sha256": "fb8ce9d3b6023caeafb3bb1093f90252b961b23bfae1d5732ad02e58ff70bb68"
   },
   "hermes/ui-tui/packages/hermes-ink/src/ink/useTerminalNotification.ts": {
     "bytes": 3548,
@@ -33583,6 +33583,10 @@
     "bytes": 6044,
     "sha256": "aff6c96a1a7cf5db2ca4197c4a2db0268b23ce97f0c6c08d4bedd72275c633c9"
   },
+  "hermes/ui-tui/src/app.tsx": {
+    "bytes": 805,
+    "sha256": "0ac9384e5b5c5a0ba6e3862b186f8263514e00cf2727798359d5803c1bfea96d"
+  },
   "hermes/ui-tui/src/app/createGatewayEventHandler.ts": {
     "bytes": 50807,
     "sha256": "94fbd77604da2d7fd1d3ef309af387c71186d4a91847f65e44707d52c5d25346"
@@ -33742,10 +33746,6 @@
   "hermes/ui-tui/src/app/wakeState.ts": {
     "bytes": 706,
     "sha256": "1902da6495f796691d357a4275909f6c7402da874fea76cb989211c738d904e1"
-  },
-  "hermes/ui-tui/src/app.tsx": {
-    "bytes": 805,
-    "sha256": "0ac9384e5b5c5a0ba6e3862b186f8263514e00cf2727798359d5803c1bfea96d"
   },
   "hermes/ui-tui/src/banner.ts": {
     "bytes": 4917,
@@ -34295,13 +34295,13 @@
     "bytes": 35513,
     "sha256": "c0533cd0f715b74abb1f24fee1bfc6dcd40ba98b91e932113069d0f3c005ffc8"
   },
-  "hermes/ui-tui/src/types/hermes-ink.d.ts": {
-    "bytes": 6868,
-    "sha256": "5274ab0ea541ea7fd64e4f29dd3b452e98ff37dbe7b46d5a5c901e659e4ad5d2"
-  },
   "hermes/ui-tui/src/types.ts": {
     "bytes": 5953,
     "sha256": "845eae1d772fc9892e93ba602dcac81a1abe98cd6c9d7f06899491897f6995af"
+  },
+  "hermes/ui-tui/src/types/hermes-ink.d.ts": {
+    "bytes": 6868,
+    "sha256": "5274ab0ea541ea7fd64e4f29dd3b452e98ff37dbe7b46d5a5c901e659e4ad5d2"
   },
   "hermes/ui-tui/tsconfig.build.json": {
     "bytes": 135,
@@ -34343,6 +34343,18 @@
     "bytes": 8482,
     "sha256": "aefe65e6574e6f46d3382588f46c508e1b3f3b3c9ce3dec6d335403a5374add9"
   },
+  "hermes/web/public/fonts-terminal/JetBrainsMono-Bold.woff2": {
+    "bytes": 94628,
+    "sha256": "08863c7964612257a90bd821e3127dc5ccb0b5046f881673a1ade5809eb21d0f"
+  },
+  "hermes/web/public/fonts-terminal/JetBrainsMono-Italic.woff2": {
+    "bytes": 96428,
+    "sha256": "9f158b85eca345daeee01dfffa602709a905ea08b0cc60dbf6153cbbd97da08f"
+  },
+  "hermes/web/public/fonts-terminal/JetBrainsMono-Regular.woff2": {
+    "bytes": 92380,
+    "sha256": "f1a7a03672cdd494ce0d5543fac6e4360fe22403c6de297fdc2e55a815f7baff"
+  },
   "hermes/web/public/fonts/Collapse-Bold.woff2": {
     "bytes": 59144,
     "sha256": "cb1bc6803168cffb3ef7b8113f95f82480a6d0f46d6e37edc854259377c6c00b"
@@ -34370,18 +34382,6 @@
   "hermes/web/public/fonts/RulesExpanded-Regular.woff2": {
     "bytes": 33820,
     "sha256": "e8062ac4889b0f05de94035571e86991b6efd03539775cfe0790e37da75434db"
-  },
-  "hermes/web/public/fonts-terminal/JetBrainsMono-Bold.woff2": {
-    "bytes": 94628,
-    "sha256": "08863c7964612257a90bd821e3127dc5ccb0b5046f881673a1ade5809eb21d0f"
-  },
-  "hermes/web/public/fonts-terminal/JetBrainsMono-Italic.woff2": {
-    "bytes": 96428,
-    "sha256": "9f158b85eca345daeee01dfffa602709a905ea08b0cc60dbf6153cbbd97da08f"
-  },
-  "hermes/web/public/fonts-terminal/JetBrainsMono-Regular.woff2": {
-    "bytes": 92380,
-    "sha256": "f1a7a03672cdd494ce0d5543fac6e4360fe22403c6de297fdc2e55a815f7baff"
   },
   "hermes/web/src/App.tsx": {
     "bytes": 44130,
@@ -38191,6 +38191,26 @@
     "bytes": 168,
     "sha256": "1bbddecc170d6739308972751b01e2761e1e8d1cf7f6d43bfc4e5589a9b6e059"
   },
+  "knowledge/duel_examples/README.md": {
+    "bytes": 261,
+    "sha256": "d2b18e79725b12786ffb8f6dca6941a800aa73eac63d665c96b42a8cc9028dbc"
+  },
+  "knowledge/duel_examples/verified_15s.json": {
+    "bytes": 2799,
+    "sha256": "28377d27fe46f626e7512210b8cefeeb56b1b1026fc43c51d3efc356e1ec2ce5"
+  },
+  "knowledge/interaction_rules/duel.json": {
+    "bytes": 665,
+    "sha256": "27970c6dff91e72c98a177b5d51ac404bf8f0c07297f6e8c6d01f7dcafde29c3"
+  },
+  "knowledge/motion_providers/providers.json": {
+    "bytes": 563,
+    "sha256": "0e463fbad6ff9bff453c983f2a03b5f80234262cf29c38331dda1a6fba3f60e9"
+  },
+  "knowledge/motions/duel.json": {
+    "bytes": 2835,
+    "sha256": "e203ab25ef8b28d7ef1784a1cb6eea776d5b303d011a838a03170e771f5a1e4b"
+  },
   "mixamo_fbx/basic/Falling.fbx": {
     "bytes": 2571056,
     "sha256": "fe5929511948ddf1bca310c3d2d8929dc95a06bd00482097581238fc671c1279"
@@ -38443,6 +38463,30 @@
     "bytes": 1951520,
     "sha256": "4e6bc72b144f5f58657cac3dc6e0f39ac3e70155e1f7b5f65da49fd6e311f6ce"
   },
+  "reports/automatic_person_count.json": {
+    "bytes": 3989,
+    "sha256": "5bc254895e5a814a51077d1ea8ac5e382bf63066f6e93b7121a2607baf714994"
+  },
+  "reports/duel_blender_regression.json": {
+    "bytes": 218444,
+    "sha256": "a73d65c21a3bc22921fa5f08ed257afd515ad6885d7d9ec965a7a4a44a789d78"
+  },
+  "reports/duel_natural_regression.json": {
+    "bytes": 304694,
+    "sha256": "392775dd698a8f422bd750e85255b043ba18d8e8c775bf240c403f9e777b4397"
+  },
+  "reports/duel_performance.json": {
+    "bytes": 585,
+    "sha256": "5ce82adcf033b332c0937d5e9244d199c51f71a30b16bc3a9c41d34d7779437e"
+  },
+  "reports/duel_release_media.json": {
+    "bytes": 649,
+    "sha256": "cd343cb8e8b6a83e323b78a4bbc2852f6b68d2b640ef6a721b409093f8746337"
+  },
+  "reports/duel_release_quality.json": {
+    "bytes": 2971,
+    "sha256": "a67e1db97eb0dca8607aac85a28716bb52eacc1832d51ec99bb1bee60c00f55d"
+  },
   "requirements.txt": {
     "bytes": 13,
     "sha256": "35fde835d2cdf4ccbfb67738c7e5d2f8829fd441d3cbcb34b1f4c948a0a11cd4"
@@ -38451,45 +38495,113 @@
     "bytes": 2671,
     "sha256": "c0a57238a3e4fca1342f8809c462800225997084684fe19024df4cb4abce8ff3"
   },
+  "scripts/duel_plan.py": {
+    "bytes": 9887,
+    "sha256": "74b2271f7633cb1bdb12cf19b5fdeeed6999af3acae1b18019509b9fe2c3bf32"
+  },
+  "scripts/duel_scene.py": {
+    "bytes": 39324,
+    "sha256": "eaa718c6d6c72f57b8412d70ed457548a6a67f01f71384d78132377e8bd37f42"
+  },
+  "scripts/duel_worker.py": {
+    "bytes": 17711,
+    "sha256": "e55a1137b7ba66e56692d05ff1b6609812b4788d0f7a3a788f525dd9bd9eb5ca"
+  },
   "scripts/preload_helpers.py": {
-    "bytes": 14135,
-    "sha256": "a69c38f960faa1d07081e7b451ec0ec2f67716ff51da6260501a6efe07497cfd"
+    "bytes": 16005,
+    "sha256": "8d254f5db523edb89c17db2ac0c419801435fb56ce0c72a16fa719dae3792e83"
   },
   "scripts/render_saved_scene.py": {
-    "bytes": 1550,
-    "sha256": "26a3f499cf900f7a79d0183b88963f448e04d797dcc806829b1941a2ce839a91"
+    "bytes": 2951,
+    "sha256": "3f33186dd9249e3d61b6a59b614466958ff3cfc2098cc28c8a94910a362d048f"
   },
   "scripts/render_white_model.py": {
-    "bytes": 11864,
-    "sha256": "51273ff8be0865bd6c75a63e7b1984d65518141b259a1586da75105b6262c7d9"
+    "bytes": 12019,
+    "sha256": "6b509b3a8449f5a95c76470cb3a24748feeff8d8ab0ce5b2aab552f811992bcb"
+  },
+  "scripts/rollback_to_single.py": {
+    "bytes": 2281,
+    "sha256": "89d471227de99bdbba62e77bde6b59f3abfad479927b22d51717b5255b11a796"
+  },
+  "scripts/scene_cast.py": {
+    "bytes": 3072,
+    "sha256": "3d79d7e11b84d33bc63f44a7e911705581d53864ccd4ae8363ba808e58ab87d6"
+  },
+  "scripts/single_plan.py": {
+    "bytes": 2833,
+    "sha256": "8bcdf9f3d86bbc7311a40e77068ed843d42491a1ad35b888a0117890cfc6e857"
   },
   "scripts/start_server.py": {
     "bytes": 1015,
     "sha256": "21365c75061429e1c0bbabaf5aef18f2d00a29f7a07224e5e832c255a8f452e1"
   },
   "start_all.sh": {
-    "bytes": 2725,
-    "sha256": "c7d85adada4f69ea68bd60c9b7fc647a2bb1d5636f07dfa03b6b83b9e6037143"
+    "bytes": 2712,
+    "sha256": "3d7a35beece61c53cee3ae4324df621bb97579223b010066d4348ed4217901a6"
+  },
+  "tests/duel_cases.py": {
+    "bytes": 2161,
+    "sha256": "ace52f9886852548479751d9b087f161e88fa075d26d916e81a64d8c15792552"
+  },
+  "tests/recheck_duel_regression.py": {
+    "bytes": 5252,
+    "sha256": "6cfaa5ac1624ea06554a3125339094ae215191778e465443deb5722dc04d212c"
+  },
+  "tests/run_duel_natural_regression.py": {
+    "bytes": 4979,
+    "sha256": "ee9d9c7dc4fc88f512fbf4fa8ff02d49d55ac676304ae07096c1762c62de4f5b"
   },
   "tests/test_animation_sequence.py": {
     "bytes": 3820,
     "sha256": "642420e4c047138fd0b96b00b3b347b6d97e7415e4a9f3cbe8671141684f6a81"
   },
+  "tests/test_duel_blender.py": {
+    "bytes": 3121,
+    "sha256": "dc94a83ac2c3bc96a62a845e66a3924e9285a0b7b2ae8516b5bd5f3550465f2d"
+  },
+  "tests/test_duel_plan.py": {
+    "bytes": 4896,
+    "sha256": "6905284301761c00d60119e0c375f2cb44558ec4f4bb4ac36c5d612917c015b9"
+  },
+  "tests/test_scene_cast.py": {
+    "bytes": 2762,
+    "sha256": "a499b9756400c19e6fb82d5cd1a5918d9d12e5c60ffa6f41d9832eaf5cdd1a72"
+  },
+  "tests/test_single_plan.py": {
+    "bytes": 1636,
+    "sha256": "8aceb7492656f8c522dcb31a8cb298199d2075fcebcb956f48ee918cce25ada4"
+  },
+  "tests/test_web_jobs.py": {
+    "bytes": 2611,
+    "sha256": "d21e9022b92ec2b72da649011730c268d0f4e658f637bfd6cfa7302c3970db85"
+  },
   "watchdog.sh": {
-    "bytes": 2065,
-    "sha256": "4d21d59633954a1bc0b93c4001a2ba8d8f96d733c0438a76a5b2fdcd25d800da"
+    "bytes": 2043,
+    "sha256": "e81995cbf1b9eb8c86a2f7c98e370312c161a0fadc89b93055d68efecf5ea19d"
   },
   "web/app.py": {
-    "bytes": 6867,
-    "sha256": "2943e2373a722732ac41c8aad947b7c2fbd1286423afafd6c2e659c23a894975"
+    "bytes": 10786,
+    "sha256": "d990ba0f696adf43ec729d57521f8b9de971fefeddcb889c116fb9d50854f7b2"
   },
   "web/index.html": {
-    "bytes": 23732,
-    "sha256": "48816874475297f4830fb528a99795e01a186d14615eb148899540b3796ad986"
+    "bytes": 25154,
+    "sha256": "04cbb02fff085a7b9dd8d05ae6dfac790c2674d957723a3e62d80fe3a1c8e647"
   },
   "white-model-director/SKILL.md": {
-    "bytes": 8527,
-    "sha256": "8285a3c547718f4e3b2d9607af287e76087d1656e092c27921d5bee9651c2251"
+    "bytes": 11653,
+    "sha256": "95aa3e2d3b0001710d254599db100e69e108c26d4e0aa6d10cbebcfa5b487053"
+  },
+  "双人打斗实现与验收记录.md": {
+    "bytes": 9046,
+    "sha256": "350cd3aa462e99fbae2c8106f77c124ab50a4f033d42cedb871be5d2cc119e12"
+  },
+  "双人打斗开发计划书.docx": {
+    "bytes": 423276,
+    "sha256": "c8d9ccde2ea4ae69d3c3c5e78d0428ae4d49c9d9544c36a51b66fe8c3a4e59f0"
+  },
+  "双人打斗开发计划书.md": {
+    "bytes": 38793,
+    "sha256": "fbb99411d13e792bba9ccbda68c4ce5f1564263832384dcac822ebe7c3181141"
   },
   "汇报配图/知识与执行机制.png": {
     "bytes": 200711,
@@ -38506,6 +38618,26 @@
   "汇报配图/系统架构.svg": {
     "bytes": 116225,
     "sha256": "42fa90248b7cf3e1170b764639dcdcb3bde0c743bbcff78f0d050893c6385d30"
+  },
+  "计划配图/双人交互时间关系.png": {
+    "bytes": 134851,
+    "sha256": "a07cc142abd51c98e0c1fe11e99822ea3ccd212169b0a2d2f561a95b0d73b3bb"
+  },
+  "计划配图/双人交互时间关系.svg": {
+    "bytes": 71302,
+    "sha256": "5437e08b1ae563f7f44968b1643ba456e4a9dfe0c1896a70c9c726b35b359caa"
+  },
+  "计划配图/双人打斗系统流程.png": {
+    "bytes": 260237,
+    "sha256": "8d15af569b30bdc97f74f930c19731ca27e9d91a39ec9cb57fe18e47a445b4b1"
+  },
+  "计划配图/双人打斗系统流程.svg": {
+    "bytes": 141131,
+    "sha256": "1a17dc9a33e2d0cad55538d36c580f53c8bb52cd4c8ccafe034045867375d83a"
+  },
+  "计划配图/双人打斗素材核对.json": {
+    "bytes": 3803,
+    "sha256": "65a969c674f4ccdaffc2734162c965a17d46cc4cc483ddf0f72d50a86823628a"
   },
   "项目汇报文档.docx": {
     "bytes": 417987,

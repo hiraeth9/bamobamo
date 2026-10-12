@@ -27,7 +27,7 @@ while true; do
     # ---- 2. Blender socket server (9876) ----
     if ! ss -tln 2>/dev/null | grep -q ':9876'; then
         log "⚠️ Blender(9876) 掉线，重启中..."
-        for pid in $(pgrep -f "blender-5.2.2-linux-x64/blender"); do kill -9 "$pid" 2>/dev/null; done
+        # tmux owns the GUI service. Never kill unrelated headless render jobs.
         tmux kill-session -t blender 2>/dev/null
         sleep 1
         tmux new-session -d -s blender \

@@ -1,0 +1,123 @@
+{
+  "scope": "One public natural-language entry; real Hermes cast detection followed by production execution. Unsupported three-person request must not render.",
+  "records": [
+    {
+      "prompt": "一个人连续出两次拳，再踢腿，4秒，固定全景显示全身。",
+      "job_id": "9907fa40c9784264",
+      "status_url": "/api/jobs/9907fa40c9784264",
+      "cast": {
+        "version": 1,
+        "job_id": "9907fa40c9784264",
+        "actors": [
+          {
+            "id": "A",
+            "name": "单独练习拳腿组合的一名角色（独白式训练，无对手）"
+          }
+        ],
+        "actor_count": 1,
+        "supported": true,
+        "engine": "single",
+        "message": "识别到 1 名人物"
+      },
+      "stage": "complete",
+      "result": {
+        "ok": true,
+        "kind": "single",
+        "actor_count": 1,
+        "job_id": "9907fa40c9784264",
+        "video": "output/single_9907fa40c9784264.mp4",
+        "video_url": "/output/single_9907fa40c9784264.mp4",
+        "media": {
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "30/1",
+          "duration": "4.000000",
+          "nb_read_frames": "120"
+        },
+        "report": "单人视频已生成并通过媒体核验。"
+      },
+      "passed": true
+    },
+    {
+      "prompt": "张三先向李四腹部出一记左直拳，李四格挡；随后李四向张三出右勾拳，张三后撤躲开。4秒，全身入镜。",
+      "job_id": "eb8cd6b70b38470e",
+      "status_url": "/api/jobs/eb8cd6b70b38470e",
+      "cast": {
+        "version": 1,
+        "job_id": "eb8cd6b70b38470e",
+        "actors": [
+          {
+            "id": "A",
+            "name": "张三"
+          },
+          {
+            "id": "B",
+            "name": "李四"
+          }
+        ],
+        "actor_count": 2,
+        "supported": true,
+        "engine": "duel",
+        "message": "识别到 2 名人物"
+      },
+      "stage": "complete",
+      "result": {
+        "ok": true,
+        "kind": "duel",
+        "actor_count": 2,
+        "job_id": "eb8cd6b70b38470e",
+        "video": "output/duel_eb8cd6b70b38470e.mp4",
+        "video_url": "/output/duel_eb8cd6b70b38470e.mp4",
+        "preview_url": "/output/jobs/eb8cd6b70b38470e/preview.mp4",
+        "plan_url": "/output/jobs/eb8cd6b70b38470e/plan.json",
+        "quality_url": "/output/jobs/eb8cd6b70b38470e/quality.json",
+        "media": {
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "30/1",
+          "duration": "4.000000",
+          "nb_read_frames": "120"
+        },
+        "quality_passed": true,
+        "visual_review_required": true,
+        "report": "双人 IK 视频已生成；自动接触、落脚、构图与媒体检查通过，动作自然度请查看预览。"
+      },
+      "passed": true
+    },
+    {
+      "prompt": "A和B一起夹击C，三个人打斗，15秒，把三个人都完整显示出来。",
+      "job_id": "5b6fe93a633341c9",
+      "status_url": "/api/jobs/5b6fe93a633341c9",
+      "cast": {
+        "version": 1,
+        "job_id": "5b6fe93a633341c9",
+        "actors": [
+          {
+            "id": "A",
+            "name": "夹击者A（与B一起从一侧夹击C）"
+          },
+          {
+            "id": "B",
+            "name": "夹击者B（与A一起从另一侧夹击C）"
+          },
+          {
+            "id": "C",
+            "name": "被夹击者C（1人对2人应战）"
+          }
+        ],
+        "actor_count": 3,
+        "supported": false,
+        "engine": null,
+        "message": "识别到 3 名人物；当前可生成 1 人动作或 2 人打斗，3 人及以上的协同动作尚未实现。"
+      },
+      "stage": "failed",
+      "result": {
+        "ok": false,
+        "job_id": "5b6fe93a633341c9",
+        "error": "识别到 3 名人物；当前可生成 1 人动作或 2 人打斗，3 人及以上的协同动作尚未实现。"
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

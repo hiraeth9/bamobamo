@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "fbx": {"input": "motion asset and source frame", "output": "Mixamo Beta bone-local transforms"},
+  "hybrid": {"input": "source poses, event phase and world goals", "output": "blended full-body poses plus IK trajectories"},
+  "procedural": {"input": "guard pose, phase, direction, intensity and targets", "output": "full-body control for uppercut, block, dodge and step"},
+  "external_model": {"status": "not_installed", "contract": "Must output Beta-compatible local poses, source FPS, contact/stance phases; validate before registration"}
+}

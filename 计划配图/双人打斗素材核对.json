@@ -1,0 +1,140 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "assets": [
+    {
+      "asset": "combat_melee/Mma Idle.fbx",
+      "bone_count": 65,
+      "hierarchy_sha256": "cc07f9c41a37367c97ea6d4e57e3df6980957bbbae96d5ed3a1f8d1669270846",
+      "rest_pose_sha256": "4421b8a7b783ae356a608203f81ac1418fe44d026d50228d4603dc29eb476050",
+      "action_slots": 1,
+      "source_frame_range": [
+        1,
+        151
+      ],
+      "import_scene_fps": 30.0,
+      "armature_scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "root_motion_span_xyz_m": [
+        0.0426,
+        0.0533,
+        0.0638
+      ]
+    },
+    {
+      "asset": "combat_melee/Lead Jab.fbx",
+      "bone_count": 65,
+      "hierarchy_sha256": "cc07f9c41a37367c97ea6d4e57e3df6980957bbbae96d5ed3a1f8d1669270846",
+      "rest_pose_sha256": "4421b8a7b783ae356a608203f81ac1418fe44d026d50228d4603dc29eb476050",
+      "action_slots": 1,
+      "source_frame_range": [
+        1,
+        56
+      ],
+      "import_scene_fps": 30.0,
+      "armature_scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "root_motion_span_xyz_m": [
+        0.1823,
+        0.7384,
+        0.1646
+      ]
+    },
+    {
+      "asset": "combat_melee/Hook.fbx",
+      "bone_count": 65,
+      "hierarchy_sha256": "cc07f9c41a37367c97ea6d4e57e3df6980957bbbae96d5ed3a1f8d1669270846",
+      "rest_pose_sha256": "4421b8a7b783ae356a608203f81ac1418fe44d026d50228d4603dc29eb476050",
+      "action_slots": 1,
+      "source_frame_range": [
+        1,
+        73
+      ],
+      "import_scene_fps": 30.0,
+      "armature_scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "root_motion_span_xyz_m": [
+        0.2051,
+        0.6711,
+        0.1435
+      ]
+    },
+    {
+      "asset": "combat_melee/Mma Kick.fbx",
+      "bone_count": 65,
+      "hierarchy_sha256": "cc07f9c41a37367c97ea6d4e57e3df6980957bbbae96d5ed3a1f8d1669270846",
+      "rest_pose_sha256": "4421b8a7b783ae356a608203f81ac1418fe44d026d50228d4603dc29eb476050",
+      "action_slots": 1,
+      "source_frame_range": [
+        1,
+        49
+      ],
+      "import_scene_fps": 30.0,
+      "armature_scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "root_motion_span_xyz_m": [
+        0.0726,
+        0.4275,
+        0.1494
+      ]
+    },
+    {
+      "asset": "combat_reaction/Hit To Body.fbx",
+      "bone_count": 65,
+      "hierarchy_sha256": "cc07f9c41a37367c97ea6d4e57e3df6980957bbbae96d5ed3a1f8d1669270846",
+      "rest_pose_sha256": "4421b8a7b783ae356a608203f81ac1418fe44d026d50228d4603dc29eb476050",
+      "action_slots": 1,
+      "source_frame_range": [
+        1,
+        36
+      ],
+      "import_scene_fps": 30.0,
+      "armature_scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "root_motion_span_xyz_m": [
+        0.0705,
+        0.1841,
+        0.1494
+      ]
+    },
+    {
+      "asset": "combat_reaction/Head Hit.fbx",
+      "bone_count": 65,
+      "hierarchy_sha256": "cc07f9c41a37367c97ea6d4e57e3df6980957bbbae96d5ed3a1f8d1669270846",
+      "rest_pose_sha256": "4421b8a7b783ae356a608203f81ac1418fe44d026d50228d4603dc29eb476050",
+      "action_slots": 1,
+      "source_frame_range": [
+        1,
+        47
+      ],
+      "import_scene_fps": 30.0,
+      "armature_scale": [
+        0.009999999776482582,
+        0.009999999776482582,
+        0.009999999776482582
+      ],
+      "root_motion_span_xyz_m": [
+        0.2032,
+        0.1192,
+        0.1381
+      ]
+    }
+  ],
+  "same_hierarchy": true,
+  "same_rest_pose": true,
+  "scope": "Skeleton and root-motion metadata only; no paired fight has been validated."
+}

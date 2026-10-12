@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "job_id": "release_v1_15s",
+  "video": "output/duel_release_v1_15s.mp4",
+  "video_url": "/output/duel_release_v1_15s.mp4",
+  "preview_url": "/output/jobs/release_v1_15s/preview.mp4",
+  "plan_url": "/output/jobs/release_v1_15s/plan.json",
+  "quality_url": "/output/jobs/release_v1_15s/quality.json",
+  "media": {
+    "width": 1280,
+    "height": 720,
+    "r_frame_rate": "30/1",
+    "duration": "15.000000",
+    "nb_read_frames": "450"
+  },
+  "quality_passed": true,
+  "visual_review_required": true,
+  "report": "双人 IK 视频已生成；自动接触、落脚、构图与媒体检查通过，动作自然度请查看预览。"
+}

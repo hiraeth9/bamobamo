@@ -36,6 +36,7 @@ p.add_argument("--distance_ratio", type=float, default=2.2, help="环绕半径=�
 p.add_argument("--orbit_seconds", type=float, default=None, help="环绕360°时长(秒)，None=跟随动画(至少2秒)")
 p.add_argument("--fov", type=float, default=50.0, help="相机视角(度)")
 p.add_argument("--blend_frames", type=int, default=12, help="多动作之间的过渡帧数(默认12=0.4秒)")
+p.add_argument("--camera_policy", choices=['fixed', 'orbit'], default='orbit')
 args = p.parse_args(argv)
 
 import bpy
@@ -239,9 +240,10 @@ else:
 scene.frame_start = frame_start
 scene.frame_end = frame_end
 empty.rotation_euler = (0, 0, 0)
-empty.keyframe_insert(data_path="rotation_euler", frame=frame_start)
-empty.rotation_euler = (0, 0, math.radians(360))
-empty.keyframe_insert(data_path="rotation_euler", frame=frame_end)
+if args.camera_policy == 'orbit':
+    empty.keyframe_insert(data_path="rotation_euler", frame=frame_start)
+    empty.rotation_euler = (0, 0, math.radians(360))
+    empty.keyframe_insert(data_path="rotation_euler", frame=frame_end)
 # Blender 5.x 中 Action 不再有 .fcurves，跳过手动设置 LINEAR 插值（用默认）
 _log(f"相机参数: pitch={args.pitch_deg}° ratio={args.distance_ratio} fov={args.fov} 帧范围 {frame_start}-{frame_end}")
 
@@ -281,14 +283,14 @@ cmd = [
     ffmpeg_bin, "-y",
     "-framerate", str(args.fps),
     "-i", os.path.join(frames_dir, base + "_%04d.png"),
-    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18",
+    "-c:v", "libx264", "-threads", "8", "-pix_fmt", "yuv420p", "-crf", "18",
     args.output,
 ]
 _log(f"step8: {cmd}")
 r = subprocess.run(cmd, capture_output=True, text=True)
 if r.returncode != 0:
     _log(f"ffmpeg 失败: {r.stderr[-800:]}")
-    print(f"FFMPEG_FAILED {r.stderr[-500:]}")
+    raise RuntimeError(f"FFMPEG_FAILED {r.stderr[-500:]}")
 else:
     _log(f"RENDER_DONE {args.output}")
     print(f"RENDER_DONE {args.output}")

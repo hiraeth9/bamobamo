@@ -1,0 +1,115 @@
+{
+  "passed": true,
+  "frame_count": 450,
+  "actors_independent": true,
+  "min_camera_margin": 0.0904,
+  "max_stance_error_m": 0.0,
+  "max_ik_error_m": 5e-05,
+  "max_joint_speed_m_s": 4.502,
+  "camera_failures": [],
+  "stance_failures": [],
+  "ik_failures": [],
+  "contacts": [
+    {
+      "event": "e01",
+      "frame": 23,
+      "outcome": "dodge",
+      "target_error_m": 0.001,
+      "passed": true,
+      "dodge_clearance_m": 0.2876
+    },
+    {
+      "event": "e02",
+      "frame": 58,
+      "outcome": "block",
+      "target_error_m": 0.0,
+      "passed": true,
+      "block_error_m": 0.0
+    },
+    {
+      "event": "e03",
+      "frame": 106,
+      "outcome": "hit",
+      "target_error_m": 0.0001,
+      "passed": true,
+      "surface_error_m": 0.0001,
+      "reaction_onset_frame": 105,
+      "reaction_sync_frames": 1
+    },
+    {
+      "event": "e04",
+      "frame": 154,
+      "outcome": "block",
+      "target_error_m": 0.0,
+      "passed": true,
+      "block_error_m": 0.0
+    },
+    {
+      "event": "e05",
+      "frame": 195,
+      "outcome": "dodge",
+      "target_error_m": 0.0249,
+      "passed": true,
+      "dodge_clearance_m": 0.4425
+    },
+    {
+      "event": "e06",
+      "frame": 237,
+      "outcome": "dodge",
+      "target_error_m": 0.0242,
+      "passed": true,
+      "dodge_clearance_m": 0.3524
+    },
+    {
+      "event": "e07",
+      "frame": 279,
+      "outcome": "dodge",
+      "target_error_m": 0.024,
+      "passed": true,
+      "dodge_clearance_m": 0.3216
+    },
+    {
+      "event": "e08",
+      "frame": 321,
+      "outcome": "dodge",
+      "target_error_m": 0.0249,
+      "passed": true,
+      "dodge_clearance_m": 0.4211
+    }
+  ],
+  "body_overlap_failures": [],
+  "occlusion_failures": [],
+  "joint_flip_failures": [],
+  "visual_review_required": true,
+  "limitations": [
+    "Geometry checks do not certify realism or all self-collisions; preview review required."
+  ],
+  "camera_bounds": {
+    "min": [
+      -1.15341055393219,
+      -0.6470112204551697,
+      -0.0005869668093509972
+    ],
+    "max": [
+      1.1534104347229004,
+      0.49623623490333557,
+      1.6975884437561035
+    ],
+    "ortho_scale": 4.57664189104578,
+    "requested_azimuth_deg": -68,
+    "actual_azimuth_deg": -68,
+    "min_body_separation_in_frame": 0.07024494167861435
+  },
+  "effective_move_distances_m": {
+    "e09": 0.35
+  },
+  "asset_sha256": {
+    "mixamo_fbx/combat_melee/Mma Idle.fbx": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+    "mixamo_fbx/combat_melee/Lead Jab.fbx": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+    "mixamo_fbx/combat_melee/Hook.fbx": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+    "mixamo_fbx/combat_melee/Mma Kick.fbx": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d"
+  },
+  "blender_version": "5.2.2 LTS",
+  "scene_code_sha256": "eaa718c6d6c72f57b8412d70ed457548a6a67f01f71384d78132377e8bd37f42",
+  "build_seconds": 13.96
+}

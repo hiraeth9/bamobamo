@@ -1,0 +1,21 @@
+{
+  "job_id": "release_v1_15s",
+  "blender_version": "5.2.2 LTS",
+  "engine": "BLENDER_EEVEE",
+  "final_resolution": [
+    1280,
+    720
+  ],
+  "preview_resolution": [
+    640,
+    360
+  ],
+  "fps": 30,
+  "frame_count": 450,
+  "build_seconds": 13.96,
+  "preview_window_seconds": 35.45,
+  "final_window_seconds": 100.67,
+  "method": "build_seconds is controller elapsed; render windows inferred from saved artifact timestamps and include stage overhead, not GPU-only timings; excludes Hermes planning and queue waiting.",
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "gpu_memory_mib": 24576
+}

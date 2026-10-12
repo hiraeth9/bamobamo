@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "skeleton": "mixamo_beta_65",
+  "source_fps": 30,
+  "motions": {
+    "guard": {
+      "category": "idle",
+      "provider": "fbx",
+      "asset": "mixamo_fbx/combat_melee/Mma Idle.fbx",
+      "description": "格斗待机，唯一允许循环的来源",
+      "loop_allowed": true,
+      "sha256": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+      "source_frames": [
+        1,
+        151
+      ]
+    },
+    "jab": {
+      "category": "attack",
+      "provider": "hybrid",
+      "asset": "mixamo_fbx/combat_melee/Lead Jab.fbx",
+      "side": "left",
+      "limb": "hand",
+      "source_peak": 18,
+      "source_weight": 0.28,
+      "description": "直拳/刺拳，源身体动势与程序化拳路、手部 IK 结合",
+      "loop_allowed": false,
+      "sha256": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+      "source_frames": [
+        1,
+        56
+      ],
+      "phases": {
+        "preparation": [
+          1,
+          10
+        ],
+        "strike": [
+          10,
+          18
+        ],
+        "recovery": [
+          18,
+          56
+        ]
+      }
+    },
+    "hook": {
+      "category": "attack",
+      "provider": "hybrid",
+      "asset": "mixamo_fbx/combat_melee/Hook.fbx",
+      "side": "right",
+      "limb": "hand",
+      "source_peak": 29,
+      "source_weight": 0.3,
+      "description": "弧线勾拳，保留身体转动并由 IK 执行落点",
+      "loop_allowed": false,
+      "sha256": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+      "source_frames": [
+        1,
+        73
+      ],
+      "phases": {
+        "preparation": [
+          1,
+          21
+        ],
+        "strike": [
+          21,
+          29
+        ],
+        "recovery": [
+          29,
+          73
+        ]
+      }
+    },
+    "kick": {
+      "category": "attack",
+      "provider": "hybrid",
+      "asset": "mixamo_fbx/combat_melee/Mma Kick.fbx",
+      "side": "right",
+      "limb": "foot",
+      "source_peak": 21,
+      "source_weight": 1.0,
+      "description": "踢击，可改变侧和头/躯干落点，单次播放，保留抬腿与回收",
+      "loop_allowed": false,
+      "sha256": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+      "source_frames": [
+        1,
+        49
+      ],
+      "phases": {
+        "preparation": [
+          1,
+          13
+        ],
+        "strike": [
+          13,
+          21
+        ],
+        "recovery": [
+          21,
+          49
+        ]
+      }
+    },
+    "uppercut": {
+      "category": "attack",
+      "provider": "procedural",
+      "side": "right",
+      "limb": "hand",
+      "source_weight": 0.0,
+      "description": "程序化上勾拳，新基础运动来源；下沉蓄力、向上弧线与躯干转动",
+      "loop_allowed": false
+    }
+  }
+}
