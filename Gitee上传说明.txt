@@ -1,0 +1,26 @@
+Gitee 目标：https://gitee.com/hiraeth9/bamo.git
+
+本目录包含项目源码、Hermes 框架源码、63 个动作素材、导演技能、网页、测试和汇报文档。真实凭据、视频与安装好的运行环境保存在完整本地快照中。
+
+首次上传（建议创建私有空仓库，创建时不生成 README/许可文件）：
+1. 在执行推送的机器配置 Gitee SSH 公钥或 HTTPS 认证。
+2. 打开终端，进入这个目录。
+3. 若尚未初始化 Git，执行 git init -b main。
+4. 设置本仓库提交身份：
+   git config user.name "你的名称"
+   git config user.email "你的注册邮箱"
+5. 提交与上传：
+   git add .
+   git commit -m "保存单角色白膜基线 2026-10-12"
+   git remote add gitee https://gitee.com/hiraeth9/bamo.git
+   git push -u gitee main
+6. 给基线增加标签：
+   git tag single-character-v1-20261012
+   git push gitee single-character-v1-20261012
+
+如果已有同名 remote，使用 git remote set-url gitee 仓库地址；如果远端已有提交，先检查远端并保留历史，不能直接强推覆盖。
+
+后续更新：git add . → git commit -m "修改说明" → git push gitee main。
+这个整理目录是上传快照，继续修改运行目录后要同步更新到这里；可用 SOURCE.json 定位来源。
+
+恢复源码到其他目录时，需要调整原代码中的固定项目路径。完整运行环境恢复依赖另存的 5 GB 快照。

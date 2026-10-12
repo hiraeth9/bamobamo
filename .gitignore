@@ -1,43 +1,32 @@
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
-env/
-
-# 敏感信息（API key、密钥）
+# Machine configuration and credentials
 .env
-*.key
+.env.*
+!.env.example
 *.pem
-hermes/.env
-secrets/
+*.key
+*.p12
+*.pfx
+.ssh/
+.workbuddy/
+/交接文档.md
+/config/hermes-config.yaml
 
-# 运行时产物（渲染输出、视频、帧序列）
-render_out/
+# Installed runtimes and build caches
+/.venv/
+/venv/
+/ffmpeg-env/
+/blender-*-linux-x64/
+*.tar.xz
+*.whl
+**/__pycache__/
+*.py[cod]
+**/.pytest_cache/
+**/node_modules/
+**/.venv/
+**/uv.lock.bak
+
+# Generated production data
+/output/
 *.mp4
-*.png
-*.jpg
-frames/
-output/
-
-# 编辑器 / IDE
-.vscode/
-.idea/
-*.swp
-.DS_Store
-
-# 本地调试脚本
-scripts/ssh_*.py
-test_*.py
-inventory*.py
-build_project.py
-dump_code.py
-list_models.py
-
-# Blender
-*.blend1
-*.blend2
-
-# 日志
 *.log
+/bamo-backups/
