@@ -1,0 +1,33 @@
+{
+  "exported_at": "2026-10-12T10:37:03.623932+08:00",
+  "source_directory": "/root/rivermind-data/bamo",
+  "target_repository": "https://gitee.com/hiraeth9/bamo.git",
+  "hermes_upstream": "https://gitee.com/wuyuancunmin/hermes-agent.git",
+  "hermes_commit": "cf64ca20c5ab99ebf7e8ca272c69edc7ea0636ed",
+  "hermes_local_changes": [
+    "uv.lock"
+  ],
+  "blender_version": "5.2.2 LTS",
+  "mcp_for_blender_version": "2.1.9",
+  "flask_version": "3.1.3",
+  "animation_assets": 63,
+  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-101959-single-character-v1",
+  "embedded": [
+    "project source",
+    "Hermes tracked source with current uv.lock",
+    "Blender MCP addon and license",
+    "63 FBX assets",
+    "director Skill",
+    "tests",
+    "report and figures",
+    "startup scripts and executable wrappers"
+  ],
+  "stored_in_full_backup": [
+    "Blender binary runtime",
+    "ffmpeg conda environment",
+    "Hermes .venv",
+    "model credentials and deployed external configuration",
+    "generated MP4 and PNG sequences",
+    "original private handoff"
+  ]
+}

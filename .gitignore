@@ -1,0 +1,32 @@
+# Machine configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.ssh/
+.workbuddy/
+/交接文档.md
+/config/hermes-config.yaml
+
+# Installed runtimes and build caches
+/.venv/
+/venv/
+/ffmpeg-env/
+/blender-*-linux-x64/
+*.tar.xz
+*.whl
+**/__pycache__/
+*.py[cod]
+**/.pytest_cache/
+**/node_modules/
+**/.venv/
+**/uv.lock.bak
+
+# Generated production data
+/output/
+*.mp4
+*.log
+/bamo-backups/

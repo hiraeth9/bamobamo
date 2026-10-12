@@ -1,0 +1,11 @@
+# Example only: fill private settings outside Git.
+model:
+  default: qwen3.8-flash
+  provider: custom
+  api_mode: chat_completions
+  base_url: YOUR_OPENAI_COMPATIBLE_BASE_URL
+mcp_servers:
+  blender:
+    command: uvx
+    args:
+      - mcp-for-blender==2.1.9
