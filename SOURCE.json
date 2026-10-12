@@ -1,7 +1,7 @@
 {
   "exported_at": "2026-10-12T10:37:03.623932+08:00",
   "source_directory": "/root/rivermind-data/bamo",
-  "target_repository": "https://gitee.com/hiraeth9/bamo.git",
+  "target_repository": "https://github.com/hiraeth9/bamobamo.git",
   "hermes_upstream": "https://gitee.com/wuyuancunmin/hermes-agent.git",
   "hermes_commit": "cf64ca20c5ab99ebf7e8ca272c69edc7ea0636ed",
   "hermes_local_changes": [
@@ -29,5 +29,7 @@
     "model credentials and deployed external configuration",
     "generated MP4 and PNG sequences",
     "original private handoff"
-  ]
+  ],
+  "optional_mirror_repository": "https://gitee.com/hiraeth9/bamo.git",
+  "remote_main_before_upload": "357b158a1de583bd3aaf79639212ad9b1df2d1e3"
 }

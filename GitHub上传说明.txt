@@ -1,0 +1,12 @@
+GitHub 目标：https://github.com/hiraeth9/bamobamo
+
+上传内容：当前项目源码、Hermes 框架源码、63 个 FBX、导演技能、网页、测试、汇报文档与配图。视频、安装环境和真实凭据另存于完整本地快照。
+
+服务器的上传目录为 /root/rivermind-data/bamo-github；它是从运行目录整理的版本快照。继续开发后，需要同步更新此上传目录或从运行项目重新整理。
+
+首次上传保留远端旧提交，并以当前完整源码树替换主分支内容。旧版本分支：backup/before-single-character-v1-20261012。新基线标签：single-character-v1-20261012。实际远端完成状态以推送与 git ls-remote 核对结果为准。
+
+服务器需要 GitHub 账户或可写仓库密钥授权；本地 SSH 连接已配置。电脑上从压缩包上传时，请自行配置 Git 身份、SSH 或 HTTPS 授权。
+
+后续更新：git add . → git commit -m "修改说明" → git push github main。
+源码恢复：从上述标签检出；完整环境恢复使用另存的 5 GB 快照。

@@ -7,17 +7,21 @@
     "bytes": 407,
     "sha256": "e250238312af8cc7124416c48b51442279cbee714df15683aeda1ee5cd916054"
   },
+  "GitHub上传说明.txt": {
+    "bytes": 1066,
+    "sha256": "5d7fe893facdd2faec043d5648d5a6e710cceff4ae870e1b26d3e9d8a2cc8e4e"
+  },
   "Gitee上传说明.txt": {
     "bytes": 1436,
     "sha256": "64f394ad2617c4898271b5238cdef0317c0da1a9db42bf07053f0c5bdd4cf4d6"
   },
   "README.md": {
-    "bytes": 2994,
-    "sha256": "1e893ce019849143b0d0603ebb23ff27a47b676613b38d0631064116e856c438"
+    "bytes": 3050,
+    "sha256": "6d134e7a989403ea3760847d04fccd52b08ebeff65501b5bb10272405b0a762a"
   },
   "SOURCE.json": {
-    "bytes": 1085,
-    "sha256": "79901c37d307f5c8f7dbdbee069da07e78191951ccf3444d55369a35d942c62a"
+    "bytes": 1236,
+    "sha256": "2feea79554ebd628dbd8822dabdb0eef5dde215e229550ae1b69f5c8fdce02b2"
   },
   "blender": {
     "bytes": 515,
