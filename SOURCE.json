@@ -74,5 +74,10 @@
   "private_complete_snapshot_uploaded": false,
   "previous_release_commit": "d2be765d5b60731bac8caefe23295bb46b0a17eb",
   "previous_release_tag": "dual-character-ik-v1-20261012",
-  "previous_full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-143659-dual-character-ik-v1"
+  "previous_full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-143659-dual-character-ik-v1",
+  "full_same_machine_backup": "/root/rivermind-data/bamo-backups/20261012-161452-dual-character-impact-v2",
+  "full_same_machine_backup_verified": true,
+  "full_same_machine_backup_files": 36559,
+  "full_same_machine_backup_bytes": 6041120071,
+  "implementation_commit": "85f0bcd7ef524af7863940b72443e43021d162ba"
 }
