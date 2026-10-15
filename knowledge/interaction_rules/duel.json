@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "coordinates": "world metres, Z up; each actor faces local -Y",
+  "contact_tolerance_height": 0.03,
+  "stance_tolerance_height": 0.01,
+  "camera_margin": 0.05,
+  "max_repairs": 2,
+  "hit": "raycast against the deformed head/torso surface; rapid torso/head impulse within two frames of contact; strong hits take a persistent recovery step, explicit final knockdowns use a falling motion and remain on the ground",
+  "block": "shared world goal; receiver guard arrives before attacker; no cyclic bone targets",
+  "dodge": "goal frozen at commitment, receiver moves out; never follow displaced target",
+  "transition": "full-body FK supplies preparation, attack and recovery; calibrated source windows omit redundant idle; short entry/exit blends keep guard coverage; no repeat on attacks or reference T poses",
+  "support": "source feet retain swing and pivot motion; low-speed planted feet use anchors; two-bone IK follows natural FK goals in free motion, with stretch disabled and a continuous bend plane; falling releases standing IK"
+}

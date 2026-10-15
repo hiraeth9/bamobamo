@@ -1,0 +1,219 @@
+{
+  "version": 1,
+  "duration_seconds": 15,
+  "fps": 30,
+  "seed": 20261013,
+  "pace": "intense",
+  "actors": [
+    {
+      "id": "A"
+    },
+    {
+      "id": "B"
+    }
+  ],
+  "camera": {
+    "policy": "fixed_full",
+    "azimuth_deg": -68,
+    "margin": 0.05
+  },
+  "events": [
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "jab",
+      "side": "right",
+      "region": "head",
+      "outcome": "hit",
+      "start": 0.8,
+      "end": 1.6,
+      "peak": 1.2,
+      "intensity": 0.4,
+      "reaction": "recoil",
+      "id": "e01",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "cross",
+      "side": "right",
+      "region": "chest",
+      "outcome": "hit",
+      "start": 1.7,
+      "end": 2.6,
+      "peak": 2.2,
+      "intensity": 0.85,
+      "reaction": "stagger",
+      "id": "e02",
+      "dodge": "side"
+    },
+    {
+      "kind": "move",
+      "actor": "both",
+      "direction": "closer",
+      "distance": 0.18,
+      "start": 2.65,
+      "end": 3.1,
+      "id": "e03"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "hook",
+      "side": "left",
+      "region": "head",
+      "outcome": "block",
+      "start": 3.15,
+      "end": 3.95,
+      "peak": 3.6,
+      "intensity": 0.7,
+      "id": "e04",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "uppercut",
+      "side": "right",
+      "region": "abdomen",
+      "outcome": "hit",
+      "start": 4.05,
+      "end": 4.9,
+      "peak": 4.5,
+      "intensity": 0.75,
+      "reaction": "stagger",
+      "id": "e05",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "kick",
+      "side": "right",
+      "region": "body",
+      "outcome": "dodge",
+      "start": 5.0,
+      "end": 5.85,
+      "peak": 5.45,
+      "intensity": 0.6,
+      "dodge": "back",
+      "id": "e06"
+    },
+    {
+      "kind": "move",
+      "actor": "both",
+      "direction": "closer",
+      "distance": 0.22,
+      "start": 5.9,
+      "end": 6.4,
+      "id": "e07"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "jab",
+      "side": "left",
+      "region": "head",
+      "outcome": "hit",
+      "start": 6.45,
+      "end": 7.25,
+      "peak": 6.9,
+      "intensity": 0.45,
+      "reaction": "recoil",
+      "id": "e08",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "cross",
+      "side": "right",
+      "region": "head",
+      "outcome": "hit",
+      "start": 7.35,
+      "end": 8.25,
+      "peak": 7.8,
+      "intensity": 0.9,
+      "reaction": "stagger",
+      "id": "e09",
+      "dodge": "side"
+    },
+    {
+      "kind": "move",
+      "actor": "both",
+      "direction": "closer",
+      "distance": 0.18,
+      "start": 8.3,
+      "end": 8.7,
+      "id": "e10"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "hook",
+      "side": "right",
+      "region": "body",
+      "outcome": "hit",
+      "start": 8.75,
+      "end": 9.55,
+      "peak": 9.15,
+      "intensity": 0.8,
+      "reaction": "stagger",
+      "id": "e11",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "jab",
+      "side": "left",
+      "region": "head",
+      "outcome": "hit",
+      "start": 9.65,
+      "end": 10.45,
+      "peak": 10.05,
+      "intensity": 0.5,
+      "reaction": "recoil",
+      "id": "e12",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "hook",
+      "side": "left",
+      "region": "chest",
+      "outcome": "hit",
+      "start": 10.55,
+      "end": 11.35,
+      "peak": 10.95,
+      "intensity": 0.75,
+      "reaction": "stagger",
+      "id": "e13",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "cross",
+      "side": "right",
+      "region": "head",
+      "outcome": "hit",
+      "start": 11.45,
+      "end": 12.4,
+      "peak": 11.95,
+      "intensity": 1.0,
+      "reaction": "knockdown",
+      "id": "e14",
+      "dodge": "side"
+    },
+    {
+      "kind": "guard",
+      "actor": "both",
+      "start": 12.5,
+      "end": 15.0,
+      "id": "e15"
+    }
+  ]
+}

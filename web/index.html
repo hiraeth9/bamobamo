@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>白膜视频生成 · White Model Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ===================== 设计令牌 =====================
+     方向：工业暗色"渲染工作台"
+     展示字 Chakra Petch / 正文 Noto Sans SC / 等宽 IBM Plex Mono
+     主色暖黑 + 琥珀橙强调色（呼应 Blender）
+  ====================================================== */
+  :root {
+    --color-bg: #0b0a09;
+    --color-surface: #15130f;
+    --color-surface-2: #1d1a15;
+    --color-text: #f4efe8;
+    --color-muted: #9b938a;
+    --color-faint: #6b645c;
+    --color-accent: #ff8a2a;
+    --color-accent-soft: rgba(255, 138, 42, 0.14);
+    --color-ok: #7bd88f;
+    --color-err: #ff6b6b;
+    --color-border: rgba(244, 239, 232, 0.10);
+    --color-border-strong: rgba(244, 239, 232, 0.18);
+
+    --font-display: 'Chakra Petch', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
+
+    --radius-sm: 4px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+
+    --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px;
+    --space-5: 40px; --space-6: 64px;
+
+    --shadow-1: 0 2px 8px rgba(0, 0, 0, .35);
+    --shadow-2: 0 8px 28px rgba(0, 0, 0, .45);
+    --shadow-3: 0 24px 64px rgba(0, 0, 0, .55);
+
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-fast: 160ms;
+    --dur-base: 320ms;
+    --dur-slow: 640ms;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* 氛围层：渐变网格 + 颗粒噪点 */
+  .atmosphere::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(52rem 40rem at 8% -12%, rgba(255, 138, 42, .16), transparent 60%),
+      radial-gradient(46rem 38rem at 102% 4%, rgba(255, 138, 42, .10), transparent 55%),
+      radial-gradient(40rem 36rem at 50% 110%, rgba(255, 138, 42, .07), transparent 60%);
+    filter: blur(1px);
+  }
+  .atmosphere::after {
+    content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* 顶部琥珀光带 */
+  .beam {
+    position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 50;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: .85;
+    animation: beam-pulse 4s var(--ease-out) infinite;
+  }
+  @keyframes beam-pulse {
+    0%, 100% { opacity: .35; }
+    50% { opacity: .9; }
+  }
+
+  .shell {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1180px;
+    margin: 0 auto;
+    padding: var(--space-4) var(--space-4) var(--space-6);
+  }
+
+  /* ===================== 顶部品牌栏 ===================== */
+  header.topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: var(--space-3) var(--space-1);
+    margin-bottom: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 34px; height: 34px; flex: none;
+    display: grid; place-items: center;
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono); font-weight: 500;
+    color: var(--color-accent); font-size: 15px;
+    letter-spacing: -0.02em;
+  }
+  .brand-name {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 17px; letter-spacing: .01em;
+  }
+  .brand-name .en {
+    display: block; font-size: 10px; letter-spacing: .32em;
+    color: var(--color-faint); text-transform: uppercase; font-weight: 500;
+  }
+  .engine-badge {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--color-muted);
+    padding: 7px 14px; border: 1px solid var(--color-border); border-radius: 999px;
+  }
+  .engine-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--color-ok);
+    box-shadow: 0 0 10px var(--color-ok);
+  }
+  .engine-dot.off { background: var(--color-faint); box-shadow: none; }
+
+  /* ===================== 主体两栏 ===================== */
+  .layout {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-4); align-items: start;
+  }
+  @media (max-width: 880px) {
+    .layout { grid-template-columns: 1fr; }
+    .shell { padding: var(--space-3) var(--space-3) var(--space-5); }
+    header.topbar { margin-bottom: var(--space-4); }
+  }
+
+  /* ===================== 左栏：输入 ===================== */
+  .panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); }
+
+  .intro { margin-bottom: var(--space-4); }
+  .intro h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(28px, 4vw, 40px); line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 10px;
+  }
+  .intro h1 .accent { color: var(--color-accent); }
+  .intro p { color: var(--color-muted); font-size: 15px; max-width: 34ch; }
+
+  .input-panel { padding: var(--space-4); }
+  .field-label {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--color-faint); margin-bottom: 10px;
+  }
+  .field-label .count { color: var(--color-faint); }
+
+  textarea#prompt {
+    width: 100%; min-height: 110px; resize: vertical;
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+    outline: none;
+    transition: border-color var(--dur-fast) ease-out, box-shadow var(--dur-fast) ease-out;
+  }
+  textarea#prompt::placeholder { color: var(--color-faint); }
+  textarea#prompt:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+  }
+
+  .actions-row { display: flex; align-items: center; gap: 14px; margin-top: 20px; }
+  button#btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 26px;
+    background: var(--color-accent); color: #1a0e02;
+    border: none; border-radius: var(--radius-sm);
+    font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: .02em;
+    cursor: pointer;
+    transition: transform var(--dur-fast) ease-out, filter var(--dur-fast) ease-out;
+  }
+  button#btn:hover:not(:disabled) { filter: brightness(1.08); transform: translateY(-1px); }
+  button#btn:active:not(:disabled) { transform: translateY(0); }
+  button#btn:disabled { background: var(--color-surface-2); color: var(--color-faint); cursor: not-allowed; }
+  .btn-glyph { font-family: var(--font-mono); font-size: 14px; }
+
+  .hint-line { margin-top: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--color-faint); }
+
+  /* ===================== 右栏：进度 + 日志 + 视频 ===================== */
+  .output-panel { padding: var(--space-4); }
+
+  /* 阶段状态 */
+  .stage-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .stage-tag {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--color-accent);
+    border: 1px solid var(--color-accent); border-radius: var(--radius-sm);
+    padding: 4px 10px; flex: none;
+  }
+  .stage-text { font-size: 14px; color: var(--color-text); }
+  .stage-text .dim { color: var(--color-muted); }
+
+  /* 进度条 */
+  .progress { height: 4px; background: var(--color-surface-2); border-radius: 999px; overflow: hidden; margin-bottom: 20px; }
+  .progress .bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--color-accent), #ffc07a);
+    border-radius: 999px;
+    transition: width var(--dur-slow) var(--ease-out);
+  }
+  .progress.running .bar {
+    width: 100%;
+    animation: sweep 1.6s var(--ease-out) infinite;
+    background: linear-gradient(90deg, var(--color-accent), #ffc07a, var(--color-accent));
+    background-size: 200% 100%;
+  }
+  @keyframes sweep { 0% { background-position: 0% 0; } 100% { background-position: -200% 0; } }
+  .progress.done .bar { width: 100%; background: var(--color-ok); }
+  .progress.error .bar { width: 100%; background: var(--color-err); }
+
+  /* 实时日志终端 */
+  .console {
+    background: #0e0c09;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    height: 220px; overflow-y: auto;
+    padding: 12px 14px;
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.7;
+    color: var(--color-muted);
+    scroll-behavior: smooth;
+  }
+  .console .line { white-space: pre-wrap; word-break: break-all; }
+  .console .line .ts { color: var(--color-faint); margin-right: 8px; user-select: none; }
+  .console .line.sys { color: var(--color-accent); }
+  .console .line.err { color: var(--color-err); }
+  .console .line.ok { color: var(--color-ok); }
+  .console .cursor {
+    display: inline-block; width: 8px; height: 14px; vertical-align: -2px;
+    background: var(--color-accent); margin-left: 2px;
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* ===================== 底部视频库 ===================== */
+  .gallery {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+  .gallery-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .gallery-head h2 {
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 20px; letter-spacing: .01em;
+  }
+  .gallery-count { font-family: var(--font-mono); font-size: 12px; color: var(--color-muted); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-4);
+  }
+  .video-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--dur-fast) ease-out, transform var(--dur-fast) ease-out;
+  }
+  .video-card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
+  .video-card video {
+    display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    background: #000; cursor: pointer;
+  }
+  .video-card .meta {
+    padding: 10px 12px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--color-muted);
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+  .video-card .meta .vname { color: var(--color-text); word-break: break-all; }
+  .video-card .meta .vsize { flex: none; color: var(--color-faint); }
+
+  .gallery-empty {
+    text-align: center; padding: var(--space-5) 0;
+    color: var(--color-faint); font-size: 14px;
+  }
+
+  /* 分页 */
+  .pager {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-3); margin-top: var(--space-4);
+  }
+  .page-btn {
+    min-height: 40px; padding: 0 18px;
+    background: var(--color-surface-2); color: var(--color-text);
+    border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+    font-family: var(--font-mono); font-size: 13px; cursor: pointer;
+    transition: border-color var(--dur-fast) ease-out, color var(--dur-fast) ease-out;
+  }
+  .page-btn:hover:not(:disabled) { border-color: var(--color-accent); color: var(--color-accent); }
+  .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+  .page-info { font-family: var(--font-mono); font-size: 13px; color: var(--color-muted); }
+
+  /* 入场动画 */
+  .reveal { opacity: 0; transform: translateY(18px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
+  .reveal:nth-child(2) { transition-delay: 70ms; }
+  .reveal:nth-child(3) { transition-delay: 140ms; }
+  .reveal:nth-child(4) { transition-delay: 210ms; }
+
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body class="atmosphere">
+<div class="beam"></div>
+
+<div class="shell">
+  <header class="topbar reveal">
+    <div class="brand">
+      <div class="brand-mark">WM</div>
+      <div class="brand-name">白膜视频生成<span class="en">White Model Studio</span></div>
+    </div>
+    <div class="engine-badge"><span class="engine-dot" id="engineDot"></span><span id="engineText">引擎检测中…</span></div>
+  </header>
+
+  <div class="layout">
+    <!-- 左栏：输入 -->
+    <section class="intro reveal">
+      <h1>一句话，生成<span class="accent">白膜参考视频</span></h1>
+      <p>描述人物、动作、场景物品、时长和镜头要求，AI 自动识别人数并生成白膜参考视频。</p>
+    </section>
+
+    <section class="panel input-panel reveal" aria-label="提示词输入">
+      <div class="field-label">
+        <span>描述你想看到的画面</span>
+        <span class="count" id="charCount">0</span>
+      </div>
+      <textarea id="prompt" placeholder="例如：两个人打斗，A连续出拳，B侧闪后踢腿反击，A抬臂格挡，最后双方拉开距离。15秒，始终拍到两人全身。"></textarea>
+      <div class="actions-row">
+        <button id="btn" type="button">
+          <span class="btn-glyph" id="btnGlyph">▶</span>
+          <span id="btnText">生成视频</span>
+        </button>
+      </div>
+      <div class="hint-line">用日常语言详细描述人物、物品、动作顺序、接触方式、时长和镜头位置，系统按完整提示词分析并生成。</div>
+    </section>
+
+    <!-- 右栏：进度 + 日志 -->
+    <section class="panel output-panel reveal" aria-label="生成进度与结果">
+      <div class="stage-row">
+        <span class="stage-tag" id="stageTag">待机</span>
+        <span class="stage-text" id="stageText"><span class="dim">提交提示词后开始</span></span>
+      </div>
+      <div class="progress" id="progress"><div class="bar"></div></div>
+      <div class="console" id="console" aria-live="polite">
+        <div class="line sys"><span class="ts">--:--:--</span>白膜渲染控制台就绪。</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 底部：视频库（历史视频 + 分页） -->
+  <section class="gallery reveal" aria-label="视频库">
+    <div class="gallery-head">
+      <h2>视频库</h2>
+      <span class="gallery-count" id="galleryCount">0 个视频</span>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-empty" id="galleryEmpty" style="display:none">
+      还没有生成视频，输入提示词开始创作吧。
+    </div>
+    <nav class="pager" id="pager" aria-label="分页">
+      <button class="page-btn" id="prevBtn" type="button">← 上一页</button>
+      <span class="page-info" id="pageInfo">1 / 1</span>
+      <button class="page-btn" id="nextBtn" type="button">下一页 →</button>
+    </nav>
+  </section>
+</div>
+
+<script>
+let abortCtl = null;
+
+/* ---------- 工具 ---------- */
+function ts() {
+  const d = new Date();
+  return [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, '0')).join(':');
+}
+function log(text, cls) {
+  const c = document.getElementById('console');
+  const line = document.createElement('div');
+  line.className = 'line ' + (cls || '');
+  const t = document.createElement('span');
+  t.className = 'ts'; t.textContent = ts();
+  line.appendChild(t);
+  line.appendChild(document.createTextNode(text));
+  c.appendChild(line);
+  c.scrollTop = c.scrollHeight;
+}
+function setStage(tag, text, progressState) {
+  document.getElementById('stageTag').textContent = tag;
+  document.getElementById('stageText').innerHTML = text;
+  const p = document.getElementById('progress');
+  p.className = 'progress ' + (progressState || '');
+}
+function setBtn(running) {
+  const btn = document.getElementById('btn');
+  btn.disabled = running;
+  document.getElementById('btnGlyph').textContent = running ? '…' : '▶';
+  document.getElementById('btnText').textContent = running ? '生成中' : '生成视频';
+}
+
+/* ---------- 引擎健康检测 ---------- */
+async function ping() {
+  try {
+    const r = await fetch('/api/actions');
+    if (r.ok) {
+      document.getElementById('engineDot').classList.remove('off');
+      document.getElementById('engineText').textContent = '引擎在线';
+      return true;
+    }
+  } catch (e) { /* ignore */ }
+  document.getElementById('engineDot').classList.add('off');
+  document.getElementById('engineText').textContent = '引擎离线';
+  return false;
+}
+
+/* ---------- 输入计数 ---------- */
+function updateCount() {
+  document.getElementById('charCount').textContent = document.getElementById('prompt').value.length + ' 字';
+}
+
+/* ---------- 生成（SSE 流式） ---------- */
+async function generate() {
+  const promptEl = document.getElementById('prompt');
+  const prompt = promptEl.value.trim();
+  if (!prompt) { log('请描述你想看到的画面', 'err'); return; }
+  if (abortCtl || resumedSource) { log('已有任务进行中', 'err'); return; }
+
+  setBtn(true);
+  setStage('运行', '连接 Agent…', 'running');
+  document.getElementById('console').innerHTML = '<div class="line sys"><span class="ts">' + ts() + '</span>白膜渲染控制台就绪。</div>';
+  log('提交提示词：' + prompt, 'sys');
+
+  abortCtl = new AbortController();
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+      signal: abortCtl.signal
+    });
+
+    if (!res.ok || !res.body) {
+      const d = await res.json().catch(() => ({}));
+      setStage('错误', '<span class="dim">' + (d.error || '请求失败') + '</span>', 'error');
+      log('失败：' + (d.error || '请求失败'), 'err');
+      return;
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let sawLog = false;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let idx;
+      while ((idx = buffer.indexOf('\n\n')) !== -1) {
+        const chunk = buffer.slice(0, idx);
+        buffer = buffer.slice(idx + 2);
+        for (const line of chunk.split('\n')) {
+          if (!line.startsWith('data:')) continue;
+          let ev;
+          try { ev = JSON.parse(line.slice(5).trim()); } catch (e) { continue; }
+          handleEvent(ev, () => { sawLog = true; });
+          if (!sawLog && ev.type === 'log') { sawLog = true; }
+        }
+      }
+    }
+  } catch (e) {
+    if (e.name === 'AbortError') { setStage('连接断开', '<span class="dim">任务继续在后台执行</span>', ''); }
+    else { setStage('错误', '<span class="dim">' + e.message + '</span>', 'error'); log('网络错误：' + e.message, 'err'); }
+  } finally {
+    abortCtl = null;
+    setBtn(false);
+  }
+}
+
+function handleEvent(ev) {
+  switch (ev.type) {
+    case 'status':
+      if (ev.stage === 'starting') {
+        setStage('运行', 'Agent 已启动，正在决策…', 'running');
+        log(ev.message || 'Agent 启动', 'sys');
+      } else {
+        setStage('运行', ev.message || '生成中…', 'running');
+      }
+      break;
+    case 'job':
+      localStorage.setItem('bamoLastJob', ev.job_id);
+      log('任务编号：' + ev.job_id, 'sys');
+      break;
+    case 'log':
+      setStage('运行', 'Agent 决策 / 渲染中…', 'running');
+      log(ev.line || '', '');
+      break;
+    case 'video':
+      localStorage.removeItem('bamoLastJob');
+      if (resumedSource) { resumedSource.close(); resumedSource = null; setBtn(false); }
+      setStage('完成', '<span class="dim">已生成视频</span>', 'done');
+      log('渲染完成 → ' + ev.video, 'ok');
+      if (ev.report) log(ev.report, 'sys');
+      for (const note of ev.warnings || []) log('生成说明：' + note, 'sys');
+      // 刷新视频库（回到第一页，最新视频排最前）
+      loadVideos(1);
+      break;
+    case 'error':
+      localStorage.removeItem('bamoLastJob');
+      if (resumedSource) { resumedSource.close(); resumedSource = null; setBtn(false); }
+      setStage('失败', '<span class="dim">' + (ev.message || '生成失败') + '</span>', 'error');
+      log('失败：' + (ev.message || ''), 'err');
+      if (ev.detail) log(ev.detail, 'err');
+      break;
+  }
+}
+
+let resumedSource = null;
+async function resumeLastJob() {
+  const jobId = localStorage.getItem('bamoLastJob');
+  if (!jobId) return;
+  try {
+    const response = await fetch('/api/jobs/' + encodeURIComponent(jobId));
+    if (!response.ok) { localStorage.removeItem('bamoLastJob'); return; }
+    const state = await response.json();
+    if (state.stage === 'complete') { handleEvent({ type: 'video', ...state.result }); return; }
+    if (state.stage === 'failed') { handleEvent({ type: 'error', message: state.message }); return; }
+    setBtn(true);
+    log('已恢复正在运行的任务', 'sys');
+    resumedSource = new EventSource('/api/jobs/' + encodeURIComponent(jobId) + '/events');
+    resumedSource.onmessage = event => {
+      try { handleEvent(JSON.parse(event.data)); } catch (error) { log('任务状态读取失败', 'err'); }
+    };
+  } catch (error) { log('任务仍在后台运行，暂时无法读取状态', 'err'); }
+}
+
+/* ---------- 入口 ---------- */
+document.getElementById('btn').addEventListener('click', generate);
+document.getElementById('prompt').addEventListener('input', updateCount);
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') generate();
+});
+
+/* ---------- 视频库 + 分页 ---------- */
+let curPage = 1;
+let totalPages = 1;
+
+function fmtSize(bytes) {
+  if (bytes >= 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+  if (bytes >= 1024) return (bytes / 1024).toFixed(0) + ' KB';
+  return bytes + ' B';
+}
+
+async function loadVideos(page) {
+  try {
+    const r = await fetch('/api/videos?page=' + page + '&page_size=6');
+    const d = await r.json();
+    curPage = d.page;
+    totalPages = d.total_pages;
+
+    document.getElementById('galleryCount').textContent = d.total + ' 个视频';
+    document.getElementById('pageInfo').textContent = d.page + ' / ' + d.total_pages;
+    document.getElementById('prevBtn').disabled = d.page <= 1;
+    document.getElementById('nextBtn').disabled = d.page >= d.total_pages;
+
+    const grid = document.getElementById('galleryGrid');
+    grid.innerHTML = '';
+    document.getElementById('galleryEmpty').style.display = d.videos.length ? 'none' : 'block';
+
+    d.videos.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'video-card';
+
+      const vid = document.createElement('video');
+      vid.controls = true;
+      vid.preload = 'metadata';
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.src = v.url;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      const name = document.createElement('span');
+      name.className = 'vname';
+      name.textContent = v.name;
+      const size = document.createElement('span');
+      size.className = 'vsize';
+      size.textContent = fmtSize(v.size);
+      meta.appendChild(name);
+      meta.appendChild(size);
+
+      card.appendChild(vid);
+      card.appendChild(meta);
+      grid.appendChild(card);
+    });
+  } catch (e) {
+    document.getElementById('galleryEmpty').style.display = 'block';
+    document.getElementById('galleryEmpty').textContent = '视频库加载失败：' + e.message;
+  }
+}
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (curPage > 1) loadVideos(curPage - 1);
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (curPage < totalPages) loadVideos(curPage + 1);
+});
+
+/* 入场序列 */
+requestAnimationFrame(() => {
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('in'), 60 + i * 80);
+  });
+});
+
+ping();
+loadVideos(1);
+resumeLastJob();
+</script>
+</body>
+</html>

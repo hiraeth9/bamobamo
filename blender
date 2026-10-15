@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Root-free Blender launcher (headless or GUI).
+# Adds the locally-extracted libSM/libICE to the library search path,
+# then runs the tarball build in place. No system changes, no root needed.
+set -euo pipefail
+
+DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+BLENDER_DIR="$DIR/blender-5.2.2-linux-x64"
+LOCAL_LIBS="$BLENDER_DIR/_local_libs/usr/lib/x86_64-linux-gnu"
+
+export LD_LIBRARY_PATH="$LOCAL_LIBS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+exec "$BLENDER_DIR/blender" "$@"

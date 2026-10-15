@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "units": "metres, Z up; object width X, depth Y, height Z; fronts face local -Y",
+  "provider": "project_procedural",
+  "objects": {
+    "table": {
+      "aliases": [
+        "桌子",
+        "餐桌",
+        "书桌",
+        "工作台"
+      ],
+      "size": [
+        1.2,
+        0.7,
+        0.75
+      ],
+      "min": [
+        0.6,
+        0.4,
+        0.6
+      ],
+      "max": [
+        2.4,
+        1.2,
+        1.0
+      ],
+      "parts": [
+        "top",
+        "legs"
+      ],
+      "anchors": [
+        "touch"
+      ],
+      "actions": [
+        "touch_table"
+      ]
+    },
+    "chair": {
+      "aliases": [
+        "椅子",
+        "座椅"
+      ],
+      "size": [
+        0.46,
+        0.48,
+        0.86
+      ],
+      "min": [
+        0.35,
+        0.35,
+        0.7
+      ],
+      "max": [
+        0.7,
+        0.7,
+        1.2
+      ],
+      "parts": [
+        "seat",
+        "back",
+        "legs"
+      ],
+      "anchors": [
+        "seat"
+      ],
+      "actions": []
+    },
+    "window": {
+      "aliases": [
+        "窗户",
+        "窗",
+        "平开窗"
+      ],
+      "size": [
+        1.1,
+        0.12,
+        1.2
+      ],
+      "min": [
+        0.7,
+        0.08,
+        0.7
+      ],
+      "max": [
+        1.6,
+        0.25,
+        1.6
+      ],
+      "parts": [
+        "frame",
+        "sash",
+        "pane",
+        "handle"
+      ],
+      "anchors": [
+        "handle",
+        "hinge"
+      ],
+      "actions": [
+        "open_window",
+        "close_window",
+        "vault_window"
+      ]
+    },
+    "door": {
+      "aliases": [
+        "门",
+        "房门",
+        "木门"
+      ],
+      "size": [
+        0.9,
+        0.14,
+        2.1
+      ],
+      "min": [
+        0.7,
+        0.08,
+        1.9
+      ],
+      "max": [
+        1.3,
+        0.25,
+        2.5
+      ],
+      "parts": [
+        "frame",
+        "leaf",
+        "handle",
+        "pull_bar"
+      ],
+      "anchors": [
+        "handle",
+        "hinge",
+        "handle_back",
+        "entry",
+        "exit",
+        "contact_front",
+        "contact_back"
+      ],
+      "actions": [
+        "open_door",
+        "close_door",
+        "pass_door"
+      ]
+    },
+    "box": {
+      "aliases": [
+        "箱子",
+        "木箱",
+        "纸箱"
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "min": [
+        0.15,
+        0.15,
+        0.15
+      ],
+      "max": [
+        1.2,
+        1.2,
+        1.2
+      ],
+      "parts": [
+        "body",
+        "lid"
+      ],
+      "anchors": [
+        "top"
+      ],
+      "actions": []
+    }
+  },
+  "interactions": {
+    "actor_count": 1,
+    "actions": [
+      "touch_table",
+      "open_window",
+      "close_window",
+      "open_door",
+      "close_door",
+      "vault_window",
+      "pass_door"
+    ],
+    "phases": "Standard operations: approach, reach, operate, release. Window vault: open prerequisite, walk/run approach, bilateral hand support, body passage, landing and recovery.",
+    "vault_window": {
+      "approach": [
+        "walk_run",
+        "run",
+        "walk"
+      ],
+      "default_approach": "walk_run",
+      "walk_fraction": {
+        "default": 0.45,
+        "min": 0.2,
+        "max": 0.7
+      },
+      "minimum_seconds": 6,
+      "exclusive": true,
+      "closed_window_policy": "For an unspecified default closed window, set it open before video begins and record initial clearance preparation in executed_scene_plan.preconditions_applied. No unattended opening is animated. Explicit keep-closed, open-then-vault and glass breaking requests are unsupported.",
+      "execution_limits": "Vault requires width >= 1.0 m, height >= 1.0 m and sill height 0.55..1.05 m. Actual deformed skin passage clearance, reach, continuous passage and landing are checked by the executor; infeasible dimensions fail without changing user dimensions or widening validation."
+    },
+    "limitations": [
+      "Chair sitting, lifting, destruction and combat mixed with object interaction are not installed.",
+      "Window vault must be the only object interaction and the final action; mixing with explicit open/close operations, additional vaults or combat is not installed."
+    ],
+    "pass_door": {
+      "direction": [
+        "outward",
+        "inward"
+      ],
+      "default_direction": "outward",
+      "minimum_seconds": 3,
+      "door_side": [
+        "inside",
+        "outside"
+      ],
+      "initial_state_requirement": "Door must already be open initially or by an earlier open_door event. Never silently open a closed door for passage.",
+      "chain_limits": "Single actor, one door and at most one passage. Only the same door open/pass/close events. Fixed-frame inside is local -Y; outside is local +Y. infer opening/closing door_side from passage direction and prior side transitions. No independent single_plan.locomotion, combat, running or other interactions.",
+      "execution_limits": "Actual animated leaf/frame/skin clearance, handle reach, safe passage route and timing are checked by the executor. Reject infeasible width, angle, obstacles or duration; do not modify explicit user dimensions or timing.",
+      "operation_contact": "Specialized pass chain uses visible near-hinge pull bars and animated contact_front/contact_back surface anchors at radius 0.30m. Original far handle remains for legacy operations; do not claim far-handle reach for full 80-degree passage-chain operation.",
+      "planning_recommendation": {
+        "unspecified_width_m": 1.3,
+        "unspecified_open_angle_deg": 80,
+        "full_chain_seconds": 20,
+        "suggested_event_intervals_seconds": {
+          "open_door": [
+            0,
+            6
+          ],
+          "pass_door": [
+            6,
+            14
+          ],
+          "close_door": [
+            14,
+            20
+          ]
+        },
+        "policy": "Only recommend when user did not specify duration, dimensions, angle or action times. Preserve explicit duration including 15 seconds; allocate safe action times within original duration or reject. The 30-second person-plan limit applies only to a saved, validated pass_door scene; other single actions and independent locomotion remain limited to 15 seconds. Preserve original asset default size and angle; actual geometry rejects infeasible explicit specifications without changing them.",
+        "default_hand_side": "left",
+        "explicit_hand_policy": "Preserve explicit right; actual reach/contact/collision checks decide feasibility. Legacy interactions without passage keep default right."
+      },
+      "maximum_chain_seconds": 30,
+      "camera": {
+        "policy": "fixed",
+        "view": "side_section",
+        "preset_azimuth_deg": 0,
+        "plan_parameters": {
+          "pitch_deg": 0,
+          "distance_ratio": 3.5,
+          "fov": 50
+        },
+        "scope": "Specialized passage-chain preset; keeps the full actor visible after closure. Legacy prop/window scenes retain their fixed oblique view; do not submit custom orbit or azimuth fields."
+      }
+    }
+  }
+}

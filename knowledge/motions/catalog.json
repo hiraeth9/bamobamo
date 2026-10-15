@@ -1,0 +1,8043 @@
+{
+  "version": 1,
+  "purpose": "Natural-language candidates, never a prompt/action whitelist",
+  "procedural_allowed": true,
+  "fbx_count": 63,
+  "entries": [
+    {
+      "motion_id": "mixamo.basic.falling",
+      "name": "Falling",
+      "asset": "mixamo_fbx/basic/Falling.fbx",
+      "asset_sha256": "fe5929511948ddf1bca310c3d2d8929dc95a06bd00482097581238fc671c1279",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Falling（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "下落",
+        "坠落",
+        "falling",
+        "Falling"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        342.0
+      ],
+      "duration_s": 11.366666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            342.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.basic.idle",
+      "name": "Idle",
+      "asset": "mixamo_fbx/basic/Idle.fbx",
+      "asset_sha256": "179d28d00444a04062b5ff1428398f8b897d13d38e7d503808c6b94b39716e5d",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Idle（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "待机",
+        "站着",
+        "站立",
+        "idle",
+        "Idle"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        121.0
+      ],
+      "duration_s": 4.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            121.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": true,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.basic.jogging",
+      "name": "Jogging",
+      "asset": "mixamo_fbx/basic/Jogging.fbx",
+      "asset_sha256": "bceae244f1ba72c6495e25c52ba780e2c6cb6dc513d5f6add9cb39555450e46b",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Jogging（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "慢跑",
+        "jogging",
+        "jog",
+        "Jogging"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        78.0
+      ],
+      "duration_s": 2.566666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            78.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": true,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.basic.jump",
+      "name": "Jump",
+      "asset": "mixamo_fbx/basic/Jump.fbx",
+      "asset_sha256": "642cbf569ff60a4251b88af7f50353e6a6d6a38a7e9715f9ff00ad0be8f76391",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Jump（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "跳跃",
+        "起跳",
+        "jump",
+        "Jump"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        66.0
+      ],
+      "duration_s": 2.1666666666666665,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            66.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.basic.run",
+      "name": "Run",
+      "asset": "mixamo_fbx/basic/Run.fbx",
+      "asset_sha256": "6eb60f943e12d7ad7f2b7a5f7c768b56dd2af6074fc99268119984f0fb602716",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Run（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "跑步",
+        "奔跑",
+        "跑向",
+        "running",
+        "run",
+        "Run"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        23.0
+      ],
+      "duration_s": 0.7333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            23.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true,
+        "method": "measured_same_rest_rig",
+        "source_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "target_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "transform_error": 0.0,
+        "mapped_bones": 65,
+        "unmapped_bones": []
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": true,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": {
+        "space": "actor_root_local_meters",
+        "reference": "source_clip_first_frame",
+        "extraction": "planar",
+        "end_displacement_m": [
+          3.725290298461914e-09,
+          -2.5028326511383057,
+          0.0
+        ],
+        "extraction_equivalence_max_error_m": 3.816559456248789e-07
+      },
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      },
+      "key_timebase_fps": 30.0,
+      "source_action": "Armature|mixamo.com|Layer0",
+      "source_slot": "OBSlot",
+      "source_sampling_status": "verified_bounded_scope",
+      "source_sampling_report": "reports/agent_motion_validation_20261014.json"
+    },
+    {
+      "motion_id": "mixamo.basic.sprint",
+      "name": "Sprint",
+      "asset": "mixamo_fbx/basic/Sprint.fbx",
+      "asset_sha256": "3a913b608684dfc737e0463fe31b33d0ebdc4606e9d1ebba118f89ac47ff9ffe",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Sprint（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "冲刺",
+        "疾跑",
+        "sprint",
+        "Sprint"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        17.0
+      ],
+      "duration_s": 0.5333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            17.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": true,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.basic.strafe",
+      "name": "Strafe",
+      "asset": "mixamo_fbx/basic/Strafe.fbx",
+      "asset_sha256": "1b1996df649992a2e229552e83031c508c794b2d00850f62b88e09233c5f6867",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "Strafe（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "侧移",
+        "横移",
+        "strafe",
+        "Strafe"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        33.0
+      ],
+      "duration_s": 1.0666666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            33.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.basic.walk",
+      "name": "Walk",
+      "asset": "mixamo_fbx/basic/Walk.fbx",
+      "asset_sha256": "7eadd944f109dfc32e1e06a0ff4abb4b40cec36d7f04264e554dfdf51bb3dde6",
+      "provider": "fbx",
+      "category": "basic",
+      "description": "真实步态的下半身层，倒放后撤",
+      "aliases": [
+        "走路",
+        "步行",
+        "行走",
+        "walking",
+        "walk",
+        "Walk"
+      ],
+      "registered_ids": [
+        "step"
+      ],
+      "registration_scope": "Existing duel annotations describe that executor; source sampler transfers poses, while contact IK and smoothing must be requested separately",
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        31.0
+      ],
+      "duration_s": 1.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            31.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true,
+        "method": "measured_same_rest_rig",
+        "source_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "target_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "transform_error": 0.0,
+        "mapped_bones": 65,
+        "unmapped_bones": []
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "registered_bounded_source",
+      "loop_allowed": true,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": {
+        "space": "actor_root_local_meters",
+        "reference": "source_clip_first_frame",
+        "extraction": "planar",
+        "end_displacement_m": [
+          9.080395102500916e-09,
+          -1.6786987781524658,
+          0.0
+        ],
+        "extraction_equivalence_max_error_m": 1.7881393432617188e-07
+      },
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      },
+      "key_timebase_fps": 30.0,
+      "source_action": "Armature|mixamo.com|Layer0",
+      "source_slot": "OBSlot",
+      "source_sampling_status": "verified_bounded_scope",
+      "source_sampling_report": "reports/agent_motion_validation_20261014.json"
+    },
+    {
+      "motion_id": "mixamo.combat_magic.casting_spell",
+      "name": "Casting Spell",
+      "asset": "mixamo_fbx/combat_magic/Casting Spell.fbx",
+      "asset_sha256": "34e0cbf686592f8349601e9b96e18c11b365849a398e361ff7dfc0fc2856485e",
+      "provider": "fbx",
+      "category": "combat_magic",
+      "description": "Casting Spell（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "施法",
+        "casting spell",
+        "Casting Spell"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        232.0
+      ],
+      "duration_s": 7.7,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            232.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_magic.fishing_cast",
+      "name": "Fishing Cast",
+      "asset": "mixamo_fbx/combat_magic/Fishing Cast.fbx",
+      "asset_sha256": "b0341cdbabb4b4a504df68c12e6240d117c719a63d82ec41b7450a152da73419",
+      "provider": "fbx",
+      "category": "combat_magic",
+      "description": "Fishing Cast（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "抛鱼竿",
+        "钓鱼抛投",
+        "fishing cast",
+        "Fishing Cast"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        264.0
+      ],
+      "duration_s": 8.766666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            264.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_magic.magic_heal",
+      "name": "Magic Heal",
+      "asset": "mixamo_fbx/combat_magic/Magic Heal.fbx",
+      "asset_sha256": "5c49eb3ac49038463ab5967fcb09d7ae6ac30f4cdfc8b85922fb120ed70c2479",
+      "provider": "fbx",
+      "category": "combat_magic",
+      "description": "Magic Heal（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "魔法治疗",
+        "magic heal",
+        "Magic Heal"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        81.0
+      ],
+      "duration_s": 2.6666666666666665,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            81.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_magic.spell_cast",
+      "name": "Spell Cast",
+      "asset": "mixamo_fbx/combat_magic/Spell Cast.fbx",
+      "asset_sha256": "1460a459a70a043e818f393a3e3280120a3c1c82d662be0a000af3bcd31b0e8c",
+      "provider": "fbx",
+      "category": "combat_magic",
+      "description": "Spell Cast（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "施法",
+        "spell cast",
+        "Spell Cast"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        35.0
+      ],
+      "duration_s": 1.1333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            35.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_magic.spell_casting",
+      "name": "Spell Casting",
+      "asset": "mixamo_fbx/combat_magic/Spell Casting.fbx",
+      "asset_sha256": "c14176921e68c7ae4c7ea24009cf7baeea8933d6161f598d70718b218fdb09a1",
+      "provider": "fbx",
+      "category": "combat_magic",
+      "description": "Spell Casting（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "施法",
+        "spell casting",
+        "Spell Casting"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        127.0
+      ],
+      "duration_s": 4.2,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            127.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.boxing",
+      "name": "Boxing",
+      "asset": "mixamo_fbx/combat_melee/Boxing.fbx",
+      "asset_sha256": "fc7af05a4b196aefa75454d357f8f77368c9bba7438c9b75b59ba4bc1b1cc546",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Boxing（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "拳击组合",
+        "拳击",
+        "打斗",
+        "搏斗",
+        "对打",
+        "格斗",
+        "boxing",
+        "fight",
+        "Boxing"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        53.0
+      ],
+      "duration_s": 1.7333333333333334,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            53.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.drop_kick",
+      "name": "Drop Kick",
+      "asset": "mixamo_fbx/combat_melee/Drop Kick.fbx",
+      "asset_sha256": "8d63145afb87b07c69a4db15afe67f0df2f77537826b575695f301c19ca8a95f",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Drop Kick（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "飞踢",
+        "双脚飞踢",
+        "drop kick",
+        "Drop Kick"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        88.0
+      ],
+      "duration_s": 2.9,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            88.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.flip_kick",
+      "name": "Flip Kick",
+      "asset": "mixamo_fbx/combat_melee/Flip Kick.fbx",
+      "asset_sha256": "06431b769004348bdb30c52501993f8d62496833f41e35c94f925730c13296d3",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Flip Kick（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "翻身踢",
+        "翻转踢",
+        "flip kick",
+        "Flip Kick"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        85.0
+      ],
+      "duration_s": 2.8,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            85.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.headbutt",
+      "name": "Headbutt",
+      "asset": "mixamo_fbx/combat_melee/Headbutt.fbx",
+      "asset_sha256": "291bb96dfee5f768cff8d8fa8367af6560008b99e43ed37ae791241800dc2cd0",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Headbutt（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "头槌",
+        "头撞",
+        "headbutt",
+        "Headbutt"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        64.0
+      ],
+      "duration_s": 2.1,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            64.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.hook",
+      "name": "Hook",
+      "asset": "mixamo_fbx/combat_melee/Hook.fbx",
+      "asset_sha256": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "勾拳，实测左手出拳，使用完整出招与收招窗口，保留转胯和弧线拳路",
+      "aliases": [
+        "勾拳",
+        "摆拳",
+        "hook",
+        "Hook"
+      ],
+      "registered_ids": [
+        "hook"
+      ],
+      "registration_scope": "Existing duel annotations describe that executor; source sampler transfers poses, while contact IK and smoothing must be requested separately",
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        73.0
+      ],
+      "duration_s": 2.4,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            73.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true,
+        "method": "measured_same_rest_rig",
+        "source_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "target_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "transform_error": 0.0,
+        "mapped_bones": 65,
+        "unmapped_bones": []
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "registered_bounded_source",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": [
+        16,
+        42
+      ],
+      "phases": {
+        "preparation": [
+          16,
+          23
+        ],
+        "strike": [
+          23,
+          31
+        ],
+        "recovery": [
+          31,
+          42
+        ]
+      },
+      "source_peak": 31,
+      "side": "left",
+      "root_metadata": {
+        "space": "actor_root_local_meters",
+        "reference": "source_clip_first_frame",
+        "extraction": "planar",
+        "end_displacement_m": [
+          2.1206215023994446e-06,
+          -6.907153874635696e-06,
+          0.0
+        ],
+        "extraction_equivalence_max_error_m": 2.0647654623614278e-07
+      },
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      },
+      "key_timebase_fps": 30.0,
+      "source_action": "Armature|mixamo.com|Layer0",
+      "source_slot": "OBSlot",
+      "source_sampling_status": "verified_bounded_scope",
+      "source_sampling_report": "reports/agent_motion_validation_20261014.json"
+    },
+    {
+      "motion_id": "mixamo.combat_melee.jab_cross",
+      "name": "Jab Cross",
+      "asset": "mixamo_fbx/combat_melee/Jab Cross.fbx",
+      "asset_sha256": "50103e1276b8fc0e6c8300e67fd99bb86fea37aa0db91002ef0d090b06812a72",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Jab Cross（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "刺拳直拳组合",
+        "一二连拳",
+        "jab cross",
+        "Jab Cross"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        65.0
+      ],
+      "duration_s": 2.1333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            65.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.kicking",
+      "name": "Kicking",
+      "asset": "mixamo_fbx/combat_melee/Kicking.fbx",
+      "asset_sha256": "9ad42f7f4a5014d181c9f676344fb6d58456d00a521d5e9360cd970d1670ab16",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Kicking（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "踢击",
+        "踢腿",
+        "kicking",
+        "Kicking"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        103.0
+      ],
+      "duration_s": 3.4,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            103.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.knee_jab",
+      "name": "Knee Jab",
+      "asset": "mixamo_fbx/combat_melee/Knee Jab.fbx",
+      "asset_sha256": "b1e158f05b1d90db3bb51f6ac8c21b60a48b4c9df9686fcc383d2126b73210a3",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Knee Jab（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "膝击",
+        "knee jab",
+        "Knee Jab"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        181.0
+      ],
+      "duration_s": 6.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            181.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.lead_jab",
+      "name": "Lead Jab",
+      "asset": "mixamo_fbx/combat_melee/Lead Jab.fbx",
+      "asset_sha256": "fa5a49d7fd0aad5d82e966e03870df3f347803b0577e5469a0704c0667f794e2",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Lead Jab（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "前手刺拳",
+        "刺拳",
+        "lead jab",
+        "Lead Jab"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        56.0
+      ],
+      "duration_s": 1.8333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            56.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.mma_idle",
+      "name": "Mma Idle",
+      "asset": "mixamo_fbx/combat_melee/Mma Idle.fbx",
+      "asset_sha256": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "格斗待机，唯一允许循环的来源",
+      "aliases": [
+        "格斗待机",
+        "格斗站姿",
+        "警戒",
+        "guard",
+        "Mma Idle"
+      ],
+      "registered_ids": [
+        "guard"
+      ],
+      "registration_scope": "Existing duel annotations describe that executor; source sampler transfers poses, while contact IK and smoothing must be requested separately",
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        151.0
+      ],
+      "duration_s": 5.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            151.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "registered_bounded_source",
+      "loop_allowed": true,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.mma_kick",
+      "name": "Mma Kick",
+      "asset": "mixamo_fbx/combat_melee/Mma Kick.fbx",
+      "asset_sha256": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "踢击，可改变侧和头/躯干落点，单次播放，保留抬腿与回收；源姿态经过对称平滑，减少紧凑重定时的关节突变",
+      "aliases": [
+        "踢击",
+        "踢腿",
+        "kick",
+        "Mma Kick"
+      ],
+      "registered_ids": [
+        "kick"
+      ],
+      "registration_scope": "Existing duel annotations describe that executor; source sampler transfers poses, while contact IK and smoothing must be requested separately",
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        49.0
+      ],
+      "duration_s": 1.6,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            49.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "registered_bounded_source",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": {
+        "preparation": [
+          1,
+          13
+        ],
+        "strike": [
+          13,
+          21
+        ],
+        "recovery": [
+          21,
+          49
+        ]
+      },
+      "source_peak": 21,
+      "side": "right",
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.punching",
+      "name": "Punching",
+      "asset": "mixamo_fbx/combat_melee/Punching.fbx",
+      "asset_sha256": "6fb15526716cbb3c2a25af3a216ddca81e7ca618420e17e44a490948a807f2ba",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Punching（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "出拳",
+        "拳击",
+        "打斗",
+        "对打",
+        "打一拳",
+        "punch",
+        "punching",
+        "Punching"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        39.0
+      ],
+      "duration_s": 1.2666666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            39.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.side_kick",
+      "name": "Side Kick",
+      "asset": "mixamo_fbx/combat_melee/Side Kick.fbx",
+      "asset_sha256": "06762f8f2bc73bf61bf75cb555d2485fcb75540bfc7a4bf2f309638bf59bee35",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Side Kick（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "侧踢",
+        "side kick",
+        "Side Kick"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        61.0
+      ],
+      "duration_s": 2.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            61.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.throw_in",
+      "name": "Throw In",
+      "asset": "mixamo_fbx/combat_melee/Throw In.fbx",
+      "asset_sha256": "f177290d9ca29d31fe4769fc572dcd1fd7b56254ccb6f9d87f9c29cb659e3f4c",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Throw In（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "掷球",
+        "throw in",
+        "Throw In"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        84.0
+      ],
+      "duration_s": 2.7666666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            84.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_melee.throw",
+      "name": "Throw",
+      "asset": "mixamo_fbx/combat_melee/Throw.fbx",
+      "asset_sha256": "10ff467f71db136ed9f0f61ff57c453a4409694a74b1797d3290c411864324a4",
+      "provider": "fbx",
+      "category": "combat_melee",
+      "description": "Throw（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "投掷",
+        "throw",
+        "Throw"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        67.0
+      ],
+      "duration_s": 2.2,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            67.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.aiming_gun",
+      "name": "Aiming Gun",
+      "asset": "mixamo_fbx/combat_ranged/Aiming Gun.fbx",
+      "asset_sha256": "4c6d2dbf906a1683340aff9cf482215109cffc1f41d986b96cb28597afd05b2d",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Aiming Gun（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "持枪瞄准",
+        "aiming gun",
+        "Aiming Gun"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        73.0
+      ],
+      "duration_s": 2.4,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            73.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.aiming",
+      "name": "Aiming",
+      "asset": "mixamo_fbx/combat_ranged/Aiming.fbx",
+      "asset_sha256": "9b0444defa5ae777ec887ca338940fce4e1b541b6e1858bc3d19a47c3856bf63",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Aiming（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "瞄准",
+        "aiming",
+        "Aiming"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        61.0
+      ],
+      "duration_s": 2.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            61.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.fire_rifle",
+      "name": "Fire Rifle",
+      "asset": "mixamo_fbx/combat_ranged/Fire Rifle.fbx",
+      "asset_sha256": "9242a758f282f60ac63c15aeac18b4352e89f21609aa152b620a97629b39b98a",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Fire Rifle（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "步枪射击",
+        "fire rifle",
+        "Fire Rifle"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        32.0
+      ],
+      "duration_s": 1.0333333333333334,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            32.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.pistol_aim",
+      "name": "Pistol Aim",
+      "asset": "mixamo_fbx/combat_ranged/Pistol Aim.fbx",
+      "asset_sha256": "8dc901cfe3b3b50e4cc24cfad082c8443df1dab58500344b675229879c2ac7a5",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Pistol Aim（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "手枪瞄准",
+        "pistol aim",
+        "Pistol Aim"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        214.0
+      ],
+      "duration_s": 7.1,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            214.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.pistol",
+      "name": "Pistol",
+      "asset": "mixamo_fbx/combat_ranged/Pistol.fbx",
+      "asset_sha256": "7cfdc4a5677df2633c1291cb882f7fc69ca815df546a09878b4d7ade4083d6bf",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Pistol（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "手枪",
+        "pistol",
+        "Pistol"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        122.0
+      ],
+      "duration_s": 4.033333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            122.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.reload",
+      "name": "Reload",
+      "asset": "mixamo_fbx/combat_ranged/Reload.fbx",
+      "asset_sha256": "a453e317ccaf872f3b7cc44df3571e6001faac862288ac45734420b47dc6fec7",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Reload（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "换弹",
+        "装弹",
+        "reload",
+        "Reload"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        207.0
+      ],
+      "duration_s": 6.866666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            207.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.rifle_run",
+      "name": "Rifle Run",
+      "asset": "mixamo_fbx/combat_ranged/Rifle Run.fbx",
+      "asset_sha256": "bbfb433fc1f2942a7411c713b00737aee137370652763e71c71425a58414d974",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Rifle Run（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "持步枪跑步",
+        "rifle run",
+        "Rifle Run"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        21.0
+      ],
+      "duration_s": 0.6666666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            21.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_ranged.shooting",
+      "name": "Shooting",
+      "asset": "mixamo_fbx/combat_ranged/Shooting.fbx",
+      "asset_sha256": "a7b4326abd62bfab479f944de9b914ff80401862e67dcf8a59b933e7b07a97ab",
+      "provider": "fbx",
+      "category": "combat_ranged",
+      "description": "Shooting（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "射击",
+        "shooting",
+        "Shooting"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        36.0
+      ],
+      "duration_s": 1.1666666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            36.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.big_rib_hit",
+      "name": "Big Rib Hit",
+      "asset": "mixamo_fbx/combat_reaction/Big Rib Hit.fbx",
+      "asset_sha256": "5ce16b4e87271c6467cdf44ec68b96da8b3d827cd9fb6a1c0d46eac0e564c8d1",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Big Rib Hit（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "肋部重击",
+        "big rib hit",
+        "Big Rib Hit"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        49.0
+      ],
+      "duration_s": 1.6,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            49.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.death",
+      "name": "Death",
+      "asset": "mixamo_fbx/combat_reaction/Death.fbx",
+      "asset_sha256": "145273dee23ac825ba08732e88b8ae2edcf4417fd3d1ab5e9f1fe6a8841568ff",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Death（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "死亡",
+        "倒地",
+        "death",
+        "Death"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        92.0
+      ],
+      "duration_s": 3.033333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            92.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.dying",
+      "name": "Dying",
+      "asset": "mixamo_fbx/combat_reaction/Dying.fbx",
+      "asset_sha256": "1193d61a121ef30385012361f0e43e1fee90f09d5e5eef7b6da0266342d285a9",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Dying（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "濒死",
+        "倒地",
+        "dying",
+        "Dying"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        133.0
+      ],
+      "duration_s": 4.4,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            133.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.getting_hit",
+      "name": "Getting Hit",
+      "asset": "mixamo_fbx/combat_reaction/Getting Hit.fbx",
+      "asset_sha256": "58ff92bd2cc35c3b32789de142a04f4177057702bc98252eb9b614ceb3954e5f",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Getting Hit（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "受击",
+        "挨打",
+        "getting hit",
+        "Getting Hit"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        139.0
+      ],
+      "duration_s": 4.6,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            139.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.head_hit",
+      "name": "Head Hit",
+      "asset": "mixamo_fbx/combat_reaction/Head Hit.fbx",
+      "asset_sha256": "578e6085a3b4d69ea5150cf544eff22918f1358379241dffde3f9995629e9c4a",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "骨架兼容的受击身体反应",
+      "aliases": [
+        "头部受击",
+        "打中头",
+        "头部反应",
+        "head hit",
+        "Head Hit"
+      ],
+      "registered_ids": [
+        "head_recoil"
+      ],
+      "registration_scope": "Existing duel annotations describe that executor; source sampler transfers poses, while contact IK and smoothing must be requested separately",
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        47.0
+      ],
+      "duration_s": 1.5333333333333334,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            47.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "registered_bounded_source",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.hit_by_car",
+      "name": "Hit By Car",
+      "asset": "mixamo_fbx/combat_reaction/Hit By Car.fbx",
+      "asset_sha256": "2694afc344166529f519da292a4698152802091747d365d3a17c21291e842581",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Hit By Car（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "被车撞",
+        "hit by car",
+        "Hit By Car"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        146.0
+      ],
+      "duration_s": 4.833333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            146.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.hit_on_legs",
+      "name": "Hit On Legs",
+      "asset": "mixamo_fbx/combat_reaction/Hit On Legs.fbx",
+      "asset_sha256": "9e8e9ee2d5ea219a48e3b26fbb6da0b35849224e13be2c826ea954169c6b359c",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Hit On Legs（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "腿部受击",
+        "hit on legs",
+        "Hit On Legs"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        123.0
+      ],
+      "duration_s": 4.066666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            123.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.hit_to_body",
+      "name": "Hit To Body",
+      "asset": "mixamo_fbx/combat_reaction/Hit To Body.fbx",
+      "asset_sha256": "c0d994947ab110558f8bc8351681ecc8fb986d4025fff2a6205d597455479090",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "骨架兼容的受击身体反应",
+      "aliases": [
+        "身体受击",
+        "躯干受击",
+        "打中身体",
+        "body hit",
+        "Hit To Body"
+      ],
+      "registered_ids": [
+        "body_recoil"
+      ],
+      "registration_scope": "Existing duel annotations describe that executor; source sampler transfers poses, while contact IK and smoothing must be requested separately",
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        36.0
+      ],
+      "duration_s": 1.1666666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            36.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "registered_bounded_source",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.kidney_hit",
+      "name": "Kidney Hit",
+      "asset": "mixamo_fbx/combat_reaction/Kidney Hit.fbx",
+      "asset_sha256": "58e89545b37c2a42c3fee279aabff9ed392b780ad017ae3f31f3f351f1b0b008",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Kidney Hit（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "腰部受击",
+        "kidney hit",
+        "Kidney Hit"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        35.0
+      ],
+      "duration_s": 1.1333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            35.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.rib_hit",
+      "name": "Rib Hit",
+      "asset": "mixamo_fbx/combat_reaction/Rib Hit.fbx",
+      "asset_sha256": "c7871270881afb9117cbc1613a79671accf2c437c9c21e7d413f1be420b8288e",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Rib Hit（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "肋部受击",
+        "rib hit",
+        "Rib Hit"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        31.0
+      ],
+      "duration_s": 1.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            31.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.side_hit",
+      "name": "Side Hit",
+      "asset": "mixamo_fbx/combat_reaction/Side Hit.fbx",
+      "asset_sha256": "8b57928d36cd9e7e5fe8e26a69284ef1e48f439be1cd1a8141bc163995fdbd23",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Side Hit（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "侧面受击",
+        "side hit",
+        "Side Hit"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        30.0
+      ],
+      "duration_s": 0.9666666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            30.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_reaction.stunned",
+      "name": "Stunned",
+      "asset": "mixamo_fbx/combat_reaction/Stunned.fbx",
+      "asset_sha256": "48ecbd2a8099497538a71437174b0141c8bf70170be18c4f3752b3c3d6443ea3",
+      "provider": "fbx",
+      "category": "combat_reaction",
+      "description": "Stunned（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "眩晕",
+        "晕眩",
+        "stunned",
+        "Stunned"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        65.0
+      ],
+      "duration_s": 2.1333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            65.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.bayonet_stab",
+      "name": "Bayonet Stab",
+      "asset": "mixamo_fbx/combat_weapon/Bayonet Stab.fbx",
+      "asset_sha256": "283b07752ec02ac67ef16a20a63448afaf21dd6d7fd6dd8dff0429af5809579a",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Bayonet Stab（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "刺刀突刺",
+        "bayonet stab",
+        "Bayonet Stab"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        99.0
+      ],
+      "duration_s": 3.2666666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            99.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.blocking",
+      "name": "Blocking",
+      "asset": "mixamo_fbx/combat_weapon/Blocking.fbx",
+      "asset_sha256": "e080e460ac3aec91b654e1c07829df9e34bb17f7714bbfd5cd347f63c4748f6c",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Blocking（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "格挡",
+        "防守",
+        "blocking",
+        "Blocking"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        37.0
+      ],
+      "duration_s": 1.2,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            37.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.body_block",
+      "name": "Body Block",
+      "asset": "mixamo_fbx/combat_weapon/Body Block.fbx",
+      "asset_sha256": "12e2d681f3254ade8192084041289d0872f85d3d9c61f1d474f07cde02f2751a",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Body Block（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "躯干格挡",
+        "body block",
+        "Body Block"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        104.0
+      ],
+      "duration_s": 3.433333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            104.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.center_block",
+      "name": "Center Block",
+      "asset": "mixamo_fbx/combat_weapon/Center Block.fbx",
+      "asset_sha256": "80cb0d7bccc165f166a67ab0fcdcf5f1d06013f13db1e1720b9fa38d31d89f5e",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Center Block（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "正面格挡",
+        "center block",
+        "Center Block"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        54.0
+      ],
+      "duration_s": 1.7666666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            54.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.inward_block",
+      "name": "Inward Block",
+      "asset": "mixamo_fbx/combat_weapon/Inward Block.fbx",
+      "asset_sha256": "9f126d73471388d23bb4a73f77734a096f5eaab9b1e63c04468bf36d6b821f97",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Inward Block（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "向内格挡",
+        "inward block",
+        "Inward Block"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        45.0
+      ],
+      "duration_s": 1.4666666666666666,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            45.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.left_block",
+      "name": "Left Block",
+      "asset": "mixamo_fbx/combat_weapon/Left Block.fbx",
+      "asset_sha256": "79ba65985b92a85f2f9ae9c585b53920617e0b19230fd12370db722deae4f41e",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Left Block（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "左侧格挡",
+        "left block",
+        "Left Block"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        47.0
+      ],
+      "duration_s": 1.5333333333333334,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            47.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.outward_block",
+      "name": "Outward Block",
+      "asset": "mixamo_fbx/combat_weapon/Outward Block.fbx",
+      "asset_sha256": "4ce3a599896a88172bd433eb8892fa1a996d7a955321cc66af8f9dcd592e31a5",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Outward Block（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "向外格挡",
+        "outward block",
+        "Outward Block"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        77.0
+      ],
+      "duration_s": 2.533333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            77.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.right_block",
+      "name": "Right Block",
+      "asset": "mixamo_fbx/combat_weapon/Right Block.fbx",
+      "asset_sha256": "9e258e6ce38685ab86edc1e6598cb3101a0406e89d58b4c3e2aaa2c43f758608",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Right Block（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "右侧格挡",
+        "right block",
+        "Right Block"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        44.0
+      ],
+      "duration_s": 1.4333333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            44.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.run_and_swing",
+      "name": "Run And Swing",
+      "asset": "mixamo_fbx/combat_weapon/Run And Swing.fbx",
+      "asset_sha256": "5074e40b01788623c7d4321b8577f4110facc961ddcc917c38c1450e277ca4c3",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Run And Swing（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "跑步挥击",
+        "run and swing",
+        "Run And Swing"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        74.0
+      ],
+      "duration_s": 2.433333333333333,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            74.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.run_with_sword",
+      "name": "Run With Sword",
+      "asset": "mixamo_fbx/combat_weapon/Run With Sword.fbx",
+      "asset_sha256": "92eeec8e3051f4f9f7c438b0d786483d80341f0c4399c065e4a276c179847461",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Run With Sword（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "持剑跑步",
+        "run with sword",
+        "Run With Sword"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        25.0
+      ],
+      "duration_s": 0.8,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            25.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.slash_advance",
+      "name": "Slash Advance",
+      "asset": "mixamo_fbx/combat_weapon/Slash Advance.fbx",
+      "asset_sha256": "d02036ea380d5f87607560d014e739daf05e3ff767e527e22abbbdab190d097b",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Slash Advance（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "前进斩击",
+        "slash advance",
+        "Slash Advance"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        76.0
+      ],
+      "duration_s": 2.5,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            76.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.swing_dancing",
+      "name": "Swing Dancing",
+      "asset": "mixamo_fbx/combat_weapon/Swing Dancing.fbx",
+      "asset_sha256": "daea29449647bb257587ec655b2de2152d18fbf37fcee23d1391442795839448",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Swing Dancing（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "摇摆舞",
+        "swing dancing",
+        "Swing Dancing"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        742.0
+      ],
+      "duration_s": 24.7,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            742.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.swing_to_land",
+      "name": "Swing To Land",
+      "asset": "mixamo_fbx/combat_weapon/Swing To Land.fbx",
+      "asset_sha256": "dddb58c468b3695bef84759a9e4aa0b83dcdcc3944e1e591070c796ddc1bd9cd",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Swing To Land（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "挥击落地",
+        "swing to land",
+        "Swing To Land"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        57.0
+      ],
+      "duration_s": 1.8666666666666667,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            57.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.thrust_slash",
+      "name": "Thrust Slash",
+      "asset": "mixamo_fbx/combat_weapon/Thrust Slash.fbx",
+      "asset_sha256": "5747f6fcd03d235130f07ce2fe94f02c349952a1a76ed4680437e2ddf92dec62",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Thrust Slash（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "突刺斩击",
+        "thrust slash",
+        "Thrust Slash"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        91.0
+      ],
+      "duration_s": 3.0,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            91.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "mixamo.combat_weapon.upward_thrust",
+      "name": "Upward Thrust",
+      "asset": "mixamo_fbx/combat_weapon/Upward Thrust.fbx",
+      "asset_sha256": "4e6bc72b144f5f58657cac3dc6e0f39ac3e70155e1f7b5f65da49fd6e311f6ce",
+      "provider": "fbx",
+      "category": "combat_weapon",
+      "description": "Upward Thrust（素材名称；动作细节仍需预览核对）",
+      "aliases": [
+        "向上突刺",
+        "upward thrust",
+        "Upward Thrust"
+      ],
+      "registered_ids": [],
+      "registration_scope": null,
+      "source_fps": 30.0,
+      "source_frame_range": [
+        1.0,
+        71.0
+      ],
+      "duration_s": 2.3333333333333335,
+      "actions": [
+        {
+          "name": "Armature|mixamo.com|Layer0",
+          "frame_range": [
+            1.0,
+            71.0
+          ],
+          "slots": [
+            {
+              "identifier": "OBSlot",
+              "target_id_type": "OBJECT"
+            }
+          ],
+          "active_slot": "OBSlot"
+        }
+      ],
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "compatibility": {
+        "skeleton": true,
+        "object_transform": true,
+        "binding": true,
+        "direct_action": true
+      },
+      "scan_status": "scanned",
+      "scan_warning": null,
+      "quality_status": "not_visually_verified",
+      "loop_allowed": false,
+      "loop_validation": "annotation_only",
+      "source_window_frames": null,
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "root_metadata": null,
+      "license": {
+        "id": "Mixamo-source-terms",
+        "status": "existing_asset_source_terms_not_CC0",
+        "redistribution_review": "required_before_external_redistribution"
+      }
+    },
+    {
+      "motion_id": "quaternius.punch_jab",
+      "name": "Punch_Jab",
+      "asset": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+      "asset_sha256": "be684571ed655a1b892c2c07e6e2aeca053b606c442d34004adaf1d944090d01",
+      "provider": "quaternius_glb",
+      "clip": "Punch_Jab",
+      "category": "attack",
+      "description": "刺拳/直拳，保留全身动作与近完全伸臂，接触窗口小幅 IK 修正",
+      "aliases": [
+        "刺拳",
+        "左手直拳",
+        "前手拳",
+        "jab",
+        "left punch",
+        "punch",
+        "Punch_Jab"
+      ],
+      "registered_ids": [
+        "jab"
+      ],
+      "source_fps": 30.0,
+      "source_fps_basis": "gltf_animation_seconds_sampled_at_30fps",
+      "source_frame_range": [
+        0.0,
+        26.0
+      ],
+      "duration_s": 0.8666666666666667,
+      "scan_status": "registered_specific_retarget",
+      "quality_status": "registered_bounded_source",
+      "compatibility": {
+        "method": "quaternius_to_beta_rest_space",
+        "direct_action": false,
+        "mapped_bones": 64,
+        "unmapped_bones": [
+          "mixamorig:HeadTop_End"
+        ],
+        "source_rig_signature": "4215cd2f3f08ea10a4c0e2e2898c71413f552fab3a32eefa1e9642281fdabf7b",
+        "target_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d"
+      },
+      "loop_allowed": false,
+      "loop_validation": "one_shot_annotation",
+      "phases": null,
+      "source_peak": 8,
+      "side": "left",
+      "license": {
+        "id": "CC0-1.0",
+        "status": "existing_registration"
+      },
+      "key_timebase_fps": 30.0,
+      "source_action": "Punch_Jab",
+      "source_slot": "OBArmature",
+      "source_sampling_status": "verified_bounded_scope",
+      "source_sampling_report": "reports/agent_motion_validation_20261014.json",
+      "root_metadata": {
+        "space": "actor_root_local_meters",
+        "reference": "source_clip_first_frame",
+        "extraction": "planar",
+        "end_displacement_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "extraction_equivalence_max_error_m": 0.0
+      }
+    },
+    {
+      "motion_id": "quaternius.death01",
+      "name": "Death01",
+      "asset": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+      "asset_sha256": "be684571ed655a1b892c2c07e6e2aeca053b606c442d34004adaf1d944090d01",
+      "provider": "quaternius_glb",
+      "clip": "Death01",
+      "category": "reaction",
+      "description": "保留全身后退失衡、仰面倒地和落地保持，根位移独立管理",
+      "aliases": [
+        "仰面倒地",
+        "向后倒地",
+        "被击倒",
+        "fall back",
+        "Death01"
+      ],
+      "registered_ids": [
+        "fall_back"
+      ],
+      "source_fps": 30.0,
+      "source_fps_basis": "gltf_animation_seconds_sampled_at_30fps",
+      "source_frame_range": [
+        0.0,
+        72.0
+      ],
+      "duration_s": 2.4,
+      "scan_status": "registered_specific_retarget",
+      "quality_status": "registered_bounded_source",
+      "compatibility": {
+        "method": "quaternius_to_beta_rest_space",
+        "direct_action": false,
+        "mapped_bones": 64,
+        "unmapped_bones": [
+          "mixamorig:HeadTop_End"
+        ],
+        "source_rig_signature": "4215cd2f3f08ea10a4c0e2e2898c71413f552fab3a32eefa1e9642281fdabf7b",
+        "target_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d"
+      },
+      "loop_allowed": false,
+      "loop_validation": "one_shot_annotation",
+      "phases": null,
+      "source_peak": null,
+      "side": null,
+      "license": {
+        "id": "CC0-1.0",
+        "status": "existing_registration"
+      },
+      "key_timebase_fps": 30.0,
+      "source_action": "Death01",
+      "source_slot": "OBArmature",
+      "source_sampling_status": "verified_bounded_scope",
+      "source_sampling_report": "reports/agent_motion_validation_20261014.json",
+      "root_metadata": {
+        "space": "actor_root_local_meters",
+        "reference": "source_clip_first_frame",
+        "extraction": "planar",
+        "end_displacement_m": [
+          0.0,
+          0.7393765449523926,
+          0.0
+        ],
+        "extraction_equivalence_max_error_m": 5.497296674757217e-07
+      }
+    },
+    {
+      "motion_id": "quaternius.punch_cross",
+      "name": "Punch_Cross",
+      "asset": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+      "asset_sha256": "be684571ed655a1b892c2c07e6e2aeca053b606c442d34004adaf1d944090d01",
+      "provider": "quaternius_glb",
+      "clip": "Punch_Cross",
+      "category": "attack",
+      "description": "后手直拳/重直拳，保留转胯、转肩与伸臂的完整动作",
+      "aliases": [
+        "右手直拳",
+        "后手直拳",
+        "重直拳",
+        "重拳",
+        "直拳",
+        "cross",
+        "right punch",
+        "punch",
+        "Punch_Cross"
+      ],
+      "registered_ids": [
+        "cross"
+      ],
+      "source_fps": 30.0,
+      "source_fps_basis": "gltf_animation_seconds_sampled_at_30fps",
+      "source_frame_range": [
+        0.0,
+        30.0
+      ],
+      "duration_s": 1.0,
+      "scan_status": "registered_specific_retarget",
+      "quality_status": "registered_bounded_source",
+      "compatibility": {
+        "method": "quaternius_to_beta_rest_space",
+        "direct_action": false,
+        "mapped_bones": 64,
+        "unmapped_bones": [
+          "mixamorig:HeadTop_End"
+        ],
+        "source_rig_signature": "4215cd2f3f08ea10a4c0e2e2898c71413f552fab3a32eefa1e9642281fdabf7b",
+        "target_rig_signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d"
+      },
+      "loop_allowed": false,
+      "loop_validation": "one_shot_annotation",
+      "phases": null,
+      "source_peak": 14,
+      "side": "right",
+      "license": {
+        "id": "CC0-1.0",
+        "status": "existing_registration"
+      },
+      "key_timebase_fps": 30.0,
+      "source_action": "Punch_Cross",
+      "source_slot": "OBArmature",
+      "source_sampling_status": "verified_bounded_scope",
+      "source_sampling_report": "reports/agent_motion_validation_20261014.json",
+      "root_metadata": {
+        "space": "actor_root_local_meters",
+        "reference": "source_clip_first_frame",
+        "extraction": "planar",
+        "end_displacement_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "extraction_equivalence_max_error_m": 0.0
+      }
+    }
+  ],
+  "scan_report": "reports/robot_asset_scan_20261014.json",
+  "quality_scope": "Source metadata and bounded source verification; no contact or naturalness certification"
+}

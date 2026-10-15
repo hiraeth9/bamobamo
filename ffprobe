@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Root-free ffprobe launcher (conda-forge build under ./ffmpeg-env).
+set -euo pipefail
+DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+exec "$DIR/ffmpeg-env/bin/ffprobe" "$@"

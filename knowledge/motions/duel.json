@@ -1,0 +1,157 @@
+{
+  "version": 3,
+  "skeleton": "mixamo_beta_65",
+  "source_fps": 30,
+  "motions": {
+    "guard": {
+      "category": "idle",
+      "provider": "fbx",
+      "asset": "mixamo_fbx/combat_melee/Mma Idle.fbx",
+      "description": "格斗待机，唯一允许循环的来源",
+      "loop_allowed": true,
+      "sha256": "8d0bee59e48089d354e43ce91f4c1ec91c7e650690c82590005396031e071404",
+      "source_frames": [
+        1,
+        151
+      ]
+    },
+    "jab": {
+      "category": "attack",
+      "provider": "retargeted_glb",
+      "asset": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+      "clip": "Punch_Jab",
+      "side": "left",
+      "limb": "hand",
+      "source_peak": 8,
+      "source_weight": 1.0,
+      "timing": "ballistic",
+      "description": "刺拳/直拳，保留全身动作与近完全伸臂，接触窗口小幅 IK 修正",
+      "loop_allowed": false,
+      "sha256": "be684571ed655a1b892c2c07e6e2aeca053b606c442d34004adaf1d944090d01",
+      "license": "CC0-1.0"
+    },
+    "hook": {
+      "category": "attack",
+      "provider": "hybrid",
+      "asset": "mixamo_fbx/combat_melee/Hook.fbx",
+      "side": "left",
+      "limb": "hand",
+      "source_peak": 31,
+      "source_weight": 1.0,
+      "description": "勾拳，实测左手出拳，使用完整出招与收招窗口，保留转胯和弧线拳路",
+      "loop_allowed": false,
+      "sha256": "59fad3b4f36bc3ed3f917542136cbc7846dba7916e798b8c168e4ea0513c31f0",
+      "source_frames": [
+        1,
+        73
+      ],
+      "phases": {
+        "preparation": [
+          16,
+          23
+        ],
+        "strike": [
+          23,
+          31
+        ],
+        "recovery": [
+          31,
+          42
+        ]
+      },
+      "source_start": 16,
+      "source_end": 42
+    },
+    "kick": {
+      "category": "attack",
+      "provider": "hybrid",
+      "asset": "mixamo_fbx/combat_melee/Mma Kick.fbx",
+      "side": "right",
+      "limb": "foot",
+      "source_peak": 21,
+      "source_weight": 1.0,
+      "pose_filter_radius": 2,
+      "description": "踢击，可改变侧和头/躯干落点，单次播放，保留抬腿与回收；源姿态经过对称平滑，减少紧凑重定时的关节突变",
+      "loop_allowed": false,
+      "sha256": "82ac7e3b64046e61dc31c4d515ade1c6978a31c34dd0ecac77a1930386713b6d",
+      "source_frames": [
+        1,
+        49
+      ],
+      "phases": {
+        "preparation": [
+          1,
+          13
+        ],
+        "strike": [
+          13,
+          21
+        ],
+        "recovery": [
+          21,
+          49
+        ]
+      }
+    },
+    "fall_back": {
+      "category": "reaction",
+      "provider": "retargeted_glb",
+      "asset": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+      "clip": "Death01",
+      "sha256": "be684571ed655a1b892c2c07e6e2aeca053b606c442d34004adaf1d944090d01",
+      "optional_fall": true,
+      "description": "保留全身后退失衡、仰面倒地和落地保持，根位移独立管理",
+      "loop_allowed": false,
+      "license": "CC0-1.0"
+    },
+    "uppercut": {
+      "category": "attack",
+      "provider": "procedural",
+      "side": "right",
+      "limb": "hand",
+      "source_weight": 0.0,
+      "description": "程序化上勾拳，新基础运动来源；下沉蓄力、向上弧线与躯干转动",
+      "loop_allowed": false
+    },
+    "cross": {
+      "category": "attack",
+      "provider": "retargeted_glb",
+      "asset": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+      "clip": "Punch_Cross",
+      "side": "right",
+      "limb": "hand",
+      "source_peak": 14,
+      "source_weight": 1.0,
+      "timing": "ballistic",
+      "description": "后手直拳/重直拳，保留转胯、转肩与伸臂的完整动作",
+      "loop_allowed": false,
+      "sha256": "be684571ed655a1b892c2c07e6e2aeca053b606c442d34004adaf1d944090d01",
+      "license": "CC0-1.0"
+    },
+    "head_recoil": {
+      "category": "reaction",
+      "provider": "fbx",
+      "asset": "mixamo_fbx/combat_reaction/Head Hit.fbx",
+      "sha256": "578e6085a3b4d69ea5150cf544eff22918f1358379241dffde3f9995629e9c4a",
+      "description": "骨架兼容的受击身体反应",
+      "loop_allowed": false
+    },
+    "body_recoil": {
+      "category": "reaction",
+      "provider": "fbx",
+      "asset": "mixamo_fbx/combat_reaction/Hit To Body.fbx",
+      "sha256": "c0d994947ab110558f8bc8351681ecc8fb986d4025fff2a6205d597455479090",
+      "description": "骨架兼容的受击身体反应",
+      "loop_allowed": false
+    },
+    "step": {
+      "category": "locomotion",
+      "provider": "fbx",
+      "asset": "mixamo_fbx/basic/Walk.fbx",
+      "sha256": "7eadd944f109dfc32e1e06a0ff4abb4b40cec36d7f04264e554dfdf51bb3dde6",
+      "description": "真实步态的下半身层，倒放后撤",
+      "loop_allowed": false,
+      "extract_root": true
+    }
+  }
+}

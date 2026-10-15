@@ -1,0 +1,230 @@
+"""Distance-driven, contact-aware Walk/Run gait for the existing Beta actor.
+
+The controller keeps one gait clock across actions, aligns corresponding source
+footfalls, and locks world toe contacts rather than classifying stance from a
+world FK speed after a turn. It never changes Actor or the original clips.
+"""
+import math
+
+import bpy
+from mathutils import Quaternion, Vector
+
+from duel_scene import PREFIX, blend_pose, point, smooth
+
+RUN_PHASE_OFFSET = 19 / 22 - 8 / 30
+
+
+def clamp(value, lower=0.0, upper=1.0):
+    return max(lower, min(upper, value))
+
+
+def damp(current, target, dt, time_constant):
+    return current + (target-current) * (1-math.exp(-dt/max(.001,time_constant)))
+
+
+class LocomotionGait:
+    """Call pose(), apply FK/root transforms, update, then call feet().
+
+    feet() returns desired ankle points, world foot rotations, IK influences and
+    anchored stance goals. The caller disables previous constraints before pose
+    sampling and bakes all returned goals/rotations with a non-stretching IK rig.
+    delta_turn_distance is abs(delta_yaw) * .25 for an in-place stepping turn.
+    """
+    def __init__(self, actor, sources, fps=30):
+        self.actor, self.sources, self.fps = actor, sources, fps
+        self.phase = .30  # Idle has the left foot forward; begin on that support.
+        self.run_weight = 0.0
+        self.motion_weight = 0.0
+        self.stride_scale = .20
+        self.elapsed = 0.0
+        self.active = False
+        self.effective_speed = 0.0
+        self.dt = 1 / fps
+        self.stop_age = 0.0
+        self.resume_age = 0.0
+        self.stop_feet = None
+        self.anchors = {}
+        self.anchor_yaws = {}
+        self.last_toes = {}
+        self.last_rotations = {}
+        self.last_contact_weights = {}
+        self.periods = {name:sources.ends[name]-1 for name in ('guard','walk','run')}
+        self.distances = {name:(sources.root_motion[name][-1]-sources.root_motion[name][0]).xy.length
+                          for name in ('walk','run')}
+        self.native_speeds = {name:self.distances[name] / (self.periods[name] / fps)
+                             for name in ('walk','run')}
+        self.hip_drift = {name:sources.poses[name][-1][PREFIX+'Hips'][0]
+                         - sources.poses[name][0][PREFIX+'Hips'][0]
+                          for name in ('walk','run')}
+        self.foot_indices = {}
+        for side in ('Left','Right'):
+            selected=[]
+            for mesh in actor.meshes:
+                groups={g.index for g in mesh.vertex_groups
+                        if g.name.removeprefix(PREFIX).startswith(side)
+                        and any(part in g.name for part in ('Foot','Toe'))}
+                selected.append([v.index for v in mesh.data.vertices
+                                 if any(g.group in groups and g.weight >= .3 for g in v.groups)])
+            self.foot_indices[side]=selected
+        # The neutral source foot's toe/sole offset calibrates the floor contact
+        # in the actual skinned rig. The six-mm margin avoids surface coincidence.
+        pose_backup={bone.name:(bone.location.copy(),bone.rotation_quaternion.copy(),bone.scale.copy())
+                     for bone in actor.arm.pose.bones}
+        actor.set_pose(sources.sample('guard',1));bpy.context.view_layer.update()
+        self.flat_toe_z={}
+        self.flat_rotations={}
+        root_yaw=actor.root.rotation_euler.z
+        for side in ('Left','Right'):
+            toe=point(actor.arm,side+'ToeBase')
+            self.flat_toe_z[side]=toe.z-self._skin_min(side)+.006
+            self.flat_rotations[side]=Quaternion((0,0,1),-root_yaw) @ self._rotation(side)
+            self.last_toes[side]=toe.copy()
+            self.last_rotations[side]=self._rotation(side)
+            self.anchors[side]=toe.copy();self.anchor_yaws[side]=root_yaw
+        actor.set_pose(pose_backup);bpy.context.view_layer.update()
+
+    def _rotation(self, side):
+        return (self.actor.arm.matrix_world @ self.actor.arm.pose.bones[PREFIX+side+'Foot'].matrix).to_quaternion()
+
+    def _skin_min(self, side):
+        depsgraph=bpy.context.evaluated_depsgraph_get()
+        minimum=float('inf')
+        for mesh,indices in zip(self.actor.meshes,self.foot_indices[side]):
+            evaluated=mesh.evaluated_get(depsgraph)
+            for index in indices:
+                minimum=min(minimum,(evaluated.matrix_world @ evaluated.data.vertices[index].co).z)
+        return minimum
+
+    def _sample_cycle(self, name, phase):
+        phase %= 1
+        pose=self.sources.sample(name,1+phase*self.periods[name])
+        loc,rot,scale=pose[PREFIX+'Hips']
+        pose[PREFIX+'Hips']=(loc-self.hip_drift[name]*phase,rot,scale)
+        return pose
+
+    def pose(self, speed, gait, delta_distance, delta_turn_distance=0.0, dt=None):
+        """Return a cyclic pose without restarting phase at a planner boundary."""
+        self.dt=dt or 1/self.fps;self.elapsed+=self.dt
+        turn_speed=max(0,delta_turn_distance)/self.dt
+        self.effective_speed=max(abs(speed),turn_speed)
+        was_active=self.active
+        self.active=self.effective_speed>.025
+        if self.active:
+            if not was_active and self.stop_feet is not None:
+                # The initial braking snapshot can contain a raised/running
+                # foot. After settling, resume from the current planted pose,
+                # never from that old pre-landing rotation or airborne toe.
+                self.stop_feet={side:{'toe':self.last_toes[side].copy(),
+                                      'rotation':self.last_rotations[side].copy()}
+                                for side in ('Left','Right')}
+            self.resume_age=self.resume_age+self.dt if was_active else 0.0
+            self.stop_age=0.0
+        else:
+            self.stop_age=self.stop_age+self.dt if not was_active else 0.0
+            self.resume_age=0.0
+        mode=str(gait).lower()
+        target_run=1.0 if mode=='run' else (smooth((self.effective_speed-1.7)/1.0) if mode=='auto' else 0.0)
+        self.run_weight=damp(self.run_weight,target_run,self.dt,.12)
+        self.motion_weight=damp(self.motion_weight,clamp(self.effective_speed/.10),self.dt,.12 if self.active else .22)
+        native_speed=self.native_speeds['walk']*(1-self.run_weight)+self.native_speeds['run']*self.run_weight
+        target_stride=clamp(self.effective_speed/max(.01,native_speed),.10,1.25)
+        # A turn needs short alternating steps. Actual translation dominates the
+        # clock whenever the actor is already walking along a curved path.
+        if turn_speed>abs(speed)*1.2:
+            target_stride=min(.30,target_stride)
+        self.stride_scale=damp(self.stride_scale,target_stride,self.dt,.09)
+        cycle_distance=self.distances['walk']*(1-self.run_weight)+self.distances['run']*self.run_weight
+        advance=max(0,delta_distance,delta_turn_distance)/(cycle_distance*max(.10,self.stride_scale))
+        self.phase+=advance
+        walk=self._sample_cycle('walk',self.phase)
+        run=self._sample_cycle('run',self.phase+RUN_PHASE_OFFSET)
+        locomotion=blend_pose(walk,run,self.run_weight)
+        idle=self.sources.sample('guard',1+(self.elapsed*self.fps)%self.periods['guard'])
+        # Short strides are produced by foot goals, retaining the source knee
+        # lift. Scale the arm/torso effort, rather than flattening both legs into
+        # an Idle pose and translating the body across planted feet.
+        effort=clamp(self.stride_scale/.65,.25,1)
+        for name in locomotion:
+            short=name.removeprefix(PREFIX)
+            if short.startswith(('Spine','Neck','Head','LeftShoulder','RightShoulder',
+                                 'LeftArm','RightArm','LeftForeArm','RightForeArm','LeftHand','RightHand')):
+                locomotion[name]=blend_pose({name:idle[name]},{name:locomotion[name]},effort)[name]
+        return blend_pose(idle,locomotion,self.motion_weight)
+
+    def _contact_weight(self, side):
+        phase=self.phase%1
+        beginning=8/30 if side=='Left' else 23/30
+        relative=(phase-beginning)%1
+        # Walk's long double-support interval contracts to Run's flight phase.
+        walk_length=.50
+        run_length=(3/22+1-RUN_PHASE_OFFSET-beginning) if side=='Left' else (15/22-RUN_PHASE_OFFSET-beginning+1)
+        length=walk_length*(1-self.run_weight)+run_length*self.run_weight
+        if relative>=length:return 0.0
+        ramp=.045
+        return smooth(relative/ramp)*smooth((length-relative)/ramp)
+
+    def feet(self, record):
+        actor=self.actor;root=actor.root.location;root_yaw=actor.root.rotation_euler.z
+        output={'desired':{},'rotations':{},'influences':{},'stance':{}}
+        record.setdefault('stance',{});record.setdefault('swing',{});record.setdefault('toe_stance',{})
+        record.update({'gait_phase':round(self.phase%1,6),'gait_cycle':math.floor(self.phase),
+                       'run_weight':round(self.run_weight,6),'stride_scale':round(self.stride_scale,6),
+                       'motion_weight':round(self.motion_weight,6)})
+        if not self.active and self.stop_feet is None:
+            self.stop_feet={side:{'toe':self.last_toes[side].copy(),'rotation':self.last_rotations[side].copy()}
+                            for side in ('Left','Right')}
+        restart=self.stop_feet if self.active else None
+        for side in ('Left','Right'):
+            key=side+'Foot';ankle=point(actor.arm,key);toe=point(actor.arm,side+'ToeBase')
+            rotation=self._rotation(side)
+            local_tip=rotation.inverted()@(toe-ankle)
+            skin_min=self._skin_min(side)
+            natural_ankle=ankle.copy()
+            displacement=ankle-root
+            natural_ankle+=actor.forward*(displacement.dot(actor.forward)*(self.stride_scale-1))
+            natural_ankle.z+=max(0,-.003-skin_min)
+            natural_toe=natural_ankle+rotation@local_tip
+            weight=self._contact_weight(side) if self.active else 1.0
+            previous_weight=self.last_contact_weights.get(side,0.0)
+            if self.active:
+                if weight>0 and previous_weight<=0:
+                    self.anchors[side]=natural_toe.copy();self.anchors[side].z=self.flat_toe_z[side]
+                    self.anchor_yaws[side]=root_yaw
+                if weight>0:
+                    fixed_rotation=Quaternion((0,0,1),self.anchor_yaws[side]-root_yaw)@rotation
+                    rotation=rotation.slerp(fixed_rotation,weight)
+                    target=self.anchors[side].copy()
+                    # Heel contact precedes toe contact. Preserve the source
+                    # heel/toe roll until the ball of the foot actually rests.
+                    target.z=max(target.z,toe.z-skin_min)
+                    desired_toe=natural_toe.lerp(target,weight)
+                else:desired_toe=natural_toe
+                if restart:
+                    amount=smooth(self.resume_age/.22)
+                    desired_toe=restart[side]['toe'].lerp(desired_toe,amount)
+                    rotation=restart[side]['rotation'].slerp(rotation,amount)
+                    if amount<1:weight=0.0
+            else:
+                state=self.stop_feet[side]
+                amount=smooth(self.stop_age/.28)
+                flat_rotation=Quaternion((0,0,1),root_yaw)@self.flat_rotations[side]
+                rotation=state['rotation'].slerp(flat_rotation,amount)
+                desired_toe=state['toe'].copy()
+                desired_toe.z+=(self.flat_toe_z[side]-desired_toe.z)*amount
+                self.anchors[side]=desired_toe.copy();self.anchor_yaws[side]=root_yaw
+                if amount<1:weight=0.0
+            desired_ankle=desired_toe-rotation@local_tip
+            output['desired'][key]=desired_ankle
+            output['rotations'][key]=rotation
+            output['influences'][key]=1.0
+            name=actor.id+':'+key
+            locked=(weight>=.999 and abs(desired_toe.z-self.anchors[side].z)<.0005)
+            if weight>=.999:
+                output['stance'][name]=desired_ankle.copy();record['stance'][name]=list(desired_ankle)
+            else:record['swing'][name]=list(desired_ankle)
+            if locked:record['toe_stance'][actor.id+':'+side+'ToeBase']=list(desired_toe)
+            record.setdefault('foot_contact_weights',{})[side]=round(weight,6)
+            self.last_toes[side]=desired_toe.copy();self.last_rotations[side]=rotation.copy()
+            self.last_contact_weights[side]=weight
+        if self.active and self.resume_age>=.22:self.stop_feet=None
+        return output

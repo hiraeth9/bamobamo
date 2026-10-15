@@ -1,0 +1,4163 @@
+{
+  "version": 1,
+  "characters": {
+    "beta": {
+      "character_id": "beta",
+      "version": 1,
+      "source_asset": "mixamo_fbx/basic/Idle.fbx",
+      "source_sha256": "179d28d00444a04062b5ff1428398f8b897d13d38e7d503808c6b94b39716e5d",
+      "skeleton": {
+        "signature": "81c996312e44723f242208706515feb31ef0ee43b13a9fa0e93ed9de435c513d",
+        "bone_count": 65,
+        "bones": [
+          {
+            "name": "mixamorig:Head",
+            "parent": "mixamorig:Neck",
+            "matrix_local": [
+              [
+                1.0,
+                0.0,
+                -0.0,
+                -1e-05
+              ],
+              [
+                -0.0,
+                0.99259,
+                0.12149,
+                159.92947
+              ],
+              [
+                0.0,
+                -0.12149,
+                0.99259,
+                -1.51955
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              159.92947,
+              -1.51955
+            ],
+            "tail": [
+              -1e-05,
+              183.03606,
+              -4.34781
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:HeadTop_End",
+            "parent": "mixamorig:Head",
+            "matrix_local": [
+              [
+                1.0,
+                0.0,
+                -0.0,
+                -1e-05
+              ],
+              [
+                -0.0,
+                0.99259,
+                0.12149,
+                181.96686
+              ],
+              [
+                0.0,
+                -0.12149,
+                0.99259,
+                5.98155
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              181.96686,
+              5.98155
+            ],
+            "tail": [
+              -1e-05,
+              205.07344,
+              3.15329
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:Hips",
+            "parent": null,
+            "matrix_local": [
+              [
+                1.0,
+                -0.0,
+                0.0,
+                -1e-05
+              ],
+              [
+                0.0,
+                0.99992,
+                -0.01292,
+                104.27487
+              ],
+              [
+                0.0,
+                0.01292,
+                0.99992,
+                1.55432
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              104.27487,
+              1.55432
+            ],
+            "tail": [
+              -1e-05,
+              114.83323,
+              1.6907
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftArm",
+            "parent": "mixamorig:LeftShoulder",
+            "matrix_local": [
+              [
+                0.0,
+                1.0,
+                -0.0,
+                15.1628
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                144.06131
+              ],
+              [
+                -1.0,
+                0.0,
+                -0.0,
+                -5.54849
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              15.16281,
+              144.06131,
+              -5.54849
+            ],
+            "tail": [
+              43.00433,
+              144.06129,
+              -5.54847
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftFoot",
+            "parent": "mixamorig:LeftLeg",
+            "matrix_local": [
+              [
+                -1.0,
+                -0.0,
+                0.0,
+                8.20778
+              ],
+              [
+                0.0,
+                -0.63174,
+                0.77518,
+                8.72948
+              ],
+              [
+                -0.0,
+                0.77518,
+                0.63174,
+                -2.74267
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              8.20778,
+              8.72947,
+              -2.74267
+            ],
+            "tail": [
+              8.20778,
+              0.0008,
+              7.96789
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftForeArm",
+            "parent": "mixamorig:LeftArm",
+            "matrix_local": [
+              [
+                0.0,
+                1.0,
+                -0.0,
+                43.00433
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                144.06129
+              ],
+              [
+                -1.0,
+                0.0,
+                -0.0,
+                -5.54847
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              43.00433,
+              144.06129,
+              -5.54847
+            ],
+            "tail": [
+              71.33317,
+              144.06125,
+              -5.54845
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHand",
+            "parent": "mixamorig:LeftForeArm",
+            "matrix_local": [
+              [
+                0.0,
+                1.0,
+                -0.0,
+                71.33316
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                144.06125
+              ],
+              [
+                -1.0,
+                0.0,
+                -0.0,
+                -5.54845
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              71.33316,
+              144.06125,
+              -5.54845
+            ],
+            "tail": [
+              79.56104,
+              144.06123,
+              -5.54845
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandIndex1",
+            "parent": "mixamorig:LeftHand",
+            "matrix_local": [
+              [
+                -9e-05,
+                1.0,
+                -0.0,
+                80.44247
+              ],
+              [
+                0.0,
+                -0.0,
+                -1.0,
+                143.54321
+              ],
+              [
+                -1.0,
+                -9e-05,
+                -0.0,
+                -3.28858
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              80.44247,
+              143.54321,
+              -3.28858
+            ],
+            "tail": [
+              84.14246,
+              143.5432,
+              -3.28891
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandIndex2",
+            "parent": "mixamorig:LeftHandIndex1",
+            "matrix_local": [
+              [
+                0.00012,
+                1.0,
+                -1e-05,
+                84.14246
+              ],
+              [
+                0.0,
+                -1e-05,
+                -1.0,
+                143.5432
+              ],
+              [
+                -1.0,
+                0.00012,
+                -0.0,
+                -3.28891
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              84.14246,
+              143.5432,
+              -3.28891
+            ],
+            "tail": [
+              86.99247,
+              143.54318,
+              -3.28856
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandIndex3",
+            "parent": "mixamorig:LeftHandIndex2",
+            "matrix_local": [
+              [
+                -1e-05,
+                1.0,
+                -1e-05,
+                86.99247
+              ],
+              [
+                -0.0,
+                -1e-05,
+                -1.0,
+                143.54318
+              ],
+              [
+                -1.0,
+                -1e-05,
+                0.0,
+                -3.28856
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              86.99247,
+              143.54318,
+              -3.28856
+            ],
+            "tail": [
+              89.76733,
+              143.54317,
+              -3.28858
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandIndex4",
+            "parent": "mixamorig:LeftHandIndex3",
+            "matrix_local": [
+              [
+                -4e-05,
+                1.0,
+                -0.0,
+                89.76733
+              ],
+              [
+                -0.00076,
+                0.0,
+                -1.0,
+                143.54317
+              ],
+              [
+                -1.0,
+                -4e-05,
+                0.00076,
+                -3.28858
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              89.76733,
+              143.54317,
+              -3.28858
+            ],
+            "tail": [
+              92.54219,
+              143.54317,
+              -3.28868
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandMiddle1",
+            "parent": "mixamorig:LeftHand",
+            "matrix_local": [
+              [
+                -6e-05,
+                1.0,
+                -0.0,
+                80.86656
+              ],
+              [
+                0.0,
+                -0.0,
+                -1.0,
+                144.06128
+              ],
+              [
+                -1.0,
+                -6e-05,
+                -0.0,
+                -5.54841
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              80.86656,
+              144.06128,
+              -5.54841
+            ],
+            "tail": [
+              84.56656,
+              144.06128,
+              -5.54864
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandMiddle2",
+            "parent": "mixamorig:LeftHandMiddle1",
+            "matrix_local": [
+              [
+                -2e-05,
+                1.0,
+                -1e-05,
+                84.56656
+              ],
+              [
+                0.0,
+                -1e-05,
+                -1.0,
+                144.06128
+              ],
+              [
+                -1.0,
+                -2e-05,
+                -0.0,
+                -5.54864
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              84.56656,
+              144.06128,
+              -5.54864
+            ],
+            "tail": [
+              87.51656,
+              144.06126,
+              -5.5487
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandMiddle3",
+            "parent": "mixamorig:LeftHandMiddle2",
+            "matrix_local": [
+              [
+                2e-05,
+                1.0,
+                -0.0,
+                87.51656
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                144.06126
+              ],
+              [
+                -1.0,
+                2e-05,
+                0.0,
+                -5.5487
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              87.51656,
+              144.06126,
+              -5.5487
+            ],
+            "tail": [
+              90.46942,
+              144.06126,
+              -5.54864
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandMiddle4",
+            "parent": "mixamorig:LeftHandMiddle3",
+            "matrix_local": [
+              [
+                8e-05,
+                1.0,
+                -0.0,
+                90.46942
+              ],
+              [
+                -0.00205,
+                -0.0,
+                -1.0,
+                144.06126
+              ],
+              [
+                -1.0,
+                8e-05,
+                0.00205,
+                -5.54864
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              90.46942,
+              144.06126,
+              -5.54864
+            ],
+            "tail": [
+              93.42228,
+              144.06126,
+              -5.54841
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandPinky1",
+            "parent": "mixamorig:LeftHand",
+            "matrix_local": [
+              [
+                0.00409,
+                0.99999,
+                1e-05,
+                79.41094
+              ],
+              [
+                0.0,
+                1e-05,
+                -1.0,
+                143.57437
+              ],
+              [
+                -0.99999,
+                0.00409,
+                -0.0,
+                -9.35471
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              79.41094,
+              143.57437,
+              -9.35471
+            ],
+            "tail": [
+              83.0109,
+              143.5744,
+              -9.33999
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandPinky2",
+            "parent": "mixamorig:LeftHandPinky1",
+            "matrix_local": [
+              [
+                0.00367,
+                0.99999,
+                1e-05,
+                83.0109
+              ],
+              [
+                -0.0,
+                1e-05,
+                -1.0,
+                143.5744
+              ],
+              [
+                -0.99999,
+                0.00367,
+                0.0,
+                -9.33999
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              83.0109,
+              143.5744,
+              -9.33999
+            ],
+            "tail": [
+              85.1109,
+              143.57443,
+              -9.33228
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandPinky3",
+            "parent": "mixamorig:LeftHandPinky2",
+            "matrix_local": [
+              [
+                0.00354,
+                0.99999,
+                -0.0,
+                85.1109
+              ],
+              [
+                0.0,
+                0.0,
+                -1.0,
+                143.57443
+              ],
+              [
+                -0.99999,
+                0.00354,
+                -0.0,
+                -9.33228
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              85.1109,
+              143.57443,
+              -9.33228
+            ],
+            "tail": [
+              87.2364,
+              143.57443,
+              -9.32477
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandPinky4",
+            "parent": "mixamorig:LeftHandPinky3",
+            "matrix_local": [
+              [
+                0.00294,
+                1.0,
+                0.0,
+                87.2364
+              ],
+              [
+                -0.00157,
+                1e-05,
+                -1.0,
+                143.57443
+              ],
+              [
+                -0.99999,
+                0.00294,
+                0.00157,
+                -9.32477
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              87.2364,
+              143.57443,
+              -9.32477
+            ],
+            "tail": [
+              89.36192,
+              143.57445,
+              -9.31851
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandRing1",
+            "parent": "mixamorig:LeftHand",
+            "matrix_local": [
+              [
+                1e-05,
+                1.0,
+                -0.0,
+                80.43769
+              ],
+              [
+                0.0,
+                0.0,
+                -1.0,
+                144.01822
+              ],
+              [
+                -1.0,
+                1e-05,
+                -0.0,
+                -7.41353
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              80.43769,
+              144.01822,
+              -7.41353
+            ],
+            "tail": [
+              83.5877,
+              144.01822,
+              -7.41349
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandRing2",
+            "parent": "mixamorig:LeftHandRing1",
+            "matrix_local": [
+              [
+                1e-05,
+                1.0,
+                -1e-05,
+                83.5877
+              ],
+              [
+                0.0,
+                -1e-05,
+                -1.0,
+                144.01822
+              ],
+              [
+                -1.0,
+                1e-05,
+                -0.0,
+                -7.41349
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              83.5877,
+              144.01822,
+              -7.41349
+            ],
+            "tail": [
+              86.53769,
+              144.0182,
+              -7.41345
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandRing3",
+            "parent": "mixamorig:LeftHandRing2",
+            "matrix_local": [
+              [
+                1e-05,
+                1.0,
+                -0.0,
+                86.53769
+              ],
+              [
+                -0.0,
+                0.0,
+                -1.0,
+                144.0182
+              ],
+              [
+                -1.0,
+                1e-05,
+                0.0,
+                -7.41345
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              86.53769,
+              144.0182,
+              -7.41345
+            ],
+            "tail": [
+              89.18201,
+              144.0182,
+              -7.41341
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandRing4",
+            "parent": "mixamorig:LeftHandRing3",
+            "matrix_local": [
+              [
+                5e-05,
+                1.0,
+                -0.0,
+                89.18201
+              ],
+              [
+                0.00099,
+                -0.0,
+                -1.0,
+                144.01819
+              ],
+              [
+                -1.0,
+                5e-05,
+                -0.00099,
+                -7.41339
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              89.18201,
+              144.01819,
+              -7.41339
+            ],
+            "tail": [
+              91.82632,
+              144.01819,
+              -7.41327
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandThumb1",
+            "parent": "mixamorig:LeftHand",
+            "matrix_local": [
+              [
+                0.39563,
+                0.76851,
+                -0.50287,
+                73.7993
+              ],
+              [
+                -0.23017,
+                -0.4471,
+                -0.86436,
+                142.48506
+              ],
+              [
+                -0.8891,
+                0.45771,
+                0.0,
+                -2.86672
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              73.7993,
+              142.48506,
+              -2.86672
+            ],
+            "tail": [
+              77.01711,
+              140.61301,
+              -0.95023
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandThumb2",
+            "parent": "mixamorig:LeftHandThumb1",
+            "matrix_local": [
+              [
+                0.38398,
+                0.77698,
+                -0.49886,
+                77.01711
+              ],
+              [
+                -0.22102,
+                -0.44723,
+                -0.86668,
+                140.61301
+              ],
+              [
+                -0.8965,
+                0.44305,
+                -0.0,
+                -0.95023
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              77.01711,
+              140.61301,
+              -0.95023
+            ],
+            "tail": [
+              79.67313,
+              139.0842,
+              0.56428
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandThumb3",
+            "parent": "mixamorig:LeftHandThumb2",
+            "matrix_local": [
+              [
+                0.37525,
+                0.78311,
+                -0.49591,
+                79.67313
+              ],
+              [
+                -0.21429,
+                -0.44722,
+                -0.86837,
+                139.0842
+              ],
+              [
+                -0.90181,
+                0.43212,
+                -0.0,
+                0.56427
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              79.67313,
+              139.0842,
+              0.56428
+            ],
+            "tail": [
+              81.69402,
+              137.93011,
+              1.67941
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftHandThumb4",
+            "parent": "mixamorig:LeftHandThumb3",
+            "matrix_local": [
+              [
+                0.54876,
+                0.7397,
+                -0.38949,
+                81.69402
+              ],
+              [
+                -0.03371,
+                -0.44596,
+                -0.89442,
+                137.93013
+              ],
+              [
+                -0.8353,
+                0.50395,
+                -0.21979,
+                1.67941
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              81.69402,
+              137.93013,
+              1.67941
+            ],
+            "tail": [
+              83.60287,
+              136.7793,
+              2.9799
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftLeg",
+            "parent": "mixamorig:LeftUpLeg",
+            "matrix_local": [
+              [
+                -1.0,
+                0.0,
+                0.0,
+                8.20778
+              ],
+              [
+                -0.0,
+                -0.99766,
+                -0.06837,
+                53.15316
+              ],
+              [
+                0.0,
+                -0.06837,
+                0.99766,
+                0.30172
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              8.20778,
+              53.15314,
+              0.30172
+            ],
+            "tail": [
+              8.20778,
+              8.72947,
+              -2.74267
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftShoulder",
+            "parent": "mixamorig:Spine2",
+            "matrix_local": [
+              [
+                -0.20571,
+                0.97736,
+                -0.04947,
+                4.57043
+              ],
+              [
+                0.01019,
+                -0.0484,
+                -0.99878,
+                144.58591
+              ],
+              [
+                -0.97856,
+                -0.20596,
+                -0.0,
+                -3.31637
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              4.57043,
+              144.58591,
+              -3.31637
+            ],
+            "tail": [
+              15.16281,
+              144.06131,
+              -5.54849
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftToeBase",
+            "parent": "mixamorig:LeftFoot",
+            "matrix_local": [
+              [
+                -1.0,
+                -0.0,
+                0.0,
+                8.20778
+              ],
+              [
+                0.0,
+                -7e-05,
+                1.0,
+                0.00081
+              ],
+              [
+                -0.0,
+                1.0,
+                7e-05,
+                7.96789
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              8.20778,
+              0.0008,
+              7.96789
+            ],
+            "tail": [
+              8.20778,
+              0.00013,
+              17.24602
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftToe_End",
+            "parent": "mixamorig:LeftToeBase",
+            "matrix_local": [
+              [
+                -0.99972,
+                -0.0,
+                0.02374,
+                8.20778
+              ],
+              [
+                0.02374,
+                -7e-05,
+                0.99972,
+                0.00014
+              ],
+              [
+                0.0,
+                1.0,
+                7e-05,
+                17.24602
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              8.20778,
+              0.00013,
+              17.24602
+            ],
+            "tail": [
+              8.20777,
+              -0.00055,
+              26.52416
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:LeftUpLeg",
+            "parent": "mixamorig:Hips",
+            "matrix_local": [
+              [
+                -1.0,
+                -0.0,
+                -0.0,
+                8.20778
+              ],
+              [
+                0.0,
+                -0.99997,
+                0.00782,
+                97.52318
+              ],
+              [
+                -0.0,
+                0.00782,
+                0.99997,
+                -0.04524
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              8.20778,
+              97.52318,
+              -0.04524
+            ],
+            "tail": [
+              8.20778,
+              53.15314,
+              0.30172
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:Neck",
+            "parent": "mixamorig:Spine2",
+            "matrix_local": [
+              [
+                1.0,
+                0.0,
+                -0.0,
+                -1e-05
+              ],
+              [
+                -0.0,
+                0.99259,
+                0.12149,
+                150.3116
+              ],
+              [
+                0.0,
+                -0.12149,
+                0.99259,
+                -3.20456
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              150.3116,
+              -3.20455
+            ],
+            "tail": [
+              -1e-05,
+              160.00363,
+              -4.39087
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightArm",
+            "parent": "mixamorig:RightShoulder",
+            "matrix_local": [
+              [
+                0.0,
+                -1.0,
+                -0.0,
+                -15.16283
+              ],
+              [
+                0.0,
+                0.0,
+                -1.0,
+                144.06129
+              ],
+              [
+                1.0,
+                0.0,
+                0.0,
+                -5.5485
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -15.16283,
+              144.06129,
+              -5.5485
+            ],
+            "tail": [
+              -43.00436,
+              144.06129,
+              -5.5485
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightFoot",
+            "parent": "mixamorig:RightLeg",
+            "matrix_local": [
+              [
+                -1.0,
+                -0.0,
+                0.0,
+                -8.20779
+              ],
+              [
+                0.0,
+                -0.63174,
+                0.77518,
+                8.7294
+              ],
+              [
+                -0.0,
+                0.77518,
+                0.63174,
+                -2.74284
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -8.20779,
+              8.7294,
+              -2.74284
+            ],
+            "tail": [
+              -8.2078,
+              0.00073,
+              7.96772
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightForeArm",
+            "parent": "mixamorig:RightArm",
+            "matrix_local": [
+              [
+                0.0,
+                -1.0,
+                -0.0,
+                -43.00436
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                144.06131
+              ],
+              [
+                1.0,
+                0.0,
+                -0.0,
+                -5.54851
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -43.00435,
+              144.06131,
+              -5.54851
+            ],
+            "tail": [
+              -71.3332,
+              144.06131,
+              -5.5485
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHand",
+            "parent": "mixamorig:RightForeArm",
+            "matrix_local": [
+              [
+                0.0,
+                -1.0,
+                -0.0,
+                -71.33319
+              ],
+              [
+                -0.0,
+                0.0,
+                -1.0,
+                144.06129
+              ],
+              [
+                1.0,
+                0.0,
+                -0.0,
+                -5.54849
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -71.33319,
+              144.06129,
+              -5.54849
+            ],
+            "tail": [
+              -79.55997,
+              144.06129,
+              -5.54849
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandIndex1",
+            "parent": "mixamorig:RightHand",
+            "matrix_local": [
+              [
+                0.00033,
+                -1.0,
+                -0.0,
+                -80.44147
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                143.54343
+              ],
+              [
+                1.0,
+                0.00033,
+                -0.0,
+                -3.28866
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -80.44147,
+              143.54343,
+              -3.28865
+            ],
+            "tail": [
+              -84.14147,
+              143.54343,
+              -3.28744
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandIndex2",
+            "parent": "mixamorig:RightHandIndex1",
+            "matrix_local": [
+              [
+                -0.00018,
+                -1.0,
+                -1e-05,
+                -84.14147
+              ],
+              [
+                0.0,
+                1e-05,
+                -1.0,
+                143.54343
+              ],
+              [
+                1.0,
+                -0.00018,
+                0.0,
+                -3.28744
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -84.14147,
+              143.54343,
+              -3.28744
+            ],
+            "tail": [
+              -86.99149,
+              143.54346,
+              -3.28796
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandIndex3",
+            "parent": "mixamorig:RightHandIndex2",
+            "matrix_local": [
+              [
+                -1e-05,
+                -1.0,
+                1e-05,
+                -86.99149
+              ],
+              [
+                -0.0,
+                -1e-05,
+                -1.0,
+                143.54346
+              ],
+              [
+                1.0,
+                -1e-05,
+                -0.0,
+                -3.28796
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -86.99149,
+              143.54346,
+              -3.28796
+            ],
+            "tail": [
+              -89.76366,
+              143.54344,
+              -3.28798
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandIndex4",
+            "parent": "mixamorig:RightHandIndex3",
+            "matrix_local": [
+              [
+                -0.00018,
+                -1.0,
+                -0.0,
+                -89.76366
+              ],
+              [
+                0.00201,
+                -0.0,
+                -1.0,
+                143.54344
+              ],
+              [
+                1.0,
+                -0.00018,
+                0.00201,
+                -3.28798
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -89.76366,
+              143.54344,
+              -3.28798
+            ],
+            "tail": [
+              -92.53585,
+              143.54344,
+              -3.28848
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandMiddle1",
+            "parent": "mixamorig:RightHand",
+            "matrix_local": [
+              [
+                0.001,
+                -1.0,
+                -0.0,
+                -80.8657
+              ],
+              [
+                -0.0,
+                0.0,
+                -1.0,
+                144.06125
+              ],
+              [
+                1.0,
+                0.001,
+                -0.0,
+                -5.54851
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -80.8657,
+              144.06125,
+              -5.54851
+            ],
+            "tail": [
+              -84.56571,
+              144.06125,
+              -5.5448
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandMiddle2",
+            "parent": "mixamorig:RightHandMiddle1",
+            "matrix_local": [
+              [
+                -0.0007,
+                -1.0,
+                -1e-05,
+                -84.56571
+              ],
+              [
+                0.0,
+                1e-05,
+                -1.0,
+                144.06125
+              ],
+              [
+                1.0,
+                -0.0007,
+                -0.0,
+                -5.5448
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -84.56571,
+              144.06125,
+              -5.5448
+            ],
+            "tail": [
+              -87.5157,
+              144.06126,
+              -5.54685
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandMiddle3",
+            "parent": "mixamorig:RightHandMiddle2",
+            "matrix_local": [
+              [
+                -5e-05,
+                -1.0,
+                -0.0,
+                -87.5157
+              ],
+              [
+                -0.0,
+                -0.0,
+                -1.0,
+                144.06126
+              ],
+              [
+                1.0,
+                -5e-05,
+                -0.0,
+                -5.54686
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -87.5157,
+              144.06126,
+              -5.54685
+            ],
+            "tail": [
+              -90.46233,
+              144.06126,
+              -5.54701
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandMiddle4",
+            "parent": "mixamorig:RightHandMiddle3",
+            "matrix_local": [
+              [
+                -0.00039,
+                -1.0,
+                -1e-05,
+                -90.46233
+              ],
+              [
+                0.00186,
+                1e-05,
+                -1.0,
+                144.06126
+              ],
+              [
+                1.0,
+                -0.00039,
+                0.00186,
+                -5.54701
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -90.46233,
+              144.06126,
+              -5.54701
+            ],
+            "tail": [
+              -93.40896,
+              144.06128,
+              -5.54815
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandPinky1",
+            "parent": "mixamorig:RightHand",
+            "matrix_local": [
+              [
+                -0.00104,
+                -1.0,
+                1e-05,
+                -79.40987
+              ],
+              [
+                -0.0,
+                -1e-05,
+                -1.0,
+                143.57458
+              ],
+              [
+                1.0,
+                -0.00104,
+                -0.0,
+                -9.35477
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -79.40987,
+              143.57458,
+              -9.35477
+            ],
+            "tail": [
+              -83.00987,
+              143.57455,
+              -9.35852
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandPinky2",
+            "parent": "mixamorig:RightHandPinky1",
+            "matrix_local": [
+              [
+                -0.00273,
+                -1.0,
+                1e-05,
+                -83.00987
+              ],
+              [
+                0.0,
+                -1e-05,
+                -1.0,
+                143.57455
+              ],
+              [
+                1.0,
+                -0.00273,
+                0.0,
+                -9.35852
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -83.00987,
+              143.57455,
+              -9.35852
+            ],
+            "tail": [
+              -85.10985,
+              143.57454,
+              -9.36426
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandPinky3",
+            "parent": "mixamorig:RightHandPinky2",
+            "matrix_local": [
+              [
+                -0.00174,
+                -1.0,
+                1e-05,
+                -85.10985
+              ],
+              [
+                -0.0,
+                -1e-05,
+                -1.0,
+                143.57454
+              ],
+              [
+                1.0,
+                -0.00174,
+                -0.0,
+                -9.36426
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -85.10985,
+              143.57454,
+              -9.36426
+            ],
+            "tail": [
+              -87.22562,
+              143.57451,
+              -9.36794
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandPinky4",
+            "parent": "mixamorig:RightHandPinky3",
+            "matrix_local": [
+              [
+                -0.00166,
+                -1.0,
+                0.0,
+                -87.22562
+              ],
+              [
+                0.00314,
+                -1e-05,
+                -1.0,
+                143.57451
+              ],
+              [
+                0.99999,
+                -0.00166,
+                0.00314,
+                -9.36794
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -87.22562,
+              143.57451,
+              -9.36794
+            ],
+            "tail": [
+              -89.3414,
+              143.57449,
+              -9.37144
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandRing1",
+            "parent": "mixamorig:RightHand",
+            "matrix_local": [
+              [
+                -0.00031,
+                -1.0,
+                -0.0,
+                -80.43679
+              ],
+              [
+                0.0,
+                0.0,
+                -1.0,
+                144.01822
+              ],
+              [
+                1.0,
+                -0.00031,
+                0.0,
+                -7.41363
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -80.43679,
+              144.01822,
+              -7.41362
+            ],
+            "tail": [
+              -83.81606,
+              144.01822,
+              -7.41468
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandRing2",
+            "parent": "mixamorig:RightHandRing1",
+            "matrix_local": [
+              [
+                0.00013,
+                -1.0,
+                -1e-05,
+                -83.81606
+              ],
+              [
+                0.0,
+                1e-05,
+                -1.0,
+                144.01822
+              ],
+              [
+                1.0,
+                0.00013,
+                0.0,
+                -7.41468
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -83.81606,
+              144.01822,
+              -7.41468
+            ],
+            "tail": [
+              -86.70576,
+              144.01823,
+              -7.4143
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandRing3",
+            "parent": "mixamorig:RightHandRing2",
+            "matrix_local": [
+              [
+                0.00036,
+                -1.0,
+                -0.0,
+                -86.70576
+              ],
+              [
+                0.0,
+                0.0,
+                -1.0,
+                144.01823
+              ],
+              [
+                1.0,
+                0.00036,
+                0.0,
+                -7.4143
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -86.70576,
+              144.01823,
+              -7.4143
+            ],
+            "tail": [
+              -89.34457,
+              144.01823,
+              -7.41336
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandRing4",
+            "parent": "mixamorig:RightHandRing3",
+            "matrix_local": [
+              [
+                0.00196,
+                -1.0,
+                0.0,
+                -89.34457
+              ],
+              [
+                0.00029,
+                0.0,
+                -1.0,
+                144.01823
+              ],
+              [
+                1.0,
+                0.00196,
+                0.00029,
+                -7.41336
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -89.34457,
+              144.01823,
+              -7.41336
+            ],
+            "tail": [
+              -91.98337,
+              144.01823,
+              -7.4082
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandThumb1",
+            "parent": "mixamorig:RightHand",
+            "matrix_local": [
+              [
+                0.39694,
+                -0.76753,
+                0.50332,
+                -73.798
+              ],
+              [
+                0.23121,
+                -0.44707,
+                -0.8641,
+                142.4873
+              ],
+              [
+                0.88825,
+                0.45937,
+                0.0,
+                -2.86664
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -73.798,
+              142.4873,
+              -2.86664
+            ],
+            "tail": [
+              -77.01318,
+              140.61453,
+              -0.94236
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandThumb2",
+            "parent": "mixamorig:RightHandThumb1",
+            "matrix_local": [
+              [
+                0.38375,
+                -0.77712,
+                0.49883,
+                -77.01319
+              ],
+              [
+                0.22086,
+                -0.44727,
+                -0.8667,
+                140.61453
+              ],
+              [
+                0.89664,
+                0.44277,
+                -0.0,
+                -0.94236
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -77.01319,
+              140.61453,
+              -0.94235
+            ],
+            "tail": [
+              -79.66802,
+              139.08655,
+              0.57025
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandThumb3",
+            "parent": "mixamorig:RightHandThumb2",
+            "matrix_local": [
+              [
+                0.37375,
+                -0.78401,
+                0.49562,
+                -79.66801
+              ],
+              [
+                0.21327,
+                -0.44738,
+                -0.86854,
+                139.08655
+              ],
+              [
+                0.90268,
+                0.43032,
+                0.0,
+                0.57025
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -79.66801,
+              139.08655,
+              0.57025
+            ],
+            "tail": [
+              -81.68684,
+              137.93454,
+              1.67831
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightHandThumb4",
+            "parent": "mixamorig:RightHandThumb3",
+            "matrix_local": [
+              [
+                0.55377,
+                -0.73325,
+                0.39457,
+                -81.68684
+              ],
+              [
+                0.04826,
+                -0.4448,
+                -0.89433,
+                137.93454
+              ],
+              [
+                0.83127,
+                0.5143,
+                -0.21093,
+                1.67831
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -81.68684,
+              137.93454,
+              1.67831
+            ],
+            "tail": [
+              -83.57494,
+              136.7892,
+              3.00262
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightLeg",
+            "parent": "mixamorig:RightUpLeg",
+            "matrix_local": [
+              [
+                -1.0,
+                0.0,
+                0.0,
+                -8.20779
+              ],
+              [
+                -0.0,
+                -0.99766,
+                -0.06835,
+                53.15308
+              ],
+              [
+                0.0,
+                -0.06835,
+                0.99766,
+                0.30069
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -8.2078,
+              53.15308,
+              0.30069
+            ],
+            "tail": [
+              -8.20779,
+              8.7294,
+              -2.74284
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightShoulder",
+            "parent": "mixamorig:Spine2",
+            "matrix_local": [
+              [
+                -0.2057,
+                -0.97736,
+                0.04948,
+                -4.56998
+              ],
+              [
+                -0.01019,
+                -0.04842,
+                -0.99878,
+                144.58611
+              ],
+              [
+                0.97856,
+                -0.20595,
+                -0.0,
+                -3.3164
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -4.56998,
+              144.58611,
+              -3.3164
+            ],
+            "tail": [
+              -15.16283,
+              144.06129,
+              -5.5485
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightToeBase",
+            "parent": "mixamorig:RightFoot",
+            "matrix_local": [
+              [
+                -1.0,
+                -0.0,
+                0.0,
+                -8.2078
+              ],
+              [
+                0.0,
+                -7e-05,
+                1.0,
+                0.00073
+              ],
+              [
+                -0.0,
+                1.0,
+                7e-05,
+                7.96772
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -8.2078,
+              0.00073,
+              7.96772
+            ],
+            "tail": [
+              -8.2078,
+              5e-05,
+              17.24584
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightToe_End",
+            "parent": "mixamorig:RightToeBase",
+            "matrix_local": [
+              [
+                -0.99973,
+                -0.0,
+                -0.02321,
+                -8.2078
+              ],
+              [
+                -0.02321,
+                -7e-05,
+                0.99973,
+                5e-05
+              ],
+              [
+                -0.0,
+                1.0,
+                7e-05,
+                17.24584
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -8.2078,
+              5e-05,
+              17.24584
+            ],
+            "tail": [
+              -8.2078,
+              -0.00062,
+              26.52396
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:RightUpLeg",
+            "parent": "mixamorig:Hips",
+            "matrix_local": [
+              [
+                -1.0,
+                -0.0,
+                -0.0,
+                -8.20779
+              ],
+              [
+                0.0,
+                -0.99997,
+                0.0078,
+                97.52321
+              ],
+              [
+                -0.0,
+                0.0078,
+                0.99997,
+                -0.04524
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -8.20779,
+              97.52321,
+              -0.04524
+            ],
+            "tail": [
+              -8.2078,
+              53.15308,
+              0.30069
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:Spine",
+            "parent": "mixamorig:Hips",
+            "matrix_local": [
+              [
+                1.0,
+                -0.0,
+                -0.0,
+                -1e-05
+              ],
+              [
+                0.0,
+                0.98913,
+                0.14703,
+                114.45647
+              ],
+              [
+                0.0,
+                -0.14703,
+                0.98913,
+                1.68584
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              114.45647,
+              1.68584
+            ],
+            "tail": [
+              -1e-05,
+              124.35043,
+              0.21513
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:Spine1",
+            "parent": "mixamorig:Spine",
+            "matrix_local": [
+              [
+                1.0,
+                -0.0,
+                -0.0,
+                -1e-05
+              ],
+              [
+                0.0,
+                0.98913,
+                0.14703,
+                124.35043
+              ],
+              [
+                0.0,
+                -0.14703,
+                0.98913,
+                0.21513
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              124.35043,
+              0.21513
+            ],
+            "tail": [
+              -1e-05,
+              133.57118,
+              -1.15552
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          },
+          {
+            "name": "mixamorig:Spine2",
+            "parent": "mixamorig:Spine1",
+            "matrix_local": [
+              [
+                1.0,
+                0.0,
+                -0.0,
+                -1e-05
+              ],
+              [
+                -0.0,
+                0.99259,
+                0.12149,
+                133.57118
+              ],
+              [
+                0.0,
+                -0.12149,
+                0.99259,
+                -1.15552
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "head": [
+              -1e-05,
+              133.57118,
+              -1.15552
+            ],
+            "tail": [
+              -1e-05,
+              147.17114,
+              -2.82016
+            ],
+            "use_deform": true,
+            "inherit_scale": "FULL",
+            "use_inherit_rotation": true
+          }
+        ]
+      },
+      "object_transform": {
+        "scale": [
+          0.009999999776482582,
+          0.009999999776482582,
+          0.009999999776482582
+        ],
+        "matrix_basis": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "matrix_world": [
+          [
+            0.01,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.01,
+            0.0
+          ],
+          [
+            0.0,
+            0.01,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "binding": {
+        "signature": "1b4083415774ecfb32fa5db3dfb508019072291bf6caa7846f0f46c99c3dc90f",
+        "meshes": [
+          {
+            "name": "Beta_Surface",
+            "signature": "a51d358db489cfdde6547d9fc5f9d168e1c074d092a84fcbc3ec0c508503aafa",
+            "vertex_count": 14232,
+            "polygon_count": 14222,
+            "armature_bind_transform": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                -0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                -0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                -0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "binding_ok": true,
+            "armature_modifiers": [
+              {
+                "name": "Armature",
+                "target": "Armature",
+                "use_vertex_groups": true,
+                "use_bone_envelopes": false
+              }
+            ]
+          },
+          {
+            "name": "Beta_Joints",
+            "signature": "c9693fd6c09eb6389800c2c683e65cefc073ae05e45886bdb53ed212233852b2",
+            "vertex_count": 10514,
+            "polygon_count": 11120,
+            "armature_bind_transform": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                -0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                -0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                -0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "binding_ok": true,
+            "armature_modifiers": [
+              {
+                "name": "Armature",
+                "target": "Armature",
+                "use_vertex_groups": true,
+                "use_bone_envelopes": false
+              }
+            ]
+          }
+        ],
+        "binding_ok": true
+      },
+      "accepted_binding_signatures": [
+        "1b4083415774ecfb32fa5db3dfb508019072291bf6caa7846f0f46c99c3dc90f"
+      ],
+      "world_unit": "metre",
+      "rest_bone_unit": "centimetre",
+      "up_axis": "+Z",
+      "forward_axis": "-Y",
+      "validation_state": "asset_scanned",
+      "license": {
+        "source": "existing local Mixamo Beta FBX",
+        "identifier": "Mixamo terms; not CC0 or open source",
+        "redistribution_review_required": true
+      },
+      "report": "reports/robot_asset_scan_20261014.json",
+      "cache_asset": "assets/characters/beta/character.blend",
+      "cache_sha256": "d4bbf736af8f59ed9141f0aafe3f0db019a689a54911ef4012bea0c561f649f6",
+      "rest_world_bounds_m": {
+        "min": [
+          -0.9025661945343018,
+          -0.17174167931079865,
+          -0.0003511549439281225
+        ],
+        "max": [
+          0.9025658369064331,
+          0.14895710349082947,
+          1.8088831901550293
+        ]
+      },
+      "height_m": 1.8092343450989574,
+      "cache_binding_signature": "1b4083415774ecfb32fa5db3dfb508019072291bf6caa7846f0f46c99c3dc90f",
+      "default_pose_source": "mixamo_fbx/basic/Idle.fbx",
+      "default_pose_source_frame": 1.0,
+      "default_pose": {
+        "mixamorig:Hips": {
+          "location": [
+            -0.9486411809921265,
+            -7.369704723358154,
+            -0.5040572881698608
+          ],
+          "rotation_quaternion": [
+            0.9291614294052124,
+            -0.035955801606178284,
+            -0.3677910566329956,
+            -0.009794686920940876
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:Spine": {
+          "location": [
+            -4.9417692160602655e-12,
+            -5.7220458984375e-06,
+            -8.344650268554688e-07
+          ],
+          "rotation_quaternion": [
+            0.9978685975074768,
+            0.05033912509679794,
+            0.04150865599513054,
+            -0.0011229505762457848
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:Spine1": {
+          "location": [
+            7.01261227906147e-12,
+            3.814697265625e-06,
+            2.2351697737121867e-07
+          ],
+          "rotation_quaternion": [
+            0.9914380311965942,
+            0.10063589364290237,
+            0.08295606821775436,
+            -0.006436539813876152
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:Spine2": {
+          "location": [
+            -2.4328915618210267e-12,
+            8.590344805270433e-06,
+            2.8954616482224083e-08
+          ],
+          "rotation_quaternion": [
+            0.9914379715919495,
+            0.10063586384057999,
+            0.0827626958489418,
+            -0.008572084829211235
+          ],
+          "scale": [
+            1.0,
+            0.9999999403953552,
+            1.0
+          ]
+        },
+        "mixamorig:Neck": {
+          "location": [
+            7.44010430521469e-13,
+            -9.5367431640625e-06,
+            1.9073481780651491e-06
+          ],
+          "rotation_quaternion": [
+            0.9992310404777527,
+            -0.037560004740953445,
+            -0.01122032105922699,
+            0.0008591946098022163
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:Head": {
+          "location": [
+            -7.700491177868585e-13,
+            2.09808349609375e-05,
+            1.9073486328125e-06
+          ],
+          "rotation_quaternion": [
+            0.9826261401176453,
+            -0.054420579224824905,
+            0.17722658812999725,
+            0.008656450547277927
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:HeadTop_End": {
+          "location": [
+            -1.4586734597976658e-12,
+            -9.5367431640625e-06,
+            -1.9073486328125e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            9.71445146547012e-17,
+            -8.881784197001252e-16,
+            -1.1102230246251565e-16
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightShoulder": {
+          "location": [
+            1.1324882507324219e-06,
+            -3.2782554626464844e-07,
+            4.023313522338867e-07
+          ],
+          "rotation_quaternion": [
+            0.9927944540977478,
+            0.07943364977836609,
+            -0.04048197716474533,
+            -0.08006643503904343
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0000001192092896,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:RightArm": {
+          "location": [
+            -2.384185791015625e-07,
+            0.0,
+            4.76837158203125e-07
+          ],
+          "rotation_quaternion": [
+            0.8454706072807312,
+            0.4907982647418976,
+            0.09696117043495178,
+            0.18680235743522644
+          ],
+          "scale": [
+            1.0,
+            0.9999999403953552,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:RightForeArm": {
+          "location": [
+            9.982697520172223e-06,
+            -1.9073486328125e-06,
+            1.1930995242437348e-05
+          ],
+          "rotation_quaternion": [
+            0.9316043257713318,
+            0.0446995310485363,
+            0.029114358127117157,
+            -0.3595382571220398
+          ],
+          "scale": [
+            0.9999998807907104,
+            0.9999998807907104,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:RightHand": {
+          "location": [
+            7.999499757715967e-06,
+            0.0,
+            -1.6393525584135205e-05
+          ],
+          "rotation_quaternion": [
+            0.9870182275772095,
+            0.10675368458032608,
+            -0.06460058689117432,
+            -0.1011209562420845
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:RightHandThumb1": {
+          "location": [
+            3.9637088775634766e-06,
+            -7.987022399902344e-06,
+            -8.514655746694189e-06
+          ],
+          "rotation_quaternion": [
+            0.9959995746612549,
+            -0.04180653393268585,
+            0.07881156355142593,
+            0.0050744046457111835
+          ],
+          "scale": [
+            1.0000001192092896,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandThumb2": {
+          "location": [
+            -1.3560056686401367e-06,
+            2.384185791015625e-06,
+            1.1458992958068848e-05
+          ],
+          "rotation_quaternion": [
+            0.9847850799560547,
+            -0.03869135305285454,
+            0.0016219498356804252,
+            0.16940689086914062
+          ],
+          "scale": [
+            1.0,
+            0.9999999403953552,
+            0.9999998807907104
+          ]
+        },
+        "mixamorig:RightHandThumb3": {
+          "location": [
+            -3.0063092708587646e-06,
+            1.2159347534179688e-05,
+            -7.593072950839996e-06
+          ],
+          "rotation_quaternion": [
+            0.9999746680259705,
+            0.0016591926105320454,
+            -1.2147337713486195e-07,
+            -0.006921010557562113
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandThumb4": {
+          "location": [
+            3.129243850708008e-06,
+            -8.344650268554688e-06,
+            -5.285713768898859e-07
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -6.266230201390499e-09,
+            2.970266699264812e-09,
+            3.725291186640334e-09
+          ],
+          "scale": [
+            0.9999998807907104,
+            0.9999999403953552,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandIndex1": {
+          "location": [
+            2.1858295440324582e-06,
+            -3.671606918942416e-06,
+            -1.2163602150394581e-05
+          ],
+          "rotation_quaternion": [
+            0.9991124868392944,
+            0.03957793116569519,
+            0.009985187090933323,
+            0.010399683378636837
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:RightHandIndex2": {
+          "location": [
+            4.320172592997551e-07,
+            -2.86102294921875e-06,
+            2.872428740374744e-05
+          ],
+          "rotation_quaternion": [
+            0.9890463948249817,
+            0.14729495346546173,
+            0.00017353678413201123,
+            0.009560429491102695
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandIndex3": {
+          "location": [
+            -5.075742492977042e-08,
+            7.152557373046875e-07,
+            -2.0731020413222723e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            1.6273066227867616e-11,
+            -1.4634632922009855e-15,
+            8.81390951690264e-05
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandIndex4": {
+          "location": [
+            -2.575712443331213e-08,
+            1.9073486328125e-06,
+            -9.051276720128953e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -1.6973783489859784e-11,
+            1.4818875293531875e-15,
+            -3.65495134158067e-12
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandMiddle1": {
+          "location": [
+            2.425109641990275e-06,
+            -2.8848669444414554e-06,
+            -1.2277274436200969e-05
+          ],
+          "rotation_quaternion": [
+            0.9934689402580261,
+            0.11098098009824753,
+            0.00868264865130186,
+            0.025046447291970253
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandMiddle2": {
+          "location": [
+            -3.026799433314409e-08,
+            -5.4836273193359375e-06,
+            1.098903339880053e-05
+          ],
+          "rotation_quaternion": [
+            0.9644784927368164,
+            0.26357829570770264,
+            0.0011162080336362123,
+            -0.017506709322333336
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandMiddle3": {
+          "location": [
+            -5.341137239156524e-07,
+            5.7220458984375e-06,
+            -1.0288280464010313e-05
+          ],
+          "rotation_quaternion": [
+            0.9999999403953552,
+            2.2676598012555393e-12,
+            -7.364553370890932e-16,
+            0.00032201322028413415
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandMiddle4": {
+          "location": [
+            4.3992022824568267e-07,
+            -1.1920928955078125e-06,
+            1.425604204996489e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -2.3566981699474354e-12,
+            4.012090139282609e-16,
+            -1.455408016326487e-11
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandRing1": {
+          "location": [
+            2.3304801288759336e-06,
+            -2.767364321698551e-06,
+            -1.2232827430125326e-05
+          ],
+          "rotation_quaternion": [
+            0.9800195693969727,
+            0.18699908256530762,
+            -0.008524258621037006,
+            0.06723389774560928
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandRing2": {
+          "location": [
+            3.6193523555994034e-07,
+            1.430511474609375e-06,
+            2.028947346843779e-05
+          ],
+          "rotation_quaternion": [
+            0.9466755390167236,
+            0.32041051983833313,
+            -0.0022594016045331955,
+            -0.03372584655880928
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandRing3": {
+          "location": [
+            7.749188739580859e-07,
+            -1.2159347534179688e-05,
+            5.2070081437705085e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            5.737546939291183e-13,
+            6.836090573890158e-17,
+            0.00011257375444984064
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandRing4": {
+          "location": [
+            -3.869642171139276e-07,
+            5.4836273193359375e-06,
+            5.366614914237289e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            2.682298827494378e-13,
+            2.1423834928313568e-16,
+            -8.731144973683769e-11
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandPinky1": {
+          "location": [
+            2.2805993467045482e-06,
+            -1.2905547919217497e-06,
+            -1.2097519174858462e-05
+          ],
+          "rotation_quaternion": [
+            0.9739611148834229,
+            0.20714245736598969,
+            -0.011249897070229053,
+            0.0914616584777832
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandPinky2": {
+          "location": [
+            -5.951151251792908e-07,
+            -2.1457672119140625e-06,
+            5.989968940411927e-06
+          ],
+          "rotation_quaternion": [
+            0.9343547224998474,
+            0.34927839040756226,
+            -0.01241428591310978,
+            -0.06951107829809189
+          ],
+          "scale": [
+            1.0,
+            0.9999999403953552,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandPinky3": {
+          "location": [
+            -4.5401981196846464e-07,
+            4.76837158203125e-06,
+            -5.096922450320562e-06
+          ],
+          "rotation_quaternion": [
+            0.9999998807907104,
+            5.159866674556146e-13,
+            -3.9548603582013724e-16,
+            0.0004965463886037469
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightHandPinky4": {
+          "location": [
+            2.1321322662970488e-07,
+            5.7220458984375e-06,
+            -7.215265895865741e-07
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -2.4838461907920883e-13,
+            5.8207636627338744e-11,
+            -1.4006289184020915e-10
+          ],
+          "scale": [
+            1.0000001192092896,
+            1.0000001192092896,
+            1.0
+          ]
+        },
+        "mixamorig:LeftShoulder": {
+          "location": [
+            -1.8477439880371094e-06,
+            -4.470348358154297e-07,
+            -2.2351741790771484e-08
+          ],
+          "rotation_quaternion": [
+            0.997542142868042,
+            0.06464886665344238,
+            0.026625772938132286,
+            0.004611534532159567
+          ],
+          "scale": [
+            1.0,
+            0.9999999403953552,
+            1.0
+          ]
+        },
+        "mixamorig:LeftArm": {
+          "location": [
+            -2.6645352591003757e-15,
+            9.5367431640625e-07,
+            7.3909759521484375e-06
+          ],
+          "rotation_quaternion": [
+            0.8432466983795166,
+            0.5225953459739685,
+            -0.11652389913797379,
+            0.04744824394583702
+          ],
+          "scale": [
+            1.0000001192092896,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftForeArm": {
+          "location": [
+            4.369524333469599e-07,
+            -3.814697265625e-06,
+            -1.0955043762805872e-05
+          ],
+          "rotation_quaternion": [
+            0.9124062061309814,
+            -0.012549098581075668,
+            0.05782962962985039,
+            0.40498533844947815
+          ],
+          "scale": [
+            0.9999999403953552,
+            0.9999999403953552,
+            0.9999998807907104
+          ]
+        },
+        "mixamorig:LeftHand": {
+          "location": [
+            -8.67471953824861e-07,
+            -1.9073486328125e-06,
+            6.529850452352548e-06
+          ],
+          "rotation_quaternion": [
+            0.9765544533729553,
+            -0.1627664417028427,
+            0.1400669366121292,
+            0.015158233232796192
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandThumb1": {
+          "location": [
+            2.2649765014648438e-06,
+            5.0067901611328125e-06,
+            1.4805622413405217e-05
+          ],
+          "rotation_quaternion": [
+            0.9945472478866577,
+            0.058147698640823364,
+            0.019448844715952873,
+            -0.08435894548892975
+          ],
+          "scale": [
+            1.0000001192092896,
+            0.9999999403953552,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:LeftHandThumb2": {
+          "location": [
+            -2.0936131477355957e-06,
+            -2.384185791015625e-06,
+            -7.644295692443848e-06
+          ],
+          "rotation_quaternion": [
+            0.9999416470527649,
+            -0.005264363717287779,
+            0.0005938423564657569,
+            0.009410879574716091
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:LeftHandThumb3": {
+          "location": [
+            3.6135315895080566e-07,
+            -5.245208740234375e-06,
+            -2.2351686723709463e-08
+          ],
+          "rotation_quaternion": [
+            0.9999803900718689,
+            0.0015268129063770175,
+            7.745409646986445e-09,
+            0.006074565928429365
+          ],
+          "scale": [
+            1.0000001192092896,
+            1.0000001192092896,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandThumb4": {
+          "location": [
+            -1.3709068298339844e-06,
+            5.9604644775390625e-06,
+            7.399141850328306e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            1.0218151658136776e-08,
+            6.786565531768929e-09,
+            6.4028435886598345e-09
+          ],
+          "scale": [
+            0.9999998807907104,
+            0.9999998807907104,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandIndex1": {
+          "location": [
+            -1.9499081460594425e-08,
+            -2.0662419046857394e-06,
+            1.6227984815486707e-05
+          ],
+          "rotation_quaternion": [
+            0.9975760579109192,
+            0.032686516642570496,
+            -0.0058282907120883465,
+            0.06115230172872543
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandIndex2": {
+          "location": [
+            2.683955244719982e-07,
+            6.4373016357421875e-06,
+            -3.0951487133279443e-06
+          ],
+          "rotation_quaternion": [
+            0.9897276759147644,
+            0.1427869200706482,
+            -0.0007903732475824654,
+            -0.007102315779775381
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandIndex3": {
+          "location": [
+            -1.412125101296624e-07,
+            -7.3909759521484375e-06,
+            -1.297815833822824e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            4.681543597229165e-09,
+            2.5462496111572364e-08,
+            6.633025623159483e-05
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandIndex4": {
+          "location": [
+            6.660497575694535e-08,
+            3.814697265625e-06,
+            1.0178477168665268e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -9.370282327836321e-14,
+            1.8973538018496328e-19,
+            4.548241124002761e-13
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandMiddle1": {
+          "location": [
+            -2.1846062736585736e-07,
+            -2.863366262317868e-06,
+            1.6206833606702276e-05
+          ],
+          "rotation_quaternion": [
+            0.9884645938873291,
+            0.12464927136898041,
+            0.00612498726695776,
+            -0.08580689877271652
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:LeftHandMiddle2": {
+          "location": [
+            3.8405414670705795e-07,
+            3.5762786865234375e-06,
+            -1.5170232472883072e-05
+          ],
+          "rotation_quaternion": [
+            0.9817360043525696,
+            0.18971669673919678,
+            -0.0013646043371409178,
+            0.014147009700536728
+          ],
+          "scale": [
+            1.0,
+            0.9999999403953552,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandMiddle3": {
+          "location": [
+            -5.662251965077303e-07,
+            9.5367431640625e-07,
+            7.831724360585213e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -2.842170943040401e-14,
+            1.154794179551086e-18,
+            -2.09439513128018e-05
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandMiddle4": {
+          "location": [
+            1.8343273211485212e-07,
+            2.86102294921875e-06,
+            -3.603227924031671e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            4.2521541843143495e-14,
+            -9.75781955236954e-19,
+            1.8189373618415772e-12
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandRing1": {
+          "location": [
+            -1.973530316945471e-07,
+            -2.514934749342501e-06,
+            1.6177165889530443e-05
+          ],
+          "rotation_quaternion": [
+            0.955245852470398,
+            0.26495257019996643,
+            -0.013303675688803196,
+            -0.13087590038776398
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandRing2": {
+          "location": [
+            1.0715042009223907e-07,
+            -3.5762786865234375e-06,
+            -1.1450968486315105e-05
+          ],
+          "rotation_quaternion": [
+            0.9609854817390442,
+            0.2755451202392578,
+            0.0017219242872670293,
+            0.02405879832804203
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandRing3": {
+          "location": [
+            2.6555471777101047e-07,
+            9.5367431640625e-07,
+            1.1463916052889545e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -1.0831872288008526e-08,
+            -7.00131721487196e-08,
+            5.781298995088946e-08
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandRing4": {
+          "location": [
+            -1.694288300768676e-07,
+            -3.5755308545049047e-06,
+            -1.4639811524830293e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            8.43769498715119e-14,
+            -2.9103830456733704e-11,
+            4.163336342344337e-17
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandPinky1": {
+          "location": [
+            2.7075518005403865e-07,
+            -3.145255959680071e-06,
+            1.6099182175821625e-05
+          ],
+          "rotation_quaternion": [
+            0.9421501755714417,
+            0.290895938873291,
+            -0.014611836522817612,
+            -0.16588881611824036
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandPinky2": {
+          "location": [
+            1.4563556760549545e-07,
+            3.5762786865234375e-06,
+            1.8661197827896103e-05
+          ],
+          "rotation_quaternion": [
+            0.9404259920120239,
+            0.33614012598991394,
+            0.01127993781119585,
+            0.049814581871032715
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandPinky3": {
+          "location": [
+            1.7214939873611002e-07,
+            -2.384185791015625e-06,
+            -1.4902993825671729e-05
+          ],
+          "rotation_quaternion": [
+            1.0,
+            9.30400432253009e-08,
+            -1.765567958500469e-08,
+            6.720171950291842e-05
+          ],
+          "scale": [
+            1.0000001192092896,
+            1.0000001192092896,
+            1.0
+          ]
+        },
+        "mixamorig:LeftHandPinky4": {
+          "location": [
+            -7.881306487433903e-07,
+            1.0967254638671875e-05,
+            2.780440354399616e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            3.6770586575585185e-13,
+            2.910396576516483e-11,
+            1.7462299661819003e-10
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightUpLeg": {
+          "location": [
+            2.7757755560742225e-07,
+            4.979188361176057e-06,
+            1.5512249262883415e-08
+          ],
+          "rotation_quaternion": [
+            0.9840875267982483,
+            0.031131505966186523,
+            0.12391238659620285,
+            -0.1234838142991066
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightLeg": {
+          "location": [
+            -1.7255459283660457e-07,
+            -1.52587890625e-05,
+            -9.536744300930877e-07
+          ],
+          "rotation_quaternion": [
+            0.9551135897636414,
+            -0.28529438376426697,
+            0.07693638652563095,
+            -0.021116862073540688
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightFoot": {
+          "location": [
+            -7.512994102398807e-07,
+            1.9073486328125e-06,
+            -3.814697265625e-06
+          ],
+          "rotation_quaternion": [
+            0.9733009934425354,
+            0.1782967448234558,
+            0.1166139468550682,
+            0.08542051166296005
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:RightToeBase": {
+          "location": [
+            7.318888037843863e-07,
+            3.552713678800501e-15,
+            2.86102294921875e-06
+          ],
+          "rotation_quaternion": [
+            0.9998694658279419,
+            0.015586191788315773,
+            0.0029560390394181013,
+            -0.0030670417472720146
+          ],
+          "scale": [
+            0.9999999403953552,
+            0.9999998211860657,
+            0.9999998211860657
+          ]
+        },
+        "mixamorig:RightToe_End": {
+          "location": [
+            4.3552597617235733e-07,
+            0.0,
+            -1.1245892750366693e-07
+          ],
+          "rotation_quaternion": [
+            1.0,
+            1.0754541701629705e-09,
+            0.0,
+            2.499491585927771e-11
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftUpLeg": {
+          "location": [
+            1.3206022231315728e-07,
+            4.522805738815805e-06,
+            -2.948792712231807e-07
+          ],
+          "rotation_quaternion": [
+            0.9681340456008911,
+            0.21473625302314758,
+            -0.07775894552469254,
+            0.10275375097990036
+          ],
+          "scale": [
+            1.0,
+            0.9999998807907104,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:LeftLeg": {
+          "location": [
+            -3.606372160902538e-07,
+            0.0,
+            2.3841860752327193e-07
+          ],
+          "rotation_quaternion": [
+            0.9494612812995911,
+            -0.28883010149002075,
+            0.11932630836963654,
+            -0.0293548796325922
+          ],
+          "scale": [
+            0.9999999403953552,
+            1.0,
+            1.0
+          ]
+        },
+        "mixamorig:LeftFoot": {
+          "location": [
+            1.581443243026115e-08,
+            -5.7220458984375e-06,
+            3.814697265625e-06
+          ],
+          "rotation_quaternion": [
+            0.996804416179657,
+            0.048057690262794495,
+            -0.05138601362705231,
+            -0.03782685101032257
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:LeftToeBase": {
+          "location": [
+            -2.7250212042417843e-07,
+            -1.9073486328125e-06,
+            -9.5367431640625e-07
+          ],
+          "rotation_quaternion": [
+            0.9993721842765808,
+            0.02044978179037571,
+            0.007576317526400089,
+            -0.027924269437789917
+          ],
+          "scale": [
+            0.9999999403953552,
+            0.9999998807907104,
+            0.9999999403953552
+          ]
+        },
+        "mixamorig:LeftToe_End": {
+          "location": [
+            -5.516830015039886e-07,
+            9.5367431640625e-07,
+            -1.0765979823190719e-06
+          ],
+          "rotation_quaternion": [
+            1.0,
+            -2.7051822115709e-08,
+            0.0,
+            6.42298325637114e-10
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    }
+  }
+}

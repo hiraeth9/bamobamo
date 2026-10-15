@@ -1,0 +1,57 @@
+# Local runtimes and externally managed dependencies
+/blender-5.2.2-linux-x64/
+/ffmpeg-env/
+/hermes/
+/.venv/
+/venv/
+**/node_modules/
+*.whl
+
+# Downloaded assets and generated media
+/assets/
+/mixamo/
+/mixamo_fbx/
+/rokoko_staging/
+/output/
+/reports/
+/汇报配图/
+/计划配图/
+*.fbx
+*.blend
+*.blend[0-9]
+*.glb
+*.gltf
+*.mp4
+*.mov
+*.zip
+*.tar
+*.tar.*
+/bones_result.json
+/*.docx
+
+# Machine-local caches and logs
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+*.bak
+.DS_Store
+.idea/
+.vscode/
+
+# Credentials and private historical notes
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_ed25519
+.netrc
+/config/*
+!/config/hermes-config.example.yaml
+!/config/hermes-source.json
+!/config/hermes-uv.lock
+/交接文档.md

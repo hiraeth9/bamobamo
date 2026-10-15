@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "fbx": {"input": "motion asset and source frame", "output": "Mixamo Beta bone-local transforms"},
+  "retargeted_glb": {"input": "CC0 GLB asset, named animation, 30 FPS and phase annotations", "output": "64 mapped Beta bones with world/rest-basis rotations, pelvis residual and separate root motion; mirroring respects destination bone bases"},
+  "hybrid": {"input": "full-body source poses, calibrated phase windows and world goals", "output": "FK body/shoulder/elbow/hip motion, gradual arm aim and limited contact correction; support targets follow source feet and fix planted feet"},
+  "procedural": {"input": "guard pose, phase, direction, intensity and targets", "output": "full-body control for uppercut, block, dodge, pursuit, impact impulse and persistent recoil step"},
+  "fall_reaction": {"input": "final knockdown contact, retargeted Death01, ground plane", "output": "full-body falling poses with standing IK released, ground correction and final pose held; no get-up or ground combat"},
+  "standing_recoil": {"input": "compatible head/body reaction, reversed Walk lower-body poses, matched source-root phase and requested retreat distance", "output": "body reaction synchronized to contact, backward stepping and persistent final position; Hit_Knockback ends lying down and is unsuitable for standing stagger"},
+  "external_model": {"status": "not_installed", "contract": "Must output Beta-compatible local poses, source FPS, contact/stance phases; validate before registration"}
+}

@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "duration_seconds": 15,
+  "fps": 30,
+  "seed": 20261012,
+  "camera": {
+    "policy": "fixed_full",
+    "azimuth_deg": -68,
+    "margin": 0.05
+  },
+  "actors": [
+    {
+      "id": "A"
+    },
+    {
+      "id": "B"
+    }
+  ],
+  "events": [
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "jab",
+      "side": "left",
+      "region": "head",
+      "outcome": "dodge",
+      "dodge": "side",
+      "start": 0.3,
+      "end": 1.2,
+      "peak": 0.75,
+      "intensity": 0.5,
+      "id": "e01"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "jab",
+      "side": "right",
+      "region": "head",
+      "outcome": "block",
+      "start": 1.45,
+      "end": 2.35,
+      "peak": 1.9,
+      "intensity": 0.6,
+      "id": "e02",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "kick",
+      "side": "right",
+      "region": "abdomen",
+      "outcome": "hit",
+      "start": 2.9,
+      "end": 4.1,
+      "peak": 3.5,
+      "intensity": 0.85,
+      "id": "e03",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "uppercut",
+      "side": "left",
+      "region": "abdomen",
+      "outcome": "block",
+      "start": 4.6,
+      "end": 5.6,
+      "peak": 5.1,
+      "intensity": 0.75,
+      "id": "e04",
+      "dodge": "side"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "hook",
+      "side": "left",
+      "region": "head",
+      "outcome": "dodge",
+      "dodge": "back",
+      "start": 6.05,
+      "end": 6.9,
+      "peak": 6.48,
+      "intensity": 0.65,
+      "id": "e05"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "hook",
+      "side": "right",
+      "region": "abdomen",
+      "outcome": "dodge",
+      "dodge": "side",
+      "start": 7.45,
+      "end": 8.3,
+      "peak": 7.88,
+      "intensity": 0.6,
+      "id": "e06"
+    },
+    {
+      "kind": "strike",
+      "actor": "B",
+      "motion": "hook",
+      "side": "right",
+      "region": "head",
+      "outcome": "dodge",
+      "dodge": "duck",
+      "start": 8.85,
+      "end": 9.7,
+      "peak": 9.28,
+      "intensity": 0.7,
+      "id": "e07"
+    },
+    {
+      "kind": "strike",
+      "actor": "A",
+      "motion": "hook",
+      "side": "left",
+      "region": "head",
+      "outcome": "dodge",
+      "dodge": "back",
+      "start": 10.25,
+      "end": 11.1,
+      "peak": 10.68,
+      "intensity": 0.6,
+      "id": "e08"
+    },
+    {
+      "kind": "move",
+      "actor": "both",
+      "direction": "apart",
+      "distance": 0.35,
+      "start": 11.5,
+      "end": 12.4,
+      "id": "e09"
+    },
+    {
+      "kind": "guard",
+      "actor": "both",
+      "start": 12.6,
+      "end": 15.0,
+      "id": "e10"
+    }
+  ],
+  "frame_count": 450
+}

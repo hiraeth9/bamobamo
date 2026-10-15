@@ -1,0 +1,7 @@
+{
+  "repository_url": "https://gitee.com/wuyuancunmin/hermes-agent.git",
+  "commit": "cf64ca20c5ab99ebf7e8ca272c69edc7ea0636ed",
+  "current_lockfile_snapshot": "config/hermes-uv.lock",
+  "lockfile_sha256": "50ae37b26fd7387037603367b3eef436d347bf29693e2e3e149f29ca31c7fb9a",
+  "scope": "External Hermes source is managed independently. Only its source pin and current modified dependency lock are saved in this project checkpoint."
+}
