@@ -22,6 +22,18 @@ MANIFEST_NAME = 'agent_scene.json'
 SCENE_NAME = 'scene.blend'
 
 
+def contact_requirements_manifest(job_id):
+    """Keep a concise description; the probe checks the scene's actual contacts."""
+    from agent_contacts import contact_requirements
+    registered = contact_requirements(job_id)
+    fields = ('id', 'actor_id', 'event_id', 'chain', 'kind', 'frame_start', 'frame_end', 'tolerance_m')
+    contacts = [{key: contact[key] for key in fields}
+                for contact in registered['requirements']['contacts']]
+    return {'contact_contract_version': registered['version'],
+            'contact_requirements_status': registered['status'],
+            'contact_requirements': {'version': registered['version'], 'contacts': contacts}}
+
+
 def sha256_file(path):
     digest = hashlib.sha256()
     with Path(path).open('rb') as stream:
@@ -568,6 +580,7 @@ def submit_scene(job_id, analysis=None):
             scene.frame_set(scene.frame_start)
             bpy.context.view_layer.update()
             facts = scene_facts(scene)
+            contact_contract = contact_requirements_manifest(job_id)
             camera_visibility = camera_visibility_manifest(job_id)
             if camera_visibility['camera_visibility_status'] not in ('registered', 'ready'):
                 warnings.append('相机可见性契约缺失或无效；后台会检查并反馈，不以存在camera证明主体可见。')
@@ -606,6 +619,8 @@ def submit_scene(job_id, analysis=None):
                         'scene_path': str(folder / SCENE_NAME), 'analysis_path': str(folder / ANALYSIS_NAME),
                         **facts, 'actor_count': declared_actors,
                         **camera_visibility,
+                        **contact_contract,
+                        'contact_coverage': 'registered_geometry_only; natural_language_coverage_unverified',
                         **execution,
                         'actor_count_source': 'agent_analysis_metadata',
                         'scene_sha256': sha256_file(temporary_scene),
@@ -622,6 +637,8 @@ def submit_scene(job_id, analysis=None):
             return {'ok': True, 'job_id': job_id, 'manifest_path': str(folder / MANIFEST_NAME),
                     'scene_path': str(folder / SCENE_NAME), 'scene_sha256': manifest['scene_sha256'],
                     'frame_count': manifest['frame_count'], 'fps': manifest['fps'], 'archive': archive,
+                    'contact_contract_version': 1,
+                    'contact_requirements_status': contact_contract['contact_requirements_status'],
                     'warnings': warnings, 'message': '真实 Blender 场景已保存；后台将重载检查并出片'}
         finally:
             temporary_scene.unlink(missing_ok=True)

@@ -9,6 +9,21 @@ import math
 import hashlib
 
 
+def registered_contact_report(job_id, frame_start=None, frame_end=None, actor_id=None,
+                              detail=False):
+    """Check registered geometry and turn runtime errors into useful feedback."""
+    try:
+        from agent_contacts import check_contacts
+        result = check_contacts(job_id, frame_start=frame_start, frame_end=frame_end,
+                                actor_id=actor_id, detail=detail)
+    except Exception as error:
+        result = {'ok': False, 'passed': False, 'version': 1, 'status': 'error', 'failure_count': 1,
+                  'failures': [{'code': 'contact_check_error', 'type': type(error).__name__,
+                                'message': str(error)}], 'contacts': []}
+    result['coverage'] = 'registered_geometry_only; natural_language_coverage_unverified'
+    return result
+
+
 def rotation_delta_degrees(first, second):
     """Physical rotation distance; q and -q represent the same orientation."""
     a=math.sqrt(sum(v*v for v in first));b=math.sqrt(sum(v*v for v in second))
@@ -81,6 +96,9 @@ def scene_motion_facts(job_id):
                     frames.update(int(key['frame']) for key in spec.get('keyframes',[]))
             pose=_action_facts(actor['armature']);root=_action_facts(actor['root'])
             commit=store.get('last_commit')
+            if commit and commit.get('status')=='internal_base_only':
+                errors.append({'actor_id':actor_id,
+                               'error':'coordinated motion is only an internal base pass; finish the contact commit before submission'})
             if commit and (pose['action']!=commit.get('armature_action') or root['action']!=commit.get('root_action')):
                 errors.append({'actor_id':actor_id,'error':'actual actions differ from committed motion'})
             if commit and (pose['channel_values_sha256']!=commit.get('pose_channel_sha256') or
@@ -284,7 +302,13 @@ def motion_check(job_id,actor_id=None,frame_start=None,frame_end=None,contacts=N
                 contact_reports.append(measured)
                 if not measured['passed']:failures.append({'check':'contact',**measured})
     finally:scene.frame_set(old_frame)
-    return {'ok':True,'passed':not failures,'scope':'specified identity, finite geometry, animation, boundaries and optional contacts/framing',
+    registered_contacts=registered_contact_report(job_id,frame_start=start,frame_end=end,actor_id=actor_id)
+    if not registered_contacts['passed']:
+        failures.append({'check':'registered_contacts','status':registered_contacts['status'],
+                         'failure_count':registered_contacts['failure_count'],
+                         'failures':registered_contacts['failures']})
+    return {'ok':True,'passed':not failures,'scope':'specified identity, finite geometry, animation, boundaries, registered contacts and optional explicit contacts/framing',
             'job_id':job_id,'frame_start':start,'frame_end':end,'actors':reports,'contacts':contact_reports,'failures':failures,
+            'registered_contacts':registered_contacts,
             'naturalness_verified':False,'semantics_verified':False,'scene_reload_verified':False,
             'visual_review_required':True}

@@ -176,37 +176,36 @@ def apply_targets(job_id,actor_id,targets,frame,weight=1):
     """
     actor=_actor(job_id,actor_id)
     info=_controls_ensure_resolved(job_id,actor_id,actor)
-    return _apply_targets_resolved(actor,info,targets,frame,weight)
+    from agent_contacts import validate_targets
+    return _apply_targets_resolved(actor,info,validate_targets(targets),frame,weight)
 
 
 def _apply_targets_resolved(actor,info,targets,frame,weight=1):
     import bpy
-    from mathutils import Vector,Quaternion
+    from mathutils import Vector,Quaternion,Matrix
+    from agent_contacts import sample_target,resolve_binding,resolve_effector
+    job_id=info.get('job_id') or actor['root'].get('wm_job_id')
     measurements=[]
     for key,spec in targets.items():
         if key not in info['chains']:
             raise ValueError('unknown IK chain: '+key)
-        keys=sorted(spec.get('keyframes',[]),key=lambda k:k['frame'])
-        if not keys:
-            keys=[dict(spec,frame=frame)]
-        if frame<=keys[0]['frame']: state=keys[0]
-        elif frame>=keys[-1]['frame']: state=keys[-1]
-        else:
-            left,right=next((a,b) for a,b in zip(keys,keys[1:]) if a['frame']<=frame<=b['frame'])
-            t=(frame-left['frame'])/max(1,right['frame']-left['frame'])
-            if left.get('interpolation','smooth')=='smooth':t=t*t*(3-2*t)
-            state=dict(left)
-            for field in ('position','pole'):
-                if field in left and field in right:
-                    state[field]=[a+(b-a)*t for a,b in zip(left[field],right[field])]
-            state['influence']=left.get('influence',1)+(right.get('influence',1)-left.get('influence',1))*t
-            if 'rotation_quaternion' in left and 'rotation_quaternion' in right:
-                state['rotation_quaternion']=list(Quaternion(left['rotation_quaternion']).slerp(Quaternion(right['rotation_quaternion']),t))
+        state=sample_target(spec,frame)
         chain=info['chains'][key]
         arm=actor['armature']
+        # FK/root channels were just assigned by the compositor. Evaluate them
+        # before deriving poles and local/skin effector offsets in world space.
+        bpy.context.view_layer.update()
         goal=bpy.data.objects[chain['target_object']]
-        goal.location=state.get('position',goal.location)
-        if 'rotation_quaternion' in state:goal.rotation_quaternion=state['rotation_quaternion']
+        binding=resolve_binding(job_id,state['binding']) if 'binding' in state else {
+            'position':state.get('position',list(goal.matrix_world.translation)),
+            'scope':'explicit_world_point'}
+        desired=Vector(binding['position'])
+        initial=resolve_effector(job_id,actor,chain['end_bone'],state)
+        evaluated_arm=arm.evaluated_get(bpy.context.evaluated_depsgraph_get())
+        origin=evaluated_arm.matrix_world @ evaluated_arm.pose.bones[chain['end_bone']].head
+        offset=Vector(initial['position'])-origin
+        rotation=Quaternion(state['rotation_quaternion']) if 'rotation_quaternion' in state else goal.matrix_world.to_quaternion()
+        goal.matrix_world=Matrix.LocRotScale(desired-offset,rotation,Vector((1,1,1)))
         if 'pole' in state:bpy.data.objects[chain['pole_object']].location=state['pole']
         else:
             start,middle,end=(chain[k].split(':')[-1] for k in ('start_bone','middle_bone','end_bone'))
@@ -216,13 +215,36 @@ def _apply_targets_resolved(actor,info,targets,frame,weight=1):
         orientation=arm.pose.bones[chain['end_bone']].constraints[chain['rotation_constraint']]
         orientation.mute=False
         orientation.influence=ik.influence if 'rotation_quaternion' in state else 0
-        start_point=arm.matrix_world @ arm.pose.bones[chain['start_bone']].head
-        mid_point=arm.matrix_world @ arm.pose.bones[chain['middle_bone']].head
-        end_point=arm.matrix_world @ arm.pose.bones[chain['end_bone']].head
-        reach=(mid_point-start_point).length+(end_point-mid_point).length
-        measurements.append({'chain':key,'target_distance_m':(goal.location-start_point).length,
-                             'reach_m':reach,'reachable':(goal.location-start_point).length<=reach+1e-4,
-                             'influence':ik.influence,'use_stretch':False})
+        # Local points rotate with the hand; skin vertices may blend several
+        # bones. Correct the goal against the actual evaluated contact point.
+        # Partial influence deliberately keeps its FK/IK handover strength;
+        # repeatedly compensating it would defeat the authored release ramp.
+        iterations=0
+        for attempt in range(8 if ik.influence>=1-1e-8 else 1):
+            bpy.context.view_layer.update()
+            actual=resolve_effector(job_id,actor,chain['end_bone'],state)
+            error=desired-Vector(actual['position'])
+            iterations=attempt+1
+            if error.length<=.0005 or ik.influence<1-1e-8 or attempt==7:
+                break
+            matrix=goal.matrix_world.copy();matrix.translation+=error;goal.matrix_world=matrix
+        evaluated_arm=arm.evaluated_get(bpy.context.evaluated_depsgraph_get())
+        points=[evaluated_arm.matrix_world @ evaluated_arm.pose.bones[chain[name]].head
+                for name in ('start_bone','middle_bone','end_bone')]
+        start_point,mid_point,end_point=points
+        first_length,second_length=(mid_point-start_point).length,(end_point-mid_point).length
+        reach=first_length+second_length
+        distance=(goal.matrix_world.translation-start_point).length
+        tolerance=float((spec.get('contact') or {}).get('tolerance_m',.03))
+        measurements.append({'chain':key,'target_distance_m':distance,
+                             'reach_m':reach,'minimum_reach_m':abs(first_length-second_length),
+                             'reachable':abs(first_length-second_length)-1e-4<=distance<=reach+1e-4,
+                             'influence':ik.influence,'use_stretch':False,
+                             'target_position_m':list(desired),'ik_goal_position_m':list(goal.matrix_world.translation),
+                             'effector_position_m':actual['position'],'effector_error_m':error.length,
+                             'effector_scope':actual['scope'],'target_scope':binding['scope'],
+                             'within_tolerance':error.length<=tolerance,'tolerance_m':tolerance,
+                             'solve_iterations':iterations})
     return {'ok':True,'frame':frame,'targets':measurements}
 
 

@@ -3,7 +3,8 @@
 blender -b --python-exit-code 1 --python agent_scene_probe.py -- \
     --manifest /.../agent_scene.json --report /.../agent_scene_probe.json
 
-This validates files and Blender evaluation.  It is not action/physics QA.
+This validates files, Blender evaluation and registered geometric contacts.
+It does not certify natural-language completeness, naturalness or dynamics.
 """
 import argparse
 import json
@@ -55,7 +56,7 @@ def resolution_messages(resolution):
 
 
 def probe_scene(manifest_path):
-    report = {'version': 1, 'scope': 'saved_scene_reproducibility_and_render_runtime_only',
+    report = {'version': 1, 'scope': 'saved_scene_reproducibility_render_runtime_and_registered_geometric_contacts',
               'passed': False, 'manifest_path': str(manifest_path), 'errors': [],
               'warnings': [], 'tested_frames': 0, 'created_at': time.time()}
     errors, warnings = report['errors'], report['warnings']
@@ -201,6 +202,13 @@ def probe_scene(manifest_path):
             except Exception as error:
                 errors.append({'code': 'camera_visibility', 'reason': 'contract_or_check_error',
                                'type': type(error).__name__, 'message': str(error)})
+        from agent_motion_quality import registered_contact_report
+        contact_result = registered_contact_report(folder.name)
+        report['registered_contacts'] = contact_result
+        if not contact_result['passed']:
+            errors.append({'code': 'contacts', 'reason': contact_result['status'],
+                           'failure_count': contact_result['failure_count'],
+                           'failures': contact_result['failures']})
         report['passed'] = not errors
     except Exception as error:
         errors.append({'code': 'probe_error', 'type': type(error).__name__, 'message': str(error)})

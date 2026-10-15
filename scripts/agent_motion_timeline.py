@@ -64,6 +64,9 @@ def validate_event(event):
         raise ValueError('masked overlays have root_owner=False and cannot also own global root motion; put root motion in a full-body base event.')
     if not _finite(event):
         raise ValueError('nonfinite motion event')
+    if 'targets' in event:
+        from agent_contacts import validate_targets
+        event['targets'] = validate_targets(event['targets'], event['start_frame'], event['end_frame'])
     event['source'] = source
     event['event_id'] = str(event['event_id'])
     event.setdefault('root_strategy', 'hold' if event.get('mask') else 'source')
@@ -441,8 +444,213 @@ def _root_delta(rotation,scale,root):
     return rotation @ Vector([a*b for a,b in zip(scale,root)])
 
 
+def contact_commit_order(actor_ids, dependencies):
+    """Targets are baked before their dependants; cycles must not mutate a scene."""
+    actor_ids = list(actor_ids)
+    if not actor_ids or any(not isinstance(aid, str) or not aid.strip() for aid in actor_ids):
+        raise ValueError('coordinated commit needs nonempty actor IDs')
+    if len(set(actor_ids)) != len(actor_ids):
+        raise ValueError('duplicate actor IDs in coordinated commit')
+    pending = set(actor_ids)
+    order = []
+    while pending:
+        ready = [aid for aid in actor_ids if aid in pending and
+                 not (set(dependencies.get(aid, ())) - {aid}) & pending]
+        if not ready:
+            raise ValueError('Cyclic actor contact dependencies require a joint solver; '
+                             'no animation was changed: ' + ', '.join(sorted(pending)))
+        order.extend(ready)
+        pending.difference_update(ready)
+    return order
+
+
+def _binding_references(spec):
+    bindings = [spec.get('binding')]
+    bindings.extend(key.get('binding') for key in spec.get('keyframes', []))
+    return [binding for binding in bindings if isinstance(binding, dict)]
+
+
+def _bound_object_owners(obj, owners, visited=None):
+    """Follow object parenting and constraint targets, including held props."""
+    if obj is None:
+        return set()
+    visited = set() if visited is None else visited
+    if obj.name in visited:
+        return set()
+    visited.add(obj.name)
+    if obj.name in owners:
+        return {owners[obj.name]}
+    ad = obj.animation_data
+    if ad is not None and ad.drivers:
+        raise ValueError('Bake contact target drivers before coordinated commit: ' + obj.name)
+    result = _bound_object_owners(obj.parent, owners, visited)
+    for constraint in obj.constraints:
+        # Influence can be animated later in the range. Preserve even currently
+        # inactive dependencies rather than sampling a future target too early.
+        for field in ('target', 'pole_target'):
+            result.update(_bound_object_owners(getattr(constraint, field, None), owners, visited))
+        for target in getattr(constraint, 'targets', ()):
+            result.update(_bound_object_owners(getattr(target, 'target', None), owners, visited))
+    for modifier in getattr(obj, 'modifiers', ()):
+        result.update(_bound_object_owners(getattr(modifier, 'object', None), owners, visited))
+    return result
+
+
+def _motion_commit_group(job_id, actor_ids, frame_start=None, frame_end=None):
+    """Evaluate every base first, then solve acyclic contacts at the same clock.
+
+    Each target actor has persistent animation before a dependant is sampled.
+    Ordinary bpy frame evaluation therefore supplies the target's *same-frame*
+    pose, including its completed IK, instead of whichever GUI frame was left.
+    This is not a cyclic whole-body or dynamics solver.
+    """
+    import bpy
+    from agent_character import scene_actor_facts
+    from agent_contacts import resolve_binding
+    from agent_motion_controls import CONTROL_STORE
+    scene = bpy.context.scene
+    original_frame = scene.frame_current
+    original_subframe = scene.frame_subframe
+    original_objects = set(bpy.data.objects.keys())
+    original_actions = set(bpy.data.actions.keys())
+    seeds = list(actor_ids)
+    contact_commit_order(seeds, {})
+    actors = {item['actor_id']: _actor(job_id, item['actor_id'])
+              for item in scene_actor_facts(job_id)['actors']}
+    for aid in seeds:
+        if aid not in actors:
+            raise ValueError('character actor not registered: ' + aid)
+    owners = {}
+    for aid, actor in actors.items():
+        for obj in [actor['root'], actor['armature'], *actor['meshes']]:
+            owners[obj.name] = aid
+    stores = {aid: _read(actor['root']) for aid, actor in actors.items()}
+    selected = list(seeds)
+    dependencies = {}
+    # Include animated target ancestors so callers cannot accidentally use an
+    # old target bake after editing its registered events.
+    for aid in selected:
+        dependencies[aid] = set()
+        for event in stores[aid].get('events', []):
+            event = validate_event(event)
+            for spec in event.get('targets', {}).values():
+                for binding in _binding_references(spec):
+                    references = ({binding['actor_id']} if 'actor_id' in binding else
+                                  _bound_object_owners(bpy.data.objects.get(binding.get('object', '')), owners))
+                    for reference in references:
+                        if reference not in actors:
+                            raise ValueError('contact target actor is not registered: ' + str(reference))
+                        if reference != aid:
+                            dependencies[aid].add(reference)
+                            if stores[reference].get('events') and reference not in selected:
+                                selected.append(reference)
+                    # Missing objects, bones and bad vertex indices fail before
+                    # any Action clear or timeline mutation.
+                    resolve_binding(job_id, binding)
+    order = contact_commit_order(selected, dependencies)
+    for aid in selected:
+        actor = actors[aid]
+        if not stores[aid].get('events'):
+            raise ValueError('No motion events for coordinated actor: ' + aid)
+        _require_registered_animation(actor, stores[aid])
+    backups = {}
+    for aid in selected:
+        actor = actors[aid]
+        objects = []
+        for obj in (actor['armature'], actor['root']):
+            ad = obj.animation_data
+            objects.append((obj, ad.action if ad else None,
+                            getattr(ad, 'action_slot', None) if ad else None,
+                            obj.matrix_basis.copy()))
+        control_objects = {}
+        for bone in actor['armature'].pose.bones:
+            for constraint in bone.constraints:
+                if constraint.name.startswith('WM_'):
+                    for field in ('target', 'pole_target'):
+                        obj = getattr(constraint, field, None)
+                        if obj is not None:
+                            control_objects[obj.name] = obj.matrix_basis.copy()
+        backups[aid] = {'timeline': actor['root'].get(STORE), 'objects': objects,
+                        'controls': actor['root'].get(CONTROL_STORE),
+                        'control_objects': control_objects,
+                        'pose': {bone.name: bone.matrix_basis.copy() for bone in actor['armature'].pose.bones},
+                        'constraints': {constraint.as_pointer(): (constraint.mute, constraint.influence,
+                                                                  getattr(constraint, 'pole_angle', None))
+                                        for bone in actor['armature'].pose.bones for constraint in bone.constraints}}
+    try:
+        # Base pass is internal and cannot be published as an accepted result.
+        for aid in selected:
+            _motion_commit_single(job_id, aid, frame_start, frame_end, _base_only=True)
+        results = {}
+        for aid in order:
+            results[aid] = _motion_commit_single(job_id, aid, frame_start, frame_end)
+        return {'ok': True, 'job_id': job_id, 'actor_ids': selected, 'requested_actor_ids': seeds,
+                'commit_order': order, 'actors': results,
+                'coordination': 'all_base_poses_then_same_frame_target_first_acyclic_IK',
+                'cyclic_contacts_supported': False, 'naturalness_verified': False}
+    except Exception:
+        # Do not strand a task with a partially completed two-pass bake.
+        for aid, backup in backups.items():
+            actor = actors[aid]
+            for obj, action, slot, basis in backup['objects']:
+                obj.animation_data_clear()
+                if action is not None:
+                    ad = obj.animation_data_create()
+                    ad.action = action
+                    if slot is not None:
+                        ad.action_slot = slot
+                obj.matrix_basis = basis
+            for bone in actor['armature'].pose.bones:
+                bone.matrix_basis = backup['pose'][bone.name]
+                for constraint in list(bone.constraints):
+                    state = backup['constraints'].get(constraint.as_pointer())
+                    if state is not None:
+                        constraint.mute, constraint.influence = state[:2]
+                        if state[2] is not None:
+                            constraint.pole_angle = state[2]
+                    elif constraint.name.startswith('WM_'):
+                        bone.constraints.remove(constraint)
+            for name, matrix in backup['control_objects'].items():
+                if name in bpy.data.objects:
+                    bpy.data.objects[name].matrix_basis = matrix
+            if backup['timeline'] is None:
+                actor['root'].pop(STORE, None)
+            else:
+                actor['root'][STORE] = backup['timeline']
+            if backup['controls'] is None:
+                actor['root'].pop(CONTROL_STORE, None)
+            else:
+                actor['root'][CONTROL_STORE] = backup['controls']
+            prefix = 'WM_' + str(job_id) + '_' + aid + '_'
+            for obj in list(bpy.data.objects):
+                if (obj.name not in original_objects and obj.name.startswith(prefix)
+                        and any(chain + suffix in obj.name
+                                for chain in ('LeftHand', 'RightHand', 'LeftFoot', 'RightFoot')
+                                for suffix in ('_Goal', '_Pole'))):
+                    bpy.data.objects.remove(obj, do_unlink=True)
+        for action in list(bpy.data.actions):
+            if action.name not in original_actions and action.users == 0:
+                bpy.data.actions.remove(action)
+        raise
+    finally:
+        scene.frame_set(original_frame, subframe=original_subframe)
+        bpy.context.view_layer.update()
+
+
 def motion_commit(job_id, actor_id, frame_start=None, frame_end=None, events=None,
                   capture=False, event_id=None, mask=None):
+    """Commit one actor, or coordinate a list of existing actors and their targets."""
+    if isinstance(actor_id, (list, tuple)):
+        if capture or events is not None or event_id is not None or mask is not None:
+            raise ValueError('Register each actor event first, then pass actor_id=[...] '
+                             'for a coordinated commit; capture remains per-actor.')
+        return _motion_commit_group(job_id, actor_id, frame_start, frame_end)
+    return _motion_commit_single(job_id, actor_id, frame_start, frame_end, events,
+                                 capture, event_id, mask)
+
+
+def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, events=None,
+                          capture=False, event_id=None, mask=None, _base_only=False):
     """Compose or capture and bake *all* actual channels; never rebuild actors.
 
     Direct bpy users pass capture=True to bake the evaluated existing animation
@@ -641,7 +849,7 @@ def motion_commit(job_id, actor_id, frame_start=None, frame_end=None, events=Non
         active=sorted([e for e in all_events if e['start_frame']<=frame<=e['end_frame'] and e.get('targets') and
                        not final_base_contains_layer(base,e,frame)],
                       key=lambda e:(e.get('priority',0),e['start_frame'],_coverage_id(e)))
-        if active:
+        if active and not _base_only:
             if control_info is None:control_info=_controls_ensure_resolved(job_id,actor_id,actor)
             for event in active:
                 applied=_apply_targets_resolved(actor,control_info,event['targets'],frame,event_weight(event,frame))
@@ -705,7 +913,7 @@ def motion_commit(job_id, actor_id, frame_start=None, frame_end=None, events=Non
                           'root_action':root.animation_data.action.name,
                           'pose_channel_sha256':animation_fingerprint(armature),
                           'root_channel_sha256':animation_fingerprint(root),
-                          'sources':provenance,'status':'baked_unreviewed',
+                          'sources':provenance,'status':'internal_base_only' if _base_only else 'baked_unreviewed',
                           'constraints_baked_and_muted':True,'baked_constraints':baked_constraints,
                           'target_diagnostics':target_diagnostics,
                           'unreachable_targets':[{'frame':record['frame'],'event_id':record['event_id'],**target}

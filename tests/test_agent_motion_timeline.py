@@ -2,11 +2,13 @@
 import math
 import sys
 import unittest
+from types import SimpleNamespace
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from agent_motion_timeline import (blend_pose,coverage_event,event_weight,
                                    sample_keyframes,upsert_event,validate_event,commit_bake_range,
-                                   final_base_contains_layer,preserve_edit_priority)
+                                   final_base_contains_layer,preserve_edit_priority,contact_commit_order,
+                                   _bound_object_owners)
 from agent_motion_quality import rotation_delta_degrees
 
 
@@ -16,6 +18,34 @@ def event(name,start,end,**kwargs):
 
 
 class MotionTimelineTests(unittest.TestCase):
+    def test_contact_target_precedes_attacker_even_if_registered_after_it(self):
+        self.assertEqual(contact_commit_order(['attacker','reactor'],{'attacker':{'reactor'}}),
+                         ['reactor','attacker'])
+        self.assertEqual(contact_commit_order(['A','B','C'],{'A':{'B'},'B':{'C'}}),['C','B','A'])
+
+    def test_static_external_target_and_self_reference_do_not_create_false_cycle(self):
+        self.assertEqual(contact_commit_order(['A','unrelated'],{'A':{'static','A'}}),['A','unrelated'])
+
+    def test_cyclic_contacts_are_reported_instead_of_using_arbitrary_actor_order(self):
+        with self.assertRaisesRegex(ValueError,'Cyclic actor contact'):
+            contact_commit_order(['A','B'],{'A':{'B'},'B':{'A'}})
+        for actors in ([],['A','A'],['A','']):
+            with self.assertRaises(ValueError):contact_commit_order(actors,{})
+
+    def test_held_prop_dependency_follows_constraints_even_before_influence_ramps_up(self):
+        target=SimpleNamespace(name='reactor_rig')
+        prop=SimpleNamespace(name='held_prop',parent=None,animation_data=None,modifiers=[],
+                             constraints=[SimpleNamespace(target=target,influence=0,mute=False)])
+        self.assertEqual(_bound_object_owners(prop,{'reactor_rig':'reactor'}),{'reactor'})
+        prop.parent=prop
+        self.assertEqual(_bound_object_owners(prop,{'reactor_rig':'reactor'}),{'reactor'})
+
+    def test_unbaked_target_driver_is_explicitly_diagnosed(self):
+        prop=SimpleNamespace(name='driver_prop',parent=None,constraints=[],modifiers=[],
+                             animation_data=SimpleNamespace(drivers=[object()]))
+        with self.assertRaisesRegex(ValueError,'Bake contact target drivers'):
+            _bound_object_owners(prop,{})
+
     def test_explicit_masked_edit_takes_over_auto_preservation_without_replacing_base(self):
         old=event('preserved',1,30,priority=100,_auto_preserved_outside_capture=True)
         changed,diagnostic=preserve_edit_priority([old],event('new',21,25,mask=['arm']))
