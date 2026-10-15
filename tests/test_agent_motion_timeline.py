@@ -8,7 +8,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from agent_motion_timeline import (blend_pose,coverage_event,event_weight,
                                    sample_keyframes,upsert_event,validate_event,commit_bake_range,
                                    final_base_contains_layer,preserve_edit_priority,contact_commit_order,
-                                   _bound_object_owners)
+                                   _bound_object_owners, active_contact_targets, contact_dependency_schedule)
 from agent_motion_quality import rotation_delta_degrees
 
 
@@ -18,6 +18,66 @@ def event(name,start,end,**kwargs):
 
 
 class MotionTimelineTests(unittest.TestCase):
+    def schedule(self, events, first, last):
+        return contact_dependency_schedule(list(events), events, first, last,
+                                            lambda binding: {binding['actor_id']} if 'actor_id' in binding else set())
+
+    def touch(self, name, start, end, other, **updates):
+        return event(name, start, end, mask=['right_arm'], targets={
+            'RightHand': {'binding': {'actor_id': other, 'bone': 'Head'}, **updates}})
+
+    def test_nonoverlapping_attack_and_counterattack_use_each_frames_order(self):
+        result = self.schedule({'A': [self.touch('attack', 1, 8, 'B')],
+                                'B': [self.touch('counter', 9, 16, 'A')]}, 1, 16)
+        self.assertEqual(result['frame_orders'][4], ['B', 'A'])
+        self.assertEqual(result['frame_orders'][12], ['A', 'B'])
+        self.assertTrue(result['dynamic_commit_order'])
+        self.assertEqual([(w['frame_start'], w['frame_end']) for w in result['dependency_windows']],
+                         [(1, 8), (9, 16)])
+
+    def test_only_actual_same_frame_cycles_are_rejected_with_the_frame(self):
+        with self.assertRaisesRegex(ValueError, 'Frame 6: Cyclic actor contact'):
+            self.schedule({'A': [self.touch('attack', 1, 12, 'B')],
+                           'B': [self.touch('counter', 6, 12, 'A')]}, 1, 12)
+
+    def test_zero_influence_and_release_do_not_leave_a_reverse_dependency(self):
+        result = self.schedule({
+            'A': [self.touch('release', 1, 12, 'B', keyframes=[
+                {'frame': 1, 'influence': 1}, {'frame': 6, 'influence': 0}, {'frame': 12, 'influence': 0}])],
+            'B': [self.touch('counter', 1, 12, 'A', keyframes=[
+                {'frame': 1, 'influence': 0}, {'frame': 6, 'influence': 0}, {'frame': 7, 'influence': 1}])]}, 1, 12)
+        self.assertEqual(result['frame_orders'][1], ['B', 'A'])
+        self.assertEqual(result['frame_orders'][7], ['A', 'B'])
+        self.assertFalse(active_contact_targets([self.touch('off', 1, 12, 'B', influence=0)], 4))
+
+    def test_event_blending_and_contact_qa_window_are_distinct(self):
+        attack = self.touch('attack', 1, 8, 'B', contact={'start_frame': 3, 'end_frame': 4})
+        attack['blend_in_frames'] = 2
+        result = self.schedule({'A': [attack], 'B': [self.touch('first_frame', 1, 1, 'A')]}, 1, 8)
+        self.assertEqual(result['frame_orders'][1], ['A', 'B'])
+        self.assertEqual(result['frame_orders'][2], ['B', 'A'])
+        self.assertTrue(active_contact_targets([attack], 6), 'Release IK is not limited to its contact QA window')
+
+    def test_final_pose_layers_suppress_only_their_actual_window(self):
+        snapshot = event('final', 1, 12, priority=100, final_pose_layers=True)
+        hidden = self.touch('old_targets', 1, 24, 'B')
+        result = self.schedule({'A': [snapshot, hidden], 'B': [self.touch('counter', 1, 12, 'A')]}, 1, 12)
+        self.assertEqual(result['commit_order'], ['A', 'B'])
+        with self.assertRaisesRegex(ValueError, 'Frame 13: Cyclic actor contact'):
+            self.schedule({'A': [snapshot, hidden], 'B': [self.touch('later', 13, 24, 'A')]}, 1, 24)
+
+    def test_stable_one_way_order_and_compact_dependency_windows(self):
+        result = self.schedule({'A': [self.touch('attack', 1, 450, 'B')], 'B': []}, 1, 450)
+        self.assertEqual(result['commit_order'], ['B', 'A'])
+        self.assertFalse(result['dynamic_commit_order'])
+        self.assertEqual(len(result['dependency_windows']), 1)
+        self.assertEqual(result['dependency_windows'][0]['frame_end'], 450)
+
+    def test_three_actor_same_frame_chain_is_target_first(self):
+        result = self.schedule({'A': [self.touch('a', 1, 5, 'B')],
+                                'B': [self.touch('b', 1, 5, 'C')], 'C': []}, 1, 5)
+        self.assertEqual(result['commit_order'], ['C', 'B', 'A'])
+
     def test_contact_target_precedes_attacker_even_if_registered_after_it(self):
         self.assertEqual(contact_commit_order(['attacker','reactor'],{'attacker':{'reactor'}}),
                          ['reactor','attacker'])

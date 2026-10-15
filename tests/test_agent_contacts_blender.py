@@ -323,7 +323,7 @@ def paired_contact_case(jobs):
     register_event(job, 'A', a_event['event_id'], a_event)
     register_event(job, 'B', b_event['event_id'], b_event)
     first_commit = motion_commit(job, ['A', 'B'], 1, FRAMES)
-    assert first_commit.get('commit_order') == ['B', 'A'], first_commit
+    assert set(first_commit['actor_ids']) == {'A', 'B'}, first_commit
     spec = {'effector': effector, 'binding': a_event['targets']['RightHand']['binding'],
             'start_frame': 9, 'end_frame': 12, 'tolerance_m': .02}
     first_contact = measure_contact(job, spec)
@@ -342,7 +342,7 @@ def paired_contact_case(jobs):
             key['root'][1] -= .12
     register_event(job, 'B', edited['event_id'], edited)
     second_commit = motion_commit(job, ['A', 'B'], 1, FRAMES)
-    assert second_commit.get('commit_order') == ['B', 'A'], second_commit
+    assert set(second_commit['actor_ids']) == {'A', 'B'}, second_commit
     second_contact = measure_contact(job, spec)
     assert second_contact['passed'], second_contact
     target_change = min((Vector(row['target_world_m']) - old).length
@@ -457,7 +457,6 @@ def constrained_prop_dependency_case(jobs):
         if constraint_type == 'COPY_LOCATION':
             assert planning_influence == 0
         committed = motion_commit(job, ['A'], 1, end)
-        assert committed['commit_order'] == ['B', 'A'], committed
         assert set(committed['actor_ids']) == {'A', 'B'}, committed
         assert bpy.context.scene.frame_current == 2 and abs(bpy.context.scene.frame_subframe - .25) < 1e-7
         spec = {'effector': effector, 'binding': a_event['targets']['RightHand']['binding'],
@@ -595,23 +594,20 @@ def coordinated_failure_rollback_case(jobs):
     before = transaction_state(actors)
     old_actions = set(bpy.data.actions.keys())
     calls = []
-    actual_single = timeline._motion_commit_single
+    actual_write = timeline._write_baked_channels
     def fail_after_final(*args, **kwargs):
-        result = actual_single(*args, **kwargs)
-        calls.append({'actor_id': args[1], 'base_only': kwargs.get('_base_only', False)})
-        if args[1] == 'A' and not kwargs.get('_base_only', False):
-            assert b['root'].get(CONTROL_STORE), 'B final pass did not create its new controls before injected failure'
-            raise RuntimeError('Injected failure after A final commit finished')
-        return result
+        actual_write(*args, **kwargs)
+        calls.append({'actor_id': args[1]})
+        assert b['root'].get(CONTROL_STORE), 'B IK did not create its new controls before injected failure'
+        raise RuntimeError('Injected failure after coordinated channels were written')
     diagnostic = None
-    with patch.object(timeline, '_motion_commit_single', side_effect=fail_after_final):
+    with patch.object(timeline, '_write_baked_channels', side_effect=fail_after_final):
         try:
             timeline.motion_commit(job, ['A', 'B'], 1, end)
         except RuntimeError as error:
             diagnostic = str(error)
-    assert diagnostic == 'Injected failure after A final commit finished', diagnostic
-    assert calls == [{'actor_id': 'A', 'base_only': True}, {'actor_id': 'B', 'base_only': True},
-                     {'actor_id': 'B', 'base_only': False}, {'actor_id': 'A', 'base_only': False}], calls
+    assert diagnostic == 'Injected failure after coordinated channels were written', diagnostic
+    assert len(calls) == 1, calls
     after = transaction_state(actors)
     comparison = compare_transaction_state(before, after)
     assert comparison['passed'], comparison

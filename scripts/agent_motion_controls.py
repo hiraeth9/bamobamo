@@ -78,8 +78,10 @@ def _pole_location(armature, start, middle, end):
     axis.normalize()
     bend=joint-origin
     bend-=axis*bend.dot(axis)
-    if bend.length<.001:
+    if bend.length<max(.001,axis.length*.02 if end.endswith('Foot') else .001):
         preferred=Vector((0,0,-1)) if end.endswith('Hand') else Vector((0,-1,0))
+        if end.endswith('Foot') and armature.parent is not None:
+            preferred=armature.parent.matrix_world.to_quaternion() @ preferred
         bend=preferred-axis*preferred.dot(axis)
         if bend.length<.001:
             bend=axis.cross(Vector((1,0,0)))
@@ -180,7 +182,7 @@ def apply_targets(job_id,actor_id,targets,frame,weight=1):
     return _apply_targets_resolved(actor,info,validate_targets(targets),frame,weight)
 
 
-def _apply_targets_resolved(actor,info,targets,frame,weight=1):
+def _apply_targets_resolved(actor,info,targets,frame,weight=1,actor_cache=None):
     import bpy
     from mathutils import Vector,Quaternion,Matrix
     from agent_contacts import sample_target,resolve_binding,resolve_effector
@@ -196,7 +198,7 @@ def _apply_targets_resolved(actor,info,targets,frame,weight=1):
         # before deriving poles and local/skin effector offsets in world space.
         bpy.context.view_layer.update()
         goal=bpy.data.objects[chain['target_object']]
-        binding=resolve_binding(job_id,state['binding']) if 'binding' in state else {
+        binding=resolve_binding(job_id,state['binding'],actor_cache=actor_cache) if 'binding' in state else {
             'position':state.get('position',list(goal.matrix_world.translation)),
             'scope':'explicit_world_point'}
         desired=Vector(binding['position'])

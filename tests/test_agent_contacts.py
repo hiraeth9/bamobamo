@@ -156,7 +156,7 @@ class ContactCheckerTests(unittest.TestCase):
         self.registration = {'version': 1, 'status': 'registered', 'requirements': {'version': 1,
             'contacts': contacts._requirements_for_events('A', [event(target)])}}
         self.patches = [patch.object(contacts, 'contact_requirements', return_value=self.registration),
-            patch.object(contacts, 'resolve_binding', side_effect=lambda job, binding: {
+            patch.object(contacts, 'resolve_binding', side_effect=lambda job, binding, actor_cache=None: {
                 'position': [self.scene.frame_current*.01, 0, 0], 'scope': 'evaluated_object_local_point'}),
             patch.object(contacts, 'resolve_effector', side_effect=lambda *args: {
                 'position': [self.scene.frame_current*.01, 0, 0], 'scope': 'evaluated_actor_skin_vertex'})]

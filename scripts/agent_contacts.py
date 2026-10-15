@@ -210,15 +210,24 @@ def _resolve_bone(armature, name):
     return bone
 
 
-def resolve_binding(job_id, binding):
-    """Resolve a target against the current evaluated scene at its current frame."""
+def resolve_binding(job_id, binding, actor_cache=None):
+    """Resolve the current evaluated target; reuse actors within one operation.
+
+    The caller may pass actors already resolved for this commit/check. Geometry
+    and pose are still evaluated at the current frame on every call.
+    """
     import bpy
     from mathutils import Vector
     binding = validate_binding(binding)
     depsgraph = bpy.context.evaluated_depsgraph_get()
     if 'actor_id' in binding:
         from agent_character import resolve_actor
-        actor = resolve_actor(job_id, binding['actor_id'])
+        if actor_cache is None:
+            actor = resolve_actor(job_id, binding['actor_id'])
+        else:
+            if binding['actor_id'] not in actor_cache:
+                actor_cache[binding['actor_id']] = resolve_actor(job_id, binding['actor_id'])
+            actor = actor_cache[binding['actor_id']]
         obj = actor['armature'].evaluated_get(depsgraph)
         bone = _resolve_bone(obj, binding['bone'])
         matrix = obj.matrix_world @ bone.matrix
@@ -340,6 +349,7 @@ def check_contacts(job_id, frame_start=None, frame_end=None, actor_id=None, deta
     scene = bpy.context.scene
     old_frame, old_subframe = scene.frame_current, scene.frame_subframe
     failures, summaries, measurements = [], [], []
+    actors = {}
     current = {}
     try:
         registration = contact_requirements(job_id)
@@ -365,12 +375,14 @@ def check_contacts(job_id, frame_start=None, frame_end=None, actor_id=None, deta
                 summary.update(passed=False, failure_count=1)
                 failures.append({'check': 'contact_window_not_covered', 'id': entry['id'], 'actor_id': entry['actor_id'],
                                  'event_id': entry['event_id'], 'chain': entry['chain']})
-            actor = resolve_actor(job_id, entry['actor_id'])
+            if entry['actor_id'] not in actors:
+                actors[entry['actor_id']] = resolve_actor(job_id, entry['actor_id'])
+            actor = actors[entry['actor_id']]
             for frame in range(start, end+1):
                 current['frame'] = frame
                 scene.frame_set(frame); bpy.context.view_layer.update()
                 state = sample_target(entry['target'], frame)
-                target = resolve_binding(job_id, state['binding']) if 'binding' in state else {
+                target = resolve_binding(job_id, state['binding'], actor_cache=actors) if 'binding' in state else {
                     'position': state['position'], 'scope': 'explicit_world_point'}
                 effector = resolve_effector(job_id, actor, entry['chain'], state)
                 distance = math.dist(target['position'], effector['position'])
