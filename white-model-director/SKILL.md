@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.6.0
+version: 9.7.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -81,6 +81,8 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 ### 通用移动接触与多人协调
 
 `timeline_event`的手脚目标可使用`binding`跟随真实物体局部点、对方骨骼局部点或求值mesh顶点；从reference_info读取精确格式。`effector`选择自身真实skin顶点，或用`effector_point`描述末端骨局部点；局部坐标保留实际对象或骨骼单位，不能将FBX骨局部厘米误当世界米。binding目标默认产生接触检查要求，用`contact.start_frame/end_frame`缩小到实际命中或握持窗口。护架等仅跟随身体的目标设`contact=False`，不把跟随目标当成物理触碰。
+
+`pole_binding`可让肘/膝方向目标跟随实际骨或物体，`pole_angle`用弧度。手肘目标优先跟随链外锁骨/胸部，保持准备、命中与收招一致；出拳同时确定实际拳朝向，按计划朝向的真实拳部偏移检查腕目标可达性。末端到位但肘锁直、翻转或遮挡拳路时继续调整姿态和支撑站位。
 
 先登记相关人物的基础姿态及IK事件，再调用`wm_agent_motion_commit(job_id, [相关actor_id])`协调烘焙。工具先计算各人基础姿态，每帧恢复后按该帧依赖求目标和IK，最后统一烘焙；先A打B、随后B反击可以交换驱动顺序，真正同帧循环会指出错误帧，需要拆解驱动关系或自由bpy联合构建。不要分别播放两条单人动画后假定接触成立。
 

@@ -78,6 +78,15 @@ class MotionTimelineTests(unittest.TestCase):
                                 'B': [self.touch('b', 1, 5, 'C')], 'C': []}, 1, 5)
         self.assertEqual(result['commit_order'], ['C', 'B', 'A'])
 
+    def test_pole_binding_obeys_same_frame_target_order_and_cycle_detection(self):
+        guard = self.touch('guard', 1, 8, 'A', pole_binding={'actor_id': 'B', 'bone': 'LeftShoulder'},
+                           contact=False)
+        result = self.schedule({'A': [guard], 'B': []}, 1, 8)
+        self.assertEqual(result['commit_order'], ['B', 'A'])
+        self.assertEqual(result['dependency_windows'][0]['dependencies'], {'A': ['B']})
+        with self.assertRaisesRegex(ValueError, 'Frame 4: Cyclic actor contact'):
+            self.schedule({'A': [guard], 'B': [self.touch('return', 4, 8, 'A')]}, 1, 8)
+
     def test_contact_target_precedes_attacker_even_if_registered_after_it(self):
         self.assertEqual(contact_commit_order(['attacker','reactor'],{'attacker':{'reactor'}}),
                          ['reactor','attacker'])

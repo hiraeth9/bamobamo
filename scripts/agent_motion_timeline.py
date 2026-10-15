@@ -489,9 +489,11 @@ def contact_dependency_schedule(actor_ids, events_by_actor, frame_start, frame_e
         for aid in actor_ids:
             for event, targets, _ in active_contact_targets(events_by_actor[aid], frame):
                 for spec in targets.values():
-                    binding = sample_target(spec, frame).get('binding')
-                    if binding:
-                        dependencies[aid].update(binding_owners(binding) - {aid})
+                    state = sample_target(spec, frame)
+                    for field in ('binding', 'pole_binding'):
+                        binding = state.get(field)
+                        if binding:
+                            dependencies[aid].update(binding_owners(binding) - {aid})
             combined[aid].update(dependencies[aid])
         try:
             frame_orders[frame] = contact_commit_order(actor_ids, dependencies)
@@ -519,8 +521,9 @@ def contact_dependency_schedule(actor_ids, events_by_actor, frame_start, frame_e
 
 
 def _binding_references(spec):
-    bindings = [spec.get('binding')]
-    bindings.extend(key.get('binding') for key in spec.get('keyframes', []))
+    bindings = [spec.get(field) for field in ('binding', 'pole_binding')]
+    bindings.extend(key.get(field) for key in spec.get('keyframes', [])
+                    for field in ('binding', 'pole_binding'))
     return [binding for binding in bindings if isinstance(binding, dict)]
 
 

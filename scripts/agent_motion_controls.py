@@ -208,11 +208,14 @@ def _apply_targets_resolved(actor,info,targets,frame,weight=1,actor_cache=None):
         offset=Vector(initial['position'])-origin
         rotation=Quaternion(state['rotation_quaternion']) if 'rotation_quaternion' in state else goal.matrix_world.to_quaternion()
         goal.matrix_world=Matrix.LocRotScale(desired-offset,rotation,Vector((1,1,1)))
-        if 'pole' in state:bpy.data.objects[chain['pole_object']].location=state['pole']
+        if 'pole_binding' in state:
+            bpy.data.objects[chain['pole_object']].location=resolve_binding(job_id,state['pole_binding'],actor_cache=actor_cache)['position']
+        elif 'pole' in state:bpy.data.objects[chain['pole_object']].location=state['pole']
         else:
             start,middle,end=(chain[k].split(':')[-1] for k in ('start_bone','middle_bone','end_bone'))
             bpy.data.objects[chain['pole_object']].location=_pole_location(arm,start,middle,end)
         ik=arm.pose.bones[chain['middle_bone']].constraints[chain['ik_constraint']]
+        ik.pole_angle=float(state.get('pole_angle',chain['pole_angle']))
         ik.mute=False; ik.influence=max(0,min(1,float(state.get('influence',1))*weight))
         orientation=arm.pose.bones[chain['end_bone']].constraints[chain['rotation_constraint']]
         orientation.mute=False

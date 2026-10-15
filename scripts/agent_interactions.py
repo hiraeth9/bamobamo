@@ -293,6 +293,27 @@ def _target_event(event_id, first, last, chain, target, priority, intent):
             'root_strategy': 'hold', 'priority': priority, 'targets': {chain: target}, 'intent': intent}
 
 
+def _elbow_pole_point(shoulder, forward, forward_m=.10, drop_m=.30):
+    point = [position+direction*forward_m for position, direction in zip(shoulder, forward)]
+    point[2] -= drop_m
+    return point
+
+
+def _hand_elbow_target(actor, actor_id, hand):
+    """Follow a chain-external shoulder; keep guard and strike elbow planes."""
+    import bpy
+    from mathutils import Vector
+    side = hand.removesuffix('Hand')
+    arm, upper = _bone(actor, side+'Arm', evaluated=True)
+    _, shoulder = _bone(actor, side+'Shoulder', evaluated=True)
+    root = actor['root'].evaluated_get(bpy.context.evaluated_depsgraph_get())
+    forward = root.matrix_world.to_quaternion() @ Vector((0, -1, 0))
+    point = _elbow_pole_point(list(arm.matrix_world @ upper.head), list(forward))
+    local = (arm.matrix_world @ shoulder.matrix).inverted() @ Vector(point)
+    return {'pole_binding': {'actor_id': actor_id, 'bone': shoulder.name, 'local_point': list(local)},
+            'pole_angle': 0. if side == 'Left' else -math.pi}
+
+
 def _outcome_options(outcome, aim_offset_world, miss_clearance_m):
     """Execution outcomes selected by the director, never a prompt vocabulary."""
     if outcome not in ('hit', 'block', 'miss'):
@@ -459,7 +480,8 @@ def guard_events(job_id, actor_id, event_id, start_frame, end_frame, *, raise_fr
                 keys.append({'frame': frame, 'binding': {'actor_id': actor_id, 'bone': head.name, 'local_point': list(local)},
                              'rotation_quaternion': list(initial_rotation.slerp(hand_rotation, weight)),
                              'influence': 1, 'interpolation': 'smooth'})
-            targets[hand] = {'keyframes': keys, 'contact': False}
+            targets[hand] = {'keyframes': keys, 'contact': False,
+                             **_hand_elbow_target(actor, actor_id, hand)}
         pose_keys = []
         for frame in key_frames:
             weight = guard_weight(frame, first, rise)
@@ -472,6 +494,7 @@ def guard_events(job_id, actor_id, event_id, start_frame, end_frame, *, raise_fr
                  'keyframes': pose_keys, 'targets': targets, 'intent': source_text}
         return _plan(actor_id, event_id, [event], {'base_posture': 'procedural_guard',
                      'root_translation_generated': False, 'leg_pose_generated': False,
+                     'elbow_policy': 'same_side_Shoulder_binding_with_Beta_pole_angle',
                      'finger_pose': 'absolute_rest_geometry_flexion', 'raise_frames': rise})
     finally:
         scene.frame_set(old_frame, subframe=old_subframe)
@@ -532,8 +555,16 @@ def hand_strike_events(job_id, actor_id, event_id, target_binding, *, start_fram
             effector, _ = _surface_effector(actor, hand)
         if effector is not None and effector_point is not None:
             raise ValueError('choose an actual skin effector or a bone-local effector point')
+        elbow_target = _hand_elbow_target(actor, actor_id, hand)
         effector_spec = {'effector': effector} if effector is not None else {'effector_point': _vector(effector_point, 'effector_point')}
         initial = Vector(resolve_effector(job_id, actor, hand, effector_spec)['position'])
+        initial_arm, initial_hand = _bone(actor, hand, evaluated=True)
+        _, knuckle = _bone(actor, hand+'Middle1', evaluated=True)
+        initial_matrix = initial_arm.matrix_world @ initial_hand.matrix
+        initial_rotation = initial_matrix.to_quaternion()
+        initial_wrist = initial_arm.matrix_world @ initial_hand.head
+        metacarpal = initial_arm.matrix_world @ knuckle.head-initial_wrist
+        initial_offset = initial-initial_wrist
         scene.frame_set(impact); bpy.context.view_layer.update()
         _validate_strike_target(binding)
         target = Vector(resolve_binding(job_id, binding)['position'])
@@ -548,18 +579,22 @@ def hand_strike_events(job_id, actor_id, event_id, target_binding, *, start_fram
         if outcome == 'miss':
             offset = list(lateral*(side*.20)) if offset is None else offset
             target += Vector(offset)
+        direction = (target-initial).normalized()
+        impact_rotation = metacarpal.normalized().rotation_difference(direction) @ initial_rotation
         arm, upper = _bone(actor, hand.removesuffix('Hand')+'Arm', evaluated=True)
         _, fore = _bone(actor, hand.removesuffix('Hand')+'ForeArm', evaluated=True)
         _, end = _bone(actor, hand, evaluated=True)
         shoulder, elbow, wrist = [arm.matrix_world @ bone.head for bone in (upper, fore, end)]
         reach = (elbow-shoulder).length+(wrist-elbow).length
-        current_offset = Vector(resolve_effector(job_id, actor, hand, effector_spec)['position'])-wrist
-        distance = (target-current_offset-shoulder).length
+        # The planned fist orientation changes its skin/local-point offset
+        # from the wrist. Reach must use that offset, rather than the old
+        # guard offset which can send the IK goal beyond arm length.
+        planned_offset = impact_rotation @ (initial_rotation.inverted() @ initial_offset)
+        distance = (target-planned_offset-shoulder).length
         if distance > reach+.005:
             return {'ok': False, 'actor_id': actor_id, 'event_id': event_id, 'events': [], 'hit_confirmed': False,
                     'status': 'approach_required', 'target_distance_m': distance, 'arm_reach_m': reach,
                     'missing_reach_m': distance-reach, 'suggestion': 'Use support_step_events or another trajectory tool to approach, then recompile; the actor was not moved.'}
-        direction = (target-initial).normalized()
         prep_keys, recovery_keys, pose_keys, miss_keys = [], [], [], []
         for frame in range(first, last+1):
             amount = strike_progress(frame, first, impact, release, last)
@@ -581,32 +616,40 @@ def hand_strike_events(job_id, actor_id, event_id, target_binding, *, start_fram
                 t = (frame-first)/(impact-first)
                 point = initial.lerp(target, amount)-direction*(windup*math.sin(math.pi*t))
                 point += lateral*(side*arc*math.sin(math.pi*t))
-                prep_keys.append({'frame': frame, 'position': list(point), 'influence': smooth(t/.20), 'interpolation': 'linear'})
+                prep_keys.append({'frame': frame, 'position': list(point),
+                                  'rotation_quaternion': list(initial_rotation.slerp(impact_rotation, amount)),
+                                  'influence': smooth(t/.20), 'interpolation': 'linear'})
             elif frame <= release and outcome == 'miss':
                 scene.frame_set(frame); bpy.context.view_layer.update()
                 point = Vector(resolve_binding(job_id, binding)['position'])+Vector(offset)
-                miss_keys.append({'frame': frame, 'position': list(point), 'influence': 1, 'interpolation': 'linear'})
+                miss_keys.append({'frame': frame, 'position': list(point), 'rotation_quaternion': list(impact_rotation),
+                                  'influence': 1, 'interpolation': 'linear'})
             elif frame > release:
                 t = (frame-release)/(last-release)
                 scene.frame_set(frame); bpy.context.view_layer.update()
                 baseline = Vector(resolve_effector(job_id, actor, hand, effector_spec)['position'])
                 point = target.lerp(baseline, smooth(t))
-                recovery_keys.append({'frame': frame, 'position': list(point), 'influence': 1-smooth(t), 'interpolation': 'linear'})
+                _, hand_bone = _bone(actor, hand)
+                baseline_rotation = samples[frame]['bone_world'][hand_bone.name].to_quaternion()
+                recovery_keys.append({'frame': frame, 'position': list(point),
+                                      'rotation_quaternion': list(impact_rotation.slerp(baseline_rotation, smooth(t))),
+                                      'influence': 1-smooth(t), 'interpolation': 'linear'})
         events = [{'event_id': event_id+':body', 'source': 'procedural', 'start_frame': first,
                    'end_frame': last, 'mask': ['upper_body', 'Hips'], 'priority': chosen,
                    'root_strategy': 'hold', 'keyframes': pose_keys, 'intent': source_text}]
         events.append(_target_event(event_id+':prepare', first, impact-1, hand,
-                                   {**effector_spec, 'keyframes': prep_keys}, chosen+1, source_text))
+                                   {**effector_spec, **elbow_target, 'keyframes': prep_keys}, chosen+1, source_text))
         contact_id = actor_id+':'+event_id+':impact'
         contact = False if outcome == 'miss' else {'id': contact_id, 'start_frame': impact, 'end_frame': release,
                                                   'tolerance_m': tolerance_m,
                                                   'kind': 'block' if outcome == 'block' else 'strike',
                                                   'source_text': source_text}
-        impact_target = {'keyframes': miss_keys} if outcome == 'miss' else {'binding': binding, 'influence': 1}
+        impact_target = {'keyframes': miss_keys} if outcome == 'miss' else {
+            'binding': binding, 'influence': 1, 'rotation_quaternion': list(impact_rotation)}
         events.append(_target_event(event_id+':impact', impact, release, hand,
-                      {**effector_spec, **impact_target, 'contact': contact}, chosen+1, source_text))
+                      {**effector_spec, **elbow_target, **impact_target, 'contact': contact}, chosen+1, source_text))
         events.append(_target_event(event_id+':recovery', release+1, last, hand,
-                                   {**effector_spec, 'keyframes': recovery_keys}, chosen+1, source_text))
+                                   {**effector_spec, **elbow_target, 'keyframes': recovery_keys}, chosen+1, source_text))
         miss_checks = [] if outcome != 'miss' else [{'id': actor_id+':'+event_id+':miss', 'actor_id': actor_id,
                        'chain': hand, 'frame_start': impact, 'frame_end': release, 'target_binding': binding,
                        'effector': effector_spec, 'aim_offset_world': offset, 'min_clearance_m': clearance,
@@ -616,6 +659,9 @@ def hand_strike_events(job_id, actor_id, event_id, target_binding, *, start_fram
                      'miss_checks': miss_checks, 'outcome': outcome, 'recoil_allowed': outcome == 'hit',
                      'impact_frame': impact, 'release_frame': release, 'effector': effector_spec,
                      'attack_source': 'procedural_existing_pose_and_FK_IK', 'arm_reach_m': reach,
+                     'planned_impact_hand_rotation_quaternion': list(impact_rotation),
+                     'hand_orientation_policy': 'actual_metacarpal_aligned_to_punch_path_then_recover',
+                     'elbow_policy': 'same_side_Shoulder_binding_with_Beta_pole_angle',
                      'initial_target_distance_m': distance, 'support_verified': False})
     finally:
         scene.frame_set(old_frame, subframe=old_subframe)

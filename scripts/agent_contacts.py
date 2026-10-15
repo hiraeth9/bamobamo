@@ -84,6 +84,10 @@ def _validate_state(state):
             raise ValueError('target influence must be in [0,1]')
     if 'binding' in state:
         state['binding'] = validate_binding(state['binding'])
+    if 'pole_binding' in state:
+        state['pole_binding'] = validate_binding(state['pole_binding'])
+    if 'pole_angle' in state:
+        state['pole_angle'] = _number(state['pole_angle'], 'pole_angle')
     if 'effector' in state:
         state['effector'] = validate_binding(state['effector'])
         if 'object' not in state['effector'] or 'vertex_index' not in state['effector']:
@@ -190,13 +194,16 @@ def sample_target(spec, frame):
         if field in left and field in right:
             state[field] = [a+(b-a)*t for a, b in zip(left[field], right[field])]
     state['influence'] = left.get('influence', 1)+(right.get('influence', 1)-left.get('influence', 1))*t
+    if 'pole_angle' in left and 'pole_angle' in right:
+        state['pole_angle'] = left['pole_angle']+(right['pole_angle']-left['pole_angle'])*t
     if 'rotation_quaternion' in left and 'rotation_quaternion' in right:
         state['rotation_quaternion'] = _quaternion_mix(left['rotation_quaternion'], right['rotation_quaternion'], t)
-    if 'binding' in left and 'binding' in right:
-        a, b = left['binding'], right['binding']
-        identity = lambda value: {k: v for k, v in value.items() if k != 'local_point'}
-        if identity(a) == identity(b) and 'local_point' in a and 'local_point' in b:
-            state['binding'] = {**a, 'local_point': [x+(y-x)*t for x, y in zip(a['local_point'], b['local_point'])]}
+    for field in ('binding', 'pole_binding'):
+        if field in left and field in right:
+            a, b = left[field], right[field]
+            identity = lambda value: {k: v for k, v in value.items() if k != 'local_point'}
+            if identity(a) == identity(b) and 'local_point' in a and 'local_point' in b:
+                state[field] = {**a, 'local_point': [x+(y-x)*t for x, y in zip(a['local_point'], b['local_point'])]}
     return json.loads(json.dumps(state))
 
 

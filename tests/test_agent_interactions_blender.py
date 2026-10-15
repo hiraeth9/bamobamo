@@ -80,7 +80,7 @@ def camera_and_floor():
     data = bpy.data.cameras.new('FightWide')
     camera = bpy.data.objects.new('FightWide', data)
     scene.collection.objects.link(camera)
-    camera.location = (1.4, -5, 2.3)
+    camera.location = (.1, -5, 1.9)
     camera.rotation_euler = (Vector((.2, 0, .95)) - camera.location).to_track_quat('-Z', 'Y').to_euler()
     data.type, data.ortho_scale = 'ORTHO', 4.5
     scene.camera = camera
@@ -139,6 +139,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output')
     parser.add_argument('--render', action='store_true')
+    parser.add_argument('--keyframes', nargs='+', type=int, help='Only render these preview frames')
     parser.add_argument('--quick', action='store_true', help='48-frame, four-second pose preview')
     parser.add_argument('--guard-only', action='store_true')
     parser.add_argument('--step-only', action='store_true')
@@ -176,6 +177,15 @@ def main():
     keyframes = output / 'keyframes'
     keyframes.mkdir()
     scene.frame_set(1)
+    for aid, actor in actors.items():
+        arm = actor['armature'].evaluated_get(bpy.context.evaluated_depsgraph_get())
+        elbows = {}
+        for side in ('Left', 'Right'):
+            shoulder, elbow = [arm.matrix_world @ arm.pose.bones['mixamorig:' + side + part].head
+                               for part in ('Arm', 'ForeArm')]
+            elbows[side] = {'below_shoulder_m': shoulder.z-elbow.z}
+            assert shoulder.z-elbow.z > .02, 'Guard elbow should remain below its shoulder'
+        print('P2_GUARD', aid, elbows, flush=True)
     scene.render.filepath = str(keyframes / 'guard.png')
     bpy.ops.render.render(write_still=True)
     print('P2_GUARD_IMAGE', keyframes / 'guard.png', flush=True)
@@ -194,8 +204,8 @@ def main():
         {'foot': 'LeftFoot', 'lift_frame': 3, 'land_frame': approach_land,
          'position': [a_lead.x+.12, a_lead.y, 0]}],
         [{'frame': 1, 'root': list(a_origin)},
-         {'frame': approach_land, 'root': list(a_origin + Vector((.09, 0, 0)))},
-         {'frame': end, 'root': list(a_origin + Vector((.09, 0, 0)))}])
+         {'frame': approach_land, 'root': list(a_origin + Vector((.10, 0, 0)))},
+         {'frame': end, 'root': list(a_origin + Vector((.10, 0, 0)))}])
     register_plan(job, approach)
     motion_commit(job, 'A', 1, end)
     scene.frame_set(1)
@@ -249,7 +259,7 @@ def main():
     after = actors['B']['root'].matrix_world.translation.copy()
     retreat_distance = (after - before).length
     bpy.ops.wm.save_as_mainfile(filepath=str(output / 'scene.blend'), check_existing=False)
-    for frame in (1, (first+impact)//2, impact, impact+3, recovered, land2, end):
+    for frame in args.keyframes or (1, (first+impact)//2, impact, impact+3, recovered, land2, end):
         scene.frame_set(frame)
         scene.render.filepath = str(keyframes / ('frame_%03d.png' % frame))
         bpy.ops.render.render(write_still=True)

@@ -39,6 +39,18 @@ class TargetValidationTests(unittest.TestCase):
         target = contacts.validate_targets({'RightHand': target})['RightHand']
         self.assertEqual(contacts.sample_target(target, 6)['binding']['local_point'], [1, 0, 0])
 
+    def test_elbow_pole_follows_its_bone_independently_of_the_hand_goal(self):
+        target = {'position': [1, 2, 3], 'contact': False, 'keyframes': [
+            {'frame': 1, 'pole_binding': {'actor_id': 'A', 'bone': 'RightShoulder',
+                                         'local_point': [0, -10, -30]}, 'pole_angle': -math.pi},
+            {'frame': 11, 'pole_binding': {'actor_id': 'A', 'bone': 'RightShoulder',
+                                          'local_point': [0, -20, -30]}, 'pole_angle': -math.pi/2}]}
+        state = contacts.sample_target(contacts.validate_targets({'RightHand': target})['RightHand'], 6)
+        self.assertEqual(state['position'], [1, 2, 3])
+        self.assertEqual(state['pole_binding']['local_point'], [0, -15, -30])
+        self.assertAlmostEqual(state['pole_angle'], -3*math.pi/4)
+        self.assertEqual(contacts._requirements_for_events('A', [event(target)]), [])
+
     def test_sparse_world_keys_carry_top_level_and_previous_state(self):
         target = {'position': [1, 2, 3], 'pole': [0, 0, 1],
                   'keyframes': [{'frame': 1, 'influence': .4}, {'frame': 3, 'position': [3, 2, 3]},

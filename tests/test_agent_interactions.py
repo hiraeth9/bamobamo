@@ -45,6 +45,15 @@ class MotionCurveTests(unittest.TestCase):
         self.assertEqual(interaction._guard_sample_frames(1, 12), [1, 13])
         self.assertAlmostEqual(interaction.guard_weight(7, 1, 12), .5)
 
+    def test_elbow_point_follows_world_body_facing_with_world_down_offset(self):
+        forward = interaction._elbow_pole_point([1, 2, 1.4], [0, -1, 0])
+        for actual, expected in zip(forward, [1., 1.9, 1.1]):
+            self.assertAlmostEqual(actual, expected)
+        turned = interaction._elbow_pole_point([1, 2, 1.4], [1, 0, 0])
+        self.assertAlmostEqual(turned[0], 1.1)
+        self.assertAlmostEqual(turned[1], 2)
+        self.assertAlmostEqual(turned[2], 1.1)
+
     def test_strike_has_accelerating_approach_contact_and_complete_release(self):
         curve = lambda frame: interaction.strike_progress(frame, 1, 11, 12, 24)
         self.assertEqual(curve(1), 0)

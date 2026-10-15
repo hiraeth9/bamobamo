@@ -126,6 +126,7 @@ def reference_info():
                               'contact': {'start_frame': 21, 'end_frame': 25, 'tolerance_m': .03, 'kind': 'strike'}}},
                 'binding': '可用{object:真实物体名,local_point:[3]}、{actor_id:目标人物,bone:实际骨名或唯一短名,local_point:[3]}或{object:真实mesh名,vertex_index:整数}。目标按同帧evaluated变换/蒙皮求值。',
                 'effector': 'effector={object:自身真实mesh名,vertex_index:整数}检查真实蒙皮点；effector_point是末端骨局部偏移，默认零只测骨起点。骨局部使用导入骨坐标单位，目标物体局部使用该物体单位，经matrix_world变为世界米。',
+                'pole': 'pole为世界米；pole_binding可按相同绑定格式跟随稳定的链外骨或物体，pole_angle为弧度。护架及出收拳保持一致的肩部pole，避免移动时肘钉在旧世界点或阶段切换翻肘。',
                 'scope': '示例只说明格式，Head零偏移不是实际头部表面；需从实际几何选择拳面/掌面与目标表面。绑定默认全事件接触，contact可限定实际窗口；护架等仅跟随姿态可设contact=False，不登记触碰要求。收招后influence=0解除IK。',
                 'coordination': '相关演员事件先登记，motion_commit(job_id,[actor_ids])统一协调；已登记接触默认由motion_check和独立重载探针复查。',
             },
