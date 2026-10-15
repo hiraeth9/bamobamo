@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.5.0
+version: 9.6.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -82,11 +82,17 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 
 `timeline_event`的手脚目标可使用`binding`跟随真实物体局部点、对方骨骼局部点或求值mesh顶点；从reference_info读取精确格式。`effector`选择自身真实skin顶点，或用`effector_point`描述末端骨局部点；局部坐标保留实际对象或骨骼单位，不能将FBX骨局部厘米误当世界米。binding目标默认产生接触检查要求，用`contact.start_frame/end_frame`缩小到实际命中或握持窗口。护架等仅跟随身体的目标设`contact=False`，不把跟随目标当成物理触碰。
 
-先登记相关人物的基础姿态及IK事件，再调用`wm_agent_motion_commit(job_id, [相关actor_id])`协调烘焙。工具先建立各人基础动画，再按依赖顺序在同帧求目标和IK；循环接触依赖当前返回明确错误，需要拆解驱动关系或自由bpy联合构建，不是提示词拒绝规则。不要分别播放两条单人动画后假定接触成立。
+先登记相关人物的基础姿态及IK事件，再调用`wm_agent_motion_commit(job_id, [相关actor_id])`协调烘焙。工具先计算各人基础姿态，每帧恢复后按该帧依赖求目标和IK，最后统一烘焙；先A打B、随后B反击可以交换驱动顺序，真正同帧循环会指出错误帧，需要拆解驱动关系或自由bpy联合构建。不要分别播放两条单人动画后假定接触成立。
 
 持续握持在持有窗口跟随目标；瞬时击打只在命中附近建立接触，随后降下IK影响并按基础FK收招，不把拳头一直绑定到后退身体。用户要求命中但实际落空时局部修复，不偷偷改成闪避或凭时间触发受击。
 
 `motion_check`默认复查已登记的接触窗口，场景提交会持久保存接触要求，后台重载后再次检查。查看passed、实际误差和覆盖范围；empty只表示未登记接触，不证明原文没有接触要求。原文明确要求须对应实际事件及检查，缺少映射保留未完成记录。P1验证接触机制，不代表受击动力学、全身平衡或任意打斗自然度已完成。
+
+徒手攻防可以通过MCP普通import `agent_interactions`，从reference_info的`interaction_helpers`读取接口。`guard_events`生成原Beta的护头与基本握拳，先登记并commit；`hand_strike_events`按真实目标、左右手和命中时刻生成准备、肩胯与出收招，缺少攻击片段仍可使用。`recoil_events`负责接触后的头躯干短反应；重击退步另配`support_step_events`，明确交替支撑脚、抬脚落脚及根路径。各helper只编译事件，仍要登记`plan.events`并协调commit，再用`verify_interaction`检查实际命中及支撑。按原文组合这些工具，不能把示例动作顺序固化为唯一打斗流程；几何检查与实际预览分别核对。
+
+可用`register_interaction(job_id, plan)`登记并持久保存紧凑检查要求，返回简短状态；同计划ID替换会清理该计划旧的多余子事件。随后`verify_interaction(job_id)`默认读取保存的要求，跨MCP调用或重载无需旧局部plan变量。不要打印完整每帧计划；手动登记`plan.events`和显式传plans仍可用。
+
+攻击的`outcome`按原文区分hit、block、miss：格挡绑定真实格挡部位或物体，落空使用偏置拳路并测预定擦过点净距。`verify_interaction`分别返回hit_confirmed、block_confirmed和miss_confirmed；格挡和落空不触发命中受击反应。擦过点检查不是全身连续碰撞检测。
 
 验收（提交前必须逐帧实测并写入analysis）：取当前帧实际evaluated的手骨（或手部皮肤顶点）到物品实际evaluated几何的最近距离，接触窗口内最大接触误差应小于约0.03米（物品或抓法使阈值需放宽时必须在analysis说明原因）；analysis如实记录所用绑定方式、接触窗口与实测最大误差，不允许只写“简化路径跟随”“未完全匹配手部”就提交；物品在接触窗口内的位置与朝向必须由上述绑定决定，不得再给物品独立的关键帧路径。
 
