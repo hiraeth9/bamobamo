@@ -334,7 +334,7 @@ _log("step7b: 渲染完成，开始 ffmpeg 编码")
 
 # ---------- 8. ffmpeg 编码 mp4 ----------
 import subprocess
-ffmpeg_bin = "/root/rivermind-data/bamo/ffmpeg"  # 项目内 conda ffmpeg 9.0.2
+ffmpeg_bin = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "ffmpeg")
 if not os.path.exists(ffmpeg_bin):
     ffmpeg_bin = "ffmpeg"
 cmd = [

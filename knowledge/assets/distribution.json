@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "purpose": "Offline CC0 starter profile for a fresh checkout; original private motion packs remain optional local extensions.",
+  "profiles": {
+    "core": {
+      "description": "Quaternius CC0 character and animation libraries; setup restores the legacy GLB paths used by registered motion IDs.",
+      "character_id": "quaternius_mannequin_f",
+      "assets": [
+        {
+          "id": "ual1_standard",
+          "path": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard.glb",
+          "bundled_source": "bundled_assets/animations/quaternius/UAL1_Standard.glb",
+          "license": "CC0-1.0"
+        },
+        {
+          "id": "ual1_standard_root_motion",
+          "path": "assets/incoming/combat/quaternius/ual1_standard/extracted/Universal Animation Library[Standard]/Unreal-Godot/UAL1_Standard_RM.glb",
+          "bundled_source": "bundled_assets/animations/quaternius/UAL1_Standard_RM.glb",
+          "license": "CC0-1.0"
+        },
+        {
+          "id": "ual2_standard",
+          "path": "assets/incoming/combat/quaternius/ual2_standard/extracted/Universal Animation Library 2[Standard]/Unreal-Godot/UAL2_Standard.glb",
+          "bundled_source": "bundled_assets/animations/quaternius/UAL2_Standard.glb",
+          "license": "CC0-1.0"
+        },
+        {
+          "id": "ual2_standard_root_motion",
+          "path": "assets/incoming/combat/quaternius/ual2_standard/extracted/Universal Animation Library 2[Standard]/Unreal-Godot/UAL2_Standard_RM.glb",
+          "bundled_source": "bundled_assets/animations/quaternius/UAL2_Standard_RM.glb",
+          "license": "CC0-1.0"
+        },
+        {
+          "id": "core_character_source",
+          "path": "bundled_assets/characters/quaternius_mannequin_f/source.fbx",
+          "license": "CC0-1.0"
+        },
+        {
+          "id": "core_character_cache",
+          "path": "bundled_assets/characters/quaternius_mannequin_f/character.blend",
+          "license": "CC0-1.0"
+        },
+        {
+          "id": "ual1_original_license",
+          "path": "bundled_assets/animations/quaternius/UAL1_License.txt"
+        },
+        {
+          "id": "ual2_original_license",
+          "path": "bundled_assets/animations/quaternius/UAL2_License.txt"
+        },
+        {
+          "id": "character_original_license",
+          "path": "bundled_assets/characters/quaternius_mannequin_f/LICENSE.txt"
+        }
+      ],
+      "motion_ids": [
+        "quaternius.punch_jab",
+        "quaternius.punch_cross",
+        "quaternius.death01",
+        "quaternius.idle_loop",
+        "quaternius.walk_loop",
+        "quaternius.sprint_loop"
+      ]
+    }
+  },
+  "sources": [
+    {
+      "name": "Quaternius Universal Animation Library Standard",
+      "source_url": "https://quaternius.itch.io/universal-animation-library",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original_license": "bundled_assets/animations/quaternius/UAL1_License.txt",
+      "original_readme": "bundled_assets/animations/quaternius/UAL1_README.txt",
+      "scope": "The bundled UAL1 Standard GLB files, including named Actions; not a claim that all Actions have been visually validated."
+    },
+    {
+      "name": "Quaternius Universal Animation Library 2 Standard",
+      "source_url": "https://quaternius.itch.io/universal-animation-library-2",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "original_license": "bundled_assets/animations/quaternius/UAL2_License.txt",
+      "original_readme": "bundled_assets/animations/quaternius/UAL2_README.txt",
+      "scope": "The bundled UAL2 Standard GLB files and its Female Mannequin; the project cache retains that CC0 character."
+    }
+  ],
+  "optional_local_extensions": [
+    {
+      "name": "Existing Mixamo library and Beta",
+      "paths": ["mixamo_fbx", "assets/characters/beta"],
+      "source_url": "https://www.mixamo.com/",
+      "distribution": "Not bundled or installed by bootstrap; restore your own authorized local copies.",
+      "scope": "Existing catalog IDs remain searchable when files are absent; availability is checked at query time."
+    },
+    {
+      "name": "Rokoko/Movella and other staged local downloads",
+      "paths": ["rokoko_staging"],
+      "local_source_record": "rokoko_staging/manifest.json",
+      "distribution": "Raw staged files are not included as part of this profile. Review each original pack's terms for local use and redistribution.",
+      "scope": "File discovery, rig compatibility and visual naturalness are separate statuses; no whole-pack compatibility claim."
+    }
+  ]
+}

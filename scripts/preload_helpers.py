@@ -9,11 +9,12 @@ Hermes 只需根据提示词解析出构图参数（视角/距离/环绕速度/�
 import math
 import os
 import subprocess
+from pathlib import Path
 
 import bpy
 from mathutils import Vector
 
-PROJECT = "/root/rivermind-data/bamo"
+PROJECT = str(Path(__file__).resolve().parents[1])
 
 # 内部状态：记录 Hermes 本次任务的决策（fbx 路径 + 构图参数），渲染时自动读取
 _STATE = {
@@ -515,11 +516,11 @@ def _agent_component(module, function, *args, **kwargs):
         return {'ok': False, 'message': str(error)}
 
 
-def wm_agent_character_info(character_id='beta', detail=False):
+def wm_agent_character_info(character_id=None, detail=False):
     return _agent_component('agent_character', 'character_info', character_id, detail=detail)
 
 
-def wm_agent_actor_ensure(job_id, actor_id, character_id='beta', **options):
+def wm_agent_actor_ensure(job_id, actor_id, character_id=None, **options):
     return _agent_component('agent_character', 'actor_ensure', job_id, actor_id,
                             character_id=character_id, **options)
 

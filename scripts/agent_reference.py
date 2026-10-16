@@ -61,14 +61,19 @@ def _folder(job_id):
 
 def reference_info():
     from camera_plan import camera_capabilities
+    from agent_character import default_character_id
+    from agent_motion_catalog import load_catalog
+    installed_assets = sorted({entry['asset'] for entry in load_catalog()['entries']
+                               if (PROJECT / entry['asset']).is_file()})
     return {
         'purpose': '素材优先的混合运动：合适素材驱动全身主动作，动作间平滑衔接，IK局部修正接触；缺少的动作才同骨架生成。组件不接受的动作、人数或时序不代表整条提示词不能生成，可以直接execute_code使用bpy构建。',
-        'animation_assets': [str(p.relative_to(PROJECT)) for p in sorted((PROJECT / 'mixamo_fbx').rglob('*.fbx'))],
+        'animation_assets': installed_assets,
         'additional_assets_root': str(PROJECT / 'assets'),
         'knowledge_root': str(PROJECT / 'knowledge'),
         'render_runtime': render_runtime_info(),
         'robot_workflow': {
-            'default_character': 'beta',
+            'default_character': default_character_id(),
+            'character_selection': 'Reuse the registered actor identity. For a new actor, prefer installed Beta; otherwise use the bundled CC0 skinned mannequin. Explicit character_id is preserved.',
             'character_catalog': str(PROJECT / 'knowledge/characters/catalog.json'),
             'motion_catalog': str(PROJECT / 'knowledge/motions/catalog.json'),
             'tool_documentation': str(PROJECT / 'docs/机器人混合动作工具说明.md'),
@@ -84,7 +89,7 @@ def reference_info():
                 'search': 'bpy.wm_agent_motion_search(完整动作意图, limit=8)：返回候选；无候选仍允许同骨架生成。',
                 'info': 'bpy.wm_agent_motion_info(motion_id)：路径、源FPS/窗口、已校准信息和真实hash。',
                 'library': 'bpy.wm_agent_motion_apply(job_id, actor_id, {"event_id":"walk_1","motion_id":"Walk","start_frame":1,"end_frame":60,"root_strategy":"source","time_scale":1,"fit":False,"blend_in_frames":6})：登记指定段并烘焙时间线。按实际源时长选结束帧，不把短动作默认fit拉满几秒。',
-                'sequence': 'MCP普通import agent_motion_sequence.library_sequence_events(job_id, actor_id, event_id, segments, start_frame=1, transition_frames=6)：segments指定实际motion_id、可选秒制source_window/time_scale。默认原速和完整素材，旧决斗短窗仅返回建议，不自动裁掉恢复；按实际源时长安排真实重叠过渡，返回开放plan.events和时序摘要。按摘要设置真实场景帧范围，登记完整序列后统一commit。它不把自然语言限制成动作枚举，不自动证明步态相位或接触匹配。',
+                'sequence': 'MCP普通import agent_motion_sequence.library_sequence_events(job_id, actor_id, event_id, segments, start_frame=1, transition_frames=6)：segments指定实际motion_id、可选秒制source_window/time_scale。默认原速保留准备和恢复；源片有实测校准T帧前缀时排除该前缀，旧决斗短窗仅返回建议，不自动裁掉恢复。按实际源时长安排真实重叠过渡，返回开放plan.events和时序摘要。按摘要设置真实场景帧范围，登记完整序列后统一commit。它不把自然语言限制成动作枚举，不自动证明步态相位或接触匹配。',
                 'event': 'bpy.wm_agent_timeline_event(job_id, actor_id, event_id, event)：保存开放语义的运动方案，source=library/procedural/hybrid是来源分类。随后motion_commit实际执行。若覆盖自动保全的窗口外快照且没指定priority，新明确编辑自动提高优先级；priority_diagnostic返回effective_priority及shadowed_by_preserved_base，显式priority原样保留。',
                 'commit': 'bpy.wm_agent_motion_commit(job_id, actor_id)：组合已登记事件并烘焙完整通道；多个相关人物使用actor_id=["A","B"]，先计算基础姿态，再逐帧按实际依赖顺序求同帧IK并统一写回。先A打B再B反击可以交换顺序；真正同帧循环在修改动画前指出错误帧。dynamic_commit_order/dependency_windows描述实际调度。bpy直接构建后用capture=True, frame_start=..., frame_end=..., event_id=...捕获实际求值姿态；capture仍逐人操作。局部capture保留其他既有帧，actual_bake_range是实际保全范围。',
                 'locomotion': 'bpy.wm_agent_locomotion_apply(job_id, actor_id, path, event_id="locomotion_base", intent="原文走跑停要求")：可选已校准平地步态。path连续逐帧{frame,root:[世界米],yaw:弧度,gait:"walk"/"run"/"idle"}；一个相位时钟驱动原Idle/Walk/Run与双足IK，保存同骨架完整姿态并保全窗口外运动。刹车阶段仍用移动步态，真实根速度逐步减到零，留足落脚站稳时间。后来叠加挥手等局部层时读取本事件priority并设更高priority。仅支持世界Z=0、无parent/单位scale/竖直root；其他需求自由bpy实现，不限制提示词。',

@@ -1,0 +1,2 @@
+# Web backend only. Hermes owns its separate pinned dependency lock.
+Flask==3.1.3

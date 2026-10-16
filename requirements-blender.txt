@@ -1,0 +1,2 @@
+# Blender includes numpy; its MCP addon additionally imports requests.
+requests==2.33.0

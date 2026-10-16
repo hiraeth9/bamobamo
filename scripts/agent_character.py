@@ -1,7 +1,7 @@
-"""Task-owned original Beta assets; no proxy geometry or inferred identity.
+"""Task-owned real character profiles; no proxy geometry or inferred identity.
 
-World/root coordinates are metres.  The imported armature's 0.01 object scale
-and centimetre rest data are deliberately retained, rather than applied twice.
+World/root coordinates are metres. Each profile retains its imported armature
+scale and rest units: Beta uses centimetres; the bundled CC0 profile uses metres.
 The module imports outside Blender so catalog/validation code can be tested.
 """
 import hashlib
@@ -94,7 +94,7 @@ def binding_facts(meshes, armature):
 
 
 def compatible_rig(actual, expected, tolerance=0.001):
-    """Tolerance is in source centimetre rest space, about 10 micrometres."""
+    """Tolerance is expressed in the character profile's rest-bone units."""
     current = {b['name']: b for b in actual['bones']}
     canonical = {b['name']: b for b in expected['bones']}
     if current.keys() != canonical.keys():
@@ -117,13 +117,25 @@ def _catalog_character(character_id='beta', verify_cache=True):
     source = PROJECT / item['source_asset']
     cache = PROJECT / item['cache_asset']
     if not source.is_file() or file_sha256(source) != item['source_sha256']:
-        raise ValueError('人物源资产缺失或已改变；请重新扫描人物缓存')
+        raise ValueError('人物源资产缺失或已改变：' + item['source_asset'] + '；请恢复该人物资产或重新构建缓存')
     if verify_cache and (not cache.is_file() or file_sha256(cache) != item['cache_sha256']):
-        raise ValueError('人物缓存缺失或已改变；请重新构建人物缓存')
+        raise ValueError('人物缓存缺失或已改变：' + item['cache_asset'] + '；请重新构建人物缓存')
     return item
 
 
-def character_info(character_id='beta', detail=False):
+def default_character_id():
+    """Prefer the installed local Beta; clean clones use the bundled CC0 rig."""
+    for character_id in ('beta', 'quaternius_mannequin_f'):
+        try:
+            _catalog_character(character_id)
+            return character_id
+        except ValueError:
+            continue
+    raise ValueError('没有可用人物资产；请安装 bundled_assets 中的 CC0 人物或恢复本机 Beta 缓存')
+
+
+def character_info(character_id=None, detail=False):
+    character_id = default_character_id() if character_id is None else character_id
     item = _catalog_character(character_id)
     if detail:
         return {'ok': True, **item}
@@ -198,18 +210,18 @@ def _identity_check(armature, meshes, character):
     skeleton = rig_facts(armature)
     binding = binding_facts(meshes, armature)
     if not compatible_rig(skeleton, character['skeleton']):
-        raise ValueError('人物骨架或休止姿态与标准 Beta 不兼容')
+        raise ValueError('人物骨架或休止姿态与登记人物不兼容：' + character['character_id'])
     if not binding['binding_ok'] or binding['signature'] not in character['accepted_binding_signatures']:
-        raise ValueError('人物原始网格、蒙皮或 Armature modifier 不符合标准 Beta')
+        raise ValueError('人物原始网格、蒙皮或 Armature modifier 不符合登记人物：' + character['character_id'])
     reference_meshes = {mesh['signature']: mesh for mesh in character['binding']['meshes']}
     for mesh in binding['meshes']:
         reference = reference_meshes.get(mesh['signature'])
         if not reference or max(abs(a-b) for row, other in zip(mesh['armature_bind_transform'],
                                   reference['armature_bind_transform']) for a,b in zip(row,other)) > .002:
-            raise ValueError('人物蒙皮对象的绑定变换或 parent inverse 与标准 Beta 不一致')
+            raise ValueError('人物蒙皮对象的绑定变换或 parent inverse 与登记人物不一致：' + character['character_id'])
     expected_scale = character['object_transform']['scale']
     if any(abs(float(a)-float(b)) > 1e-6 for a, b in zip(armature.scale, expected_scale)):
-        raise ValueError('人物骨架导入缩放与标准 Beta 不一致')
+        raise ValueError('人物骨架导入缩放与登记人物不一致：' + character['character_id'])
     return skeleton, binding
 
 
@@ -496,7 +508,7 @@ def scene_actor_facts(job_id, allow_empty=False):
                            'armature_object': entry.get('armature_object'), 'error': str(exc)})
     for name, meshes in rendered_rigs.items():
         if name not in registered_rigs:
-            errors.append(f'可渲染人物骨架未通过标准 Beta 登记：{name}；身体 {sorted(set(meshes))}')
+            errors.append(f'可渲染人物骨架未通过人物身份登记：{name}；身体 {sorted(set(meshes))}')
     rendered_count = sum(bool(actor.get('rendered')) for actor in actors)
     if not actors:
         errors.append('当前场景没有登记通过身份验证的标准机器人')
@@ -507,7 +519,7 @@ def scene_actor_facts(job_id, allow_empty=False):
                                      for name, meshes in sorted(rendered_rigs.items())],
             'declared_prop_meshes': sorted(attachment_meshes),
             'identity_verified': not errors,
-            'scope': 'Actual undeformed Beta topology/weights/rest rig and live modifier binding only.'}
+            'scope': 'Actual undeformed registered-character topology/weights/rest rig and live modifier binding only.'}
 
 
 def resolve_actor(job_id, actor_id):
@@ -539,15 +551,18 @@ def _register(job_id, actor_id, character_id, armature, meshes, root, collection
     return actor_get(job_id, actor_id)
 
 
-def actor_adopt(job_id, actor_id, armature_name, root_name=None, character_id='beta'):
-    """Register a recipe's real Beta without replacing its animation or rig."""
+def actor_adopt(job_id, actor_id, armature_name, root_name=None, character_id=None):
+    """Register a real catalog character without replacing its animation/rig."""
     _validate_actor(actor_id)
     scene = _job_scene(job_id, allow_claim=True)
     if actor_id in _registry(scene):
         existing = actor_get(job_id, actor_id)
         if existing['armature_object'] != armature_name:
             raise ValueError('该 actor_id 已登记另一骨架')
+        if character_id is not None and existing['character_id'] != character_id:
+            raise ValueError('该角色已使用另一人物资产')
         return existing
+    character_id = default_character_id() if character_id is None else character_id
     bpy = _bpy()
     armature = bpy.data.objects.get(armature_name)
     if armature is None or armature.name not in scene.objects or armature.type != 'ARMATURE':
@@ -575,7 +590,7 @@ def _finite_sequence(value, length, name):
     return tuple(float(v) for v in value)
 
 
-def actor_ensure(job_id, actor_id, character_id='beta', position=(0, 0, 0), yaw=0, color=None):
+def actor_ensure(job_id, actor_id, character_id=None, position=(0, 0, 0), yaw=0, color=None):
     """Idempotent create; repeat calls preserve existing position and animation."""
     _validate_actor(actor_id)
     position = _finite_sequence(position, 3, 'position')
@@ -589,9 +604,10 @@ def actor_ensure(job_id, actor_id, character_id='beta', position=(0, 0, 0), yaw=
     registry = _registry(scene)
     if actor_id in registry:
         result = actor_get(job_id, actor_id)
-        if result['character_id'] != character_id:
+        if character_id is not None and result['character_id'] != character_id:
             raise ValueError('该角色已使用另一人物资产')
         return result
+    character_id = default_character_id() if character_id is None else character_id
     bpy = _bpy()
     character = _catalog_character(character_id)
     from mathutils import Matrix

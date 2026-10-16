@@ -23,11 +23,14 @@ def _context(job_id, actor_id):
             'frame_end': scene.frame_end, 'events': timeline_info(job_id, actor_id)['events']}
 
 
-def _source_window(segment, measured):
+def _source_window(segment, measured, definition=None):
     duration = float(measured['duration_s'])
     if 'source_window' in segment:
         window = segment['source_window']
         origin = 'explicit_seconds'
+    elif definition and definition.get('requires_source_window'):
+        window = definition['valid_motion_window_seconds']
+        origin = 'verified_motion_window_excluding_calibration'
     else:
         window = [0., duration]
         origin = 'whole_clip_needs_neutral_frame_review'
@@ -73,7 +76,8 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
 
     Each segment needs ``motion_id`` and may supply ``source_window`` in clip
     seconds and ``time_scale`` (1 means original speed). Otherwise the whole
-    clip is used, retaining its recovery. Old catalog frame windows are only
+    clip is used, except for a verified calibration-only prefix. The motion's
+    preparation and recovery remain intact. Old catalog frame windows are only
     returned as optional editing suggestions. Timeline root origins
     are aligned by the existing compositor, never by copying a source robot.
 
@@ -97,7 +101,7 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
             raise ValueError('segment %s needs a motion_id selected from the motion catalog' % (index+1))
         definition = motion_info(segment['motion_id'])
         measured = prepare_motion(context['armature'], definition['motion_id'])
-        window, origin = _source_window(segment, measured)
+        window, origin = _source_window(segment, measured, definition)
         suggested = _suggested_source_window(definition, measured)
         speed = _number(segment.get('time_scale', 1), 'time_scale')
         if speed <= 0:
@@ -117,6 +121,8 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
             notes.append('Segment %s has an optional catalog edit suggestion; it was not applied automatically, so the selected clip keeps its recovery.' % (index+1))
         if origin == 'whole_clip_needs_neutral_frame_review':
             notes.append('Segment %s uses the whole clip; review calibration/neutral frames before claiming a natural transition.' % (index+1))
+        elif origin == 'verified_motion_window_excluding_calibration':
+            notes.append('Segment %s excludes the verified calibration prefix and retains the remaining performance; naturalness still needs review.' % (index+1))
     overlaps = _overlaps([source['intervals'] for source in sources], requested)
     events, timing, transitions = [], [], []
     cursor = first

@@ -23,7 +23,8 @@ class MotionCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog['fbx_count'], 63)
         self.assertEqual(len(entries), len({item['motion_id'] for item in entries}))
         glb = [item for item in entries if item['provider'] == 'quaternius_glb']
-        self.assertEqual({item['clip'] for item in glb}, {'Punch_Jab', 'Punch_Cross', 'Death01'})
+        self.assertEqual({item['clip'] for item in glb}, {'Punch_Jab', 'Punch_Cross', 'Death01',
+                                                       'Idle_Loop', 'Walk_Loop', 'Sprint_Loop'})
         self.assertTrue(all(item['license']['id'] == 'CC0-1.0' for item in glb))
         self.assertTrue(all(item['license']['id'] != 'CC0-1.0' for item in entries if item['provider'] == 'fbx'))
 
@@ -97,7 +98,165 @@ class MotionCatalogTests(unittest.TestCase):
             path = Path(directory) / 'changed_source_report.json'
             path.write_text(json.dumps(report))
             result = motion.build_catalog('reports/robot_asset_scan_20261014.json', path)
-        self.assertFalse(any(item.get('source_sampling_status') for item in result['entries']))
+        self.assertFalse(any(item.get('source_sampling_status') for item in result['entries'] if item['collection'] == 'main'))
+
+    def test_staging_files_are_discoverable_without_inflating_motion_count(self):
+        entries = self.catalog['entries']
+        staged = {item['asset']: item for item in entries if item['collection'] == 'rokoko_staging'}
+        actual = {str(path.relative_to(PROJECT)) for path in (PROJECT/'rokoko_staging').rglob('*')
+                  if path.is_file() and path.suffix.lower() in ('.fbx', '.glb')}
+        self.assertEqual(set(staged), actual)
+        self.assertEqual((self.catalog['legacy_main_motion_count'], self.catalog['staging_fbx_count'],
+                          self.catalog['staging_glb_count']), (66, 87, 5))
+        self.assertEqual(self.catalog['main_motion_count'], 69)
+        self.assertEqual(self.catalog['entry_counts']['character_asset'], 2)
+        self.assertEqual(self.catalog['entry_counts']['collection_candidate'], 8)
+        self.assertEqual(self.catalog['unique_asset_file_count'], 156)
+
+    def test_collections_and_models_do_not_become_callable_actions(self):
+        collections = motion.search_motions('UAL1', catalog=self.catalog)['candidates']
+        self.assertEqual(len(collections), 4)
+        self.assertTrue(all(entry['entry_kind'] == 'collection_candidate' for entry in collections))
+        self.assertTrue(all(not entry['execution']['available'] for entry in collections))
+        self.assertEqual(motion.search_motions('女性模型', usable_only=True, catalog=self.catalog)['candidates'], [])
+        model = motion.motion_info('staging.unknown.mannequin_f.fbx', self.catalog)
+        self.assertTrue(model['available'])
+        self.assertEqual(model['available_scope'], 'source_file_exists_only')
+        self.assertFalse(model['sampling_available'])
+
+    def test_plain_walking_and_boxing_candidates_include_staging_with_status(self):
+        walking = motion.search_motions('普通走路', limit=100, catalog=self.catalog)['candidates']
+        self.assertIn('rokoko.mixamo.09_slowwalkforward_mixamo_769', {item['motion_id'] for item in walking})
+        self.assertNotIn('weapon', walking[0]['style_hints'])
+        boxing = motion.search_motions('拳击', limit=100, catalog=self.catalog)['candidates']
+        self.assertIn('mixamo.combat_melee.boxing', {item['motion_id'] for item in boxing})
+        self.assertIn('rokoko.mixamo.boxing_mixamo', {item['motion_id'] for item in boxing})
+        self.assertTrue(all('execution' in item and 'use_status' in item for item in boxing))
+
+    def test_suggestions_do_not_become_visual_or_naturalness_claims(self):
+        candidate = motion.motion_info('rokoko.mixamo.shadowboxing_mixamo', self.catalog)
+        self.assertEqual(candidate['semantic_status'], 'filename_inference_only')
+        self.assertFalse(candidate['naturalness_verified'])
+        self.assertFalse(candidate['execution']['available'])
+        self.assertIsNone(candidate['source_fps'])
+        self.assertIn('support_metadata', candidate['metadata_gaps'])
+        self.assertEqual(candidate['source_provenance']['archives'], ['Combat.zip'])
+        self.assertEqual(candidate['source_provenance']['capture_method'], 'not_documented_in_local_manifest')
+
+    def test_weapon_backwards_candidate_is_explicit_instead_of_becoming_unarmed_dodge(self):
+        result = motion.search_motions('后退', catalog=self.catalog)
+        self.assertTrue(result['candidates'])
+        self.assertTrue(all('weapon' in item['style_hints'] for item in result['candidates']))
+        self.assertTrue(all(not item['execution']['available'] for item in result['candidates']))
+        dodge = motion.search_motions('闪避', catalog=self.catalog)
+        self.assertEqual(dodge['candidates'], [])
+        self.assertFalse(dodge['unknown_action_rejected'])
+
+    def test_new_alias_and_status_filters_do_not_change_legacy_exact_ids(self):
+        result = motion.search_motions('揍一拳', usable_only=True, catalog=self.catalog)
+        self.assertIn('mixamo.combat_melee.punching', {item['motion_id'] for item in result['candidates']})
+        self.assertTrue(all(item['execution']['available'] for item in result['candidates']))
+        self.assertEqual(motion.motion_info('cross', self.catalog)['motion_id'], 'quaternius.punch_cross')
+        self.assertEqual(motion.motion_info('Walk', self.catalog)['motion_id'], 'mixamo.basic.walk')
+        self.assertTrue(all(item['entry_kind'] == 'collection_candidate' for item in
+            motion.search_motions('UAL1', entry_kind='collection_candidate', catalog=self.catalog)['candidates']))
+
+    def test_refresh_preserves_measured_metadata_and_old_source_registration(self):
+        result = motion.build_catalog()
+        old = {entry['motion_id']: entry for entry in self.catalog['entries']}
+        new = {entry['motion_id']: entry for entry in result['entries']}
+        self.assertEqual(set(old), set(new))
+        for identifier in ('mixamo.basic.walk', 'quaternius.punch_cross'):
+            self.assertEqual(new[identifier]['source_fps'], old[identifier]['source_fps'])
+            self.assertEqual(new[identifier]['source_frame_range'], old[identifier]['source_frame_range'])
+            self.assertEqual(new[identifier]['source_sampling_status'], old[identifier]['source_sampling_status'])
+
+    def test_measured_rokoko_sources_keep_native_fps_calibration_and_preview_separate(self):
+        for identifier, fps, bones in (('rokoko.mixamo.09_slowwalkforward_mixamo_769', 30., 53),
+                                       ('rokoko.mixamo.boxing_mixamo', 24., 52)):
+            entry = motion.motion_info(identifier, self.catalog)
+            self.assertEqual(entry['entry_kind'], 'motion')
+            self.assertEqual(entry['source_fps'], fps)
+            self.assertEqual(entry['key_timebase_fps'], fps)
+            self.assertEqual(entry['skeleton']['bone_count'], bones)
+            self.assertTrue(entry['sampling_available'])
+            self.assertFalse(entry['naturalness_verified'])
+            self.assertFalse(entry['loop_allowed'])
+            self.assertTrue(entry['calibration_metadata']['t_pose_at_source_zero'])
+            self.assertGreater(entry['valid_motion_window_seconds'][0], 0)
+            self.assertLess(entry['suggested_source_window_seconds'][1], entry['duration_s'])
+            self.assertEqual(entry['validated_playback_windows'][0]['time_scale'], 1.)
+
+    def test_selected_ground_route_is_usable_without_claiming_ordinary_whole_clip_sampling(self):
+        entry = motion.motion_info('rokoko.mixamo.getup_wipebloodfrommouth_mixamo_769', self.catalog)
+        self.assertEqual(entry['use_status'], 'limited_validated_ground_window')
+        self.assertEqual(entry['execution']['function'], 'agent_ground_motion.ground_motion_events')
+        self.assertFalse(entry['execution']['ordinary_sampler_validated'])
+        self.assertFalse(entry['sampling_available'])
+        self.assertIn(entry['motion_id'], {item['motion_id'] for item in
+            motion.search_motions('起身', usable_only=True, catalog=self.catalog)['candidates']})
+
+    def test_refresh_keeps_validated_rokoko_and_limited_routes(self):
+        refreshed = {entry['motion_id']: entry for entry in motion.build_catalog()['entries']}
+        for identifier in ('rokoko.mixamo.boxing_mixamo', 'rokoko.mixamo.getup_wipebloodfrommouth_mixamo_769'):
+            old = motion.motion_info(identifier, self.catalog)
+            self.assertEqual(refreshed[identifier]['execution'], old['execution'])
+            self.assertEqual(refreshed[identifier]['entry_kind'], old['entry_kind'])
+            self.assertEqual(refreshed[identifier]['source_fps'], old['source_fps'])
+
+    def test_actual_installed_files_control_search_availability_without_rewriting_facts(self):
+        catalog = copy.deepcopy(self.catalog)
+        before = json.dumps(catalog, sort_keys=True)
+        core = next(item for item in catalog['entries'] if item['motion_id'] == 'quaternius.walk_loop')
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory)
+            source = project/core['asset']; source.parent.mkdir(parents=True)
+            source.write_bytes(b'An installed file for discovery-only availability tests')
+            with patch.object(motion, 'PROJECT', project):
+                all_results = motion.search_motions('走路', limit=100, catalog=catalog)['candidates']
+                usable = motion.search_motions('走路', usable_only=True, catalog=catalog)['candidates']
+        self.assertEqual([item['motion_id'] for item in usable], ['quaternius.walk_loop'])
+        self.assertEqual(all_results[0]['motion_id'], 'quaternius.walk_loop')
+        missing = next(item for item in all_results if item['motion_id'] == 'mixamo.basic.walk')
+        self.assertFalse(missing['available'])
+        self.assertFalse(missing['sampling_available'])
+        self.assertTrue(missing['execution']['available'])
+        self.assertEqual(json.dumps(catalog, sort_keys=True), before)
+
+    def test_present_unadapted_file_is_not_usable(self):
+        candidate = next(item for item in self.catalog['entries'] if item['motion_id'] == 'rokoko.mixamo.shadowboxing_mixamo')
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory)
+            path = project/candidate['asset'];path.parent.mkdir(parents=True)
+            path.write_bytes(b'Present, unadapted candidate for discovery-only tests')
+            with patch.object(motion, 'PROJECT', project):
+                result = motion.search_motions('影子拳击', catalog={'entries':[candidate]})['candidates'][0]
+                self.assertTrue(result['available'])
+                self.assertFalse(result['sampling_available'])
+                self.assertEqual(motion.search_motions('影子拳击', usable_only=True, catalog={'entries':[candidate]})['candidates'], [])
+
+    def test_refresh_in_checkout_without_optional_packs_keeps_registered_ids_and_facts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory)
+            folder = project/'knowledge/motions';folder.mkdir(parents=True)
+            index = folder/'catalog.json'
+            index.write_text(json.dumps(self.catalog))
+            (folder/'duel.json').write_text((PROJECT/'knowledge/motions/duel.json').read_text())
+            with patch.object(motion, 'PROJECT', project), patch.object(motion, 'CATALOG_PATH', index):
+                refreshed = motion.write_catalog(path=index)
+                self.assertEqual({entry['motion_id'] for entry in refreshed['entries']},
+                                 {entry['motion_id'] for entry in self.catalog['entries']})
+                self.assertEqual(len(refreshed['entries']), 161)
+                self.assertEqual(motion.search_motions('走路', usable_only=True, catalog=refreshed)['candidates'], [])
+                discovered = motion.search_motions('走路', limit=100, catalog=refreshed)['candidates']
+                self.assertTrue(discovered)
+                self.assertTrue(all(not entry['available'] for entry in discovered))
+                by_id = {entry['motion_id']:entry for entry in refreshed['entries']}
+                self.assertEqual(by_id['rokoko.mixamo.boxing_mixamo']['source_fps'], 24.)
+                self.assertEqual(by_id['rokoko.mixamo.getup_wipebloodfrommouth_mixamo_769']['execution']['function'],
+                                 'agent_ground_motion.ground_motion_events')
+                self.assertTrue(all('available' not in entry and 'sampling_available' not in entry
+                                    for entry in json.loads(index.read_text())['entries']))
 
 
 if __name__ == '__main__':

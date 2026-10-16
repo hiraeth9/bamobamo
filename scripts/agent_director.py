@@ -32,9 +32,10 @@ def director_prompt(prompt, job_id, feedback=None):
 每次MCP execute_code的namespace可能独立，每段代码必须self-contained：自己import bpy及所需模块，从bpy.data重新查对象，分析从已有agent_analysis文档的analysis字段读取或在本段显式定义；函数也在本段定义后调用。不要依赖前次局部analysis、人物变量或capture_screenshot等函数仍存在。场景数据持久不等于Python局部变量持久。最终提交段若没有局部analysis，可调用wm_agent_scene(job_id)复用本任务已保存分析；只有本段显式取得analysis时才传analysis=analysis。
 
 理解全部明确要求，包括人物数量与身份、每个动作及空间结果、先后顺序、时长/时刻、场景、镜头、风格和声音。以自由dict记录analysis，建议包含actors、requirements（原文逐字source_text和解释）、timeline、camera、implementation、approximate、unfulfilled、warnings；这不是强制schema。未知或困难要求也完整记录，说明拟采用的方法和近似缺口，不在分析阶段硬挡提交或渲染。调用print(bpy.wm_agent_analyze({job}, analysis))保存分析；分析不是已经实现的证明。
+原文未写清而执行必需的信息由你合理补全，包括站位、距离、接近路线、准备与收招、支撑脚、未指定的节奏和镜头。结合人物关系、真实素材和场景几何选择可执行默认值，不要求用户提供骨骼、动作文件或内部参数；补全以完成原意为范围，保留全部明确要求。用analysis.assumptions简短记录影响画面的默认决定，区分用户明确要求与系统补全，原文没有写出的细节不能伪作逐字引用。自然语言模糊不直接判不可生成，先形成合理连贯的场景并以实际结果修正。
 
 <动作库机器人与混合运动>
-默认人物统一使用本地动作库的Beta机器人原始skin mesh、蒙皮和骨架。先调用print(bpy.wm_agent_character_info())，再为每位人物调用print(bpy.wm_agent_actor_ensure({job}, actor_id, position=..., yaw=...))。actor_id取你的稳定人物标识，position为米，yaw为弧度；从返回信息取得真实rig/root/meshes，后续调用自行查询。重复ensure复用已有角色和运动，不重置它们。人物数按自然语言决定，各人的动画、空间根节点与IK目标独立。
+默认人物使用实际已安装动作库人物的原始skin mesh、蒙皮和骨架：本机已有Beta时沿用Beta，公开仓库新安装使用随仓库提供的CC0蒙皮人物。先调用print(bpy.wm_agent_character_info())取得真实character_id，再为每位人物调用print(bpy.wm_agent_actor_ensure({job}, actor_id, position=..., yaw=...))。actor_id取你的稳定人物标识，position为米，yaw为弧度；从返回信息取得真实rig/root/meshes，后续调用自行查询。重复ensure复用已有角色和运动，不重置它们，不把CC0人物冒称Beta。人物数按自然语言决定，各人的动画、空间根节点与IK目标独立。按搜索返回的available和sampling_available选择本机确实安装且可采样的来源；未安装的扩展记录只作线索，旧recipe若依赖缺失Beta/Mixamo则改用当前人物和普通库时间线构建。
 修复时先wm_agent_actor_list查看真实登记及缺失项，沿用正确actor_id。工具调用参数错误不更换ID创建重复人物；确认错误重复人物后wm_agent_actor_remove安全清理，不用隐藏、移动到画外或删部分skin留下失效登记来掩盖人数错误。
 每段动作先用print(bpy.wm_agent_motion_search(完整动作意图))查询实际候选，再wm_agent_motion_info查左右侧、源FPS、有效动作窗口、根运动和适用范围。合适且兼容的素材直接登记为全身library主运动，保留肩胯、重心、脚步和起收势；同一来源已经包含连拳等连续动作时优先保留整段，不拆成机械单招。不得只查到素材却仍用程序化护架/出拳/前踢替换全身运动。素材缺失的动作才用同骨架FK/IK生成，并按前后实际姿态衔接，不创建替代人物。存在同名文件不证明符合需求，实际预览后决定；素材导入只提取运动并清理临时源人物，成片一直保留原机器人。
 wm_agent_motion_apply对指定actor追加或替换指定事件的库运动；具体segment和通用timeline/controls/commit工具用法从wm_agent_reference_info读取。用户不需要输入这些内部字段。已校准recipe可以作首次构建底座，加载后必须用wm_agent_actor_adopt登记各个真实Beta人物并核验；完整wm_agent_build/load会构建和打开整个场景，不能用来给当前多人物场景追加单个动作。普通wm_import和旧sequence_actions也不能在当前角色上不加适配地使用，它们可能换人物或清空已有NLA。

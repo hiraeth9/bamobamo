@@ -1,5 +1,8 @@
 import sys
+from pathlib import Path
 import bpy
+
+PROJECT = Path(__file__).resolve().parents[1]
 
 # 调试日志直接写文件，绕过 stdout 缓冲
 _logf = open("/tmp/ss_debug.log", "w", buffering=1)
@@ -9,14 +12,14 @@ def _log(msg):
     _logf.flush()
 
 _log("step1: bpy imported, importing addon")
-sys.path.insert(0, "/root/rivermind-data/bamo/blender-mcp")
+sys.path.insert(0, str(PROJECT / "blender-mcp"))
 import addon
 _log("step2: addon imported, calling register()")
 addon.register()
 
 # 预置白膜渲染 helper 函数（挂到 bpy，供 Hermes 通过 execute_code 调用）
 _log("step2.5: loading preload_helpers")
-sys.path.insert(0, "/root/rivermind-data/bamo/scripts")
+sys.path.insert(0, str(PROJECT / "scripts"))
 try:
     import preload_helpers
     _log("step2.5b: preload_helpers loaded OK")

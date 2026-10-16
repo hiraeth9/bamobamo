@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.8.0
+version: 9.9.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -18,7 +18,9 @@ metadata:
 
 **核心原则：你是导演。** 把完整提示词转成动作、时序、接触、空间关系和镜头，依据真正场景与预览判断执行结果。**接触类动作必须由真实骨骼parent或约束/IK绑定承载，不能靠手与物品各自的关键帧近似**（详见“手持/搬运/推拉/接触物品”一节）。
 
-**主运动采用素材优先。** 有合适素材时，用它驱动原Beta的全身动作，保留肩胯发力、重心、脚步和节奏；多个动作按实际起收姿态平滑过渡。FK/IK主要修正局部接触与支撑，确实缺少合适素材的动作再生成，并接回前后实际姿态。不要因为已有程序化工具，就用它替代库中已经合适的整段运动；接触误差小不代表动作自然。
+**主运动采用素材优先。** 有合适素材时，用它驱动已登记人物的全身动作，保留肩胯发力、重心、脚步和节奏；多个动作按实际起收姿态平滑过渡。FK/IK主要修正局部接触与支撑，确实缺少合适素材的动作再生成，并接回前后实际姿态。不要因为已有程序化工具，就用它替代库中已经合适的整段运动；接触误差小不代表动作自然。
+
+**执行必需的缺失信息由你补全。** 原文没有写清的站位、距离、接近路线、准备、收招、支撑、节奏和镜头，结合场景、人物关系与实际素材作合理决定，不要求用户填写技术参数。保留明确要求，补全以完成原意为范围；在`analysis.assumptions`简短记录影响画面的默认值，并与用户原文要求区分。模糊输入先形成可执行的连贯方案，再根据实际场景修正。
 
 ## 根据任务入口选择工作流
 
@@ -36,11 +38,11 @@ metadata:
 
 ## 固定动作库机器人与混合动作
 
-默认人物使用本地Beta机器人原始网格、蒙皮与骨架。先查询`bpy.wm_agent_character_info()`，根据自然语言人数分别调用`bpy.wm_agent_actor_ensure(job_id, actor_id, position=..., yaw=...)`。position为米，yaw为弧度。使用稳定actor_id和工具返回的真实对象名；重复ensure不清除正确动作或材质。修复时先查看已有登记和真实对象，沿用原actor_id；接口调用报错先检查签名与参数，不更换actor_id创建重复人物。不要重新创建分段proxy替代机器人。
+默认人物使用实际安装的动作库人物原始网格、蒙皮与骨架。本机Beta已安装时沿用Beta；公开仓库新安装使用随仓库提供的CC0蒙皮人物。先查询`bpy.wm_agent_character_info()`取得真实`character_id`，根据自然语言人数分别调用`bpy.wm_agent_actor_ensure(job_id, actor_id, position=..., yaw=...)`。position为米，yaw为弧度。使用稳定actor_id和工具返回的真实对象名；重复ensure不清除正确动作或材质。修复时先查看已有登记和真实对象，沿用原actor_id；接口调用报错先检查签名与参数，不更换actor_id创建重复人物。不要重新创建分段proxy替代机器人，不把CC0人物冒称Beta。
 
 修复人物数量时先`wm_agent_actor_list(job_id)`核对真实人物、对象、可见性及缺失项。出现错误重复人物时确认保留者，再`wm_agent_actor_remove(job_id, 错误actor_id)`安全清理指定人物及其登记；不要只hide_render、移动到画外或直接删部分网格留下失效登记。物品和其他人物应保留，删除后再次查询和检查实际画面。
 
-每段动作查询`bpy.wm_agent_motion_search(完整意图)`并读取`bpy.wm_agent_motion_info(motion_id)`，核对语义、侧别、窗口、帧率、根运动与实际适用范围。合适的素材优先；缺少候选继续在同一机器人骨架上用FK/IK、约束和关键帧生成。目录用于检索，不能当用户动作白名单。库、自动生成和混合表示每个片段的来源，用户继续只输入自然语言。
+每段动作查询`bpy.wm_agent_motion_search(完整意图)`并读取`bpy.wm_agent_motion_info(motion_id)`，核对语义、侧别、窗口、帧率、根运动与实际适用范围。根据`available`、`sampling_available`选择本机确实安装且可采样的来源；未安装扩展只作检索线索。合适的素材优先；缺少候选继续在同一人物骨架上用FK/IK、约束和关键帧生成。目录用于检索，不能当用户动作白名单。库、自动生成和混合表示每个片段的来源，用户继续只输入自然语言。依赖未安装Beta/Mixamo的旧recipe不适用时，使用当前人物和普通库时间线构建。
 
 从`wm_agent_reference_info`读取motion_apply、timeline、controls和commit的实际调用说明。保持全段合理基础运动；新动作只改变需要的骨区与时间窗口。边走边招手等同时要求用骨区控制权合成，不自动改成串行。前后动作匹配根位置、朝向、速度和支撑相位，不用T姿态或无关Idle填空。FK/IK交接先匹配当前末端姿态；根轨迹只由一个合成结果驱动。
 

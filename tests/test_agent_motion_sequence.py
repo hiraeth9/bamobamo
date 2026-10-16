@@ -54,6 +54,21 @@ def test_explicit_seconds_override_the_curated_annotation():
     assert plan['sequence']['segments'][0]['source_window_origin'] == 'explicit_seconds'
 
 
+def test_verified_calibration_prefix_is_removed_without_shortening_recovery():
+    definition = {'requires_source_window': True, 'valid_motion_window_seconds': [.1, 2.]}
+    plan = compile_sequence([{'motion_id': 'a'}], definitions={'a': definition})
+    assert plan['events'][0]['source_window'] == [.1, 2.]
+    assert plan['events'][0]['end_frame'] == 58
+    assert plan['sequence']['segments'][0]['source_window_origin'] == 'verified_motion_window_excluding_calibration'
+
+
+def test_explicit_window_can_override_verified_calibration_exclusion():
+    definition = {'requires_source_window': True, 'valid_motion_window_seconds': [.1, 2.]}
+    plan = compile_sequence([{'motion_id': 'a', 'source_window': [0., .5]}], definitions={'a': definition})
+    assert plan['events'][0]['source_window'] == [0., .5]
+    assert plan['sequence']['segments'][0]['source_window_origin'] == 'explicit_seconds'
+
+
 def test_pairwise_overlap_keeps_both_sources_moving_without_frozen_pose_keys():
     plan = compile_sequence([{'motion_id': name} for name in ('a', 'b', 'c')], transition_frames=6)
     first, second, third = plan['events']

@@ -26,6 +26,10 @@
 *.zip
 *.tar
 *.tar.*
+# Redistributable core assets; source packs and generated output stay local.
+!/bundled_assets/**/*.fbx
+!/bundled_assets/**/*.glb
+!/bundled_assets/**/*.blend
 /bones_result.json
 /*.docx
 

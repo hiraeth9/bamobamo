@@ -1,0 +1,6 @@
+Quaternius Mannequin_F from Universal Animation Library 2
+License: CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+https://quaternius.com/packs/universalanimationlibrary2.html
+
+This bundle retains the original source FBX. The character cache preserves its real mesh and weights, adds semantic bone aliases, a matte material and a CC0 Idle pose.

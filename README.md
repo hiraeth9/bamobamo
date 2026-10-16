@@ -1,5 +1,39 @@
 # Bamo 自然语言生成动作参考视频
 
+## Linux 首次运行
+
+使用 Linux x86_64、Python 3 和自己的模型账号。Ubuntu/Debian 首次准备系统依赖：
+
+```bash
+sudo apt-get update
+sudo apt-get install git python3 tmux xvfb libsm6 libice6 libx11-6 libxrender1 libxi6 libxfixes3 libxkbcommon0 libgl1 libegl1 libgl1-mesa-dri
+git clone https://github.com/hiraeth9/bamobamo.git
+cd bamobamo
+cp .env.example .env
+```
+
+编辑 `.env`，填自己的 `BAMO_API_KEY`、`BAMO_API_BASE` 和 `BAMO_MODEL`，然后运行：
+
+```bash
+./run.sh
+```
+
+首次启动会联网获取 Blender、项目指定版本的 Hermes、Python 依赖及必要的工具，安装项目 Skill，并准备仓库随附的核心素材；之后打开 `http://localhost:8090`。启动过程不提交视频任务、不调用付费模型。环境与模型配置保存在当前项目目录，API 密钥不随 Git 提交；更换电脑后填写自己的模型账号即可。默认本地监听，已有远程访问需求可设置 `HOST=0.0.0.0`。
+
+`./run.sh --setup-only` 只准备环境，`./run.sh --check` 只读检查，`bash start_all.sh` 启动已准备的环境。现有服务和任务不会因启动器运行而被清理。首次下载速度取决于网络；已有官方 Blender Linux 压缩包可通过 `.env` 的 `BAMO_BLENDER_ARCHIVE` 指定。
+
+安装条件、下载来源和已验证范围见 [Linux 一键启动与依赖](docs/Linux一键启动与依赖.md)。
+
+## 素材与当前实施路线
+
+按[六阶段实施计划](素材优先动作生成框架六阶段实施计划.md)推进：素材 → 单人基础 → 单人打斗 → 双人基础 → 双人打斗 → 多人。主运动优先复用合适的全身素材，保留原速、准备和收招，再平滑连接；IK 主要修正局部接触与支撑。Hermes 根据自然语言选择素材，合理补全未说明的必要细节，并在 `analysis.assumptions` 中记录影响画面的默认决定。
+
+`bundled_assets/` 保存允许公开再分发的 Quaternius CC0 核心素材和真实蒙皮人物，来源与安装目标见 `knowledge/assets/distribution.json`。这些提供可运行的公开起点，不代表全部动作都已满足真人自然度。现有本机已安装 Beta 时继续使用 Beta；新安装使用独立的 CC0 人物身份，已有任务的人物保持原样。
+
+本机的 Mixamo 和 Rokoko 扩展不会因本次整理删除。它们的原始文件不直接随公开仓库分发：[Mixamo 许可说明](https://community.adobe.com/questions-696/mixamo-faq-licensing-royalties-ownership-eula-and-tos-589400?lang=en)和 [Rokoko 条款](https://www.rokoko.com/terms-of-use)约束原始资产的转发。扩展目录保留检索信息，但运行时按实际文件和适配情况报告可用性，缺文件不会冒称已安装。若自行获取并放回对应路径，仍可作为本机扩展使用。
+
+历史任务、视频、费用记录与模型凭据不包含在公开启动包中。下面保留此前功能和验证记录；脚本测试通过不等于任意自然语言视频或打斗自然度已通过。
+
 ## 相机可见性与恢复记录 2026年10月15日
 
 “搬椅子堵门”20 秒案例已重出固定斜侧正交机位视频，完整 600 帧主体入画与遮挡检查通过；原动作、人物和物品保持。新场景保存镜头契约，后台独立重载检查失败时反馈 Hermes 修复。相机检查不等同于动作接触、物理或自然度验收。
