@@ -59,14 +59,15 @@ def kick_weight(frame, timing):
 
 
 def kick_pole(hip, ankle, direction):
-    """Knees bend into the kick plane; a horizontal extension bends upward."""
-    axis = [b-a for a, b in zip(hip, ankle)]
-    size = sum(value*value for value in axis)
-    along = sum(a*b for a, b in zip(direction, axis))/size
-    projected = [value-along*part for value, part in zip(direction, axis)]
-    if sum(value*value for value in projected) < .01:
-        direction = [0., 0., 1.]
-    return support_pole(hip, ankle, direction)
+    """Bend the knee forward at lift-off and upward at a high extension.
+
+    Projecting only the horizontal attack direction bends a high kick knee
+    downward. An upward bias follows the front-kick chamber instead, while
+    its projection on a vertical standing leg still points forward.
+    """
+    preferred = list(direction)
+    preferred[2] += 1.5
+    return support_pole(hip, ankle, preferred)
 
 
 def foot_contact_conflicts(requirements, foot, start, end, event_id):
@@ -142,7 +143,7 @@ def leg_strike_events(job_id, actor_id, event_id, target_binding, *, start_frame
     support = 'LeftFoot' if foot == 'RightFoot' else 'RightFoot'
     try:
         scene.frame_set(timing['start']); bpy.context.view_layer.update()
-        soles, anchors, rotations, ankle_offsets, lengths = {}, {}, {}, {}, {}
+        soles, anchors, rotations, ankle_offsets, lengths, knee_names = {}, {}, {}, {}, {}, {}
         for chain in (foot, support):
             soles[chain], anchors[chain] = _surface_effector(actor, chain)
             if abs(anchors[chain][2]-floor) > .04:
@@ -152,6 +153,7 @@ def leg_strike_events(job_id, actor_id, event_id, target_binding, *, start_frame
             ankle_offsets[chain] = Vector(anchors[chain])-(arm.matrix_world @ bone.head)
             _, upper = _bone(actor, chain.removesuffix('Foot')+'UpLeg', evaluated=True)
             _, knee = _bone(actor, chain.removesuffix('Foot')+'Leg', evaluated=True)
+            knee_names[chain] = knee.name
             a, b, c = [arm.matrix_world @ item.head for item in (upper, knee, bone)]
             lengths[chain] = (a-b).length+(b-c).length
             anchors[chain][2] = floor
@@ -177,16 +179,24 @@ def leg_strike_events(job_id, actor_id, event_id, target_binding, *, start_frame
             toe_direction = actor['root'].matrix_world.to_quaternion() @ Vector((0, -1, 0))
         toe_direction.z = 0.; toe_direction.normalize()
         rotation = toe_direction.rotation_difference(direction) @ rotations[foot]
-        chamber = initial+direction*.10+Vector((0, 0, height))
         root_initial = Vector(samples[timing['start']]['root'])
         toward_support = Vector(anchors[support])-root_initial
         toward_support.z = 0.
         lateral = actor['root'].matrix_world.to_quaternion() @ Vector((1, 0, 0))
         lateral_shift = lateral*max(-shift, min(shift, toward_support.dot(lateral)))
+        _, attack_hip = _bone(actor, foot.removesuffix('Foot')+'UpLeg', evaluated=True)
+        hip_initial = arm.matrix_world @ attack_hip.head
+        strike_offset = rotation @ (rotations[foot].inverted() @ (initial-ankle))
+        chamber = hip_initial+lateral_shift+direction*.14+strike_offset
+        chamber.z = initial.z+height
         body_keys, attack_keys, support_keys = [], [], []
         _, hips_bone = _bone(actor, 'Hips')
         for frame in range(timing['start'], timing['end']+1):
             weight = kick_weight(frame, timing)
+            settle_weight = (1-smooth((frame-timing['land'])/max(1, timing['end']-timing['land']))
+                             if frame >= timing['land'] else 1.)
+            if frame == timing['start']:
+                settle_weight = 0.
             root = Vector(samples[frame]['root'])+lateral_shift*weight
             root_rotation = Quaternion(samples[frame]['root_rotation_quaternion'])
             new_root = Matrix.LocRotScale(root, root_rotation, Vector(samples[frame]['root_scale']))
@@ -202,6 +212,11 @@ def leg_strike_events(job_id, actor_id, event_id, target_binding, *, start_frame
             current_rotation = rotations[foot].slerp(rotation, weight)
             offset = current_rotation @ (rotations[foot].inverted() @ (initial-ankle))
             planned_ankle = point-offset
+            base_knees = {chain: delta @ samples[frame]['bone_world'][knee_names[chain]].translation
+                          -Vector((0, 0, lowering)) for chain in (foot, support)}
+            attack_base_pole = Vector(support_pole(hip_positions[foot], planned_ankle,
+                                                  base_knees[foot]-hip_positions[foot]))
+            attack_pole = attack_base_pole.lerp(Vector(kick_pole(hip_positions[foot], planned_ankle, direction)), weight)
             reach = (planned_ankle-hip_positions[foot]).length
             allowed_reach = lengths[foot]*(.995 if timing['impact'] <= frame <= timing['release'] else 1.00001)
             if reach > allowed_reach:
@@ -226,12 +241,15 @@ def leg_strike_events(job_id, actor_id, event_id, target_binding, *, start_frame
                               'interpolation': 'linear'})
             attack_keys.append({'frame': frame, 'position': list(point),
                                 'rotation_quaternion': list(current_rotation),
-                                'pole': kick_pole(hip_positions[foot], planned_ankle, direction),
-                                'influence': 1, 'interpolation': 'linear'})
+                                'pole': list(attack_pole),
+                                'influence': settle_weight, 'interpolation': 'linear'})
             forward = root_rotation @ Vector((0, -1, 0))
+            support_base_pole = Vector(support_pole(hip_positions[support], support_ankle,
+                                                   base_knees[support]-hip_positions[support]))
+            stance_pole = support_base_pole.lerp(Vector(support_pole(hip_positions[support], support_ankle, forward)), weight)
             support_keys.append({'frame': frame, 'position': anchors[support],
-                                 'pole': support_pole(hip_positions[support], support_ankle, forward),
-                                 'influence': 1, 'interpolation': 'linear'})
+                                 'pole': list(stance_pole),
+                                 'influence': settle_weight, 'interpolation': 'linear'})
         source = str(intent or 'Flat-floor knee chamber, foot strike, rechamber and planted guard recovery')
         events = [{'event_id': event_id+':body', 'source': 'procedural', 'start_frame': timing['start'],
                    'end_frame': timing['end'], 'root_strategy': 'trajectory', 'priority': chosen,
@@ -255,10 +273,11 @@ def leg_strike_events(job_id, actor_id, event_id, target_binding, *, start_frame
                                     ('land', timing['land'], timing['end'])):
             events.append(_target_event(event_id+':'+label, begin, finish, foot,
                           {'effector': soles[foot], 'position': anchors[foot], 'rotation_quaternion': list(rotations[foot]),
-                           'keyframes': [{'frame': key['frame'], 'position': anchors[foot], 'pole': key['pole'], 'influence': 1}
+                           'keyframes': [{'frame': key['frame'], 'position': anchors[foot], 'pole': key['pole'], 'influence': key['influence']}
                                          for key in attack_keys if begin <= key['frame'] <= finish],
                            'contact': {'id': actor_id+':'+event_id+':'+label, 'kind': 'support', 'tolerance_m': .01}}, chosen+1, source))
         return _plan(actor_id, event_id, events, {'impact_contact_ids': [cid], 'effector': {'effector': effector},
+                     'attack_foot': foot, 'attack_direction_world': list(direction),
                      'support_foot': support, 'support_contact_id': sid, 'release_window': release_window,
                      'timing': timing, 'leg_reach_m': lengths[foot], 'root_shift_m': lateral_shift.length,
                      'base_recovery': 'captured_root_guard_and_grounded_stance',

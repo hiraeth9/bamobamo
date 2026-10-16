@@ -53,6 +53,11 @@ class KickTrajectoryTests(unittest.TestCase):
         stance = kick_pole([0, 0, .9], [0, 0, .08], [1, 0, 0])
         self.assertGreater(stance[0], 0)
 
+    def test_high_front_kick_keeps_knee_above_leg_axis(self):
+        hip, ankle = [0, 0, .9], [.75, 0, 1.12]
+        pole = kick_pole(hip, ankle, [1, 0, 0])
+        self.assertGreater(pole[2], (hip[2]+ankle[2])/2)
+
     def test_existing_attack_foot_contact_must_be_explicitly_released(self):
         contracts = [{'id': 'walk:stance', 'event_id': 'walk:planted', 'chain': 'RightFoot', 'frame_start': 1, 'frame_end': 30},
                      {'id': 'other', 'event_id': 'walk:support', 'chain': 'LeftFoot', 'frame_start': 1, 'frame_end': 60},
