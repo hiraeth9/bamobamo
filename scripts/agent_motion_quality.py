@@ -24,6 +24,32 @@ def registered_contact_report(job_id, frame_start=None, frame_end=None, actor_id
     return result
 
 
+def registered_ground_report(job_id, frame_start=None, frame_end=None, actor_id=None):
+    """Recheck saved floor-motion requirements, when a scene has them."""
+    reports = []
+    failures = []
+    try:
+        from agent_character import actor_list
+        from agent_motion_timeline import timeline_info
+        from agent_ground_motion import check_ground_motion
+        actors = [actor_id] if actor_id else [item['actor_id'] for item in actor_list(job_id)['actors']]
+        for aid in actors:
+            events = timeline_info(job_id, aid)['events']
+            if not any(event.get('ground_motion') for event in events):
+                continue
+            measured = check_ground_motion(job_id, aid, frame_start=frame_start, frame_end=frame_end)
+            reports.append({'actor_id': aid, **measured})
+            if not measured['passed']:
+                failures.append({'actor_id': aid, 'failures': measured['failures'],
+                                 'contact_report': measured['contact_report']})
+    except Exception as error:
+        failures.append({'code': 'ground_check_error', 'type': type(error).__name__, 'message': str(error)})
+    return {'ok': not any(item.get('code') == 'ground_check_error' for item in failures),
+            'passed': not failures, 'status': 'failed' if failures else ('passed' if reports else 'empty'),
+            'actors': reports, 'failure_count': len(failures), 'failures': failures,
+            'scope': 'registered ground-motion skin/floor and support requirements only; no dynamics or naturalness proof'}
+
+
 def rotation_delta_degrees(first, second):
     """Physical rotation distance; q and -q represent the same orientation."""
     a=math.sqrt(sum(v*v for v in first));b=math.sqrt(sum(v*v for v in second))
@@ -307,8 +333,12 @@ def motion_check(job_id,actor_id=None,frame_start=None,frame_end=None,contacts=N
         failures.append({'check':'registered_contacts','status':registered_contacts['status'],
                          'failure_count':registered_contacts['failure_count'],
                          'failures':registered_contacts['failures']})
-    return {'ok':True,'passed':not failures,'scope':'specified identity, finite geometry, animation, boundaries, registered contacts and optional explicit contacts/framing',
+    registered_ground=registered_ground_report(job_id,frame_start=start,frame_end=end,actor_id=actor_id)
+    if not registered_ground['passed']:
+        failures.append({'check':'registered_ground', 'failures':registered_ground['failures']})
+    return {'ok':True,'passed':not failures,'scope':'specified identity, finite geometry, animation, boundaries, registered contacts/ground motion and optional explicit contacts/framing',
             'job_id':job_id,'frame_start':start,'frame_end':end,'actors':reports,'contacts':contact_reports,'failures':failures,
             'registered_contacts':registered_contacts,
+            'registered_ground':registered_ground,
             'naturalness_verified':False,'semantics_verified':False,'scene_reload_verified':False,
             'visual_review_required':True}

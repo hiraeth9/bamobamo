@@ -202,13 +202,18 @@ def probe_scene(manifest_path):
             except Exception as error:
                 errors.append({'code': 'camera_visibility', 'reason': 'contract_or_check_error',
                                'type': type(error).__name__, 'message': str(error)})
-        from agent_motion_quality import registered_contact_report
+        from agent_motion_quality import registered_contact_report, registered_ground_report
         contact_result = registered_contact_report(folder.name)
         report['registered_contacts'] = contact_result
         if not contact_result['passed']:
             errors.append({'code': 'contacts', 'reason': contact_result['status'],
                            'failure_count': contact_result['failure_count'],
                            'failures': contact_result['failures']})
+        ground_result = registered_ground_report(folder.name)
+        report['registered_ground'] = ground_result
+        if not ground_result['passed']:
+            errors.append({'code': 'ground_motion', 'reason': ground_result['status'],
+                           'failures': ground_result['failures']})
         report['passed'] = not errors
     except Exception as error:
         errors.append({'code': 'probe_error', 'type': type(error).__name__, 'message': str(error)})
