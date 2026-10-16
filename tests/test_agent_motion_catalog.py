@@ -111,7 +111,7 @@ class MotionCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog['main_motion_count'], 69)
         self.assertEqual(self.catalog['entry_counts']['character_asset'], 2)
         self.assertEqual(self.catalog['entry_counts']['collection_candidate'], 8)
-        self.assertEqual(self.catalog['unique_asset_file_count'], 161)
+        self.assertEqual(self.catalog['unique_asset_file_count'], 170)
 
     def test_collections_and_models_do_not_become_callable_actions(self):
         collections = motion.search_motions('UAL1', catalog=self.catalog)['candidates']
@@ -143,11 +143,14 @@ class MotionCatalogTests(unittest.TestCase):
         self.assertEqual(candidate['source_provenance']['archives'], ['Combat.zip'])
         self.assertEqual(candidate['source_provenance']['capture_method'], 'not_documented_in_local_manifest')
 
-    def test_weapon_backwards_candidate_is_explicit_instead_of_becoming_unarmed_dodge(self):
-        result = motion.search_motions('后退', catalog=self.catalog)
+    def test_retreat_candidates_keep_weapon_style_separate_from_new_unarmed_sources(self):
+        result = motion.search_motions('后退', limit=100, catalog=self.catalog)
         self.assertTrue(result['candidates'])
-        self.assertTrue(all('weapon' in item['style_hints'] for item in result['candidates']))
-        self.assertTrue(all(not item['execution']['available'] for item in result['candidates']))
+        unarmed = [item for item in result['candidates'] if 'weapon' not in item['style_hints']]
+        self.assertEqual({item['motion_id'] for item in unarmed}, {'cmu.76_11','cmu.76_01'})
+        weapons = [item for item in result['candidates'] if 'weapon' in item['style_hints']]
+        self.assertTrue(weapons)
+        self.assertTrue(all(not item['execution']['available'] for item in weapons))
         dodge = motion.search_motions('闪避', catalog=self.catalog)
         self.assertEqual(dodge['candidates'], [])
         self.assertFalse(dodge['unknown_action_rejected'])
@@ -246,7 +249,7 @@ class MotionCatalogTests(unittest.TestCase):
                 refreshed = motion.write_catalog(path=index)
                 self.assertEqual({entry['motion_id'] for entry in refreshed['entries']},
                                  {entry['motion_id'] for entry in self.catalog['entries']})
-                self.assertEqual(len(refreshed['entries']), 166)
+                self.assertEqual(len(refreshed['entries']), 175)
                 self.assertEqual(motion.search_motions('走路', usable_only=True, catalog=refreshed)['candidates'], [])
                 discovered = motion.search_motions('走路', limit=100, catalog=refreshed)['candidates']
                 self.assertTrue(discovered)
@@ -263,9 +266,13 @@ class MotionCatalogTests(unittest.TestCase):
     def test_cmu_selected_sources_keep_actual_import_facts_and_clear_license(self):
         cmu = [entry for entry in self.catalog['entries'] if entry['provider'] == 'cmu_fbx']
         self.assertEqual({entry['motion_id'] for entry in cmu},
-                         {'cmu.02_01', 'cmu.07_01', 'cmu.02_03', 'cmu.79_08', 'cmu.80_10'})
+                         {'cmu.'+identifier for identifier in ('02_01','07_01','02_03','79_08','80_10',
+                          '69_16','16_17','16_33','22_14','144_05','144_07','144_26','76_11','76_01')})
         last_frames = {'cmu.02_01': 86, 'cmu.07_01': 79, 'cmu.02_03': 44,
-                       'cmu.79_08': 111, 'cmu.80_10': 194}
+                       'cmu.79_08': 111, 'cmu.80_10': 194, 'cmu.69_16': 282,
+                       'cmu.16_17': 130, 'cmu.16_33': 72, 'cmu.22_14': 177,
+                       'cmu.144_05': 697, 'cmu.144_07': 612, 'cmu.144_26': 837,
+                       'cmu.76_11': 129, 'cmu.76_01': 233}
         for entry in cmu:
             self.assertEqual(entry['source_fps'], 30.)
             self.assertEqual(entry['key_timebase_fps'], 30.)
@@ -294,7 +301,7 @@ class MotionCatalogTests(unittest.TestCase):
 
     def test_cmu_sampler_scope_keeps_contact_and_floor_quality_separate(self):
         for entry in self.catalog['entries']:
-            if entry['provider'] != 'cmu_fbx':
+            if entry['motion_id'] not in ('cmu.02_01','cmu.07_01','cmu.02_03','cmu.79_08','cmu.80_10'):
                 continue
             self.assertTrue(entry['execution']['available'])
             self.assertEqual(set(entry['execution']['target_profiles']), {'beta', 'quaternius_mannequin_f'})
@@ -310,6 +317,97 @@ class MotionCatalogTests(unittest.TestCase):
             self.assertEqual(set(scope['measurements']), {'beta', 'quaternius_mannequin_f'})
             self.assertIsNone(entry['support_metadata'])
             self.assertIsNone(entry['recovery_metadata'])
+
+
+    def test_new_cmu_source_discovery_needs_actual_adapter_measurements(self):
+        discovered = {entry['motion_id']: entry for entry in motion._cmu_entries({})}
+        selected = {'cmu.'+identifier for identifier in ('69_16','16_17','16_33','22_14',
+                    '144_05','144_07','144_26','76_11','76_01')}
+        for identifier in selected:
+            candidate = discovered[identifier]
+            self.assertEqual(candidate['entry_kind'], 'motion_file_candidate')
+            self.assertFalse(candidate['execution']['available'])
+            self.assertEqual(candidate['source_sampling_status'], 'adapter_not_validated')
+            self.assertIsNone(candidate['support_metadata'])
+            self.assertIsNone(candidate['recovery_metadata'])
+        self.assertNotIn('cmu.76_04', discovered)
+        for identifier in ('cmu.144_05','cmu.144_07','cmu.144_26'):
+            self.assertIsNone(discovered[identifier]['suggested_source_window_seconds'])
+            self.assertEqual(discovered[identifier]['semantic_annotations']['single_action_window_status'],
+                             'not_selected_from_long_source')
+        for query, identifier in (('原地转身','cmu.69_16'),('走路左转','cmu.16_17'),('转弯','cmu.16_17'),('stop','cmu.16_33'),
+                                  ('停步','cmu.16_33'),('下蹲起立','cmu.22_14'),
+                                  ('前踢','cmu.144_05'),('左侧格挡','cmu.144_07'),
+                                  ('右侧格挡','cmu.144_26'),('大步后撤','cmu.76_11'),
+                                  ('撤步出拳','cmu.76_01')):
+            self.assertIn(identifier, {entry['motion_id'] for entry in
+                motion.search_motions(query, limit=100, catalog=self.catalog)['candidates']})
+
+    def test_cmu_source_heading_and_long_performances_do_not_become_fixed_single_actions(self):
+        sources = {entry['motion_id']:entry for entry in self.catalog['entries']}
+        for identifier in ('cmu.22_14','cmu.76_11','cmu.76_01'):
+            observation = sources[identifier]['source_motion_metadata']
+            self.assertEqual(observation['initial_facing'], 'near_negative_x')
+            self.assertLess(observation['first_motion_forward_xy'][0], -.9)
+        for identifier in ('cmu.16_17','cmu.16_33','cmu.69_16'):
+            observation = sources[identifier]['source_motion_metadata']
+            self.assertEqual(observation['initial_facing'], 'near_negative_y')
+            self.assertLess(observation['first_motion_forward_xy'][1], -.9)
+        self.assertGreater(sources['cmu.69_16']['source_motion_metadata']['unwrapped_heading_change_degrees'], 300)
+        squat = sources['cmu.22_14']['source_motion_metadata']['source_hip_start_min_end_cm']
+        self.assertLess(squat[1], squat[0] - 50)
+        self.assertLess(abs(squat[2] - squat[0]), .2)
+        for identifier in ('cmu.144_05','cmu.144_07','cmu.144_26'):
+            source = sources[identifier]
+            candidate = source['suggested_source_window_seconds']
+            self.assertGreater(candidate[0], source['valid_motion_window_seconds'][0])
+            self.assertLess(candidate[1] - candidate[0], 2.)
+            self.assertEqual(source['semantic_annotations']['single_action_window_status'],
+                             'representative_keyframe_candidate_not_full_recovery_validated')
+            self.assertFalse(source['naturalness_verified'])
+
+
+    def test_extra_cmu_adapter_scope_does_not_claim_full_frame_support_or_recovery(self):
+        selected = {'cmu.'+identifier for identifier in ('69_16','16_17','16_33','22_14',
+                    '144_05','144_07','144_26','76_11','76_01')}
+        visual = {'cmu.16_17','cmu.16_33','cmu.22_14','cmu.144_05','cmu.144_07','cmu.144_26'}
+        for entry in self.catalog['entries']:
+            if entry['motion_id'] not in selected:
+                continue
+            scope = entry['validation_scope']
+            self.assertTrue(entry['execution']['available'])
+            self.assertEqual(set(entry['execution']['target_profiles']), {'beta','quaternius_mannequin_f'})
+            self.assertFalse(scope['sampling']['full_frame_quality_review'])
+            self.assertFalse(scope['foot_support_validated'])
+            self.assertFalse(scope['hand_shape_validated'])
+            self.assertFalse(scope['contact_validated'])
+            self.assertFalse(scope['recovery_validated'])
+            self.assertFalse(scope['naturalness_verified'])
+            self.assertEqual(scope['timeline_saved_reload_validated'], entry['motion_id'] in visual)
+            if entry['motion_id'].startswith('cmu.144_'):
+                self.assertEqual(scope['sampling']['method'],
+                                 'eight_selected_source_times_including_candidate_window_and_full_source_quartiles')
+                self.assertTrue(all(row['sample_count'] == 8 for row in scope['measurements'].values()))
+            else:
+                self.assertEqual(scope['sampling']['stride_source_frames'], 3)
+            self.assertIn(entry['motion_id'], {item['motion_id'] for item in
+                motion.search_motions(entry['motion_id'], usable_only=True, catalog=self.catalog)['candidates']})
+        squat = next(entry for entry in self.catalog['entries'] if entry['motion_id'] == 'cmu.22_14')
+        self.assertEqual(squat['semantic_annotations']['observed_motion'], 'two_very_deep_squat_cycles')
+        self.assertFalse(squat['semantic_annotations']['shallow_squat_validated'])
+        self.assertLess(squat['validation_scope']['measurements']['quaternius_mannequin_f']['sampled_skin_floor_range_m'][0], -.058)
+
+    def test_refresh_keeps_preview_candidates_without_replacing_full_calibrated_default(self):
+        old = {entry['motion_id']:entry for entry in self.catalog['entries']}
+        refreshed = {entry['motion_id']:entry for entry in motion.build_catalog()['entries']}
+        expected = {'cmu.144_05':[4.1,5.6], 'cmu.144_07':[.6,2.], 'cmu.144_26':[61/30,103/30]}
+        for identifier, window in expected.items():
+            source = refreshed[identifier]
+            self.assertEqual(source['suggested_source_window_seconds'], window)
+            self.assertEqual(source['valid_motion_window_seconds'], [1/30,source['duration_s']])
+            self.assertEqual(source['validation_scope'], old[identifier]['validation_scope'])
+            self.assertEqual(source['semantic_annotations'], old[identifier]['semantic_annotations'])
+            self.assertFalse(source['validation_scope']['recovery_validated'])
 
     def test_cmu_labels_are_discoverable_without_claiming_contact_or_compatibility(self):
         for query, expected in (('普通走路', {'cmu.02_01', 'cmu.07_01'}),

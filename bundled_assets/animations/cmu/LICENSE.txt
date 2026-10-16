@@ -1,6 +1,6 @@
 CMU motion-capture data — redistribution terms (not CC0)
 
-These five FBX motion files contain human motion-capture data originally
+These bundled FBX motion files contain human motion-capture data originally
 created by the Carnegie Mellon University Graphics Lab. The database received
 funding from NSF grant EIA-0196217. cgspeed supplied a BVH conversion; RancidMilk
 converted those animations to FBX. This project obtained the bones-only files
@@ -19,9 +19,11 @@ along. Keep this notice with these files when redistributing them.
 This is a summary of the source terms, not a CC0 dedication or a new license.
 The source permissions and restriction apply to the motion files listed below.
 RancidMilk's separate GPLv3 converter scripts are not included in this bundle.
-No character mesh is present in these five bones-only FBX files.
+No character mesh is present in these bundled bones-only FBX files.
 
-Files covered: 02_01.fbx, 07_01.fbx, 02_03.fbx, 79_08.fbx, 80_10.fbx.
+Files covered: 02_01.fbx, 07_01.fbx, 02_03.fbx, 79_08.fbx, 80_10.fbx,
+69_16.fbx, 16_17.fbx, 16_33.fbx, 22_14.fbx, 144_05.fbx, 144_07.fbx,
+144_26.fbx, 76_11.fbx, 76_01.fbx.
 
 Original data and terms: https://mocap.cs.cmu.edu/
 BVH conversion source: https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture

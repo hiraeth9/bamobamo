@@ -7,7 +7,7 @@
   "entry_counts": {
     "character_asset": 2,
     "collection_candidate": 8,
-    "motion": 76,
+    "motion": 85,
     "motion_file_candidate": 80
   },
   "legacy_main_motion_count": 66,
@@ -22,9 +22,18 @@
     "cmu.07_01",
     "cmu.02_03",
     "cmu.79_08",
-    "cmu.80_10"
+    "cmu.80_10",
+    "cmu.69_16",
+    "cmu.16_17",
+    "cmu.16_33",
+    "cmu.22_14",
+    "cmu.144_05",
+    "cmu.144_07",
+    "cmu.144_26",
+    "cmu.76_11",
+    "cmu.76_01"
   ],
-  "unique_asset_file_count": 161,
+  "unique_asset_file_count": 170,
   "staging_file_count": 92,
   "staging_fbx_count": 87,
   "staging_glb_count": 5,
@@ -11012,6 +11021,2654 @@
                 0.9913378406188527
               ]
             }
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.69_16",
+      "name": "CMU 69_16 turn in place",
+      "asset": "bundled_assets/animations/cmu/69_16.fbx",
+      "asset_sha256": "074d281aba1861a63860c304d52136391bbfe27de632e29d079dc2496b575da3",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "原地整转（源肩线累计转向约331°，整段不是单次90°转身）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "原地转身",
+        "转身",
+        "原地转圈",
+        "turn in place",
+        "cmu.69_16",
+        "69_16"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        282.0
+      ],
+      "source_action": "69_16|69_16|69_16",
+      "duration_s": 9.366666666666667,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "turn in place",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_sparse_measurements_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.01228441019573872,
+            "end_displacement_m": [
+              0.09019576013088226,
+              -0.24567225575447083,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.02475881576538086,
+            "pelvis_height_range_m": [
+              1.0209256410598755,
+              1.0456844568252563
+            ],
+            "extraction_equivalence_max_error_m": 3.5762786865234375e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010799456289076042,
+            "end_displacement_m": [
+              0.07929280400276184,
+              -0.21597512066364288,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.02176588773727417,
+            "pelvis_height_range_m": [
+              0.8975149393081665,
+              0.9192808270454407
+            ],
+            "extraction_equivalence_max_error_m": 2.7314279645418166e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        9.366666666666667
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        9.366666666666667
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.69_16",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/69_16.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          282
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          0.2698317766189575,
+          -0.9629075527191162
+        ],
+        "last_motion_forward_xy": [
+          -0.23363514244556427,
+          -0.9723243713378906
+        ],
+        "initial_facing": "near_negative_y",
+        "unwrapped_heading_change_degrees": 330.8345620029998,
+        "heading_range_degrees": 348.17625676686146,
+        "source_root_displacement_cm": [
+          7.3371357917785645,
+          -20.000595092773438,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          83.04660034179688,
+          85.15229797363281
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          9.42919586870428,
+          0.8257756343325392
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            9.366666666666667
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric source-time samples only; no timeline reload or visual naturalness acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "every_third_motion_source_frame_plus_source_end",
+          "stride_source_frames": 3,
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": false,
+        "timeline_reload_source_window": null,
+        "reviewed_timeline_keyframe_count": 0,
+        "visual_status": "numeric_samples_only",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 95,
+            "first_forward_xy": [
+              0.269599586725235,
+              -0.9629725217819214
+            ],
+            "last_forward_xy": [
+              -0.23350486159324646,
+              -0.9723556637763977
+            ],
+            "heading_change_deg": 330.85605332656434,
+            "root_motion_start_to_end_m": [
+              0.09019576013088226,
+              -0.24567225575447083,
+              0.0
+            ],
+            "hip_z_range_m": [
+              1.0209256410598755,
+              1.0456844568252563
+            ],
+            "minimum_knee_degrees": 126.8555598318944,
+            "first_mean_root_speed_m_s": 0.1698378378583039,
+            "last_mean_root_speed_m_s": 0.009983292727292608,
+            "sampled_skin_floor_range_m": [
+              -0.020343152806162834,
+              0.01687770150601864
+            ],
+            "extraction_error_m": 3.5762786865234375e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 95,
+            "first_forward_xy": [
+              0.2695997357368469,
+              -0.9629724621772766
+            ],
+            "last_forward_xy": [
+              -0.23350489139556885,
+              -0.9723556041717529
+            ],
+            "heading_change_deg": 330.8560417264661,
+            "root_motion_start_to_end_m": [
+              0.07929280400276184,
+              -0.21597512066364288,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.8975149393081665,
+              0.9192808270454407
+            ],
+            "minimum_knee_degrees": 127.0281177310856,
+            "first_mean_root_speed_m_s": 0.1493076314484996,
+            "last_mean_root_speed_m_s": 0.008776441964088914,
+            "sampled_skin_floor_range_m": [
+              -0.019380871206521988,
+              0.014195449650287628
+            ],
+            "extraction_error_m": 2.7314279645418166e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.16_17",
+      "name": "CMU 16_17 walk, 90-degree left turn",
+      "asset": "bundled_assets/animations/cmu/16_17.fbx",
+      "asset_sha256": "d1ff08029084cd386c71e8f304fceb3005f6a8ce1d5c415e8771d107a89237c1",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "行走左转（原标签90°，源肩线实测约99°转向）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "走路转弯",
+        "走路左转",
+        "左转",
+        "左转弯",
+        "行走转弯",
+        "turn left",
+        "转弯",
+        "turn",
+        "cmu.16_17",
+        "16_17"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        130.0
+      ],
+      "source_action": "16_17|16_17|16_17",
+      "duration_s": 4.3,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "walk, 90-degree left turn",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "representative_keyframes_reviewed",
+      "quality_status": "sampler_verified_representative_keyframes_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012265985699945659,
+            "end_displacement_m": [
+              1.7614446878433228,
+              -2.98356294631958,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.03615272045135498,
+            "pelvis_height_range_m": [
+              1.029064416885376,
+              1.065217137336731
+            ],
+            "extraction_equivalence_max_error_m": 1.4317526995497124e-06
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010783258967935265,
+            "end_displacement_m": [
+              1.548518419265747,
+              -2.622906446456909,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.031782448291778564,
+            "pelvis_height_range_m": [
+              0.9046699404716492,
+              0.9364523887634277
+            ],
+            "extraction_equivalence_max_error_m": 8.920806376395086e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        4.3
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        4.3
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.16_17",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/16_17.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          130
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.12558844685554504,
+          -0.9920824766159058
+        ],
+        "last_motion_forward_xy": [
+          0.9994367361068726,
+          0.03355897590517998
+        ],
+        "initial_facing": "near_negative_y",
+        "unwrapped_heading_change_degrees": 99.13788752907172,
+        "heading_range_degrees": 111.60079994510839,
+        "source_root_displacement_cm": [
+          143.6123046875,
+          -243.23382568359375,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          83.88607788085938,
+          87.12596893310547
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          117.64722408293309,
+          89.70492200077781
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            4.3
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Three representative timeline frames and independent reload; not continuous motion, support, contact or recovery acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "every_third_motion_source_frame_plus_source_end",
+          "stride_source_frames": 3,
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "timeline_reload_source_window": [
+          0.03333333333333333,
+          4.3
+        ],
+        "reviewed_timeline_keyframe_count": 3,
+        "visual_status": "representative_keyframes_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 44,
+            "first_forward_xy": [
+              -0.12557390332221985,
+              -0.9920843243598938
+            ],
+            "last_forward_xy": [
+              0.9994363188743591,
+              0.03357277065515518
+            ],
+            "heading_change_deg": 99.13783828580793,
+            "root_motion_start_to_end_m": [
+              1.7614446878433228,
+              -2.98356294631958,
+              0.0
+            ],
+            "hip_z_range_m": [
+              1.029064416885376,
+              1.065217137336731
+            ],
+            "minimum_knee_degrees": 105.09228902286182,
+            "first_mean_root_speed_m_s": 1.3603953473433086,
+            "last_mean_root_speed_m_s": 1.1662895099637938,
+            "sampled_skin_floor_range_m": [
+              0.030920786783099174,
+              0.053354207426309586
+            ],
+            "extraction_error_m": 1.4317526995497124e-06
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 44,
+            "first_forward_xy": [
+              -0.12557387351989746,
+              -0.992084264755249
+            ],
+            "last_forward_xy": [
+              0.9994362592697144,
+              0.03357265144586563
+            ],
+            "heading_change_deg": 99.13783030893904,
+            "root_motion_start_to_end_m": [
+              1.548518419265747,
+              -2.622906446456909,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9046699404716492,
+              0.9364523887634277
+            ],
+            "minimum_knee_degrees": 105.26473080883713,
+            "first_mean_root_speed_m_s": 1.1959492154818967,
+            "last_mean_root_speed_m_s": 1.0253073223159985,
+            "sampled_skin_floor_range_m": [
+              0.015616074204444885,
+              0.04242704436182976
+            ],
+            "extraction_error_m": 8.920806376395086e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.16_33",
+      "name": "CMU 16_33 slow walk, stop",
+      "asset": "bundled_assets/animations/cmu/16_33.fbx",
+      "asset_sha256": "1ae8877eee28b582c9025960549706e1395967642680aa62587130fe43cac3ab",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "行走后停止（原标签慢走，源根末段明显减速）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "走路停止",
+        "走后停下",
+        "停步",
+        "停止",
+        "停下",
+        "walk stop",
+        "stop",
+        "cmu.16_33",
+        "16_33"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        72.0
+      ],
+      "source_action": "16_33|16_33|16_33",
+      "duration_s": 2.3666666666666667,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "slow walk, stop",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "representative_keyframes_reviewed",
+      "quality_status": "sampler_verified_representative_keyframes_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012265984599128248,
+            "end_displacement_m": [
+              -0.09612898528575897,
+              -1.9876863956451416,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.03426170349121094,
+            "pelvis_height_range_m": [
+              1.0302374362945557,
+              1.0644991397857666
+            ],
+            "extraction_equivalence_max_error_m": 7.177349673981843e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010783258000185952,
+            "end_displacement_m": [
+              -0.08450879156589508,
+              -1.7474125623703003,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.030120134353637695,
+            "pelvis_height_range_m": [
+              0.9057011008262634,
+              0.9358212351799011
+            ],
+            "extraction_equivalence_max_error_m": 5.462855929083633e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        2.3666666666666667
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        2.3666666666666667
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.16_33",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/16_33.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          72
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.06629836559295654,
+          -0.9977998733520508
+        ],
+        "last_motion_forward_xy": [
+          -0.075585275888443,
+          -0.9971393346786499
+        ],
+        "initial_facing": "near_negative_y",
+        "unwrapped_heading_change_degrees": -0.533446902925282,
+        "heading_range_degrees": 13.191768521133184,
+        "source_root_displacement_cm": [
+          -7.831590175628662,
+          -162.04893493652344,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          83.82869720458984,
+          86.87464904785156
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          139.3376565255359,
+          3.265533322765653
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            2.3666666666666667
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Three representative timeline frames and independent reload; not continuous motion, support, contact or recovery acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "every_third_motion_source_frame_plus_source_end",
+          "stride_source_frames": 3,
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "timeline_reload_source_window": [
+          0.03333333333333333,
+          2.3666666666666667
+        ],
+        "reviewed_timeline_keyframe_count": 3,
+        "visual_status": "representative_keyframes_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 25,
+            "first_forward_xy": [
+              -0.06626922637224197,
+              -0.9978017210960388
+            ],
+            "last_forward_xy": [
+              -0.07561630010604858,
+              -0.9971370100975037
+            ],
+            "heading_change_deg": -0.5369023417914685,
+            "root_motion_start_to_end_m": [
+              -0.09612898528575897,
+              -1.9876863956451416,
+              0.0
+            ],
+            "hip_z_range_m": [
+              1.0302374362945557,
+              1.0644991397857666
+            ],
+            "minimum_knee_degrees": 102.36726211008018,
+            "first_mean_root_speed_m_s": 1.5805742846383026,
+            "last_mean_root_speed_m_s": 0.05523581833777912,
+            "sampled_skin_floor_range_m": [
+              0.03481055051088333,
+              0.042025018483400345
+            ],
+            "extraction_error_m": 7.177349673981843e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 25,
+            "first_forward_xy": [
+              -0.06626921892166138,
+              -0.9978017210960388
+            ],
+            "last_forward_xy": [
+              -0.07561635226011276,
+              -0.9971369504928589
+            ],
+            "heading_change_deg": -0.5369060056293458,
+            "root_motion_start_to_end_m": [
+              -0.08450879156589508,
+              -1.7474125623703003,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9057011008262634,
+              0.9358212351799011
+            ],
+            "minimum_knee_degrees": 102.53971072624465,
+            "first_mean_root_speed_m_s": 1.3895125024238564,
+            "last_mean_root_speed_m_s": 0.048558330760234164,
+            "sampled_skin_floor_range_m": [
+              0.026168696582317352,
+              0.039085038006305695
+            ],
+            "extraction_error_m": 5.462855929083633e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.22_14",
+      "name": "CMU 22_14 alternating squats (2 subjects - subject A)",
+      "asset": "bundled_assets/animations/cmu/22_14.fbx",
+      "asset_sha256": "d04a9764bbf6a2f636088c4f2dc236084d0a38b77ecd80cdda19e4434ccc8c00",
+      "provider": "cmu_fbx",
+      "category": "recovery",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "两次极深蹲起（人物A单人轨迹，低点约1.8/4.13秒，骨盆末尾恢复到起始高度）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "下蹲",
+        "蹲下",
+        "深蹲",
+        "蹲起",
+        "下蹲起立",
+        "起立",
+        "站起",
+        "squat",
+        "cmu.22_14",
+        "22_14"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        177.0
+      ],
+      "source_action": "22_14|22_14|22_14",
+      "duration_s": 5.866666666666666,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "alternating squats (2 subjects - subject A)",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review",
+        "observed_motion": "two_very_deep_squat_cycles",
+        "cycle_low_points_seconds": [
+          1.8,
+          4.13
+        ],
+        "single_squat_window_status": "not_selected",
+        "shallow_squat_validated": false
+      },
+      "style_hints": [
+        "recovery"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "representative_keyframes_reviewed",
+      "quality_status": "sampler_verified_representative_keyframes_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012332908679010058,
+            "end_displacement_m": [
+              -0.03326234966516495,
+              0.0004608333110809326,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.7730969190597534,
+            "pelvis_height_range_m": [
+              0.2699822187423706,
+              1.043079137802124
+            ],
+            "extraction_equivalence_max_error_m": 2.666641796853137e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.01084209221883008,
+            "end_displacement_m": [
+              -0.029241561889648438,
+              0.0004051215946674347,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.6796441078186035,
+            "pelvis_height_range_m": [
+              0.237346351146698,
+              0.9169904589653015
+            ],
+            "extraction_equivalence_max_error_m": 2.4755668231600746e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        5.866666666666666
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        5.866666666666666
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.22_14",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/22_14.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          177
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.945344865322113,
+          -0.32607248425483704
+        ],
+        "last_motion_forward_xy": [
+          -0.9385251402854919,
+          -0.34521105885505676
+        ],
+        "initial_facing": "near_negative_x",
+        "unwrapped_heading_change_degrees": 1.1641169000986231,
+        "heading_range_degrees": 15.751375300035289,
+        "source_root_displacement_cm": [
+          -2.697002410888672,
+          0.0399932861328125,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          21.891204833984375,
+          84.57689666748047
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          0.29607623734904526,
+          8.699246070190311
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements",
+        "source_hip_start_min_end_cm": [
+          83.25621795654297,
+          21.891204833984375,
+          83.3351058959961
+        ]
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            5.866666666666666
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Three representative timeline frames and independent reload; not continuous motion, support, contact or recovery acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "every_third_motion_source_frame_plus_source_end",
+          "stride_source_frames": 3,
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "timeline_reload_source_window": [
+          0.03333333333333333,
+          5.866666666666666
+        ],
+        "reviewed_timeline_keyframe_count": 3,
+        "visual_status": "representative_keyframes_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 60,
+            "first_forward_xy": [
+              -0.945340096950531,
+              -0.326086163520813
+            ],
+            "last_forward_xy": [
+              -0.9384878873825073,
+              -0.34531205892562866
+            ],
+            "heading_change_deg": 1.1694548476725737,
+            "root_motion_start_to_end_m": [
+              -0.03326234966516495,
+              0.0004608333110809326,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.2699822187423706,
+              1.043079137802124
+            ],
+            "minimum_knee_degrees": 6.953332784993027,
+            "first_mean_root_speed_m_s": 0.0002562569954650826,
+            "last_mean_root_speed_m_s": 0.10633045672461966,
+            "sampled_skin_floor_range_m": [
+              -0.05731268599629402,
+              0.05703718960285187
+            ],
+            "extraction_error_m": 2.666641796853137e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 60,
+            "first_forward_xy": [
+              -0.9453402161598206,
+              -0.32608580589294434
+            ],
+            "last_forward_xy": [
+              -0.9384881258010864,
+              -0.34531161189079285
+            ],
+            "heading_change_deg": 1.1694476906760287,
+            "root_motion_start_to_end_m": [
+              -0.029241561889648438,
+              0.0004051215946674347,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.237346351146698,
+              0.9169904589653015
+            ],
+            "minimum_knee_degrees": 7.113560912071886,
+            "first_mean_root_speed_m_s": 0.00022527399705809053,
+            "last_mean_root_speed_m_s": 0.09347717239450763,
+            "sampled_skin_floor_range_m": [
+              -0.058503493666648865,
+              0.06973928213119507
+            ],
+            "extraction_error_m": 2.4755668231600746e-07
+          }
+        },
+        "additional_low_pose_preview": {
+          "source_time_seconds": 4.13,
+          "representative_keyframe_count": 1,
+          "saved_reload_validated": true,
+          "scope": "Deepest crouch reviewed in addition to the three ordinary timeline representatives; ground penetration remains unresolved"
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.144_05",
+      "name": "CMU 144_05 Front_Kicking",
+      "asset": "bundled_assets/animations/cmu/144_05.fbx",
+      "asset_sha256": "c4ad489012e6f4b30fd07a3fa0e7f402ab5d8f02d464809958b9f4099f903dc9",
+      "provider": "cmu_fbx",
+      "category": "unarmed",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "前踢长段（23.2秒，具体单次踢击的准备/执行/恢复窗待选）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "前踢",
+        "正踢",
+        "踢腿",
+        "踢击",
+        "front kick",
+        "kick",
+        "cmu.144_05",
+        "144_05"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        697.0
+      ],
+      "source_action": "144_05|144_05|144_05",
+      "duration_s": 23.2,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "Front_Kicking",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review",
+        "single_action_window_status": "representative_keyframe_candidate_not_full_recovery_validated",
+        "candidate_single_action_windows": [
+          {
+            "source_window_seconds": [
+              4.1,
+              5.6
+            ],
+            "peak_seconds": 4.833333333333333,
+            "motion_label": "right_front_kick",
+            "primary_side": "right",
+            "review_scope": "Three representative poses; no target/opponent contact or stable-support acceptance"
+          }
+        ]
+      },
+      "style_hints": [
+        "unarmed"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "representative_keyframes_reviewed",
+      "quality_status": "sampler_verified_representative_keyframes_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012296086385317298,
+            "end_displacement_m": [
+              -0.02124636620283127,
+              -0.14001548290252686,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.13436096906661987,
+            "pelvis_height_range_m": [
+              0.9689915776252747,
+              1.1033525466918945
+            ],
+            "extraction_equivalence_max_error_m": 2.7314279645418166e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010809721047169235,
+            "end_displacement_m": [
+              -0.018678080290555954,
+              -0.12309025973081589,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.1181192398071289,
+            "pelvis_height_range_m": [
+              0.8518587350845337,
+              0.9699779748916626
+            ],
+            "extraction_equivalence_max_error_m": 2.8115454709698567e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_candidate_window",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        23.2
+      ],
+      "suggested_source_window_seconds": [
+        4.1,
+        5.6
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.144_05",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/144_05.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          697
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.45274224877357483,
+          -0.8916414976119995
+        ],
+        "last_motion_forward_xy": [
+          -0.4363783597946167,
+          -0.899763286113739
+        ],
+        "initial_facing": "diagonal_toward_negative_y",
+        "unwrapped_heading_change_degrees": 1.0467259445689792,
+        "heading_range_degrees": 93.07411344647588,
+        "source_root_displacement_cm": [
+          -1.7325496673583984,
+          -11.3862886428833,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          74.9830551147461,
+          93.3366470336914
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          4.427034757680832,
+          5.853420131719197
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "source_window_notes": "Optional candidate reviewed at preparation/peak/retraction representative frames only. Full calibrated source remains the default; stable end support, complete recovery, contact and temporal naturalness are unaccepted.",
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            4.1,
+            5.6
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Three representative timeline frames and independent reload; not continuous motion, support, contact or recovery acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "eight_selected_source_times_including_candidate_window_and_full_source_quartiles",
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "timeline_reload_source_window": [
+          4.1,
+          5.6
+        ],
+        "reviewed_timeline_keyframe_count": 3,
+        "visual_status": "representative_keyframes_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 8,
+            "first_forward_xy": [
+              -0.45172011852264404,
+              -0.8921597003936768
+            ],
+            "last_forward_xy": [
+              -0.4347527027130127,
+              -0.9005498886108398
+            ],
+            "heading_change_deg": 1.084539873373788,
+            "root_motion_start_to_end_m": [
+              -0.02124636620283127,
+              -0.14001548290252686,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9689915776252747,
+              1.1033525466918945
+            ],
+            "minimum_knee_degrees": 45.499697891917215,
+            "first_mean_root_speed_m_s": 0.48814752089280183,
+            "last_mean_root_speed_m_s": 0.06789933636106833,
+            "sampled_skin_floor_range_m": [
+              0.03393254056572914,
+              0.07479169964790344
+            ],
+            "extraction_error_m": 2.7314279645418166e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 8,
+            "first_forward_xy": [
+              -0.45172005891799927,
+              -0.8921597599983215
+            ],
+            "last_forward_xy": [
+              -0.4347527027130127,
+              -0.9005498886108398
+            ],
+            "heading_change_deg": 1.0845352838972004,
+            "root_motion_start_to_end_m": [
+              -0.018678080290555954,
+              -0.12309025973081589,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.8518587350845337,
+              0.9699779748916626
+            ],
+            "minimum_knee_degrees": 45.67248118735103,
+            "first_mean_root_speed_m_s": 0.4291397127348438,
+            "last_mean_root_speed_m_s": 0.05969158601364446,
+            "sampled_skin_floor_range_m": [
+              0.018583931028842926,
+              0.07095120847225189
+            ],
+            "extraction_error_m": 2.8115454709698567e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.144_07",
+      "name": "CMU 144_07 Left_Blocks",
+      "asset": "bundled_assets/animations/cmu/144_07.fbx",
+      "asset_sha256": "89890f97c2b6c6e1b31881f3a4c335c04e1247c0e7fcfcb45f0a44b5663a487c",
+      "provider": "cmu_fbx",
+      "category": "unarmed",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "左格挡长段（20.37秒，具体单次格挡窗口待核查）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "左格挡",
+        "左侧格挡",
+        "左侧防守",
+        "格挡",
+        "left block",
+        "格挡防守",
+        "block",
+        "left blocks",
+        "cmu.144_07",
+        "144_07"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        612.0
+      ],
+      "source_action": "144_07|144_07|144_07",
+      "duration_s": 20.366666666666667,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "Left_Blocks",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review",
+        "single_action_window_status": "representative_keyframe_candidate_not_full_recovery_validated",
+        "candidate_single_action_windows": [
+          {
+            "source_window_seconds": [
+              0.6,
+              2.0
+            ],
+            "peak_seconds": 1.3,
+            "motion_label": "left_high_block",
+            "primary_side": "left",
+            "review_scope": "Three representative poses; no target/opponent contact or stable-support acceptance"
+          }
+        ]
+      },
+      "style_hints": [
+        "unarmed"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "representative_keyframes_reviewed",
+      "quality_status": "sampler_verified_representative_keyframes_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012296085279090454,
+            "end_displacement_m": [
+              -0.051953576505184174,
+              0.002468765713274479,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.0875508189201355,
+            "pelvis_height_range_m": [
+              0.9317318797111511,
+              1.0192826986312866
+            ],
+            "extraction_equivalence_max_error_m": 3.816559456248789e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.01080972007466439,
+            "end_displacement_m": [
+              -0.04567336663603783,
+              0.0021703382954001427,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.07696747779846191,
+            "pelvis_height_range_m": [
+              0.8191030025482178,
+              0.8960704803466797
+            ],
+            "extraction_equivalence_max_error_m": 1.3657139822709083e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_candidate_window",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        20.366666666666667
+      ],
+      "suggested_source_window_seconds": [
+        0.6,
+        2.0
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.144_07",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/144_07.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          612
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.2272966355085373,
+          -0.9738255143165588
+        ],
+        "last_motion_forward_xy": [
+          -0.4255146384239197,
+          -0.9049515128135681
+        ],
+        "initial_facing": "near_negative_y",
+        "unwrapped_heading_change_degrees": -12.045277233599622,
+        "heading_range_degrees": 62.31626244291264,
+        "source_root_displacement_cm": [
+          -4.225130081176758,
+          0.20250320434570312,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          75.51979064941406,
+          83.093505859375
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          2.2479502258988244,
+          18.951433027471563
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "source_window_notes": "Optional candidate reviewed at preparation/peak/retraction representative frames only. Full calibrated source remains the default; stable end support, complete recovery, contact and temporal naturalness are unaccepted.",
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.6,
+            2.0
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Three representative timeline frames and independent reload; not continuous motion, support, contact or recovery acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "eight_selected_source_times_including_candidate_window_and_full_source_quartiles",
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "timeline_reload_source_window": [
+          0.6,
+          2.0
+        ],
+        "reviewed_timeline_keyframe_count": 3,
+        "visual_status": "representative_keyframes_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 8,
+            "first_forward_xy": [
+              -0.22577932476997375,
+              -0.9741784334182739
+            ],
+            "last_forward_xy": [
+              -0.42439141869544983,
+              -0.905478835105896
+            ],
+            "heading_change_deg": -12.06343832887394,
+            "root_motion_start_to_end_m": [
+              -0.051953576505184174,
+              0.002468765713274479,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9317318797111511,
+              1.0192826986312866
+            ],
+            "minimum_knee_degrees": 125.63757317834104,
+            "first_mean_root_speed_m_s": 0.3442109154854937,
+            "last_mean_root_speed_m_s": 0.0362336405482434,
+            "sampled_skin_floor_range_m": [
+              0.0012058247812092304,
+              0.009337753057479858
+            ],
+            "extraction_error_m": 3.816559456248789e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 8,
+            "first_forward_xy": [
+              -0.22577930986881256,
+              -0.9741784930229187
+            ],
+            "last_forward_xy": [
+              -0.4243914783000946,
+              -0.9054787158966064
+            ],
+            "heading_change_deg": -12.063445922629644,
+            "root_motion_start_to_end_m": [
+              -0.04567336663603783,
+              0.0021703382954001427,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.8191030025482178,
+              0.8960704803466797
+            ],
+            "minimum_knee_degrees": 125.81253530412009,
+            "first_mean_root_speed_m_s": 0.3026023105159923,
+            "last_mean_root_speed_m_s": 0.031853680957329246,
+            "sampled_skin_floor_range_m": [
+              -0.028796352446079254,
+              -0.0025447700172662735
+            ],
+            "extraction_error_m": 1.3657139822709083e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.144_26",
+      "name": "CMU 144_26 Right_Blocks",
+      "asset": "bundled_assets/animations/cmu/144_26.fbx",
+      "asset_sha256": "7c8a2c031cb3baff5858cfbff81df223ddab24fb5abfa2db2c440c2c19ce4a14",
+      "provider": "cmu_fbx",
+      "category": "unarmed",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "右格挡长段（27.87秒，具体单次格挡窗口待核查）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "右格挡",
+        "右侧格挡",
+        "右侧防守",
+        "格挡",
+        "right block",
+        "格挡防守",
+        "block",
+        "right blocks",
+        "cmu.144_26",
+        "144_26"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        837.0
+      ],
+      "source_action": "144_26|144_26|144_26",
+      "duration_s": 27.866666666666667,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "Right_Blocks",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review",
+        "single_action_window_status": "representative_keyframe_candidate_not_full_recovery_validated",
+        "candidate_single_action_windows": [
+          {
+            "source_window_seconds": [
+              2.033333333333333,
+              3.433333333333333
+            ],
+            "peak_seconds": 2.7333333333333334,
+            "motion_label": "right_high_block",
+            "primary_side": "right",
+            "review_scope": "Three representative poses; no target/opponent contact or stable-support acceptance"
+          }
+        ]
+      },
+      "style_hints": [
+        "unarmed"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "representative_keyframes_reviewed",
+      "quality_status": "sampler_verified_representative_keyframes_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012296086385317298,
+            "end_displacement_m": [
+              0.024003447964787483,
+              0.020377369597554207,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.06018328666687012,
+            "pelvis_height_range_m": [
+              0.9607878923416138,
+              1.0209711790084839
+            ],
+            "extraction_equivalence_max_error_m": 2.384185791015625e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010809721047169235,
+            "end_displacement_m": [
+              0.02110188454389572,
+              0.01791412942111492,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.052908241748809814,
+            "pelvis_height_range_m": [
+              0.844646692276001,
+              0.8975549340248108
+            ],
+            "extraction_equivalence_max_error_m": 2.4755668231600746e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_candidate_window",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        27.866666666666667
+      ],
+      "suggested_source_window_seconds": [
+        2.033333333333333,
+        3.433333333333333
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.144_26",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/144_26.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          837
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.13861548900604248,
+          -0.9903462529182434
+        ],
+        "last_motion_forward_xy": [
+          -0.2032500058412552,
+          -0.9791269302368164
+        ],
+        "initial_facing": "near_negative_y",
+        "unwrapped_heading_change_degrees": -3.7593358797683045,
+        "heading_range_degrees": 94.1479479045432,
+        "source_root_displacement_cm": [
+          1.9527983665466309,
+          1.6564254760742188,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          72.86528778076172,
+          84.16851806640625
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          2.445492177916022,
+          3.1167126661165936
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "source_window_notes": "Optional candidate reviewed at preparation/peak/retraction representative frames only. Full calibrated source remains the default; stable end support, complete recovery, contact and temporal naturalness are unaccepted.",
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            2.033333333333333,
+            3.433333333333333
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Three representative timeline frames and independent reload; not continuous motion, support, contact or recovery acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "eight_selected_source_times_including_candidate_window_and_full_source_quartiles",
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "timeline_reload_source_window": [
+          2.033333333333333,
+          3.433333333333333
+        ],
+        "reviewed_timeline_keyframe_count": 3,
+        "visual_status": "representative_keyframes_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 8,
+            "first_forward_xy": [
+              -0.13699069619178772,
+              -0.9905723333358765
+            ],
+            "last_forward_xy": [
+              -0.2012123018503189,
+              -0.9795477390289307
+            ],
+            "heading_change_deg": -3.734111128544281,
+            "root_motion_start_to_end_m": [
+              0.024003447964787483,
+              0.020377369597554207,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9607878923416138,
+              1.0209711790084839
+            ],
+            "minimum_knee_degrees": 126.99739554019888,
+            "first_mean_root_speed_m_s": 0.31749038348475267,
+            "last_mean_root_speed_m_s": 0.03067863327653768,
+            "sampled_skin_floor_range_m": [
+              -0.0041120462119579315,
+              0.00897123757749796
+            ],
+            "extraction_error_m": 2.384185791015625e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 8,
+            "first_forward_xy": [
+              -0.13699063658714294,
+              -0.9905722737312317
+            ],
+            "last_forward_xy": [
+              -0.2012123018503189,
+              -0.9795476198196411
+            ],
+            "heading_change_deg": -3.7341154179245426,
+            "root_motion_start_to_end_m": [
+              0.02110188454389572,
+              0.01791412942111492,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.844646692276001,
+              0.8975549340248108
+            ],
+            "minimum_knee_degrees": 127.16998076014677,
+            "first_mean_root_speed_m_s": 0.2791117683616039,
+            "last_mean_root_speed_m_s": 0.02697016698284722,
+            "sampled_skin_floor_range_m": [
+              -0.016108062118291855,
+              9.460700675845146e-05
+            ],
+            "extraction_error_m": 2.4755668231600746e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.76_11",
+      "name": "CMU 76_11 quick large steps backwards",
+      "asset": "bundled_assets/animations/cmu/76_11.fbx",
+      "asset_sha256": "b0c54dbe2cc29264738f01430a57ae0b7eebcf8f568f4d4f85804a8dd0579b74",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "大步后撤（源后移约237厘米，并伴随约55°转体）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "后退",
+        "后撤",
+        "大步后退",
+        "大步后撤",
+        "retreat",
+        "backward",
+        "backwards",
+        "cmu.76_11",
+        "76_11"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        129.0
+      ],
+      "source_action": "76_11|76_11|76_11",
+      "duration_s": 4.266666666666667,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "quick large steps backwards",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_sparse_measurements_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012178398317239986,
+            "end_displacement_m": [
+              2.8834025859832764,
+              -0.022388003766536713,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.08244705200195312,
+            "pelvis_height_range_m": [
+              0.9651879072189331,
+              1.0476349592208862
+            ],
+            "extraction_equivalence_max_error_m": 9.555351461101412e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.01070625925073821,
+            "end_displacement_m": [
+              2.53485369682312,
+              -0.019681714475154877,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.07248073816299438,
+            "pelvis_height_range_m": [
+              0.8485148549079895,
+              0.9209955930709839
+            ],
+            "extraction_equivalence_max_error_m": 7.152945413593644e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        4.266666666666667
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        4.266666666666667
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.76_11",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/76_11.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          129
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.9998660683631897,
+          0.01636400818824768
+        ],
+        "last_motion_forward_xy": [
+          -0.5646367073059082,
+          0.8253394961357117
+        ],
+        "initial_facing": "near_negative_x",
+        "unwrapped_heading_change_degrees": -54.68530003929079,
+        "heading_range_degrees": 85.06038897974723,
+        "source_root_displacement_cm": [
+          236.7689971923828,
+          -0.9318704605102539,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          78.2511978149414,
+          86.1001968383789
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          9.56505002042327,
+          1.6889838527470658
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            4.266666666666667
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric source-time samples only; no timeline reload or visual naturalness acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "every_third_motion_source_frame_plus_source_end",
+          "stride_source_frames": 3,
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": false,
+        "timeline_reload_source_window": null,
+        "reviewed_timeline_keyframe_count": 0,
+        "visual_status": "numeric_samples_only",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 44,
+            "first_forward_xy": [
+              -0.999610424041748,
+              0.02791086584329605
+            ],
+            "last_forward_xy": [
+              -0.556383490562439,
+              0.830925703048706
+            ],
+            "heading_change_deg": -54.594560516771516,
+            "root_motion_start_to_end_m": [
+              2.8834025859832764,
+              -0.022388003766536713,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9651879072189331,
+              1.0476349592208862
+            ],
+            "minimum_knee_degrees": 104.22640545121179,
+            "first_mean_root_speed_m_s": 0.10701325567430436,
+            "last_mean_root_speed_m_s": 0.012853072160905046,
+            "sampled_skin_floor_range_m": [
+              -0.0033683772198855877,
+              0.037604715675115585
+            ],
+            "extraction_error_m": 9.555351461101412e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 44,
+            "first_forward_xy": [
+              -0.999610424041748,
+              0.027910884469747543
+            ],
+            "last_forward_xy": [
+              -0.5563835501670837,
+              0.8309255838394165
+            ],
+            "heading_change_deg": -54.59455281207618,
+            "root_motion_start_to_end_m": [
+              2.53485369682312,
+              -0.019681714475154877,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.8485148549079895,
+              0.9209955930709839
+            ],
+            "minimum_knee_degrees": 104.40157248266594,
+            "first_mean_root_speed_m_s": 0.09407733796317196,
+            "last_mean_root_speed_m_s": 0.011299489800222268,
+            "sampled_skin_floor_range_m": [
+              -0.016250738874077797,
+              0.013831776566803455
+            ],
+            "extraction_error_m": 7.152945413593644e-07
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.76_01",
+      "name": "CMU 76_01 walk backwards then attack with a punch",
+      "asset": "bundled_assets/animations/cmu/76_01.fbx",
+      "asset_sha256": "3ecb94ae795e82bdcfdc055607d7170c277b0dcd256db37a988f97332b0ab705",
+      "provider": "cmu_fbx",
+      "category": "unarmed",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "后退接出拳组合（7.73秒，出拳时序及接触未标注）（真人动捕，Beta/CC0身体采样已验证；支撑、接触及动作自然度尚未验收）",
+      "aliases": [
+        "后退",
+        "后撤",
+        "后退接拳",
+        "后退后出拳",
+        "撤步出拳",
+        "backwards punch",
+        "cmu.76_01",
+        "76_01"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        233.0
+      ],
+      "source_action": "76_01|76_01|76_01",
+      "duration_s": 7.733333333333333,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "walk backwards then attack with a punch",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "unarmed"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_sparse_measurements_only",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "source_frame_2_to_source_end",
+        "extraction": "planar_only_vertical_pelvis_and_original_heading_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012178398317239986,
+            "end_displacement_m": [
+              0.8505260944366455,
+              0.08076615631580353,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.10317909717559814,
+            "pelvis_height_range_m": [
+              0.9304454326629639,
+              1.033624529838562
+            ],
+            "extraction_equivalence_max_error_m": 3.819467311494439e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.01070625925073821,
+            "end_displacement_m": [
+              0.7477134466171265,
+              0.07100287079811096,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.09070676565170288,
+            "pelvis_height_range_m": [
+              0.8179720640182495,
+              0.9086788296699524
+            ],
+            "extraction_equivalence_max_error_m": 3.3735995288695185e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        7.733333333333333
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        7.733333333333333
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.76_01",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original timing, source body transfer and existing skins verified on Beta/CC0 with bounded quality sampling. Foot support, hand shape, contact, recovery and naturalness remain unaccepted."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/76_01.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "source_motion_metadata": {
+        "basis": "actual_imported_source_bones_before_retargeting",
+        "motion_source_frames": [
+          2,
+          233
+        ],
+        "forward_basis": "left_minus_right_shoulder_cross_world_up_projected_to_xy",
+        "first_motion_forward_xy": [
+          -0.989885151386261,
+          -0.1418709009885788
+        ],
+        "last_motion_forward_xy": [
+          -0.9915130734443665,
+          0.13000720739364624
+        ],
+        "initial_facing": "near_negative_x",
+        "unwrapped_heading_change_degrees": -15.626130477901926,
+        "heading_range_degrees": 100.89208523830399,
+        "source_root_displacement_cm": [
+          69.81300354003906,
+          6.899250030517578,
+          0.0
+        ],
+        "source_hip_height_range_cm": [
+          76.40129852294922,
+          84.91490173339844
+        ],
+        "source_first_last_5_mean_root_speed_cm_s": [
+          19.650057502243843,
+          13.872347973902103
+        ],
+        "unit_scope": "Source skeleton centimeters; these are not target-profile world distances or support measurements"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            7.733333333333333
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric source-time samples only; no timeline reload or visual naturalness acceptance"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_core_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end; quality observations are sampled, not every frame",
+        "sampling": {
+          "method": "every_third_motion_source_frame_plus_source_end",
+          "stride_source_frames": 3,
+          "full_frame_quality_review": false
+        },
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": false,
+        "timeline_reload_source_window": null,
+        "reviewed_timeline_keyframe_count": 0,
+        "visual_status": "numeric_samples_only",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "hand_shape_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin at the stated sparse source times; positive values are clearance and negative values penetration. These are not foot-specific support intervals or a full-frame ground solve.",
+        "measurements": {
+          "beta": {
+            "sample_count": 79,
+            "first_forward_xy": [
+              -0.9911713004112244,
+              -0.13258716464042664
+            ],
+            "last_forward_xy": [
+              -0.9901350140571594,
+              0.14011646807193756
+            ],
+            "heading_change_deg": -15.673706657391064,
+            "root_motion_start_to_end_m": [
+              0.8505260944366455,
+              0.08076615631580353,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.9304454326629639,
+              1.033624529838562
+            ],
+            "minimum_knee_degrees": 120.08095474134721,
+            "first_mean_root_speed_m_s": 0.2770335742626289,
+            "last_mean_root_speed_m_s": 0.21144383294953037,
+            "sampled_skin_floor_range_m": [
+              -0.029551466926932335,
+              0.013964222744107246
+            ],
+            "extraction_error_m": 3.819467311494439e-07
+          },
+          "quaternius_mannequin_f": {
+            "sample_count": 79,
+            "first_forward_xy": [
+              -0.9911713600158691,
+              -0.13258729875087738
+            ],
+            "last_forward_xy": [
+              -0.9901350140571594,
+              0.1401163637638092
+            ],
+            "heading_change_deg": -15.673707903258414,
+            "root_motion_start_to_end_m": [
+              0.7477134466171265,
+              0.07100287079811096,
+              0.0
+            ],
+            "hip_z_range_m": [
+              0.8179720640182495,
+              0.9086788296699524
+            ],
+            "minimum_knee_degrees": 120.256067131288,
+            "first_mean_root_speed_m_s": 0.24354542503910434,
+            "last_mean_root_speed_m_s": 0.18588438843743713,
+            "sampled_skin_floor_range_m": [
+              -0.04240955412387848,
+              0.005829329136759043
+            ],
+            "extraction_error_m": 3.3735995288695185e-07
           }
         }
       },

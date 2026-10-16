@@ -85,8 +85,9 @@ def test_real_core_manifest_includes_small_cmu_sources_with_their_own_terms():
     manifest = json.loads((project/bootstrap.MANIFEST).read_text())
     core = manifest['profiles']['core']
     sources = [asset for asset in core['assets'] if asset.get('license') == 'CMU-Mocap']
-    assert {asset['id'] for asset in sources} == {'cmu_02_01', 'cmu_07_01', 'cmu_02_03', 'cmu_79_08', 'cmu_80_10'}
-    assert sum((project/asset['path']).stat().st_size for asset in sources) < 1_000_000
+    assert {asset['id'] for asset in sources} == {'cmu_'+identifier for identifier in ('02_01','07_01','02_03','79_08','80_10',
+        '69_16','16_17','16_33','22_14','144_05','144_07','144_26','76_11','76_01')}
+    assert sum((project/asset['path']).stat().st_size for asset in sources) < 5_000_000
     assert {'cmu.02_01', 'cmu.07_01', 'cmu.02_03', 'cmu.79_08', 'cmu.80_10'} <= set(core['motion_ids'])
     terms = (project/'bundled_assets/animations/cmu/LICENSE.txt').read_text()
     assert 'not CC0' in terms and 'Direct\nsale of the motion data itself is prohibited' in terms
