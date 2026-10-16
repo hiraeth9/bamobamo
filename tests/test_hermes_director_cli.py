@@ -1,5 +1,6 @@
 """Pure asynchronous tests; never load Hermes configuration or API clients."""
 import asyncio
+from contextlib import contextmanager, nullcontext
 import json
 from pathlib import Path
 import sys
@@ -114,6 +115,12 @@ class AuxiliaryVisionGuardTests(unittest.IsolatedAsyncioTestCase):
 
 
 class LauncherTests(unittest.TestCase):
+    def setUp(self):
+        # Launcher delegation tests must never consume a user's active quota.
+        patcher = patch.object(launcher, 'model_request_limit', return_value=nullcontext())
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
     def test_original_main_initializes_before_wrapper_and_receives_all_arguments(self):
         original_argv = sys.argv
         original_path = list(sys.path)
@@ -160,6 +167,25 @@ class LauncherTests(unittest.TestCase):
                     launcher.main()
             self.assertEqual(stopped.exception.code, 23)
             self.assertIs(sys.argv, invocation)
+
+    def test_optional_gate_surrounds_original_initialization_and_cleanup(self):
+        order = []
+        @contextmanager
+        def gate(config):
+            self.assertEqual(config.name, 'model-request-limit.json')
+            order.append('gate_enter')
+            try:
+                yield
+            finally:
+                order.append('gate_exit')
+        def importer(name):
+            order.append('hermes_import')
+            return SimpleNamespace(main=lambda: order.append('original_main'))
+        with patch.object(launcher, 'model_request_limit', side_effect=gate), \
+                patch.object(launcher.importlib, 'import_module', side_effect=importer), \
+                patch.object(launcher, 'install_auxiliary_vision_guard', side_effect=lambda:order.append('vision_install')):
+            launcher.main(['-z', 'offline test'])
+        self.assertEqual(order, ['gate_enter', 'hermes_import', 'vision_install', 'original_main', 'gate_exit'])
 
 
 if __name__ == '__main__':

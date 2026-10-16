@@ -35,6 +35,14 @@ bash start_all.sh      # 已准备好的目录直接启动服务，不负责安�
 
 模型配置默认生成在忽略提交的 `config/hermes-runtime/`，只使用当前用户显式提供的设置。启动器不会复制其他账号的 `~/.hermes` 密钥。重新填写 `.env` 后运行入口会更新该项目管理的模型配置。已有完整 Hermes 配置可用 `BAMO_HERMES_HOME` 指向，该方式保留用户的配置与密钥文件，仅同步项目 Skill。
 
+需要限制一次验证的剩余请求数时，可在本机创建不提交的 `config/model-request-limit.json`：
+
+```json
+{"date":"2026-10-16","max_requests":10,"state_path":"/tmp/bamo-model-requests-20261016.json"}
+```
+
+规则只在对应上海日期生效，计数文件由各个导演进程共享。项目启动器在发出 OpenAI 兼容的 `chat/completions` 或 `responses` 请求前占用一次，主调用、标题、辅助调用、失败及 SDK 重试都计入；到上限会直接停止模型发送。这里的数字是本轮剩余发送上限，须先扣除已有调用，不是视频任务数。计数仅存整数，与历史费用记录及预算账本独立；同一轮不要重置计数文件。没有当日规则时保持原行为，此设置不限制其他程序直接调用模型。
+
 Hermes 的获取版本记录在 `config/hermes-source.json`。目录中已带完整 Hermes 源码时，安装沿用其源码和锁文件；没有源码时才从指定提交获取，使用仓库保存的依赖锁。后续如主动更换 Hermes 版本，需要同时确认代码与依赖兼容。
 
 可在 `.env` 用 `BAMO_BLENDER_ARCHIVE` 指定已经下载的 Linux x64 官方 Blender 压缩包。其他运行时下载失败会显示入口与可据此处理的错误；联网或系统依赖修复后重新运行即可。自动下载来源：[Blender 官方发行目录](https://download.blender.org/release/Blender5.2/)、[uv 官方发行](https://github.com/astral-sh/uv/releases/tag/0.12.19)、[FFmpeg 静态包](https://github.com/BtbN/FFmpeg-Builds/releases)。

@@ -1,7 +1,7 @@
-"""Project-owned Hermes CLI with a bounded auxiliary image-analysis call.
+"""Project-owned Hermes CLI with an optional send cap and bounded vision call.
 
-Delegate startup and argument parsing to Hermes itself.  Only the auxiliary
-vision function is wrapped; the registered native-image handler stays intact.
+Delegate startup and argument parsing to Hermes itself. An opt-in gate counts
+actual model sends; the auxiliary vision wrapper leaves its native handler intact.
 """
 import asyncio
 from functools import wraps
@@ -10,6 +10,8 @@ import json
 from pathlib import Path
 import sys
 from threading import Lock
+
+from model_request_limit import model_request_limit
 
 
 AUXILIARY_VISION_TIMEOUT_SECONDS = 45.0
@@ -97,11 +99,12 @@ def main(argv=None):
         # main's import performs profile/.env initialization. Import it before
         # the vision module freezes its optional runtime settings.
         sys.argv = ['hermes', *arguments]
-        hermes_main = importlib.import_module('hermes_cli.main')
-        install_auxiliary_vision_guard()
-        # Original main owns startup, plugins, default toolsets and the public
-        # oneshot runner, including process cleanup and its exit status.
-        return hermes_main.main()
+        with model_request_limit(Path(__file__).resolve().parents[1]/'config/model-request-limit.json'):
+            hermes_main = importlib.import_module('hermes_cli.main')
+            install_auxiliary_vision_guard()
+            # Original main owns startup, plugins, default toolsets and the public
+            # oneshot runner, including process cleanup and its exit status.
+            return hermes_main.main()
     finally:
         sys.argv = original_argv
         if added_path:

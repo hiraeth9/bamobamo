@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.10.0
+version: 9.10.1
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -47,6 +47,8 @@ metadata:
 修复人物数量时先`wm_agent_actor_list(job_id)`核对真实人物、对象、可见性及缺失项。出现错误重复人物时确认保留者，再`wm_agent_actor_remove(job_id, 错误actor_id)`安全清理指定人物及其登记；不要只hide_render、移动到画外或直接删部分网格留下失效登记。物品和其他人物应保留，删除后再次查询和检查实际画面。
 
 每段动作查询`bpy.wm_agent_motion_search(完整意图)`并读取`bpy.wm_agent_motion_info(motion_id)`，核对语义、侧别、窗口、帧率、根运动与实际适用范围。根据`available`、`sampling_available`选择本机确实安装且可采样的来源；未安装扩展只作检索线索。合适的素材优先；缺少候选继续在同一人物骨架上用FK/IK、约束和关键帧生成。目录用于检索，不能当用户动作白名单。库、自动生成和混合表示每个片段的来源，用户继续只输入自然语言。依赖未安装Beta/Mixamo的旧recipe不适用时，使用当前人物和普通库时间线构建。
+
+素材身体朝向与人物root朝向分别核对。部分CMU源的身体初始面向−X，裁窗后起向也可能改变；用所选窗口真实骨盆/肩线判断身体前向，不把root yaw或校准T姿当作表演朝向。续接时同时对齐全身姿态与根位移，保留源内部转向、后退关系；普通重叠尚不保证自动朝向/足相位匹配。三个长踢/格挡来源的候选短窗只看过代表帧，准备、恢复、支撑和实际接触仍需检查。
 
 从`wm_agent_reference_info`读取motion_apply、timeline、controls和commit的实际调用说明。保持全段合理基础运动；新动作只改变需要的骨区与时间窗口。边走边招手等同时要求用骨区控制权合成，不自动改成串行。前后动作匹配根位置、朝向、速度和支撑相位，不用T姿态或无关Idle填空。FK/IK交接先匹配当前末端姿态；根轨迹只由一个合成结果驱动。
 
