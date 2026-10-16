@@ -39,6 +39,16 @@ def test_explicit_speed_and_crop_have_physical_scene_duration():
     assert plan['sequence']['segments'][0]['playback_duration_s'] == .75
 
 
+def test_facing_alignment_is_opt_in_and_individual_segments_can_preserve_source_facing():
+    ordinary = compile_sequence([{'motion_id': 'a'}])
+    assert 'align_heading' not in ordinary['events'][0]
+    plan = compile_sequence([{'motion_id': 'a'}, {'motion_id': 'b', 'align_heading': False}], align_heading=True)
+    assert plan['events'][0]['align_heading'] is True
+    assert 'align_heading' not in plan['events'][1]
+    assert plan['sequence']['segments'][1]['align_heading'] is False
+    assert all(event['time_scale'] == 1 and not event['fit'] for event in plan['events'])
+
+
 def test_old_short_annotation_does_not_cut_recovery_and_is_only_an_edit_suggestion():
     plan = compile_sequence([{'motion_id': 'a'}], definitions={'a': {'source_window_frames': [16, 42], 'source_frame_range': [1, 61], 'source_fps': 30}})
     event = plan['events'][0]

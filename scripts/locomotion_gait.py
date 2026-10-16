@@ -27,6 +27,22 @@ def standing_weight(zero_age, *, landing_seconds=.28, settle_seconds=.30):
     return smooth((zero_age-landing_seconds)/settle_seconds)
 
 
+def landing_heading(current_heading, support_weight, body_heading, previous_support=None):
+    """A swing foot lands facing its last reliable support, carried by the body.
+
+    Its ankle-to-toe ray can point almost vertically during the source swing;
+    the ray's projected atan2 is then an unsuitable yaw to flatten and freeze.
+    A foot already in contact retains its actual world heading.
+    """
+    if support_weight>0 and current_heading is not None:
+        return current_heading
+    if previous_support is None:
+        return body_heading
+    old_heading,old_body_heading=previous_support
+    turn=math.atan2(math.sin(body_heading-old_body_heading),math.cos(body_heading-old_body_heading))
+    return old_heading+turn
+
+
 class LocomotionGait:
     """Call pose(), apply FK/root transforms, update, then call feet().
 
@@ -53,6 +69,7 @@ class LocomotionGait:
         self.last_toes = {}
         self.last_rotations = {}
         self.last_contact_weights = {}
+        self.last_support_headings = {}
         self.zero_age = .58
         self.standing_amount = 0.0
         self.last_pose = None
@@ -179,9 +196,28 @@ class LocomotionGait:
     def _stop_rotation(self, side, root_yaw):
         flat=Quaternion((0,0,1),root_yaw)@self.flat_rotations[side]
         source_direction=flat@self.foot_tips[side]
-        actual_direction=self.stop_feet[side]['rotation']@self.foot_tips[side]
-        delta=math.atan2(actual_direction.x,-actual_direction.y)-math.atan2(source_direction.x,-source_direction.y)
+        delta=self.stop_feet[side]['landing_heading']-math.atan2(source_direction.x,-source_direction.y)
         return Quaternion((0,0,1),delta)@flat
+
+    def _body_heading(self):
+        across=point(self.actor.arm,'LeftUpLeg')-point(self.actor.arm,'RightUpLeg')
+        return math.atan2(across.y,across.x)
+
+    def _stop_snapshot(self):
+        result={side:{'toe':self.last_toes[side].copy(),'rotation':self.last_rotations[side].copy()}
+                for side in ('Left','Right')}
+        if self.standing_pose is not None:
+            body=self._body_heading()
+            for side,state in result.items():
+                direction=state['rotation']@self.foot_tips[side]
+                # A rolling contact can also approach the same projection
+                # singularity just before lift-off; retain its recent flat
+                # support heading instead of labelling that noisy ray a yaw.
+                heading=(math.atan2(direction.x,-direction.y)
+                         if direction.xy.length>=direction.length*.5 else None)
+                state['landing_heading']=landing_heading(heading,
+                    self.last_contact_weights.get(side,0.),body,self.last_support_headings.get(side))
+        return result
 
     def _prepare_stop_standing(self):
         """Fit pelvis height over the actual support, without shuffling feet."""
@@ -250,9 +286,7 @@ class LocomotionGait:
             self.pose_resume_age=0.0
             self.stop_standing_pose=None
             if self.last_pose is not None:
-                self.stop_feet={side:{'toe':self.last_toes[side].copy(),
-                                      'rotation':self.last_rotations[side].copy()}
-                                for side in ('Left','Right')}
+                self.stop_feet=self._stop_snapshot()
         elif moving:
             self.pose_resume_age+=self.dt
         self.was_moving=moving
@@ -266,12 +300,13 @@ class LocomotionGait:
                 # The initial braking snapshot can contain a raised/running
                 # foot. After settling, resume from the current planted pose,
                 # never from that old pre-landing rotation or airborne toe.
-                self.stop_feet={side:{'toe':self.last_toes[side].copy(),
-                                      'rotation':self.last_rotations[side].copy()}
-                                for side in ('Left','Right')}
+                self.stop_feet=self._stop_snapshot()
             self.resume_age=self.resume_age+self.dt if was_active else 0.0
             self.stop_age=0.0
         else:
+            if was_active:
+                self.stop_feet=self._stop_snapshot()
+                self.stop_standing_pose=None
             self.stop_age=self.stop_age+self.dt if not was_active else 0.0
             self.resume_age=0.0
         mode=str(gait).lower()
@@ -329,8 +364,7 @@ class LocomotionGait:
                        'motion_weight':round(self.motion_weight,6),
                        'standing_weight':round(self.standing_amount,6)})
         if not self.active and self.stop_feet is None:
-            self.stop_feet={side:{'toe':self.last_toes[side].copy(),'rotation':self.last_rotations[side].copy()}
-                            for side in ('Left','Right')}
+            self.stop_feet=self._stop_snapshot()
         restart=self.stop_feet if self.active else None
         for side in ('Left','Right'):
             key=side+'Foot';ankle=point(actor.arm,key);toe=point(actor.arm,side+'ToeBase')
@@ -396,5 +430,8 @@ class LocomotionGait:
             record.setdefault('foot_contact_weights',{})[side]=round(weight,6)
             self.last_toes[side]=desired_toe.copy();self.last_rotations[side]=rotation.copy()
             self.last_contact_weights[side]=weight
+            direction=rotation@local_tip
+            if weight>=.5 and direction.xy.length>=direction.length*.5:
+                self.last_support_headings[side]=(math.atan2(direction.x,-direction.y),self._body_heading())
         if self.active and self.resume_age>=.22:self.stop_feet=None
         return output

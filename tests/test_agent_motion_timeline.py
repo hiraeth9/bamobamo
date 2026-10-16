@@ -2,6 +2,7 @@
 import math
 import sys
 import unittest
+from unittest.mock import patch
 from types import SimpleNamespace
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
@@ -9,6 +10,7 @@ from agent_motion_timeline import (blend_pose,blend_root,coverage_event,event_we
                                    sample_keyframes,upsert_event,validate_event,commit_bake_range,
                                    final_base_contains_layer,preserve_edit_priority,contact_commit_order,
                                    _bound_object_owners, active_contact_targets, contact_dependency_schedule)
+from agent_motion_timeline import _placement_heading_delta
 from agent_motion_quality import rotation_delta_degrees
 
 
@@ -18,6 +20,58 @@ def event(name,start,end,**kwargs):
 
 
 class MotionTimelineTests(unittest.TestCase):
+    def test_heading_alignment_only_accepts_explicit_opt_in_for_full_body_sources(self):
+        for source in ('library', 'hybrid'):
+            value=event('source',1,20,source=source,motion_id='chosen',align_heading=True)
+            self.assertTrue(validate_event(value)['align_heading'])
+        for value in (event('masked',1,20,source='library',motion_id='chosen',mask=['left_arm'],align_heading=True),
+                      event('procedural',1,20,align_heading=True)):
+            with self.assertRaisesRegex(ValueError,'full-body library/hybrid'):
+                validate_event(value)
+        for value in (1,'true',None):
+            with self.assertRaisesRegex(ValueError,'true or false'):
+                validate_event(event('source',1,20,source='library',motion_id='chosen',align_heading=value))
+
+    def test_heading_alignment_does_not_silently_override_explicit_direction(self):
+        for field in ('keyframes','root_path'):
+            value=event('source',1,20,source='library',motion_id='chosen',align_heading=True)
+            value[field]=[{'frame':1,'root':[0,0,0],'root_rotation_quaternion':[1,0,0,0]}]
+            with self.assertRaisesRegex(ValueError,'align_heading=False'):
+                validate_event(value)
+            value['align_heading']=False
+            self.assertFalse(validate_event(value)['align_heading'])
+
+    def test_heading_alignment_keeps_world_trajectory_coordinates_and_input_pose(self):
+        value=event('source',1,20,source='library',motion_id='chosen',align_heading=True,
+                    root_strategy='trajectory',root_path=[{'frame':1,'root':[4,5,0]},
+                                                          {'frame':20,'root':[7,8,0]}])
+        actual=validate_event(value)
+        self.assertEqual(actual['root_path'],value['root_path'])
+        self.assertEqual(actual['keyframes'],value['keyframes'])
+
+    def test_placement_uses_real_window_pose_and_previous_body_not_root_axis_alone(self):
+        armature=object()
+        calls=[]
+        def heading(arm,pose):
+            self.assertIs(arm,armature);calls.append(pose)
+            return pose['measured_heading']
+        previous={'measured_heading':math.radians(99)}
+        incoming={'measured_heading':math.radians(-90)}
+        with patch.dict(sys.modules,{'agent_motion_features':SimpleNamespace(pose_heading=heading)}):
+            delta=_placement_heading_delta(armature,previous,incoming)
+        self.assertAlmostEqual(math.degrees(delta),-171)
+        self.assertEqual(calls,[previous,incoming])
+        self.assertAlmostEqual(math.sin(incoming['measured_heading']+delta),math.sin(previous['measured_heading']))
+        self.assertAlmostEqual(math.cos(incoming['measured_heading']+delta),math.cos(previous['measured_heading']))
+
+    def test_first_clip_aligns_to_actor_forward_and_turn_change_survives_placement(self):
+        incoming={'measured_heading':math.radians(75)}
+        with patch.dict(sys.modules,{'agent_motion_features':SimpleNamespace(pose_heading=lambda arm,pose:pose['measured_heading'])}):
+            delta=_placement_heading_delta(object(),None,incoming)
+        self.assertAlmostEqual(math.degrees(delta),-75)
+        end_heading=incoming['measured_heading']+math.radians(99)
+        self.assertAlmostEqual(math.degrees(end_heading+delta),99)
+
     def schedule(self, events, first, last):
         return contact_dependency_schedule(list(events), events, first, last,
                                             lambda binding: {binding['actor_id']} if 'actor_id' in binding else set())

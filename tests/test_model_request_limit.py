@@ -58,6 +58,23 @@ def test_sync_failures_and_later_retries_keep_the_reserved_count(tmp_path):
     assert state.read_text() == '2\n'
 
 
+def test_unlimited_mode_keeps_existing_count_and_counts_failed_sends(tmp_path):
+    config, state = rule(tmp_path, maximum=None)
+    state.write_text('54\n')
+    sends = []
+    def failing(request):
+        sends.append(request)
+        raise httpx.ReadTimeout('offline failure', request=request)
+    with model_request_limit(config, today=TODAY) as gate:
+        assert gate.check_available() is None
+        with httpx.Client(transport=httpx.MockTransport(failing)) as client:
+            for _ in range(9):
+                with pytest.raises(httpx.ReadTimeout):
+                    client.post('https://provider.test/v1/chat/completions')
+        assert not gate.denied and gate.check_available() is None
+    assert len(sends) == 9 and state.read_text() == '63\n'
+
+
 def test_sync_async_main_title_and_auxiliary_requests_share_the_cap(tmp_path):
     config, state = rule(tmp_path, maximum=3)
     sent = []

@@ -28,6 +28,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output')
     parser.add_argument('--reload')
+    parser.add_argument('--turn-sign', type=int, choices=(-1, 1), default=1)
+    parser.add_argument('--extra-walk-frames', type=int, default=0)
+    parser.add_argument('--no-preview', action='store_true')
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
 
     def snapshot(actor):
@@ -77,7 +80,8 @@ def main():
         out = Path(args.reload).parent
         duel_plan.JOBS = out / 'jobs'
         actor = resolve_actor('settle', 'New')
-        for frames in (range(111, 120), range(232, 250)):
+        last = bpy.context.scene.frame_end
+        for frames in (range(111, 120), range(last-18, last)):
             value = metrics(actor, frames)
             assert max(value['rotation_deg'][part] for part in ('Hips', 'LeftFoot', 'RightFoot', 'LeftToeBase', 'RightToeBase')) < .05, value
             assert value['foot_skin_motion_m'] < .0001, value
@@ -93,7 +97,8 @@ def main():
     (folder / 'request.json').write_text(json.dumps({'prompt': 'Isolated zero-walk-pause-turn-walk standing support regression'}))
     bpy.ops.wm.read_factory_settings(use_empty=True)
     scene = bpy.context.scene
-    scene.frame_start, scene.frame_end = 1, 250
+    count = 250 + args.extra_walk_frames
+    scene.frame_start, scene.frame_end = 1, count
     scene.render.fps, scene.render.fps_base = 30, 1
     actor_ensure('settle', 'New', character_id='beta')
     actor_ensure('settle', 'Old', character_id='beta')
@@ -104,15 +109,15 @@ def main():
         return value * value * (3 - 2 * value)
 
     def speed(time):
-        for start, end in ((.7, 2.7), (4.6, 6.3)):
+        for start, end in ((.7, 2.7), (4.6, 6.3+args.extra_walk_frames/30)):
             if start <= time < end:
                 return min(ease((time - start) / .3), ease((end - time) / .3))
         return 0.
 
     path, xy, previous_speed, previous_yaw = [], Vector((0., 0., 0.)), 0., 0.
-    for index in range(250):
+    for index in range(count):
         time = index / 30
-        yaw = math.pi / 2 * ease((time - 4) / .6)
+        yaw = args.turn_sign * math.pi / 2 * ease((time - 4) / .6)
         velocity = speed(time)
         delta = (previous_speed + velocity) / 60 if index else 0.
         xy += Vector((math.sin(yaw), -math.cos(yaw), 0)) * delta
@@ -145,7 +150,7 @@ def main():
     path_error = 0.
     walking_error = 0.
     saved = {}
-    for frame in range(1, 251):
+    for frame in range(1, count+1):
         scene.frame_set(frame)
         expected = Vector(path[frame - 1]['root'])
         actual = new['root'].evaluated_get(bpy.context.evaluated_depsgraph_get())
@@ -156,22 +161,34 @@ def main():
             # after both source contact clocks have had a full replacement step.
             for name in ('Hips', 'Spine', 'LeftUpLeg', 'RightUpLeg', 'LeftToeBase', 'RightToeBase'):
                 walking_error = max(walking_error, math.degrees(n['mixamorig:' + name].to_quaternion().rotation_difference(o['mixamorig:' + name].to_quaternion()).angle))
-        if frame in (1, 22, 23, 100, 119, 121, 122, 139, 180, 232, 250):
+        if frame in (1, 22, 23, 100, 119, 121, 122, 139, 180, count-18, count):
             saved[frame] = n
     assert path_error < 1e-6, path_error
     assert walking_error < .05, walking_error
-    new_stops = [metrics(new, frames) for frames in (range(1, 20), range(111, 120), range(232, 250))]
-    old_stop = metrics(old, range(232, 250))
+    new_stops = [metrics(new, frames) for frames in (range(1, 20), range(111, 120), range(count-18, count))]
+    old_stop = metrics(old, range(count-18, count))
     for value in new_stops:
         assert max(value['rotation_deg'][part] for part in ('Hips', 'LeftFoot', 'RightFoot', 'LeftToeBase', 'RightToeBase')) < .05, value
         assert value['foot_skin_motion_m'] < .0001, value
         assert -.002 < value['skin_floor_range_m'][0] < .012, value
         assert value['rotation_deg']['Head'] > .05, 'Upper body was frozen'
         assert value['trunk_lean_range_deg'][1] < 5, value
+        assert value['maximum_toe_heading_error_deg'] < 35, value
     assert 165 < new_stops[0]['knee_interior_range_deg'][0] < 175, new_stops[0]
     assert new_stops[0]['maximum_toe_heading_error_deg'] < .1, new_stops[0]
     print('ACTUAL_SETTLING', json.dumps({'new_stops': new_stops, 'old_terminal': old_stop,
           'root_path_error_m': path_error, 'moving_pose_difference_deg': walking_error}), flush=True)
+    # A stopping swing foot may choose a reliable landing yaw, but neither
+    # support toe is dragged across the floor to produce that orientation.
+    for before, last in ((81, 119), (189+args.extra_walk_frames, count)):
+        scene.frame_set(before);a = snapshot(new)
+        maximum_xy = 0.
+        for frame in range(before+1, last+1):
+            scene.frame_set(frame);b = snapshot(new)
+            maximum_xy = max(maximum_xy, max((a['mixamorig:'+side+'ToeBase'].translation-
+                b['mixamorig:'+side+'ToeBase'].translation).xy.length for side in ('Left', 'Right')))
+        assert maximum_xy < .00001, (before, last, maximum_xy)
+        print('STOP_WORLD_TOE_XY_ERROR_M', before, last, maximum_xy, flush=True)
 
     # A full-frame geometry jump is reported separately from the intentional
     # walking motion; onset must begin from the last actually evaluated stance.
@@ -202,7 +219,7 @@ def main():
     camera_data.type = 'ORTHO';camera_data.ortho_scale = 2.7
     scene.render.resolution_x, scene.render.resolution_y = 480, 540
     scene.render.resolution_percentage = 100
-    for frame in (1, 119, 250):
+    for frame in (() if args.no_preview else (1, 119, count)):
         scene.frame_set(frame)
         center = new['root'].matrix_world.translation + Vector((0, 0, .9))
         camera.location = center + Vector((3, -6, 1.6))

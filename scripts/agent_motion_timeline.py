@@ -51,6 +51,14 @@ def validate_event(event):
     source = event.get('source', 'procedural')
     if source not in ('library', 'procedural', 'hybrid'):
         raise ValueError('source describes implementation: library/procedural/hybrid')
+    if 'align_heading' in event and not isinstance(event['align_heading'], bool):
+        raise ValueError('align_heading must be true or false')
+    if event.get('align_heading'):
+        if source not in ('library', 'hybrid') or event.get('mask'):
+            raise ValueError('align_heading=True is for full-body library/hybrid events; masked layers do not own actor heading')
+        if any('root_rotation_quaternion' in key
+               for field in ('keyframes', 'root_path') for key in event.get(field, [])):
+            raise ValueError('align_heading=True conflicts with explicit root_rotation_quaternion; use align_heading=False to keep the authored direction')
     if source in ('library', 'hybrid') and not event.get('motion_id'):
         raise ValueError('library source requires an actual motion_id')
     if source == 'procedural' and not event.get('keyframes') and not event.get('targets'):
@@ -454,6 +462,20 @@ def _root_delta(rotation,scale,root):
     return rotation @ Vector([a*b for a,b in zip(scale,root)])
 
 
+def _placement_heading_delta(armature, previous_pose, incoming_pose):
+    """One placement yaw, leaving every frame of the source turn intact.
+
+    Source FK is measured without the actor root. The caller composes the
+    result after the preceding root's accumulated rotation. With no preceding
+    body, zero means the actor root's own forward direction.
+    """
+    from agent_motion_features import pose_heading
+    previous = pose_heading(armature, previous_pose) if previous_pose is not None else 0.
+    incoming = pose_heading(armature, incoming_pose)
+    difference = previous-incoming
+    return math.atan2(math.sin(difference), math.cos(difference))
+
+
 def _sampled_root(event, sample, frame, origin, rotation, scale):
     """Resolve an event's root without changing scene objects or ownership."""
     from mathutils import Vector
@@ -848,6 +870,9 @@ def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, ev
     root_path keyframes use root-parent coordinates (world metres for our rigs).
     Library root displacement is actor-space and follows each event's starting
     root orientation/scale, inherited from the preceding event unless specified.
+    Optional align_heading places a full-body library/hybrid source using its
+    selected first pose's physical pelvis facing; subsequent source turns are
+    retained. Explicit world trajectory positions keep their authored coordinates.
     """
     import bpy
     from mathutils import Quaternion, Vector
@@ -931,6 +956,7 @@ def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, ev
     source_root_origin = {}
     source_root_rotation={}
     source_root_scale={}
+    source_heading_alignment={}
     source_pose_context = {}
     processed=[]
     for event in sorted([e for e in all_events if not e.get('mask')],key=lambda e:(e['start_frame'],e.get('priority',0),_coverage_id(e))):
@@ -962,7 +988,16 @@ def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, ev
                 cursor_scale=Vector(path_state.get('root_scale',cursor_scale))
         source_root_origin[event['event_id']]=cursor.copy()
         start_sample=_source_sample(armature,event,event['start_frame'],fps,context=cursor_pose,operation=operation)
-        source_root_rotation[event['event_id']]=Quaternion(start_sample.get('root_rotation_quaternion',cursor_rotation))
+        placement_rotation=Quaternion(start_sample.get('root_rotation_quaternion',cursor_rotation))
+        if event.get('align_heading'):
+            incoming_pose=blend_pose(cursor_pose,start_sample['pose'])
+            offset=_placement_heading_delta(armature,cursor_pose if previous_event else None,incoming_pose)
+            placement_rotation=cursor_rotation @ Quaternion((0,0,1),offset)
+            source_heading_alignment[event['event_id']]={
+                'offset_yaw_degrees':math.degrees(offset),
+                'basis':'selected-window pelvis FK in actor-root space',
+                'source_turn_preserved':True}
+        source_root_rotation[event['event_id']]=placement_rotation
         source_root_scale[event['event_id']]=Vector(start_sample.get('root_scale',cursor_scale))
         source_pose_context[event['event_id']]=cursor_pose
         processed.append(event)
@@ -1016,7 +1051,9 @@ def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, ev
             root_scale=Vector(root_channels['root_scale'])
             if base['event_id']!=previous_base:
                 provenance.append({'event_id':base['event_id'],'source':base['source'],'provenance':source.get('provenance',{}),
-                                   'root_strategy':base['root_strategy'],'root_owner':True})
+                                   'root_strategy':base['root_strategy'],'root_owner':True,
+                                   **({'heading_alignment':source_heading_alignment[base['event_id']]}
+                                      if base['event_id'] in source_heading_alignment else {})})
                 previous_base=base['event_id']
         for overlay in sorted([e for e in all_events if e.get('mask')],key=lambda e:(e.get('priority',0),e['start_frame'])):
             if final_base_contains_layer(base,overlay,frame):

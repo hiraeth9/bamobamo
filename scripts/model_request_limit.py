@@ -35,9 +35,9 @@ class ModelRequestGate:
                 fcntl.flock(stream, fcntl.LOCK_SH)
                 raw = stream.read().strip()
                 used = json.loads(raw) if raw else 0
-        if used >= self.max_requests:
+        if self.max_requests is not None and used >= self.max_requests:
             self._deny()
-        return self.max_requests-used
+        return None if self.max_requests is None else self.max_requests-used
 
     def reserve(self):
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
@@ -47,7 +47,7 @@ class ModelRequestGate:
             stream.seek(0)
             raw = stream.read().strip()
             used = json.loads(raw) if raw else 0
-            if used >= self.max_requests:
+            if self.max_requests is not None and used >= self.max_requests:
                 self._deny()
             stream.seek(0)
             stream.truncate()
@@ -68,8 +68,8 @@ def load_gate(config_path, today=None):
     if configured_date != today:
         return None
     maximum = rule.get('max_requests')
-    if type(maximum) is not int or maximum < 1:
-        raise ValueError('model-request-limit.json 的 max_requests 必须为正整数')
+    if maximum is not None and (type(maximum) is not int or maximum < 1):
+        raise ValueError('model-request-limit.json 的 max_requests 请填正整数，或用 null 只计数不限制')
     state = rule.get('state_path')
     if not isinstance(state, str) or not state.strip():
         raise ValueError('model-request-limit.json 需要填写本轮独立的 state_path')

@@ -71,7 +71,7 @@ def _overlaps(intervals, requested):
 
 
 def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame=1,
-                            transition_frames=6, priority=None, intent=None):
+                            transition_frames=6, align_heading=False, priority=None, intent=None):
     """Return open library events at source speed with real pairwise overlap.
 
     Each segment needs ``motion_id`` and may supply ``source_window`` in clip
@@ -81,12 +81,18 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
     returned as optional editing suggestions. Timeline root origins
     are aligned by the existing compositor, never by copying a source robot.
 
+    ``align_heading=True`` optionally places each source at the preceding
+    body's measured facing while retaining the source's own turn. A segment
+    can override it with False; explicit root rotations use that authored mode.
+
     No scene range is changed. The compact ``sequence`` result tells the caller
     the required end frame, chosen source times and any shortened transitions.
     """
     _name(event_id, 'event_id')
     first = _frame(start_frame, 'start_frame')
     requested = _frame(transition_frames, 'transition_frames')
+    if not isinstance(align_heading, bool):
+        raise ValueError('align_heading must be true or false')
     if requested < 0:
         raise ValueError('transition_frames must be nonnegative')
     if not isinstance(segments, (list, tuple)) or not segments:
@@ -104,6 +110,9 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
         window, origin = _source_window(segment, measured, definition)
         suggested = _suggested_source_window(definition, measured)
         speed = _number(segment.get('time_scale', 1), 'time_scale')
+        heading = segment.get('align_heading', align_heading)
+        if not isinstance(heading, bool):
+            raise ValueError('segment align_heading must be true or false')
         if speed <= 0:
             raise ValueError('time_scale must be positive; 1 preserves the source speed')
         duration = (window[1]-window[0])/speed
@@ -115,6 +124,7 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
         sources.append({'motion_id': measured.get('motion_id', definition['motion_id']),
                         'source_window_seconds': window, 'source_window_origin': origin,
                         'source_duration_s': float(measured['duration_s']), 'time_scale': speed,
+                        'align_heading': heading,
                         'playback_duration_s': duration, 'intervals': intervals,
                         **({'suggested_source_window_seconds': suggested} if suggested else {})})
         if suggested:
@@ -137,6 +147,7 @@ def library_sequence_events(job_id, actor_id, event_id, segments, *, start_frame
                        'source_window': source['source_window_seconds'], 'time_scale': source['time_scale'],
                        'fit': False, 'loop': False, 'blend_in_frames': overlap,
                        'weight': 1., 'root_strategy': 'source', 'priority': chosen,
+                       **({'align_heading': True} if source['align_heading'] else {}),
                        'intent': str(segments[index].get('intent') or intent or 'Existing motion source with a moving overlap')})
         timing.append({'event_id': identifier, 'frame_start': cursor, 'frame_end': finish,
                        **{key: value for key, value in source.items() if key != 'intervals'},
