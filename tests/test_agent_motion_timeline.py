@@ -5,7 +5,7 @@ import unittest
 from types import SimpleNamespace
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from agent_motion_timeline import (blend_pose,coverage_event,event_weight,
+from agent_motion_timeline import (blend_pose,blend_root,coverage_event,event_weight,
                                    sample_keyframes,upsert_event,validate_event,commit_bake_range,
                                    final_base_contains_layer,preserve_edit_priority,contact_commit_order,
                                    _bound_object_owners, active_contact_targets, contact_dependency_schedule)
@@ -245,6 +245,26 @@ class MotionTimelineTests(unittest.TestCase):
         incoming={'arm':{'location':[4,0,0]}}
         w=event_weight(event('next',20,40,blend_in_frames=10),25)
         self.assertEqual(blend_pose(outgoing,incoming,w)['arm']['location'],[3,0,0])
+
+    def test_root_crossfade_preserves_outgoing_motion_and_blends_heading_and_scale(self):
+        outgoing={'root':[2,1,0],'root_rotation_quaternion':[1,0,0,0],'root_scale':[1,1,1]}
+        incoming={'root':[4,3,0],'root_rotation_quaternion':[2**-.5,0,0,2**-.5],'root_scale':[1.2,.8,1]}
+        actual=blend_root(outgoing,incoming,.5)
+        self.assertEqual(actual['root'],[3,2,0])
+        self.assertEqual(actual['root_scale'],[1.1,.9,1])
+        self.assertAlmostEqual(rotation_delta_degrees(outgoing['root_rotation_quaternion'],actual['root_rotation_quaternion']),45)
+        advanced=dict(outgoing,root=[2.4,1,0])
+        self.assertAlmostEqual(blend_root(advanced,incoming,.5)['root'][0]-actual['root'][0],.2)
+        self.assertEqual(outgoing['root'],[2,1,0])
+
+    def test_root_crossfade_endpoints_and_quaternion_sign_do_not_reset_transform(self):
+        outgoing={'root':[2,1,0],'root_rotation_quaternion':[1,0,0,0],'root_scale':[1,1,1]}
+        incoming={'root':[4,3,0],'root_rotation_quaternion':[-1,0,0,0],'root_scale':[1.2,.8,1]}
+        self.assertEqual(blend_root(outgoing,incoming,0),outgoing)
+        end=blend_root(outgoing,incoming,1)
+        self.assertEqual(end['root'],incoming['root'])
+        self.assertEqual(end['root_scale'],incoming['root_scale'])
+        self.assertEqual(end['root_rotation_quaternion'],[1,0,0,0])
 
 
 if __name__=='__main__':unittest.main()

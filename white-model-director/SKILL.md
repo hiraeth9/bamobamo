@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.7.0
+version: 9.8.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -17,6 +17,8 @@ metadata:
 你是白膜（白模/素模）参考视频的导演。理解完整提示词，决定动作、空间关系、时序和镜头，通过 Blender MCP 构建真正可编辑、可保存和可重载的场景。
 
 **核心原则：你是导演。** 把完整提示词转成动作、时序、接触、空间关系和镜头，依据真正场景与预览判断执行结果。**接触类动作必须由真实骨骼parent或约束/IK绑定承载，不能靠手与物品各自的关键帧近似**（详见“手持/搬运/推拉/接触物品”一节）。
+
+**主运动采用素材优先。** 有合适素材时，用它驱动原Beta的全身动作，保留肩胯发力、重心、脚步和节奏；多个动作按实际起收姿态平滑过渡。FK/IK主要修正局部接触与支撑，确实缺少合适素材的动作再生成，并接回前后实际姿态。不要因为已有程序化工具，就用它替代库中已经合适的整段运动；接触误差小不代表动作自然。
 
 ## 根据任务入口选择工作流
 
@@ -70,9 +72,9 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 
 已校准recipe适合作首次构建时可以复用。真实scene加载后，用`wm_agent_actor_adopt`登记其Beta人物并检查身份。完整`wm_agent_build/load`会构建和打开整个场景，不能用于向已经存在的多人时间线追加一个动作；旧wm_import或sequence_actions可能换人物/清空NLA，也不能直接用于局部修复。角色身份或绑定失败要修复真正机器人，不用proxy代替后报告完成。
 
-**手持/搬运/推拉/接触物品时必须建立真实接触绑定（强制）。** 凡提示词要求人物搬、拿、抱、抬、推、拉、放置、扶靠或触摸某物品（椅子、箱子、桌子、门窗、箱体等），该物品在整个接触窗口内必须与人物的实际接触手骨建立真实绑定，不能只给物品单独打关键帧后声称“跟随”。至少采用下列一种方式，优先1、2：
+**手持/搬运/推拉/接触物品时必须建立真实接触关系。** 按原文选择物品轨迹驱动手部 IK，或手部驱动物品随动；整个接触窗口都要让实际手部与物品握点保持接触。至少采用下列一种方式：
 
-1. **骨骼parent**：在接触开始帧把物品（或其控制Empty）parent到实际接触手骨（如`mixamorig:RightHand`/`mixamorig:LeftHand`），用`obj.matrix_parent_inverse = hand.matrix_world.inverted()`保持世界位置；松手帧解除并恢复原parent、`matrix_parent_inverse`与`matrix_world`。
+1. **骨骼parent**：保存物品世界矩阵，将parent设为实际armature，`parent_type='BONE'`、`parent_bone=实际手骨名`；更新求值后恢复保存的世界矩阵。松手时解除随动并保持当帧世界矩阵。PoseBone的世界矩阵为`armature.matrix_world @ hand.matrix`。
 2. **约束跟随**：给物品加`CHILD_OF`（或`COPY_LOCATION`+`COPY_ROTATION`）约束，`target`=该手的armature对象、`subtarget`=手骨；握住时`influence=1.0`，松手过渡到`0.0`（对约束influence打关键帧或扫值），烘焙后按需保留约束。
 3. **IK驱动手**：用实际二骨IK链（起点`RightArm`/`LeftArm`、肘`ForeArm`、腕`Hand`及Hand goal空物体，可配`wm_agent_controls_match`）把双手每帧解到物品实际握点，让手跟随物品。
 
@@ -88,15 +90,25 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 
 持续握持在持有窗口跟随目标；瞬时击打只在命中附近建立接触，随后降下IK影响并按基础FK收招，不把拳头一直绑定到后退身体。用户要求命中但实际落空时局部修复，不偷偷改成闪避或凭时间触发受击。
 
-`motion_check`默认复查已登记的接触窗口，场景提交会持久保存接触要求，后台重载后再次检查。查看passed、实际误差和覆盖范围；empty只表示未登记接触，不证明原文没有接触要求。原文明确要求须对应实际事件及检查，缺少映射保留未完成记录。P1验证接触机制，不代表受击动力学、全身平衡或任意打斗自然度已完成。
+`motion_check`默认复查已登记的接触窗口及`ground_motion`实际皮肤对地要求，后台重载后再次检查。查看passed、实际误差和覆盖范围；empty只表示未登记该类要求，不证明原文没有接触要求。原文明确要求须对应实际事件及检查，缺少映射保留未完成记录。几何检查不代表受击动力学、全身平衡或任意打斗自然度已完成。
 
-徒手攻防可以通过MCP普通import `agent_interactions`，从reference_info的`interaction_helpers`读取接口。`guard_events`生成原Beta的护头与基本握拳，先登记并commit；`hand_strike_events`按真实目标、左右手和命中时刻生成准备、肩胯与出收招，缺少攻击片段仍可使用。`recoil_events`负责接触后的头躯干短反应；重击退步另配`support_step_events`，明确交替支撑脚、抬脚落脚及根路径。各helper只编译事件，仍要登记`plan.events`并协调commit，再用`verify_interaction`检查实际命中及支撑。按原文组合这些工具，不能把示例动作顺序固化为唯一打斗流程；几何检查与实际预览分别核对。
+徒手攻防先查实际素材，以全身`source='library'`事件构建主运动。合适的连拳等连续素材优先完整保留，不拆成机械单招。默认显式`time_scale=1`保留源节奏，按原文适度调整，不把短片段用默认`fit`拉满长窗口。相邻动作选择朝向、手位、重心及支撑脚接近的起收窗口，再真实重叠过渡，同时混合姿态与根变换；剔除无关中立/T帧，不每招回统一站姿。可通过`agent_motion_sequence.library_sequence_events`编排，返回普通开放事件供登记与commit；没有合适匹配时再生成衔接，不能用无限长淡化掩盖不匹配。
+
+先登记完整序列再统一commit，避免逐招capture盖掉后续素材。拳踢默认保留全身，不只取上半身；`extract_planar`配`root_strategy='source'`保留源位移，不能随意hold制造滑步。足IK只选实际承重脚/窗口，不能全程把双脚钉死而破坏库自带起步、踮脚或踢腿。旧决斗标注的短窗只是裁切建议，未经核查不能自动删掉源动作恢复段。
+
+素材主运动commit后，用相对目标和短窗口IK局部修正实际接触；偏差大时先调站位、时序或重选素材，不把真人运动强行扭到远处目标。`agent_interactions`中的`guard_events`、`hand_strike_events`、`recoil_events`、`support_step_events`仅在缺少合适素材时补充姿态、攻击或反应，不是默认全身运动来源。通过reference_info读取接口，helper生成后登记并协调commit，再用`verify_interaction`检查实际命中及支撑，同时观看真实发力、脚步和过渡。
 
 可用`register_interaction(job_id, plan)`登记并持久保存紧凑检查要求，返回简短状态；同计划ID替换会清理该计划旧的多余子事件。随后`verify_interaction(job_id)`默认读取保存的要求，跨MCP调用或重载无需旧局部plan变量。不要打印完整每帧计划；手动登记`plan.events`和显式传plans仍可用。
 
+通过MCP普通import以下可选编译器，完整签名可用`inspect.signature`查看。它们返回开放事件，仍按上述登记、协调commit和检查流程执行；用户只需自然语言，人物、左右侧、目标、时刻及结果由你解释。
+
+- `agent_leg_interactions.leg_strike_events`：原Beta站稳后的抬膝、前踢、收腿与落地，另一脚支撑。先commit护架、走停及目标基础运动再编译，变化后重新编译。目标太远先接近；攻击脚旧支撑先释放。持续行走与移动支撑须另行安排，不把它当作任意踢法工具。
+- `agent_contact_interactions.contact_events`：`start_frame < contact_frame <= release_frame < end_frame`，从当前链姿态平滑接触、保持同帧目标绑定、释放回当前基础动作。`chain`选真实手脚，`kind`保留开放意图；多人/双手可分别跟随同一物体不同握点。物品轨迹及人物根/脚步单独编排并先commit，修改基础动作后重新编译。此工具不新建人物、物品或相机。
+- `agent_ground_motion.ground_motion_events`：选择实际本地FBX及秒制`source_window`，把兼容单人地面运动先验按rest空间映射到原Beta。支持已验证的Rokoko 52/53骨源（Hips可在Armature对象），不能直接交给原65骨direct sampler。`blend_in_frames`从实际基础姿态过渡；实际根位置对齐，保留源垂直骨盆运动。`supports`可指定实际承重手脚的短窗口，起身及时释放手，末尾留`settle_frames`，应站起时设`expect_standing=True`。commit后`check_ground_motion`及默认检查量测实际全身皮肤对地、支撑及可选末尾站姿；先验适配不等于通用受力击倒或自碰撞求解。
+
 攻击的`outcome`按原文区分hit、block、miss：格挡绑定真实格挡部位或物体，落空使用偏置拳路并测预定擦过点净距。`verify_interaction`分别返回hit_confirmed、block_confirmed和miss_confirmed；格挡和落空不触发命中受击反应。擦过点检查不是全身连续碰撞检测。
 
-验收（提交前必须逐帧实测并写入analysis）：取当前帧实际evaluated的手骨（或手部皮肤顶点）到物品实际evaluated几何的最近距离，接触窗口内最大接触误差应小于约0.03米（物品或抓法使阈值需放宽时必须在analysis说明原因）；analysis如实记录所用绑定方式、接触窗口与实测最大误差，不允许只写“简化路径跟随”“未完全匹配手部”就提交；物品在接触窗口内的位置与朝向必须由上述绑定决定，不得再给物品独立的关键帧路径。
+验收时逐帧实测实际evaluated手部皮肤到物品握点/表面的距离，接触窗口内最大误差以约0.03米为起点，按实际抓法调整并说明。analysis记录驱动方式、接触窗口与实测误差。物品轨迹可由关键帧生成，双手IK须从它的同帧握点求解；手驱动物品时，物品由骨骼parent或约束随动。两种方式均需检查实际接触与释放，不能把互不关联的手和物品轨迹当成持有。
 
 设置`prop_id`或`wm_object_role='prop'`来区分物品与身体。原Beta蒙皮保持完整；附属物标记不能替代实际人物身份。
 

@@ -62,7 +62,7 @@ def _folder(job_id):
 def reference_info():
     from camera_plan import camera_capabilities
     return {
-        'purpose': '可选已校准组件。组件不接受的动作、人数或时序不代表整条提示词不能生成；可以直接execute_code使用bpy自由构建。',
+        'purpose': '素材优先的混合运动：合适素材驱动全身主动作，动作间平滑衔接，IK局部修正接触；缺少的动作才同骨架生成。组件不接受的动作、人数或时序不代表整条提示词不能生成，可以直接execute_code使用bpy构建。',
         'animation_assets': [str(p.relative_to(PROJECT)) for p in sorted((PROJECT / 'mixamo_fbx').rglob('*.fbx'))],
         'additional_assets_root': str(PROJECT / 'assets'),
         'knowledge_root': str(PROJECT / 'knowledge'),
@@ -83,13 +83,14 @@ def reference_info():
             'motion_tools': {
                 'search': 'bpy.wm_agent_motion_search(完整动作意图, limit=8)：返回候选；无候选仍允许同骨架生成。',
                 'info': 'bpy.wm_agent_motion_info(motion_id)：路径、源FPS/窗口、已校准信息和真实hash。',
-                'library': 'bpy.wm_agent_motion_apply(job_id, actor_id, {"event_id":"walk_1","motion_id":"Walk","start_frame":1,"end_frame":60,"root_strategy":"source","blend_in_frames":6})：登记指定段并烘焙时间线。',
+                'library': 'bpy.wm_agent_motion_apply(job_id, actor_id, {"event_id":"walk_1","motion_id":"Walk","start_frame":1,"end_frame":60,"root_strategy":"source","time_scale":1,"fit":False,"blend_in_frames":6})：登记指定段并烘焙时间线。按实际源时长选结束帧，不把短动作默认fit拉满几秒。',
+                'sequence': 'MCP普通import agent_motion_sequence.library_sequence_events(job_id, actor_id, event_id, segments, start_frame=1, transition_frames=6)：segments指定实际motion_id、可选秒制source_window/time_scale。默认原速和完整素材，旧决斗短窗仅返回建议，不自动裁掉恢复；按实际源时长安排真实重叠过渡，返回开放plan.events和时序摘要。按摘要设置真实场景帧范围，登记完整序列后统一commit。它不把自然语言限制成动作枚举，不自动证明步态相位或接触匹配。',
                 'event': 'bpy.wm_agent_timeline_event(job_id, actor_id, event_id, event)：保存开放语义的运动方案，source=library/procedural/hybrid是来源分类。随后motion_commit实际执行。若覆盖自动保全的窗口外快照且没指定priority，新明确编辑自动提高优先级；priority_diagnostic返回effective_priority及shadowed_by_preserved_base，显式priority原样保留。',
                 'commit': 'bpy.wm_agent_motion_commit(job_id, actor_id)：组合已登记事件并烘焙完整通道；多个相关人物使用actor_id=["A","B"]，先计算基础姿态，再逐帧按实际依赖顺序求同帧IK并统一写回。先A打B再B反击可以交换顺序；真正同帧循环在修改动画前指出错误帧。dynamic_commit_order/dependency_windows描述实际调度。bpy直接构建后用capture=True, frame_start=..., frame_end=..., event_id=...捕获实际求值姿态；capture仍逐人操作。局部capture保留其他既有帧，actual_bake_range是实际保全范围。',
                 'locomotion': 'bpy.wm_agent_locomotion_apply(job_id, actor_id, path, event_id="locomotion_base", intent="原文走跑停要求")：可选已校准平地步态。path连续逐帧{frame,root:[世界米],yaw:弧度,gait:"walk"/"run"/"idle"}；一个相位时钟驱动原Idle/Walk/Run与双足IK，保存同骨架完整姿态并保全窗口外运动。刹车阶段仍用移动步态，真实根速度逐步减到零，留足落脚站稳时间。后来叠加挥手等局部层时读取本事件priority并设更高priority。仅支持世界Z=0、无parent/单位scale/竖直root；其他需求自由bpy实现，不限制提示词。',
                 'timeline': 'bpy.wm_agent_timeline_info(job_id, actor_id)：查询已登记段，稳定event_id替换局部计划，保留其他段。',
                 'controls': 'bpy.wm_agent_actor_controls(job_id, actor_id)；wm_agent_controls_match匹配当前FK末端，设置目标及IK权重后可capture烘焙。',
-                'check': 'bpy.wm_agent_motion_check(job_id, actor_id=None, check_camera=True)：真实几何与通道检查，并默认复查已登记接触窗口；empty表示没有登记接触，不能当作原文接触要求已满足。看passed与实际误差，不认证自然度。',
+                'check': 'bpy.wm_agent_motion_check(job_id, actor_id=None, check_camera=True)：真实几何与通道检查，默认复查已登记接触窗口及ground_motion的实际皮肤对地要求；empty表示没有登记该类要求，不能当作原文要求已满足。看passed与实际误差，不认证自然度。',
                 'pov': 'bpy.wm_agent_camera_pov(job_id, actor_id, target_actor_id, start_frame, end_frame, fov=75, return_camera="Camera", shot_id="B_counter")：从actor_id的真实头骨眼位观察target_actor_id，烘焙镜头并按帧切回全景；修复保留shot_id，运动修改后重新调用。原身体不拆分，头颈仅在该窗口渲染遮罩，必须检查实际出拳手臂与目标可见。重叠窗口返回真实冲突，请安排不重叠的实际镜头。',
                 'full_camera': 'bpy.wm_agent_camera_full(job_id, {"reference":"world","azimuth_deg":60,"elevation_deg":20,"projection":"perspective"}, actor_ids=None, focus_objects=None)：复用已校准固定镜头，按真实人物动作范围构图并保持方向；focus_objects支持实际MESH名及{"id":"chair","objects":["实际椅座","实际椅背","实际椅腿"]}逻辑物品组。整组几何入框，组内正常互挡不误判为整物品缺失，外墙遮挡仍检查。拟合阶段最多12代表帧含首尾，visibility.helper_sample_frames/helper_sample_scope只证明这些帧；backend_full_frame_visibility_required=True表示仍须后台独立全片检查。相机不改变角色动画。',
                 'camera_check': 'bpy.wm_agent_camera_check(job_id, requirements=None, frame_start=None, frame_end=None, detail=False)：requirements非None先登记场景镜头需求，再检查真实active camera、求值skin/关注物品入框及不透明物遮挡；None复查已登记需求，缺登记返回missing。默认全片；长视频可frame_start/frame_end分段检查并如实说明scope，不把局部检查称全片认证。passed才表示指定几何检查通过，ok只表示检查调用完成；scope与实际预览另看。新提交保存camera_visibility_version=1，后台重载独立检查所有帧，失败交Hermes保留动作修复后重提交。',
@@ -134,13 +135,29 @@ def reference_info():
                 'module': 'agent_interactions',
                 'functions': ['guard_events', 'hand_strike_events', 'recoil_events',
                               'support_step_events', 'register_interaction', 'verify_interaction'],
-                'purpose': '在现有人物上生成可组合的开放时间轴事件；不用出拳片段，不重建场景或选择相机。通过MCP execute_code普通import调用，参数和完整签名可用inspect.signature查看。',
+                'purpose': '素材优先主运动完成后，用这些工具修接触或补充缺少的动作；不要用程序化护架/攻击默认替换合适的素材全身运动。不重建场景或选择相机，通过MCP execute_code普通import，完整签名可用inspect.signature查看。',
                 'guard': 'guard_events(job_id, actor_id, event_id, start_frame, end_frame)：只生成双手护头与基本握拳，默认首帧完成准备，双手随自身头部移动；不改变腿或根节点。先登记并commit基础姿态，再编译依赖当前姿态的攻击和脚步。',
                 'strike': 'hand_strike_events(job_id, actor_id, event_id, target_binding, start_frame=..., impact_frame=..., end_frame=..., hand="RightHand", outcome="hit")：从实际护架生成准备、肩胯参与、1至2帧接触和收招。hit目标为真实身体表面；block绑定实际格挡部位或物体；miss用aim_offset_world偏置擦过并实测擦过点净距，不登记命中。左右侧与时刻按原文。approach_required表示需要先接近后重新编译，不拉长手臂。',
                 'reaction': 'recoil_events(..., impact_frame=..., end_frame=..., direction_world=[3], amount=.5, contact_id=实际命中ID)：生成接触之后的头躯干反应。outcome为block/miss时不生成受击事件。它不自动平移根节点；重击后退另配support_step_events。',
                 'steps': 'support_step_events(job_id, actor_id, event_id, steps, root_path)：steps为{foot:"RightFoot",lift_frame:...,land_frame:...,position:[实际足底世界米]}列表，左右交替；root_path为{frame:...,root:[世界米]}列表。平地默认floor_z=0，真实足底支撑、抬脚弧线及有限髋部降低，不倒放前进Walk。',
                 'workflow': '生成helper只返回plan。print(register_interaction(job_id,plan))登记事件并保存紧凑检查要求；同event_id替换会清理该计划旧的多余子事件。相关人物统一motion_commit，再print(verify_interaction(job_id))复查实际结果。检查要求随scene保存，跨MCP调用无需保留局部plan变量；也兼容手工timeline_event和verify_interaction(job_id,plans)。不要打印整份每帧plan.events。',
-                'scope': '首轮校准Beta、平地、徒手上肢和交替短步；属于可选运动工具，用户提示词仍完整交给Hermes，其他动作继续自由FK/IK。几何通过不代表自然度或真实力学。',
+                'additional_modules': {
+                    'agent_leg_interactions': {
+                        'functions': ['leg_strike_events'],
+                        'usage': 'leg_strike_events(job_id, actor_id, event_id, target_binding, start_frame=..., impact_frame=..., end_frame=..., foot="RightFoot")：原Beta平地前踢，抬膝、伸击、收腿和落地，另一脚固定支撑。左右脚和斜向可变；先commit护架、走停和目标基础运动再编译，改变基础运动后重新编译。approach_required先接近，contact_release_required先释放攻击脚旧支撑；持续行走或移动支撑不能直接当静止前踢处理。不表示支持任意踢法。',
+                    },
+                    'agent_contact_interactions': {
+                        'functions': ['contact_events'],
+                        'usage': 'contact_events(job_id, actor_id, event_id, target_binding, start_frame=..., contact_frame=..., release_frame=..., end_frame=..., chain="RightHand", kind="hold")：从当前链姿态平滑接触、持续跟随、释放回当前基础动作。kind是开放语义，不限定提示词动词；物品轨迹及人物根/脚步另行编排并先commit，同一物体多个握点可供多人/双手分别绑定。不创建人物、物品或相机；修改基础动画后重新编译。',
+                    },
+                    'agent_ground_motion': {
+                        'functions': ['ground_motion_events', 'check_ground_motion'],
+                        'source_candidates': [str(PROJECT / 'rokoko_staging/mixamo/KnockOut_Loser_mixamo.fbx'),
+                                              str(PROJECT / 'rokoko_staging/mixamo/GetUp_WipeBloodfromMouth_MIXAMO_769.fbx')],
+                        'usage': 'ground_motion_events(job_id, actor_id, event_id, source_asset=实际本地FBX路径, source_window=[起秒,止秒], start_frame=..., end_frame=..., expect_standing=False)：将单人地面动作先验按实际rest空间映射到原Beta，源Hips可为骨或Armature对象；输出普通开放事件并校正地面。起身结束用expect_standing=True并留settle_frames。supports可按实测指定短手脚支撑窗口，抬身后及时释放。登记commit后check_ground_motion量测实际全身皮肤对地、支撑及可选末尾站姿，motion_check和后台重载也默认复查。仅验证本地兼容源窗口，不等于通用动力学击倒。',
+                    },
+                },
+                'scope': '校准Beta、平地上肢、基础前踢、交替短步、接触与本地地面动作先验；属于可选运动工具，用户提示词仍完整交给Hermes，其他动作继续自由FK/IK。几何通过不代表自然度或真实力学。',
             },
             'scene_lighting': 'bpy.wm_agent_lighting(job_id=None, force=False)：为当前EEVEE/Cycles场景补齐实际可渲染照明（World+三点光），清空场景或自建场景后必须确保有照明。EEVEE/Cycles场景若既无可见灯光、World又为空或全黑、也无自发光，成片会全黑；后台探针会把这种完全无照明的场景判为错误并要求修复，保存时框架也会兜底补默认照明并在warnings记录。也可自行用bpy.data.lights新建AREA/SUN并设置scene.world。',
             'recipe_pov': '新固定机器人任务复用双人recipe时先用camera.policy=fixed_full构建，再adopt/capture，最后用camera_pov加第一视角。旧cinematic相机可能复制拆分身体，与新人物身份不兼容。全身camera检查仅用于全景帧范围；第一视角另检查本人手臂和对方。',

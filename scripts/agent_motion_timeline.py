@@ -173,6 +173,14 @@ def blend_pose(base, incoming, weight=1.0, bones=None):
     return result
 
 
+def blend_root(outgoing, incoming, weight):
+    """Blend two evaluated root transforms with the pose transition clock."""
+    return {'root': [a+(b-a)*weight for a,b in zip(outgoing['root'],incoming['root'])],
+            'root_rotation_quaternion': _quat_mix(outgoing['root_rotation_quaternion'],
+                                                 incoming['root_rotation_quaternion'],weight),
+            'root_scale': [a+(b-a)*weight for a,b in zip(outgoing['root_scale'],incoming['root_scale'])]}
+
+
 def prepare_keyframes(keys,baseline=None):
     if not keys:
         return []
@@ -442,6 +450,27 @@ def _capture_event(actor, frame_start, frame_end, event_id, mask=None):
 def _root_delta(rotation,scale,root):
     from mathutils import Vector
     return rotation @ Vector([a*b for a,b in zip(scale,root)])
+
+
+def _sampled_root(event, sample, frame, origin, rotation, scale):
+    """Resolve an event's root without changing scene objects or ownership."""
+    from mathutils import Vector
+    position = Vector(origin)
+    if event.get('root_path'):
+        position = Vector(sample_keyframes(event['root_path'],frame).get('root',position))
+    elif event['root_strategy']=='source':
+        position += _root_delta(rotation,scale,sample.get('root',(0,0,0)))
+    elif event['root_strategy']=='trajectory' and 'root' in sample:
+        position = Vector(sample['root'])
+    result = {'root': list(position),
+              'root_rotation_quaternion': list(sample.get('root_rotation_quaternion',rotation)),
+              'root_scale': list(sample.get('root_scale',scale))}
+    if event.get('root_path'):
+        path = sample_keyframes(event['root_path'],frame)
+        for field in ('root_rotation_quaternion','root_scale'):
+            if field in path:
+                result[field] = list(path[field])
+    return result
 
 
 def contact_commit_order(actor_ids, dependencies):
@@ -961,7 +990,9 @@ def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, ev
             composed=json.loads(json.dumps(source_pose_context.get(base['event_id'],baseline)))
             source=_source_sample(armature,base,sample_frame,fps,context=composed,operation=operation)
             incoming=blend_pose(composed,source['pose'])
-            # New source ramps from outgoing end pose, never a rest-pose fade.
+            root_channels=_sampled_root(base,source,sample_frame,source_root_origin[base['event_id']],
+                                        source_root_rotation[base['event_id']],source_root_scale[base['event_id']])
+            # Overlapping sources both keep moving; gaps hold the prior end pose.
             previous=[e for e in all_events if not e.get('mask') and e['event_id']!=base['event_id'] and e['start_frame']<base['start_frame']]
             blend=int(base.get('blend_in_frames',0))
             if previous and blend and sample_frame-base['start_frame']<blend:
@@ -969,26 +1000,18 @@ def _motion_commit_single(job_id, actor_id, frame_start=None, frame_end=None, ev
                 outgoing_context=source_pose_context.get(outgoing['event_id'],baseline)
                 outgoing_sample=_source_sample(armature,outgoing,outgoing_frame,fps,context=outgoing_context,operation=operation)
                 old=blend_pose(outgoing_context,outgoing_sample['pose'])
-                composed=blend_pose(old,incoming,event_weight(base,sample_frame))
+                weight=event_weight(base,sample_frame)
+                composed=blend_pose(old,incoming,weight)
+                outgoing_root=_sampled_root(outgoing,outgoing_sample,outgoing_frame,
+                                             source_root_origin[outgoing['event_id']],
+                                             source_root_rotation[outgoing['event_id']],
+                                             source_root_scale[outgoing['event_id']])
+                root_channels=blend_root(outgoing_root,root_channels,weight)
             else:
                 composed=incoming
-            root_position=source_root_origin.get(base['event_id'],root_position).copy()
-            root_rotation=source_root_rotation[base['event_id']].copy()
-            root_scale=source_root_scale[base['event_id']].copy()
-            if base.get('root_path'):
-                root_position=Vector(sample_keyframes(base['root_path'],sample_frame).get('root',root_position))
-            elif base['root_strategy']=='source':
-                root_position += _root_delta(source_root_rotation[base['event_id']],source_root_scale[base['event_id']],source.get('root',(0,0,0)))
-            elif base['root_strategy']=='trajectory' and 'root' in source:
-                root_position=Vector(source['root'])
-            if 'root_rotation_quaternion' in source:
-                root_rotation=Quaternion(source['root_rotation_quaternion'])
-            if 'root_scale' in source:
-                root_scale=Vector(source['root_scale'])
-            if base.get('root_path'):
-                path_state=sample_keyframes(base['root_path'],sample_frame)
-                root_rotation=Quaternion(path_state.get('root_rotation_quaternion',root_rotation))
-                root_scale=Vector(path_state.get('root_scale',root_scale))
+            root_position=Vector(root_channels['root'])
+            root_rotation=Quaternion(root_channels['root_rotation_quaternion'])
+            root_scale=Vector(root_channels['root_scale'])
             if base['event_id']!=previous_base:
                 provenance.append({'event_id':base['event_id'],'source':base['source'],'provenance':source.get('provenance',{}),
                                    'root_strategy':base['root_strategy'],'root_owner':True})
