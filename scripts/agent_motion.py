@@ -1,4 +1,4 @@
-"""Sample existing motions onto a fixed Beta rig without replacing its skin.
+"""Sample existing motions onto a registered rig without replacing its skin.
 
 Temporary imports are removed immediately; only plain pose samples are cached.
 The final timeline owns animation and must bake these samples before saving.
@@ -112,7 +112,7 @@ def _retarget_setup(source, target):
         raise ValueError('Registered Quaternius skeleton does not match its named mapping')
     missing = [name for name in target.data.bones.keys() if name not in mapping and name != PREFIX + 'HeadTop_End']
     if PREFIX + 'Hips' not in target.data.bones or missing:
-        raise ValueError('Target is not the supported Beta rest skeleton; missing mapping: ' + ', '.join(missing))
+        raise ValueError('Target does not have the supported semantic body mapping; missing: ' + ', '.join(missing))
     target_basis = target.matrix_basis.copy()
     source_basis = source.matrix_world.copy()
     target_hip = target_basis @ target.data.bones[PREFIX + 'Hips'].head_local
