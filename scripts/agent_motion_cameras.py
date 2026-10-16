@@ -96,7 +96,8 @@ def camera_full(job_id, camera_spec, actor_ids=None, focus_objects=None):
     import bpy
     from types import SimpleNamespace
     from agent_character import scene_actor_facts, resolve_actor
-    from agent_camera_quality import STORE as VISIBILITY_STORE, camera_requirements
+    from agent_camera_quality import (STORE as VISIBILITY_STORE, camera_requirements,
+                                      merge_actor_framing, actor_framing_feedback)
     from reference_camera import setup_reference_camera
     scene = bpy.context.scene
     identities = scene_actor_facts(job_id)
@@ -184,13 +185,21 @@ def camera_full(job_id, camera_spec, actor_ids=None, focus_objects=None):
         def sample_visibility():
             result = None
             tested = []
+            framing = []
             for sample in sample_frames:
                 result = camera_check(job_id, frame_start=sample, frame_end=sample)
+                merge_actor_framing(framing, result['actor_framing'])
                 tested.append(sample)
                 if not result['passed']:
                     break
+            result['actor_framing'] = framing
+            result['framing_feedback'] = actor_framing_feedback(framing)
+            result['tested_frames'] = len(tested)
+            result['checked_frame_range'] = [tested[0], tested[-1]]
+            result['frame_sampling'] = 'representative_frames'
             result['helper_sample_frames'] = tested
             result['helper_sample_scope'] = 'Representative fit checks; independent backend checks every frame before publishing.'
+            result['scope'] = result['helper_sample_scope']
             return result
 
         register()

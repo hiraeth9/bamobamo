@@ -1,11 +1,13 @@
 """The general director delivers its scene without old semantic gates."""
 import hashlib
+from datetime import datetime
 import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from zoneinfo import ZoneInfo
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import duel_plan
@@ -459,6 +461,51 @@ class HermesWorkerTests(unittest.TestCase):
         self.assertIn('HTTP 401', result['error'])
         self.assertIn('API Key', result['error'])
         self.assertEqual(calls, ['hermes.log'])
+
+    def request_limit(self, used):
+        state = self.project/'request-count.json'
+        state.write_text(str(used)+'\n')
+        duel_plan.atomic_json(self.project/'config/model-request-limit.json', {
+            'date': datetime.now(ZoneInfo('Asia/Shanghai')).date().isoformat(),
+            'max_requests': 1, 'state_path': str(state)})
+        return state
+
+    def test_exhausted_limit_fails_clearly_without_starting_any_subprocess(self):
+        state = self.request_limit(1)
+        calls = []
+        result = self.run_with(lambda *args:calls.append(args))
+        self.assertFalse(result['ok'])
+        self.assertIn('模型请求已达到上限', result['error'])
+        self.assertEqual(calls, [])
+        self.assertEqual(json.loads((self.folder/'status.json').read_text())['stage'], 'failed')
+        self.assertEqual(state.read_text(), '1\n')
+        self.assertEqual(list(self.folder.glob('agent_feedback_*.json')), [])
+
+    def test_limit_consumed_during_first_attempt_prevents_later_repair_launches(self):
+        from model_request_limit import ModelRequestGate
+        state = self.request_limit(0)
+        calls = []
+        def execute(folder, command, log_name, timeout):
+            calls.append(log_name)
+            ModelRequestGate(state, 1).reserve()
+            raise RuntimeError('Invalid API response after 3 retries')
+        result = self.run_with(execute)
+        self.assertFalse(result['ok'])
+        self.assertIn('模型请求已达到上限', result['error'])
+        self.assertEqual(calls, ['hermes.log'])
+        self.assertEqual(state.read_text(), '1\n')
+        self.assertTrue((self.folder/'agent_feedback_0.json').is_file())
+        self.assertFalse((self.folder/'agent_feedback_1.json').exists())
+
+    def test_exhausted_model_limit_does_not_block_an_existing_scene_render(self):
+        self.request_limit(1)
+        self.save_scene()
+        with patch.object(duel_worker, 'run_logged', side_effect=self.execute), \
+                patch.object(duel_worker, 'verify_video', return_value={'nb_read_frames':'48'}):
+            result = duel_worker.run_job(self.job, already_planned=True)
+        self.assertTrue(result['ok'], result)
+        self.assertTrue(all('-z' not in command for command, _ in self.commands))
+        self.assertEqual([name for _, name in self.commands], ['agent_probe_0.log', 'preview.log', 'rendering.log'])
 
 
 if __name__ == '__main__':

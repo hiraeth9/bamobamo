@@ -245,11 +245,22 @@ def run_hermes_scene_job(folder, already_planned=False):
     # Repairs concern a missing or unreproducible saved scene. Action choice,
     # character count and subjective quality never become frontend gates.
     for attempt in range(3):
+        needs_director = not (already_planned and attempt == 0 and manifest_path.exists())
+        if needs_director:
+            from model_request_limit import load_gate, ModelRequestLimitReached
+            gate = load_gate(PROJECT / 'config/model-request-limit.json')
+            if gate is not None:
+                try:
+                    gate.check_available()
+                except ModelRequestLimitReached as error:
+                    # Outside the repair try: exhaustion is not a scene repair.
+                    # RuntimeError lets run_job persist an ordinary failed result.
+                    raise RuntimeError(str(error)) from None
         director_log = 'hermes.log' if attempt == 0 else f'agent_repair_{attempt}.log'
         probe = None
         report_path = None
         try:
-            if not (already_planned and attempt == 0 and manifest_path.exists()):
+            if needs_director:
                 prior_submission_sha = hashlib.sha256(manifest_path.read_bytes()).hexdigest() if manifest_path.is_file() else None
                 repairing = attempt > 0 or feedback is not None
                 stage = 'repairing' if repairing else 'planning'

@@ -136,3 +136,23 @@ def test_non_current_shanghai_date_does_not_activate_or_reset_counter(tmp_path):
         assert gate is None
         assert (httpx.Client.send, httpx.AsyncClient.send) == original
     assert state.read_text() == '9\n'
+
+
+def test_preflight_is_read_only_and_denial_survives_a_swallowed_exception(tmp_path):
+    state = tmp_path/'counter.json'
+    gate = ModelRequestGate(state, 1)
+    assert gate.check_available() == 1
+    assert not state.exists() and not gate.denied
+    gate.reserve()
+    assert not gate.denied  # Using the last permitted send is still allowed.
+    gate.raise_if_denied()
+    try:
+        gate.reserve()
+    except BaseException:
+        pass  # Mirrors Hermes' thread/future error handling.
+    assert gate.denied
+    with pytest.raises(ModelRequestLimitReached, match='上限'):
+        gate.raise_if_denied()
+    with pytest.raises(ModelRequestLimitReached):
+        ModelRequestGate(state, 1).check_available()
+    assert state.read_text() == '1\n'

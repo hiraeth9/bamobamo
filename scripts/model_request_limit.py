@@ -16,6 +16,28 @@ class ModelRequestGate:
     def __init__(self, state_path, max_requests):
         self.state_path = Path(state_path)
         self.max_requests = max_requests
+        self.denied = False
+
+    def _deny(self):
+        self.denied = True
+        raise ModelRequestLimitReached(f'本轮模型请求已达到上限（{self.max_requests}次），停止后续模型发送。')
+
+    def raise_if_denied(self):
+        """Preserve the actual cause if a Hermes thread swallowed SystemExit."""
+        if self.denied:
+            self._deny()
+
+    def check_available(self):
+        """Read the shared count without reserving or creating a state file."""
+        used = 0
+        if self.state_path.is_file():
+            with self.state_path.open('r', encoding='utf-8') as stream:
+                fcntl.flock(stream, fcntl.LOCK_SH)
+                raw = stream.read().strip()
+                used = json.loads(raw) if raw else 0
+        if used >= self.max_requests:
+            self._deny()
+        return self.max_requests-used
 
     def reserve(self):
         self.state_path.parent.mkdir(parents=True, exist_ok=True)
@@ -26,7 +48,7 @@ class ModelRequestGate:
             raw = stream.read().strip()
             used = json.loads(raw) if raw else 0
             if used >= self.max_requests:
-                raise ModelRequestLimitReached(f'本轮模型请求已达到上限（{self.max_requests}次），停止后续模型发送。')
+                self._deny()
             stream.seek(0)
             stream.truncate()
             stream.write(str(used+1)+'\n')

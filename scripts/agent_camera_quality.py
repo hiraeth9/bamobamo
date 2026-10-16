@@ -12,9 +12,49 @@ STORE = 'wm_camera_visibility_v1'
 REGIONS = ('head', 'trunk', 'left_arm', 'right_arm', 'left_hand', 'right_hand',
            'left_foot', 'right_foot')
 DEFAULT_REGIONS = ('head', 'trunk', 'left_foot', 'right_foot')
-SCOPE = ('Every applicable frame and actual marker camera; evaluated subject vertices '
+SCOPE = ('Every applicable frame in the requested check interval and actual marker camera; evaluated subject vertices '
          'for projection and representative surface rays against render-enabled opaque '
          'scene meshes. Sampled visibility, not all pixels, physics or naturalness.')
+
+
+def _actor_framing_sample(actor_id, camera, framing, regions, frame, uv, render_size):
+    """Projected vertex bounds, not silhouette pixels or an image-size gate."""
+    width = float(uv[:, 0].max()-uv[:, 0].min())
+    height = float(uv[:, 1].max()-uv[:, 1].min())
+    return {'actor_id': actor_id, 'camera': camera, 'framing': framing,
+            'regions': list(regions) if framing == 'regions' else [],
+            'sample_count': 1, 'frame_range': [frame, frame], 'render_size_pixels': list(render_size),
+            'height_fraction_range': [height, height],
+            'height_pixels_range': [height*render_size[1], height*render_size[1]],
+            'width_fraction_range': [width, width],
+            'projected_bbox_area_fraction_range': [width*height, width*height]}
+
+
+def merge_actor_framing(target, entries):
+    """Combine actual measurements while keeping cameras and regions distinct."""
+    identity = ('actor_id', 'camera', 'framing', 'regions', 'render_size_pixels')
+    ranges = ('height_fraction_range', 'height_pixels_range', 'width_fraction_range',
+              'projected_bbox_area_fraction_range')
+    for entry in entries:
+        previous = next((item for item in target if all(item[key] == entry[key] for key in identity)), None)
+        if previous is None:
+            target.append(copy.deepcopy(entry))
+            continue
+        previous['sample_count'] += entry['sample_count']
+        previous['frame_range'] = [min(previous['frame_range'][0], entry['frame_range'][0]),
+                                   max(previous['frame_range'][1], entry['frame_range'][1])]
+        for key in ranges:
+            previous[key] = [min(previous[key][0], entry[key][0]), max(previous[key][1], entry[key][1])]
+    return target
+
+
+def actor_framing_feedback(entries):
+    return ['%s在%s的投影高度为画面%.1f–%.1f%%（约%.0f–%.0f像素，%s）；'
+            '主体入框不代表动作细节清楚，请结合原提示词判断主体大小。此尺寸不作为失败门槛，'
+            '面积字段是投影包围框面积，不是人物轮廓像素面积。' % (
+                item['actor_id'], item['camera'], *(100*v for v in item['height_fraction_range']),
+                *item['height_pixels_range'], '所选身体区域' if item['framing'] == 'regions' else '全身')
+            for item in entries]
 
 
 def _finite_vector(value, size, name):
@@ -388,7 +428,9 @@ def check_camera_visibility(job_id, requirements=None, frame_start=None, frame_e
     from agent_motion_quality import camera_projection_context, project_world_vertices
     scene=_scene(job_id);saved=scene.frame_current,scene.frame_subframe,scene.camera
     result={'ok':False,'passed':False,'status':'failed','job_id':job_id,'tested_frames':0,
-            'failure_count':0,'failures':[],'requirements':None,'scope':SCOPE}
+            'failure_count':0,'failures':[],'requirements':None,'scope':SCOPE,
+            'actor_framing': [], 'framing_feedback': [],
+            'framing_scope': 'Projected bounds of checked full-body or named-region vertices on the camera canvas, before render-border cropping; not visible silhouette area.'}
     def fail(code,**fields):
         result['failure_count']+=1
         if len(result['failures'])<60:result['failures'].append({'code':code,**fields})
@@ -404,6 +446,10 @@ def check_camera_visibility(job_id, requirements=None, frame_start=None, frame_e
         first=scene.frame_start if frame_start is None else frame_start;last=scene.frame_end if frame_end is None else frame_end
         if type(first) is not int or type(last) is not int or not scene.frame_start<=first<=last<=scene.frame_end:
             raise ValueError('check frame interval must lie in saved scene')
+        result['checked_frame_range']=[first,last]
+        result['frame_sampling']='every_frame_in_requested_interval'
+        render_size=[int(value*scene.render.resolution_percentage/100)
+                     for value in (scene.render.resolution_x,scene.render.resolution_y)]
         for frame in range(first,last+1):
             scene.frame_set(frame);bpy.context.view_layer.update();deps=bpy.context.evaluated_depsgraph_get()
             camera_obj=_active_camera(scene,frame,saved[2]);result['tested_frames']+=1
@@ -439,6 +485,9 @@ def check_camera_visibility(job_id, requirements=None, frame_start=None, frame_e
                     else:points=np.concatenate([r['world'][r['kept_vertices']] for r in target])
                     if not len(points):fail('subject_region_missing',frame=frame,kind=kind,subject=ident);continue
                     uv=project_world_vertices(points,projection);margin=float(np.minimum.reduce([uv[:,0],uv[:,1],1-uv[:,0],1-uv[:,1]]).min())
+                    if kind=='actor' and np.isfinite(uv).all() and np.all(uv[:,2]>0):
+                        merge_actor_framing(result['actor_framing'], [_actor_framing_sample(
+                            ident,camera_obj.name,shot['framing'],shot['regions'],frame,uv,render_size)])
                     if not np.isfinite(uv).all() or margin<shot['margin']-1e-4 or np.any(uv[:,2]<camera.data.clip_start) or np.any(uv[:,2]>camera.data.clip_end):
                         fail('subject_out_of_frame',frame=frame,camera=camera_obj.name,kind=kind,subject=ident,margin=margin)
                     regions=shot['regions'] if kind=='actor' else ['surface']
@@ -468,4 +517,5 @@ def check_camera_visibility(job_id, requirements=None, frame_start=None, frame_e
         fail('camera_visibility_error',type=type(error).__name__,message=str(error))
     finally:
         scene.frame_set(saved[0],subframe=saved[1]);scene.camera=saved[2]
+        result['framing_feedback']=actor_framing_feedback(result['actor_framing'])
     return result

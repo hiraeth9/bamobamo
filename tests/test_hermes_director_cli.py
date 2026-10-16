@@ -1,15 +1,18 @@
 """Pure asynchronous tests; never load Hermes configuration or API clients."""
 import asyncio
 from contextlib import contextmanager, nullcontext
+from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
 import sys
+import tempfile
 from types import ModuleType, SimpleNamespace
 import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import hermes_director_cli as launcher
+from model_request_limit import ModelRequestGate, ModelRequestLimitReached
 
 
 class AuxiliaryVisionGuardTests(unittest.IsolatedAsyncioTestCase):
@@ -186,6 +189,61 @@ class LauncherTests(unittest.TestCase):
                 patch.object(launcher, 'install_auxiliary_vision_guard', side_effect=lambda:order.append('vision_install')):
             launcher.main(['-z', 'offline test'])
         self.assertEqual(order, ['gate_enter', 'hermes_import', 'vision_install', 'original_main', 'gate_exit'])
+
+    def test_thread_swallowed_limit_cannot_be_reported_as_success_or_generic_exit(self):
+        original_argv = sys.argv
+        for return_mode in ('success', 'generic_exit'):
+            with self.subTest(return_mode=return_mode), tempfile.TemporaryDirectory() as folder:
+                state = Path(folder)/'counter.json'
+                state.write_text('0\n')
+                gate = ModelRequestGate(state, 1)
+                def original_main():
+                    gate.reserve()  # The run starts with one permitted send.
+                    with ThreadPoolExecutor(max_workers=1) as pool:
+                        try:
+                            pool.submit(gate.reserve).result()
+                        except BaseException:
+                            pass
+                    if return_mode == 'generic_exit':
+                        raise SystemExit('Invalid API response after 3 retries')
+                    return 0
+                with patch.object(launcher, 'model_request_limit', return_value=nullcontext(gate)), \
+                        patch.object(launcher.importlib, 'import_module', return_value=SimpleNamespace(main=original_main)), \
+                        patch.object(launcher, 'install_auxiliary_vision_guard'):
+                    with self.assertRaisesRegex(ModelRequestLimitReached, '达到上限'):
+                        launcher.main(['-z', 'offline fixture'])
+                self.assertIs(sys.argv, original_argv)
+                self.assertEqual(state.read_text(), '1\n')
+
+    def test_initially_exhausted_gate_stops_before_loading_hermes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            state = Path(folder)/'counter.json'
+            state.write_text('1\n')
+            gate = ModelRequestGate(state, 1)
+            with patch.object(launcher, 'model_request_limit', return_value=nullcontext(gate)), \
+                    patch.object(launcher.importlib, 'import_module') as importer:
+                with self.assertRaisesRegex(ModelRequestLimitReached, '达到上限'):
+                    launcher.main(['-z', 'must not initialize Hermes'])
+            importer.assert_not_called()
+            self.assertEqual(state.read_text(), '1\n')
+
+    def test_oneshot_hard_exit_hook_preserves_original_exit_and_cleanup_order(self):
+        order = []
+        original = lambda code:order.append(('original_exit', code))
+        module = SimpleNamespace(_exit_after_oneshot=original)
+        with tempfile.TemporaryDirectory() as folder:
+            gate = ModelRequestGate(Path(folder)/'count.json', 1)
+            gate.reserve()
+            try:
+                gate.reserve()
+            except ModelRequestLimitReached:
+                pass
+            with launcher.guard_oneshot_limit_exit(module, gate), patch.object(launcher, 'print', create=True) as output:
+                order.append('hermes_cleanup')
+                module._exit_after_oneshot(0)
+            self.assertEqual(order, ['hermes_cleanup', ('original_exit', 1)])
+            self.assertIs(module._exit_after_oneshot, original)
+            self.assertIn('达到上限', output.call_args.args[0])
 
 
 if __name__ == '__main__':

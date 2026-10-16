@@ -4,6 +4,7 @@ Delegate startup and argument parsing to Hermes itself. An opt-in gate counts
 actual model sends; the auxiliary vision wrapper leaves its native handler intact.
 """
 import asyncio
+from contextlib import contextmanager
 from functools import wraps
 import importlib
 import json
@@ -11,7 +12,7 @@ from pathlib import Path
 import sys
 from threading import Lock
 
-from model_request_limit import model_request_limit
+from model_request_limit import ModelRequestLimitReached, model_request_limit
 
 
 AUXILIARY_VISION_TIMEOUT_SECONDS = 45.0
@@ -87,6 +88,34 @@ def install_auxiliary_vision_guard(vision_module=None):
     return vision_module.vision_analyze_tool
 
 
+@contextmanager
+def guard_oneshot_limit_exit(hermes_main, gate):
+    """Preserve Hermes' cleanup/hard-exit while reporting a swallowed refusal.
+
+    The real oneshot uses os._exit, so a launcher finally cannot run afterward.
+    Intercept only its existing exit hook, after Hermes' own cleanup completes.
+    """
+    original = getattr(hermes_main, '_exit_after_oneshot', None)
+    if gate is None or not callable(original):
+        yield
+        return
+
+    @wraps(original)
+    def exit_with_limit_cause(return_code):
+        try:
+            gate.raise_if_denied()
+        except ModelRequestLimitReached as error:
+            print(str(error), file=sys.stderr, flush=True)
+            return_code = 1
+        return original(return_code)
+
+    hermes_main._exit_after_oneshot = exit_with_limit_cause
+    try:
+        yield
+    finally:
+        hermes_main._exit_after_oneshot = original
+
+
 def main(argv=None):
     """Preserve Hermes -z and all model/provider/toolset/usage-file arguments."""
     arguments = list(sys.argv[1:] if argv is None else argv)
@@ -99,12 +128,19 @@ def main(argv=None):
         # main's import performs profile/.env initialization. Import it before
         # the vision module freezes its optional runtime settings.
         sys.argv = ['hermes', *arguments]
-        with model_request_limit(Path(__file__).resolve().parents[1]/'config/model-request-limit.json'):
-            hermes_main = importlib.import_module('hermes_cli.main')
-            install_auxiliary_vision_guard()
-            # Original main owns startup, plugins, default toolsets and the public
-            # oneshot runner, including process cleanup and its exit status.
-            return hermes_main.main()
+        with model_request_limit(Path(__file__).resolve().parents[1]/'config/model-request-limit.json') as gate:
+            try:
+                if gate is not None:
+                    gate.check_available()
+                hermes_main = importlib.import_module('hermes_cli.main')
+                install_auxiliary_vision_guard()
+                # Original main owns startup, plugins, default toolsets and the public
+                # oneshot runner, including process cleanup and its exit status.
+                with guard_oneshot_limit_exit(hermes_main, gate):
+                    return hermes_main.main()
+            finally:
+                if gate is not None:
+                    gate.raise_if_denied()
     finally:
         sys.argv = original_argv
         if added_path:

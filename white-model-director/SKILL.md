@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.10.1
+version: 9.10.2
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -140,6 +140,8 @@ EEVEE需要有效照明与正确shader；清空场景或自建场景后必须先
 相机以真正机位与目标判断。新azimuth的0=参考前方-Y、+90=右+X、-90=左-X、180=后+Y。新camera.elevation_deg是机位相对目标的仰角，**+20表示高机位向下俯视20度，-20表示低机位向上仰视20度**。旧pitch_deg是相机朝向角，符号不同，不能混用；下文旧pitch映射表只用于旧helper。position/look_at自定义时核对真实camera.location与目标方向，不能只依据“fixed/full_body”字段认定角度已实现。
 
 固定全景可用`wm_agent_camera_full(job_id, camera_spec, actor_ids=None, focus_objects=None)`复用已校准镜头求解，保持明确方位与俯角并覆盖真实动作范围；实际参数按原文填写。参考信息提供具体用法，不能覆盖的镜头仍可直接bpy实现。
+
+“人物全身与脚下地面可见”通常只需以人物动作范围构图并保留脚下空间，地面作为环境真实渲染；不要因此把整块大地面放入`focus_objects`，否则工具会按整个地面边界拉远镜头。只有原文明示整个场地/地面边界都须入镜时，才把其全部几何纳入重点对象。检查工具返回的人物投影高度比例与像素高度，并结合原文判断人物大小是否合理；全身入框不能证明画面足以看清动作。
 
 camera_full拟合阶段最多检查12代表帧，包含首尾，返回`visibility.helper_sample_frames`/`helper_sample_scope`；`backend_full_frame_visibility_required=True`说明仍需后台独立全片检查。代表帧通过不等于整片无遮挡。camera_check默认全片，长视频可以`frame_start`/`frame_end`分段调用并如实说明scope，正式提交后的独立后台仍逐帧检查全片。
 

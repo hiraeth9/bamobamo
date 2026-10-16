@@ -1,9 +1,12 @@
 import sys
 import unittest
+import numpy as np
 from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
-from agent_camera_quality import normalize_requirements, REGIONS, DEFAULT_REGIONS
+from agent_camera_quality import (normalize_requirements, REGIONS, DEFAULT_REGIONS,
+                                  _actor_framing_sample, merge_actor_framing,
+                                  actor_framing_feedback)
 
 
 class CameraContractTests(unittest.TestCase):
@@ -68,6 +71,36 @@ class CameraContractTests(unittest.TestCase):
                       self.contract(expected_elevation_deg=20)]:
             with self.subTest(value=value),self.assertRaises((ValueError,TypeError)):
                 normalize_requirements(value,'job',1,600)
+
+
+class ActorFramingTests(unittest.TestCase):
+    def sample(self, frame=1, height=.095, camera='Wide', framing='full_body'):
+        uv=np.asarray([[.4,.3,3.],[.6,.3+height,3.]])
+        return _actor_framing_sample('A',camera,framing,['head'],frame,uv,[640,360])
+
+    def test_small_subject_returns_dimensions_and_advice_without_a_gate(self):
+        value=self.sample()
+        self.assertAlmostEqual(value['height_fraction_range'][0],.095)
+        self.assertAlmostEqual(value['height_pixels_range'][0],34.2)
+        self.assertAlmostEqual(value['projected_bbox_area_fraction_range'][0],.2*.095)
+        self.assertIn('不作为失败门槛',actor_framing_feedback([value])[0])
+        self.assertNotIn('passed',value)
+
+    def test_aggregation_covers_both_measured_ends_without_claiming_middle_frames(self):
+        first=self.sample();last=self.sample(frame=180,height=.4)
+        values=merge_actor_framing([], [first,last])
+        self.assertEqual(values[0]['sample_count'],2)
+        self.assertEqual(values[0]['frame_range'],[1,180])
+        self.assertAlmostEqual(values[0]['height_pixels_range'][0],34.2)
+        self.assertAlmostEqual(values[0]['height_pixels_range'][1],144.)
+        self.assertEqual(first['sample_count'],1)
+
+    def test_actor_regions_and_camera_views_are_not_combined_with_full_body(self):
+        values=merge_actor_framing([], [self.sample(),self.sample(camera='Close'),
+                                       self.sample(framing='regions')])
+        self.assertEqual(len(values),3)
+        self.assertEqual(values[0]['regions'],[])
+        self.assertEqual(values[2]['regions'],['head'])
 
 
 if __name__=='__main__':unittest.main()
