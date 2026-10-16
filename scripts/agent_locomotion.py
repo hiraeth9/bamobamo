@@ -13,7 +13,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 SOURCE_IDS = {'guard': 'mixamo.basic.idle', 'walk': 'mixamo.basic.walk',
-              'run': 'mixamo.basic.run'}
+              'run': 'mixamo.basic.run', 'standing': 'quaternius.idle_loop'}
 
 
 def _number(value, label):
@@ -175,7 +175,7 @@ def apply_locomotion(job_id, actor_id, path, event_id='locomotion_base', *, prio
     from agent_motion_timeline import (STORE, _read, _require_registered_animation,
                                        register_event, motion_commit)
     from locomotion_gait import LocomotionGait
-    from duel_scene import Actor
+    from duel_scene import Actor, point, smooth
 
     scene = bpy.context.scene
     if not isinstance(event_id, str) or not event_id.strip():
@@ -231,6 +231,7 @@ def apply_locomotion(job_id, actor_id, path, event_id='locomotion_base', *, prio
                                pole_directions={})
         view.set_pose = lambda pose: set_pose(arm, recipe_pose_adapter(pose))
         gait = LocomotionGait(view, sources, fps=fps)
+        previous_poles, restart_poles = {}, {}
         distance = 0.
         previous = path[0]
         for index, sample in enumerate(path):
@@ -268,9 +269,25 @@ def apply_locomotion(job_id, actor_id, path, event_id='locomotion_base', *, prio
                              'pole': list(Actor.pole_location(view, key.removesuffix('Foot'),
                                                             'Leg', 'UpLeg', feet['desired'][key]))}
                        for key in ('LeftFoot', 'RightFoot')}
+            if gait.standing_amount:
+                for side in ('Left', 'Right'):
+                    key = side + 'Foot'
+                    origin = point(arm, side + 'UpLeg')
+                    upright_pole = origin.lerp(feet['desired'][key], .5) + view.forward * .7
+                    targets[key]['pole'] = list(Vector(targets[key]['pole']).lerp(upright_pole, gait.standing_amount))
+            if gait.was_moving and gait.resume_pose is not None and gait.pose_resume_age < .22:
+                if gait.pose_resume_age == 0:
+                    restart_poles = {key: value.copy() for key, value in previous_poles.items()}
+                amount = smooth(gait.pose_resume_age / .22)
+                for key, pole in restart_poles.items():
+                    targets[key]['pole'] = list(pole.lerp(Vector(targets[key]['pole']), amount))
+            previous_poles = {key: Vector(value['pole']) for key, value in targets.items()}
             applied = _apply_targets_resolved(actor, info, targets, frame, 1)
             bpy.context.view_layer.update()
-            keys.append({'frame': frame, 'interpolation': 'linear', 'pose': read_pose(arm, evaluated=True),
+            actual_pose = read_pose(arm, evaluated=True)
+            gait.remember_pose({name: (Vector(value['location']), Quaternion(value['rotation_quaternion']),
+                                      Vector(value['scale'])) for name, value in actual_pose.items()})
+            keys.append({'frame': frame, 'interpolation': 'linear', 'pose': actual_pose,
                          'root': list(root.location), 'root_rotation_quaternion': list(root.rotation_quaternion),
                          'root_scale': list(root.scale)})
             for target in applied['targets']:
@@ -305,7 +322,8 @@ def apply_locomotion(job_id, actor_id, path, event_id='locomotion_base', *, prio
                      'sha256': hashlib.sha256(Path(__file__).with_name('locomotion_gait.py').read_bytes()).hexdigest(),
                      'adapter_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                      'fps': fps, 'phase_continuous': True, 'root_space': 'world_metres',
-                     'calibration_scope': 'Original Idle/Walk/Run, flat world-Z=0 floor, upright unparented unit-scale actor root'},
+                     'calibration_scope': 'Original Walk/Run; calibrated standing support on flat world-Z=0 floor, upright unparented unit-scale actor root',
+                     'standing_reference': gait.standing_reference},
                  'locomotion_measurements': records}
         for preserved in outside:
             register_event(job_id, actor_id, preserved['event_id'], preserved)

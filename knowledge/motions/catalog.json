@@ -2808,7 +2808,10 @@
         "刺拳直拳组合",
         "一二连拳",
         "jab cross",
-        "Jab Cross"
+        "Jab Cross",
+        "连拳",
+        "连续出拳",
+        "组合拳"
       ],
       "registered_ids": [],
       "registration_scope": null,
@@ -3420,7 +3423,10 @@
         "格斗站姿",
         "警戒",
         "guard",
-        "Mma Idle"
+        "Mma Idle",
+        "防守待机",
+        "防守站姿",
+        "护架"
       ],
       "registered_ids": [
         "guard"
@@ -3580,7 +3586,8 @@
         "踢击",
         "踢腿",
         "kick",
-        "Mma Kick"
+        "Mma Kick",
+        "踢"
       ],
       "registered_ids": [
         "kick"
@@ -9613,7 +9620,9 @@
         "向后倒地",
         "被击倒",
         "fall back",
-        "Death01"
+        "Death01",
+        "倒地",
+        "倒下"
       ],
       "registered_ids": [
         "fall_back"
@@ -11624,7 +11633,9 @@
         "walk stop",
         "stop",
         "cmu.16_33",
-        "16_33"
+        "16_33",
+        "走路后停下",
+        "走停"
       ],
       "registered_ids": [],
       "source_fps": 30.0,
@@ -12220,7 +12231,8 @@
         "front kick",
         "kick",
         "cmu.144_05",
-        "144_05"
+        "144_05",
+        "踢"
       ],
       "registered_ids": [],
       "source_fps": 30.0,
@@ -12523,7 +12535,8 @@
         "block",
         "left blocks",
         "cmu.144_07",
-        "144_07"
+        "144_07",
+        "防守"
       ],
       "registered_ids": [],
       "source_fps": 30.0,
@@ -12826,7 +12839,8 @@
         "block",
         "right blocks",
         "cmu.144_26",
-        "144_26"
+        "144_26",
+        "防守"
       ],
       "registered_ids": [],
       "source_fps": 30.0,
@@ -13128,7 +13142,9 @@
         "backward",
         "backwards",
         "cmu.76_11",
-        "76_11"
+        "76_11",
+        "退步",
+        "撤步"
       ],
       "registered_ids": [],
       "source_fps": 30.0,

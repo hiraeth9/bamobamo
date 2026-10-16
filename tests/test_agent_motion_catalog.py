@@ -44,6 +44,60 @@ class MotionCatalogTests(unittest.TestCase):
             self.assertTrue(result['procedural_allowed'])
             self.assertFalse(result['unknown_action_rejected'])
 
+    def test_everyday_words_find_existing_measured_motion_sources(self):
+        expected = {'连拳': {'mixamo.combat_melee.jab_cross'},
+                    '连续出拳': {'mixamo.combat_melee.jab_cross'},
+                    '踢': {'mixamo.combat_melee.mma_kick', 'cmu.144_05'},
+                    '走停': {'cmu.16_33'}, '退步': {'cmu.76_11'},
+                    '倒地': {'quaternius.death01'},
+                    '防守': {'cmu.144_07', 'cmu.144_26'},
+                    '护架': {'mixamo.combat_melee.mma_idle'}}
+        for query, identifiers in expected.items():
+            result = motion.search_motions(query, limit=100, usable_only=True, catalog=self.catalog)
+            self.assertTrue(identifiers <= {entry['motion_id'] for entry in result['candidates']}, query)
+            self.assertTrue(result['procedural_allowed'])
+            self.assertFalse(result['unknown_action_rejected'])
+        # These terms improve retrieval without certifying named combinations
+        # inside the two CMU boxing clips or inventing a forward fighting step.
+        self.assertFalse({'cmu.79_08', 'cmu.80_10'} & {entry['motion_id'] for entry in
+            motion.search_motions('连拳', limit=100, catalog=self.catalog)['candidates']})
+
+    def test_public_core_accepts_everyday_terms_without_promoting_quality(self):
+        identifiers = {'cmu.16_33', 'cmu.76_11', 'cmu.144_05', 'cmu.144_07',
+                       'cmu.144_26', 'quaternius.death01'}
+        core = {'entries': [entry for entry in self.catalog['entries'] if entry['motion_id'] in identifiers]}
+        before = copy.deepcopy(core)
+        for query in ('走停', '退步', '踢', '防守', '倒地'):
+            result = motion.search_motions(query, usable_only=True, catalog=core)
+            self.assertTrue(result['candidates'], query)
+            self.assertTrue(all(entry['sampling_available'] and entry['requires_semantic_review']
+                                for entry in result['candidates']))
+        self.assertEqual(core, before)
+        unknown = motion.search_motions('用手在空中写一个螺旋星图', catalog=core)
+        self.assertEqual(unknown['candidates'], [])
+        self.assertTrue(unknown['procedural_allowed'])
+        self.assertFalse(unknown['unknown_action_rejected'])
+
+    def test_generic_idle_is_retained_with_explicit_guard_semantics_feedback(self):
+        idle = next(entry for entry in self.catalog['entries'] if entry['motion_id'] == 'quaternius.idle_loop')
+        before = copy.deepcopy(idle)
+        result = motion.search_motions('格斗待机', catalog={'entries': [idle]})
+        self.assertEqual(result['candidates'][0]['motion_id'], idle['motion_id'])
+        self.assertTrue(any('普通站立待机' in reason and '没有格斗护架验证' in reason
+                            for reason in result['candidates'][0]['match_reasons']))
+        self.assertEqual(idle, before)
+        self.assertEqual(motion.search_motions('格斗待机', catalog=self.catalog)['candidates'][0]['motion_id'],
+                         'mixamo.combat_melee.mma_idle')
+
+    def test_daily_aliases_survive_normal_catalog_refresh(self):
+        refreshed = motion.build_catalog()
+        for query, identifier in (('连拳', 'mixamo.combat_melee.jab_cross'),
+                                  ('踢', 'cmu.144_05'), ('踢', 'mixamo.combat_melee.mma_kick'),
+                                  ('走停', 'cmu.16_33'), ('退步', 'cmu.76_11'),
+                                  ('倒地', 'quaternius.death01'), ('防守', 'cmu.144_07')):
+            self.assertIn(identifier, {entry['motion_id'] for entry in
+                motion.search_motions(query, limit=100, catalog=refreshed)['candidates']})
+
     def test_right_hand_straight_punch_prefers_specific_source(self):
         result = motion.search_motions('B用右手直拳攻击A', catalog=self.catalog)
         self.assertEqual(result['candidates'][0]['motion_id'], 'quaternius.punch_cross')

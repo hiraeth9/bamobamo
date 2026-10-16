@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.10.2
+version: 9.10.4
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -34,6 +34,8 @@ metadata:
 
 每次MCP execute_code的namespace可能独立。每段代码self-contained：自己import，使用bpy.data重新取得对象，分析从已有agent_analysis的analysis字段读取或在本段显式定义，函数在本段定义后调用。不能依赖前次局部analysis、人物变量或capture_screenshot等函数仍存在；场景数据持久不表示Python局部变量持久。最终提交段可用wm_agent_scene(job_id)复用已保存分析；只有本段取得analysis时才传analysis=analysis。
 
+按依赖合并工具操作：独立素材查询、motion_info和所需函数签名在同一次execute_code批量读取，返回紧凑事实；取得必要信息后登记完整序列并统一commit。避免逐个猜参数、逐片重复查询造成无效往返。预览仍等待真实异步结果，不能为省调用跳过检查或声称未验证的动作通过。
+
 把全部明确要求逐项解释，包含人物数量与身份、动作、顺序、目标与接触、时长、镜头、环境、风格和声音。使用宽松analysis dict，建议记录actors、requirements（原文逐字source_text与解释）、timeline、camera、implementation、approximate、unfulfilled、warnings。字段是建议，不是拒绝请求的固定动作schema。调用`print(bpy.wm_agent_analyze(job_id, analysis))`保存。困难要求也保留，说明构建方法或近似缺口；分析记录和自述不能作为完成证据。
 
 ## 固定动作库机器人与混合动作
@@ -62,6 +64,8 @@ metadata:
 
 每个动作都要检查可观测结果：真实接触、位移、关节和结束姿态。发现测量违背原文时先修复同一人物的目标、坐标转换或支撑，再预览/提交；工具ok、注释和分析里的动作名称不证明动作发生。这些是同骨架自由生成的通用方法，不要求用户使用专门提示词。
 
+区分动作过程和结束状态：“先抬手防守”需要实际抬手过程，不能第一帧已经护架就声称完成；选取低手准备段再衔接护架，或在保留全身素材的同时补局部过渡。“全程握拳”也必须检查真实指骨与手部皮肤，源文件叫拳击不保证双手始终闭合。
+
 自由bpy的新运动登记到场景并烘焙真实改变的位移、旋转、缩放及必要约束。当前MCP局部变量、临时handler和内存采样cache不承担持久化。每段保存来源和实际帧范围，不能把planning自述当动作已经应用。
 
 先设置真实FPS、帧范围与分辨率，再登记全部事件并统一commit。程序段需实际keyframes或targets。直接编辑Action/约束后调用`wm_agent_motion_commit(..., capture=True, event_id=..., frame_start=..., frame_end=...)`捕获成果；普通commit重放登记的计划，不能用来保存未登记的直接编辑。
@@ -76,9 +80,9 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 
 根轨迹用`root_strategy='trajectory'`与`root_path=[{'frame':61,'root':[0,-1.2,0]}]`，root为米；源裁剪用`source_window=[起点秒,终点秒]`。root_trajectory/source_window_frames不是执行字段。循环走跑可用loop=True、fit=False保留素材节奏；要求减速时必须实际降低根速度并安排刹步/足支撑，切到Idle+hold不能证明已减速。
 
-平地走、跑、减速和站稳可选`wm_agent_locomotion_apply(job_id, actor_id, path, event_id='locomotion_base', intent=原文意图)`，不新建人物。path覆盖每一个连续整数帧，每项`{'frame':帧号,'root':[世界米x,y,0],'yaw':弧度,'gait':'walk'/'run'/'idle'}`；这是内部路线参数，用户仍输入自然语言。由原文安排时间与合理速度，一个步态时钟连续驱动原Idle/Walk/Run、身体姿态和双足IK。移动中的刹车仍标walk/run，实际根速度缓降到零后标idle，给收脚落地留足时间；不允许用idle水平滑动模拟刹车。工具目前校准于世界Z=0、竖直无parent且单位scale的root，原FBX骨架.01缩放保持。其他地面、楼梯、腾空或翻窗继续自由bpy/IK构建，这个可选工具不限制提示词。完整轨迹、实际足支撑及源hash保存在场景，默认只返回摘要；运动后重新设置相机、实际预览并提交。
+原Beta平地走、跑、减速和站稳可选`wm_agent_locomotion_apply(job_id, actor_id, path, event_id='locomotion_base', intent=原文意图)`，不新建人物。path覆盖每一个连续整数帧，每项`{'frame':帧号,'root':[世界米x,y,0],'yaw':弧度,'gait':'walk'/'run'/'idle'}`；这是内部路线参数，用户仍输入自然语言。由原文安排时间与合理速度，一个步态时钟连续驱动原Walk/Run和双足IK；零速落脚后使用Quaternius待机的上身先验，并按真实腿长与落脚位置校正骨盆、固定下肢和脚趾；停步保留实际足位与朝向，不自动并足，不是完整原Idle回放。移动中的刹车仍标walk/run，实际根速度缓降到零后标idle，给收脚落地与站姿衔接留足时间；不允许用idle水平滑动模拟刹车。工具目前校准于世界Z=0、竖直无parent且单位scale的root，原FBX骨架.01缩放保持。其他人物、地面、楼梯、腾空或翻窗可用兼容素材及自由bpy/IK构建，这个可选工具不限制提示词。完整轨迹、实际足支撑及来源保存在场景，默认只返回摘要；运动后重新设置相机、实际预览并提交。
 
-已校准recipe适合作首次构建时可以复用。真实scene加载后，用`wm_agent_actor_adopt`登记其Beta人物并检查身份。完整`wm_agent_build/load`会构建和打开整个场景，不能用于向已经存在的多人时间线追加一个动作；旧wm_import或sequence_actions可能换人物/清空NLA，也不能直接用于局部修复。角色身份或绑定失败要修复真正机器人，不用proxy代替后报告完成。
+已校准recipe适合作首次构建时可以复用。上述站姿修正属于`wm_agent_locomotion_apply`，旧`single_plan.locomotion`构建路径尚未包含它，不能将两者视为同等验证。真实scene加载后，用`wm_agent_actor_adopt`登记其Beta人物并检查身份。完整`wm_agent_build/load`会构建和打开整个场景，不能用于向已经存在的多人时间线追加一个动作；旧wm_import或sequence_actions可能换人物/清空NLA，也不能直接用于局部修复。角色身份或绑定失败要修复真正机器人，不用proxy代替后报告完成。
 
 **手持/搬运/推拉/接触物品时必须建立真实接触关系。** 按原文选择物品轨迹驱动手部 IK，或手部驱动物品随动；整个接触窗口都要让实际手部与物品握点保持接触。至少采用下列一种方式：
 
@@ -113,12 +117,13 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 - `agent_leg_interactions.leg_strike_events`：原Beta站稳后的抬膝、前踢、收腿与落地，另一脚支撑。先commit护架、走停及目标基础运动再编译，变化后重新编译。目标太远先接近；攻击脚旧支撑先释放。持续行走与移动支撑须另行安排，不把它当作任意踢法工具。
 - `agent_contact_interactions.contact_events`：`start_frame < contact_frame <= release_frame < end_frame`，从当前链姿态平滑接触、保持同帧目标绑定、释放回当前基础动作。`chain`选真实手脚，`kind`保留开放意图；多人/双手可分别跟随同一物体不同握点。物品轨迹及人物根/脚步单独编排并先commit，修改基础动作后重新编译。此工具不新建人物、物品或相机。
 - `agent_ground_motion.ground_motion_events`：选择实际本地FBX及秒制`source_window`，把兼容单人地面运动先验按rest空间映射到原Beta。支持已验证的Rokoko 52/53骨源（Hips可在Armature对象），不能直接交给原65骨direct sampler。`blend_in_frames`从实际基础姿态过渡；实际根位置对齐，保留源垂直骨盆运动。`supports`可指定实际承重手脚的短窗口，起身及时释放手，末尾留`settle_frames`，应站起时设`expect_standing=True`。commit后`check_ground_motion`及默认检查量测实际全身皮肤对地、支撑及可选末尾站姿；先验适配不等于通用受力击倒或自碰撞求解。
+- `agent_hand_pose.hand_pose_events`：先commit实际全身素材，再按`start_frame/end_frame`给`hands=('Left','Right')`或单手生成手指局部层。默认`finger_curl_deg=65`、`blend_in_frames=6`、`blend_out_frames=6`，从当帧素材手势平滑握紧并释放回素材；全程紧拳可把两个blend都设0，末尾保持可设`blend_out_frames=0`。只接管实际手指，不替换手腕、手臂、身体或根。返回普通plan，register_interaction后统一commit，须用真实手部近景和指链检查闭合；握拳不证明抓物接触或全身动作自然。
 
 攻击的`outcome`按原文区分hit、block、miss：格挡绑定真实格挡部位或物体，落空使用偏置拳路并测预定擦过点净距。`verify_interaction`分别返回hit_confirmed、block_confirmed和miss_confirmed；格挡和落空不触发命中受击反应。擦过点检查不是全身连续碰撞检测。
 
 验收时逐帧实测实际evaluated手部皮肤到物品握点/表面的距离，接触窗口内最大误差以约0.03米为起点，按实际抓法调整并说明。analysis记录驱动方式、接触窗口与实测误差。物品轨迹可由关键帧生成，双手IK须从它的同帧握点求解；手驱动物品时，物品由骨骼parent或约束随动。两种方式均需检查实际接触与释放，不能把互不关联的手和物品轨迹当成持有。
 
-设置`prop_id`或`wm_object_role='prop'`来区分物品与身体。原Beta蒙皮保持完整；附属物标记不能替代实际人物身份。
+设置`prop_id`或`wm_object_role='prop'`来区分物品与身体。当前登记人物的原始蒙皮保持完整；附属物标记不能替代实际人物身份。
 
 第一视角使用`wm_agent_camera_pov(job_id, actor_id, target_actor_id, start_frame, end_frame, fov=75, return_camera=..., shot_id='B_counter')`。actor_id拥有眼位和出拳手臂，target_actor_id是被观察者。完成双方运动后再烘焙相机；运动修改后沿用稳定shot_id重新生成镜头，避免留下旧窗口和遮罩。该工具只在指定渲染窗口遮住本人的头颈，保留原网格和蒙皮。双人recipe先用`camera.policy=fixed_full`构建，再adopt/capture，最后添加该第一视角；旧cinematic可能复制拆分身体，与新固定人物策略不兼容。实际帧检查本人的手臂与对方可见，切回全景检查双方全身。全身camera检查只覆盖全景时间段，第一视角采用相应的可见性要求。
 
@@ -126,12 +131,12 @@ capture和步态工具生成的完整最终姿态比已有事件优先级高；�
 
 按实际需求选择并组合两种构建方式：
 
-- 直接MCP execute_code使用bpy建立物品、材质、FK/IK、约束和关键帧，在已有Beta机器人上生成动作。允许新动作、任意人数及自定义镜头；不得播放无关素材、删去动作或用瞬移和T姿态填补衔接后虚称完成。
+- 直接MCP execute_code使用bpy建立物品、材质、FK/IK、约束和关键帧，在已有登记人物上生成动作。允许新动作、任意人数及自定义镜头；不得播放无关素材、删去动作或用瞬移和T姿态填补衔接后虚称完成。
 - 可选`print(bpy.wm_agent_build(job_id, single_plan=..., scene_plan=..., duel_plan=...))`异步构建已校准recipe，只传适用计划。用`bpy.wm_agent_build_status(job_id)`查询；ok=true只表示查询成功，只有status=complete且scene_available=True才表示成功完成。building/not_started/interrupted不能当完成；failed/interrupted若确有scene文件，可load修复但不能当合格产物。不重复启动或在execute_code里长时间循环等待。成功后必须`print(bpy.wm_agent_load(job_id))`加载真正构建场景，再检查、补充或修改；单有计划或build成功标记不能提交空白或上个任务场景。recipe失败时可修正或改用直接构建。
 
-人物必须保留固定Beta机器人原始skin mesh和真实绑定。ARMATURE骨架、骨骼显示和custom_shape属于视口辅助，不会直接渲染成人物；bone-parent几何、CURVE或其他表示可用于物品和辅助控制，不替代机器人的身体。仅有三副骨架不等于成片里有三个人。检查对象hide_render、collection和view layer可见性；动画、接触、身体数量与全身事实依据evaluated/deformed可见几何和实际渲染帧，不仅检查armature.location或骨骼关键帧。要求举手招呼时核对实际手部几何的抬手与招呼轨迹。
+人物必须保留当前登记角色的原始skin mesh和真实绑定（本机Beta或公开CC0人物）。ARMATURE骨架、骨骼显示和custom_shape属于视口辅助，不会直接渲染成人物；bone-parent几何、CURVE或其他表示可用于物品和辅助控制，不替代机器人的身体。仅有三副骨架不等于成片里有三个人。检查对象hide_render、collection和view layer可见性；动画、接触、身体数量与全身事实依据evaluated/deformed可见几何和实际渲染帧，不仅检查armature.location或骨骼关键帧。要求举手招呼时核对实际手部几何的抬手与招呼轨迹。
 
-agent_rig_geometry.attach_rest_proxy保留用于隔离诊断。默认成片缺身体时修复Beta机器人资产、网格可见性和skin绑定；分段刚性代理不能替代原机器人。新任务提交将核对真实角色身份，历史场景和旧协议保留原记录。
+agent_rig_geometry.attach_rest_proxy保留用于隔离诊断。默认成片缺身体时修复当前登记人物的资产、网格可见性和skin绑定；分段刚性代理不能替代原机器人。新任务提交将核对真实角色身份，历史场景和旧协议保留原记录。
 
 网格vertex.co为对象局部坐标，实际evaluated world vertex=当前帧evaluated对象的matrix_world @ v.co。不要把world-space顶点再次叠加object.location、scale或parent；使用局部顶点配对象变换，或把世界点先转换到对象局部。物品bbox、接触和相机投影按实际evaluated world vertices检查；dimensions、名称或metadata位置不能证明真正几何位于目标位置。
 

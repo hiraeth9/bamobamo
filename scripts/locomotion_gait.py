@@ -22,6 +22,11 @@ def damp(current, target, dt, time_constant):
     return current + (target-current) * (1-math.exp(-dt/max(.001,time_constant)))
 
 
+def standing_weight(zero_age, *, landing_seconds=.28, settle_seconds=.30):
+    """Only settle a standing pose after the last swing foot has landed."""
+    return smooth((zero_age-landing_seconds)/settle_seconds)
+
+
 class LocomotionGait:
     """Call pose(), apply FK/root transforms, update, then call feet().
 
@@ -48,6 +53,19 @@ class LocomotionGait:
         self.last_toes = {}
         self.last_rotations = {}
         self.last_contact_weights = {}
+        self.zero_age = .58
+        self.standing_amount = 0.0
+        self.last_pose = None
+        self.resume_pose = None
+        self.pose_resume_age = .22
+        self.was_moving = False
+        self.has_moved = False
+        self.standing_reference = None
+        self.standing_pose = None
+        self.standing_ankles = {}
+        self.standing_rotations = {}
+        self.standing_toe_z = {}
+        self.stop_standing_pose = None
         self.periods = {name:sources.ends[name]-1 for name in ('guard','walk','run')}
         self.distances = {name:(sources.root_motion[name][-1]-sources.root_motion[name][0]).xy.length
                           for name in ('walk','run')}
@@ -81,7 +99,124 @@ class LocomotionGait:
             self.last_toes[side]=toe.copy()
             self.last_rotations[side]=self._rotation(side)
             self.anchors[side]=toe.copy();self.anchor_yaws[side]=root_yaw
+        if 'standing' in sources.ends:
+            self._calibrate_standing(root_yaw)
         actor.set_pose(pose_backup);bpy.context.view_layer.update()
+
+    def _calibrate_standing(self, root_yaw):
+        """A relaxed source torso plus target-sized, parallel flat support.
+
+        This is a standing-support correction, not an untouched playback of
+        the source: its Beta FK feet are staggered and require leg IK below.
+        """
+        actor=self.actor;arm=actor.arm
+        reference_time=1.2
+        actor.set_pose(self.sources.sample('standing',1+reference_time*self.fps))
+        bpy.context.view_layer.update()
+        hips=arm.pose.bones[PREFIX+'Hips']
+        across=point(arm,'LeftUpLeg')-point(arm,'RightUpLeg')
+        yaw=math.atan2(across.y,across.x)-root_yaw
+        world=arm.matrix_world@hips.matrix
+        pivot=world.translation.copy()
+        from mathutils import Matrix
+        world=Matrix.Translation(pivot)@Quaternion((0,0,1),-yaw).to_matrix().to_4x4()@Matrix.Translation(-pivot)@world
+        hips.matrix=arm.matrix_world.inverted()@world
+        bpy.context.view_layer.update()
+        # Keep the measured flat source sole orientation, but use the relaxed
+        # reference's fixed toe articulation, so a looping toe never curls into
+        # the floor after the ankle has already stopped.
+        for side in ('Left','Right'):
+            foot=arm.pose.bones[PREFIX+side+'Foot']
+            matrix=arm.matrix_world@foot.matrix
+            flat=Quaternion((0,0,1),root_yaw)@self.flat_rotations[side]
+            ankle=point(arm,side+'Foot')
+            local_tip=matrix.to_quaternion().inverted()@(point(arm,side+'ToeBase')-ankle)
+            direction=flat@local_tip
+            heading=math.atan2(direction.x,-direction.y)
+            flat=Quaternion((0,0,1),root_yaw-heading)@flat
+            self.standing_rotations[side]=Quaternion((0,0,1),-root_yaw)@flat
+            matrix=flat.to_matrix().to_4x4();matrix.translation=ankle
+            # matrix_world includes the FBX's centimetre scale.
+            matrix=matrix@Matrix.Diagonal((*arm.matrix_world.to_scale(),1))
+            foot.matrix=arm.matrix_world.inverted()@matrix
+        bpy.context.view_layer.update()
+        hip=point(arm,'Hips');root=actor.root.location
+        heights=[]
+        self.standing_hip=Quaternion((0,0,1),-root_yaw)@(hip-root)
+        self.standing_top_offsets={}
+        self.leg_lengths={}
+        self.foot_tips={}
+        for side in ('Left','Right'):
+            top=point(arm,side+'UpLeg');knee=point(arm,side+'Leg');ankle=point(arm,side+'Foot')
+            upper=(top-knee).length;lower=(knee-ankle).length
+            self.leg_lengths[side]=(upper,lower)
+            self.standing_top_offsets[side]=Quaternion((0,0,1),-root_yaw)@(top-hip)
+            self.foot_tips[side]=self._rotation(side).inverted()@(point(arm,side+'ToeBase')-ankle)
+            height=ankle.z-self._skin_min(side)+.006
+            lateral=(top-hip).dot(actor.lateral)
+            goal=root+actor.lateral*lateral
+            goal.z=height
+            reach_sq=upper*upper+lower*lower-2*upper*lower*math.cos(math.radians(170))
+            horizontal=(top-goal).xy.length
+            heights.append(height+math.sqrt(max(0,reach_sq-horizontal*horizontal))-(top.z-hip.z))
+            self.standing_ankles[side]=Quaternion((0,0,1),-root_yaw)@(goal-root)
+            self.standing_toe_z[side]=height+(self.standing_rotations[side]@self.foot_tips[side]).z
+        world=arm.matrix_world@hips.matrix;world.translation.z+=min(heights)-hip.z
+        hips.matrix=arm.matrix_world.inverted()@world
+        bpy.context.view_layer.update()
+        self.standing_pose={bone.name:(bone.location.copy(),bone.rotation_quaternion.copy(),bone.scale.copy())
+                            for bone in arm.pose.bones}
+        self.standing_hip.z=min(heights)-root.z
+        self.root_to_hip=(hips.bone.matrix_local.to_3x3().inverted()@
+                          arm.matrix_world.to_3x3().inverted()@
+                          Quaternion((0,0,1),root_yaw).to_matrix())
+        self.standing_reference={'motion_id':'quaternius.idle_loop',
+            'source_window_seconds':[0.,self.sources.metadata['standing']['duration_s']],
+            'calibration_time_seconds':reference_time,'corrections':['pelvis_heading','target_leg_length_height',
+            'initial_parallel_under_hip_support','stop_preserves_world_toe_anchors',
+            'fixed_lower_body_and_toes'], 'raw_source_playback':False}
+
+    def _stop_rotation(self, side, root_yaw):
+        flat=Quaternion((0,0,1),root_yaw)@self.flat_rotations[side]
+        source_direction=flat@self.foot_tips[side]
+        actual_direction=self.stop_feet[side]['rotation']@self.foot_tips[side]
+        delta=math.atan2(actual_direction.x,-actual_direction.y)-math.atan2(source_direction.x,-source_direction.y)
+        return Quaternion((0,0,1),delta)@flat
+
+    def _prepare_stop_standing(self):
+        """Fit pelvis height over the actual support, without shuffling feet."""
+        yaw=self.actor.root.rotation_euler.z;unrotate=Quaternion((0,0,1),-yaw)
+        ankles={}
+        for side in ('Left','Right'):
+            toe=self.stop_feet[side]['toe'].copy();toe.z=self.standing_toe_z[side]
+            ankle=toe-self._stop_rotation(side,yaw)@self.foot_tips[side]
+            ankles[side]=unrotate@(ankle-self.actor.root.location)
+        middle=(ankles['Left']+ankles['Right'])*.5
+        neutral_middle=(self.standing_ankles['Left']+self.standing_ankles['Right'])*.5
+        hip=self.standing_hip.copy();hip.x+=middle.x-neutral_middle.x;hip.y+=middle.y-neutral_middle.y
+        heights=[]
+        for side in ('Left','Right'):
+            upper,lower=self.leg_lengths[side]
+            top=hip+self.standing_top_offsets[side]
+            horizontal=(top-ankles[side]).xy.length
+            reach_sq=upper*upper+lower*lower-2*upper*lower*math.cos(math.radians(170))
+            heights.append(ankles[side].z+math.sqrt(max(0,reach_sq-horizontal*horizontal))-self.standing_top_offsets[side].z)
+        hip.z=min(heights)
+        self.stop_standing_pose=dict(self.standing_pose)
+        loc,rot,scale=self.standing_pose[PREFIX+'Hips']
+        self.stop_standing_pose[PREFIX+'Hips']=(loc+self.root_to_hip@(hip-self.standing_hip),rot,scale)
+
+    def remember_pose(self, pose):
+        """Remember actual post-IK channels for a subsequent restart blend."""
+        self.last_pose={name:tuple(value.copy() for value in channels) for name,channels in pose.items()}
+
+    def _standing(self):
+        pose=self.sources.sample('standing',1+(self.elapsed*self.fps)% (self.sources.ends['standing']-1))
+        for name,channels in (self.stop_standing_pose or self.standing_pose).items():
+            if name.removeprefix(PREFIX).startswith(('Hips','LeftUpLeg','RightUpLeg','LeftLeg','RightLeg',
+                                                   'LeftFoot','RightFoot','LeftToe','RightToe')):
+                pose[name]=channels
+        return pose
 
     def _rotation(self, side):
         return (self.actor.arm.matrix_world @ self.actor.arm.pose.bones[PREFIX+side+'Foot'].matrix).to_quaternion()
@@ -109,6 +244,23 @@ class LocomotionGait:
         self.effective_speed=max(abs(speed),turn_speed)
         was_active=self.active
         self.active=self.effective_speed>.025
+        moving=self.effective_speed>=1e-6
+        if moving and not self.was_moving:
+            self.resume_pose=self.last_pose
+            self.pose_resume_age=0.0
+            self.stop_standing_pose=None
+            if self.last_pose is not None:
+                self.stop_feet={side:{'toe':self.last_toes[side].copy(),
+                                      'rotation':self.last_rotations[side].copy()}
+                                for side in ('Left','Right')}
+        elif moving:
+            self.pose_resume_age+=self.dt
+        self.was_moving=moving
+        self.has_moved=self.has_moved or moving
+        self.zero_age=self.zero_age+self.dt if not moving else 0.0
+        self.standing_amount=standing_weight(self.zero_age) if self.standing_pose is not None else 0.0
+        if self.standing_pose is not None and not moving and self.has_moved and self.stop_feet is not None and self.stop_standing_pose is None:
+            self._prepare_stop_standing()
         if self.active:
             if not was_active and self.stop_feet is not None:
                 # The initial braking snapshot can contain a raised/running
@@ -149,7 +301,12 @@ class LocomotionGait:
             if short.startswith(('Spine','Neck','Head','LeftShoulder','RightShoulder',
                                  'LeftArm','RightArm','LeftForeArm','RightForeArm','LeftHand','RightHand')):
                 locomotion[name]=blend_pose({name:idle[name]},{name:locomotion[name]},effort)[name]
-        return blend_pose(idle,locomotion,self.motion_weight)
+        pose=blend_pose(idle,locomotion,self.motion_weight)
+        if self.standing_pose is not None and self.standing_amount>0:
+            pose=blend_pose(pose,self._standing(),self.standing_amount)
+        if moving and self.resume_pose is not None and self.pose_resume_age<.22:
+            pose=blend_pose(self.resume_pose,pose,smooth(self.pose_resume_age/.22))
+        return pose
 
     def _contact_weight(self, side):
         phase=self.phase%1
@@ -169,7 +326,8 @@ class LocomotionGait:
         record.setdefault('stance',{});record.setdefault('swing',{});record.setdefault('toe_stance',{})
         record.update({'gait_phase':round(self.phase%1,6),'gait_cycle':math.floor(self.phase),
                        'run_weight':round(self.run_weight,6),'stride_scale':round(self.stride_scale,6),
-                       'motion_weight':round(self.motion_weight,6)})
+                       'motion_weight':round(self.motion_weight,6),
+                       'standing_weight':round(self.standing_amount,6)})
         if not self.active and self.stop_feet is None:
             self.stop_feet={side:{'toe':self.last_toes[side].copy(),'rotation':self.last_rotations[side].copy()}
                             for side in ('Left','Right')}
@@ -206,11 +364,23 @@ class LocomotionGait:
                     if amount<1:weight=0.0
             else:
                 state=self.stop_feet[side]
-                amount=smooth(self.stop_age/.28)
-                flat_rotation=Quaternion((0,0,1),root_yaw)@self.flat_rotations[side]
+                # The first eased path delta may be below the gait's contact
+                # threshold. Hold the actual standing orientation until the
+                # stepping resume blend starts, rather than snapping it back
+                # to the old source-Idle foot on that first moving interval.
+                amount=0.0 if self.was_moving else smooth(self.stop_age/.28)
+                flat_rotation=(self._stop_rotation(side,root_yaw) if self.standing_pose is not None and self.has_moved
+                               else Quaternion((0,0,1),root_yaw)@self.flat_rotations[side])
                 rotation=state['rotation'].slerp(flat_rotation,amount)
                 desired_toe=state['toe'].copy()
-                desired_toe.z+=(self.flat_toe_z[side]-desired_toe.z)*amount
+                floor_z=self.standing_toe_z[side] if self.standing_pose is not None else self.flat_toe_z[side]
+                desired_toe.z+=(floor_z-desired_toe.z)*amount
+                foot_settle=1.0 if self.standing_pose is not None and not self.has_moved else 0.0
+                if foot_settle>0:
+                    standing_rotation=Quaternion((0,0,1),root_yaw)@self.standing_rotations[side]
+                    rotation=state['rotation'].slerp(standing_rotation,foot_settle)
+                    neutral=root+Quaternion((0,0,1),root_yaw)@self.standing_ankles[side]+standing_rotation@local_tip
+                    desired_toe=state['toe'].lerp(neutral,foot_settle)
                 self.anchors[side]=desired_toe.copy();self.anchor_yaws[side]=root_yaw
                 if amount<1:weight=0.0
             desired_ankle=desired_toe-rotation@local_tip

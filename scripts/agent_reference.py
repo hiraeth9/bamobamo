@@ -92,7 +92,7 @@ def reference_info():
                 'sequence': 'MCP普通import agent_motion_sequence.library_sequence_events(job_id, actor_id, event_id, segments, start_frame=1, transition_frames=6)：segments指定实际motion_id、可选秒制source_window/time_scale。默认原速保留准备和恢复；源片有实测校准T帧前缀时排除该前缀，旧决斗短窗仅返回建议，不自动裁掉恢复。按实际源时长安排真实重叠过渡，返回开放plan.events和时序摘要。按摘要设置真实场景帧范围，登记完整序列后统一commit。它不把自然语言限制成动作枚举，不自动证明步态相位或接触匹配。',
                 'event': 'bpy.wm_agent_timeline_event(job_id, actor_id, event_id, event)：保存开放语义的运动方案，source=library/procedural/hybrid是来源分类。随后motion_commit实际执行。若覆盖自动保全的窗口外快照且没指定priority，新明确编辑自动提高优先级；priority_diagnostic返回effective_priority及shadowed_by_preserved_base，显式priority原样保留。',
                 'commit': 'bpy.wm_agent_motion_commit(job_id, actor_id)：组合已登记事件并烘焙完整通道；多个相关人物使用actor_id=["A","B"]，先计算基础姿态，再逐帧按实际依赖顺序求同帧IK并统一写回。先A打B再B反击可以交换顺序；真正同帧循环在修改动画前指出错误帧。dynamic_commit_order/dependency_windows描述实际调度。bpy直接构建后用capture=True, frame_start=..., frame_end=..., event_id=...捕获实际求值姿态；capture仍逐人操作。局部capture保留其他既有帧，actual_bake_range是实际保全范围。',
-                'locomotion': 'bpy.wm_agent_locomotion_apply(job_id, actor_id, path, event_id="locomotion_base", intent="原文走跑停要求")：可选已校准平地步态。path连续逐帧{frame,root:[世界米],yaw:弧度,gait:"walk"/"run"/"idle"}；一个相位时钟驱动原Idle/Walk/Run与双足IK，保存同骨架完整姿态并保全窗口外运动。刹车阶段仍用移动步态，真实根速度逐步减到零，留足落脚站稳时间。后来叠加挥手等局部层时读取本事件priority并设更高priority。仅支持世界Z=0、无parent/单位scale/竖直root；其他需求自由bpy实现，不限制提示词。',
+                'locomotion': 'bpy.wm_agent_locomotion_apply(job_id, actor_id, path, event_id="locomotion_base", intent="原文走跑停要求")：可选原Beta平地步态。path连续逐帧{frame,root:[世界米],yaw:弧度,gait:"walk"/"run"/"idle"}；一个相位时钟驱动原Walk/Run与双足IK，零速落脚后用Quaternius待机上身先验及按真实腿长校正的站姿，不是完整原Idle回放。保存同骨架完整姿态并保全窗口外运动。刹车阶段仍用移动步态，真实根速度逐步减到零，留足落脚站稳时间。后来叠加挥手等局部层时读取本事件priority并设更高priority。仅校准世界Z=0、无parent/单位scale/竖直root；其他人物或需求可用适配库素材及自由bpy实现，不限制提示词。',
                 'timeline': 'bpy.wm_agent_timeline_info(job_id, actor_id)：查询已登记段，稳定event_id替换局部计划，保留其他段。',
                 'controls': 'bpy.wm_agent_actor_controls(job_id, actor_id)；wm_agent_controls_match匹配当前FK末端，设置目标及IK权重后可capture烘焙。',
                 'check': 'bpy.wm_agent_motion_check(job_id, actor_id=None, check_camera=True)：真实几何与通道检查，默认复查已登记接触窗口及ground_motion的实际皮肤对地要求；empty表示没有登记该类要求，不能当作原文要求已满足。看passed与实际误差，不认证自然度。',
@@ -123,7 +123,7 @@ def reference_info():
             'procedural_example_note': '示例只说明JSON形状，四元数不是经过验收的招手姿态。按真实bone_roles与休止轴构建准备/动作/恢复关键帧；用户输入保持自然语言。',
             'root_strategy': 'source提取并累计素材平面根运动；trajectory使用root_path=[{"frame":61,"root":[0,-1.2,0]}]，root坐标为米；hold保持空间状态。source_window=[起点秒,终点秒]；root_trajectory/source_window_frames不是执行字段。masked overlays不独占根。循环走跑用loop=True、fit=False保持源节奏；减速要求实际根速度和刹步支撑，不是仅切Idle+hold。',
             'support': '现有走跑/翻窗/门窗/双人recipe可复用；完整build/load仅用于整场构建，不作为追加动作工具。',
-            'held_props': '手持/搬运/推拉/接触物品须通过真实目标绑定、骨骼parent或约束保证接触。IK先求值再烘焙完整姿态，正确烘焙后可mute以免二次求解；禁止未求值便关IK或仅让手与物品各自独立运动后声称接触。通过targets.binding和contact窗口登记接触，再检查实际末端与目标及保存重载结果；约束开关不是完成证据。为物品设置prop_id或wm_object_role="prop"；身体保持原Beta蒙皮，附属物不作为人物身份几何。',
+            'held_props': '手持/搬运/推拉/接触物品须通过真实目标绑定、骨骼parent或约束保证接触。IK先求值再烘焙完整姿态，正确烘焙后可mute以免二次求解；禁止未求值便关IK或仅让手与物品各自独立运动后声称接触。通过targets.binding和contact窗口登记接触，再检查实际末端与目标及保存重载结果；约束开关不是完成证据。为物品设置prop_id或wm_object_role="prop"；身体保持当前登记人物的原始蒙皮，附属物不作为人物身份几何。',
             'bound_contact_targets': {
                 'example': {'RightHand': {'binding': {'actor_id': 'B', 'bone': 'Head', 'local_point': [0, 0, 0]},
                               'effector_point': [0, 0, 0],
@@ -147,6 +147,10 @@ def reference_info():
                 'steps': 'support_step_events(job_id, actor_id, event_id, steps, root_path)：steps为{foot:"RightFoot",lift_frame:...,land_frame:...,position:[实际足底世界米]}列表，左右交替；root_path为{frame:...,root:[世界米]}列表。平地默认floor_z=0，真实足底支撑、抬脚弧线及有限髋部降低，不倒放前进Walk。',
                 'workflow': '生成helper只返回plan。print(register_interaction(job_id,plan))登记事件并保存紧凑检查要求；同event_id替换会清理该计划旧的多余子事件。相关人物统一motion_commit，再print(verify_interaction(job_id))复查实际结果。检查要求随scene保存，跨MCP调用无需保留局部plan变量；也兼容手工timeline_event和verify_interaction(job_id,plans)。不要打印整份每帧plan.events。',
                 'additional_modules': {
+                    'agent_hand_pose': {
+                        'functions': ['hand_pose_events'],
+                        'usage': 'hand_pose_events(job_id, actor_id, event_id, start_frame=..., end_frame=..., hands=("Left","Right"), finger_curl_deg=65, blend_in_frames=6, blend_out_frames=6)：先commit全身素材，再生成仅手指的握拳/释放层。左右可单选，in/out=0可全窗保持，curl=0可张开；默认平滑回到当帧素材手势。返回普通plan，register_interaction后统一commit。不接管手腕/手臂/身体/根，不创建人物。真实近景与指链仍需检查，不能把握拳当抓物接触验证。',
+                    },
                     'agent_leg_interactions': {
                         'functions': ['leg_strike_events'],
                         'usage': 'leg_strike_events(job_id, actor_id, event_id, target_binding, start_frame=..., impact_frame=..., end_frame=..., foot="RightFoot")：原Beta平地前踢，抬膝、伸击、收腿和落地，另一脚固定支撑。左右脚和斜向可变；先commit护架、走停和目标基础运动再编译，改变基础运动后重新编译。approach_required先接近，contact_release_required先释放攻击脚旧支撑；持续行走或移动支撑不能直接当静止前踢处理。不表示支持任意踢法。',
@@ -173,7 +177,7 @@ def reference_info():
             'path': str(PROJECT / 'scripts/agent_rig_geometry.py'),
             'usage': 'from agent_rig_geometry import attach_rest_proxy; mesh = attach_rest_proxy(armature, bone_names=None, radii=None, material=None)',
             'purpose': '可选休止姿态局部网格+Armature modifier，保留原骨架及动画，避免world-space与bone-parent重复变换。',
-            'scope': '隔离诊断的刚性分段白模代理；默认成片使用Beta原机器人。代理验证不表示解剖皮肤、动作自然度或接触物理通过。',
+            'scope': '隔离诊断的刚性分段白模代理；默认成片使用当前登记人物的原始skin（本机Beta或公开CC0人物）。代理验证不表示解剖皮肤、动作自然度或接触物理通过。',
         },
         'mesh_geometry_helper': {
             'module': 'agent_mesh_geometry',

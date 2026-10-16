@@ -25,9 +25,10 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--report', default=str(PROJECT / 'reports/agent_locomotion_validation_20261014.json'))
+    parser.add_argument('--output', help='Save the real scene here and print checks without writing a report')
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
     report_path = Path(args.report).resolve()
-    artifacts = report_path.with_suffix('')
+    artifacts = Path(args.output).resolve() if args.output else report_path.with_suffix('')
     artifacts.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
     temporary = tempfile.TemporaryDirectory(prefix='bamo_gait_adaptation_')
@@ -242,8 +243,11 @@ def main():
         'artifacts': {'scene': str(saved), 'scene_sha256': hashlib.sha256(saved.read_bytes()).hexdigest()},
         'elapsed_s': time.monotonic() - started,
         'scope': 'Real registered original Beta, 120-frame walk/run/brake/settle, weighted outside motion and other actor preservation, real skin/toe support and saved full-channel reload. No rendered-video or arbitrary-motion naturalness certification.'}
-    report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print('REGISTERED_GAIT', json.dumps({'passed': report['passed'], 'errors': errors, 'report': str(report_path)}), flush=True)
+    if not args.output:
+        report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    print('REGISTERED_GAIT', json.dumps({'passed': report['passed'], 'errors': errors, 'scene': str(saved),
+        'outside_error':maximum_outside,'other_actor_error':maximum_other,'same_id_error':same_id_error,
+        'toe_anchor_error_m':maximum_toe_anchor_error,'terminal_slip_m':terminal_slip,'reload_error':reload_error}), flush=True)
     temporary.cleanup()
     if not report['passed']:
         raise RuntimeError('Registered Beta locomotion regression failed')

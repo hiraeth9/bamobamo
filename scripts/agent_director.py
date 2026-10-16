@@ -28,6 +28,7 @@ def director_prompt(prompt, job_id, feedback=None):
 
 {scene_entry}
 通过MCP调用print(bpy.wm_agent_reference_info())查看真实素材、骨架、可复用构建器与接口。采用素材优先的混合运动：合适的素材负责全身主动作和发力节奏，动作之间平滑衔接，FK/IK负责局部接触与缺失动作。缺少同名文件不直接判无素材，先看实际语义和姿态；确实没有合适来源才生成对应动作。
+按依赖关系合并MCP操作：独立的素材查询、motion_info和所需函数签名可在一次execute_code中批量查看，输出紧凑结果；取得事实后批量登记完整素材序列并统一commit。不要逐个猜参数或为每个可独立查询的片段反复发起模型往返。预览仍异步等待真实结果，不能为省调用跳过必要检查或伪称动作通过。
 
 每次MCP execute_code的namespace可能独立，每段代码必须self-contained：自己import bpy及所需模块，从bpy.data重新查对象，分析从已有agent_analysis文档的analysis字段读取或在本段显式定义；函数也在本段定义后调用。不要依赖前次局部analysis、人物变量或capture_screenshot等函数仍存在。场景数据持久不等于Python局部变量持久。最终提交段若没有局部analysis，可调用wm_agent_scene(job_id)复用本任务已保存分析；只有本段显式取得analysis时才传analysis=analysis。
 
@@ -51,17 +52,18 @@ wm_agent_motion_apply对指定actor追加或替换指定事件的库运动；具
 interaction_helpers.additional_modules列出可选扩展：agent_leg_interactions.leg_strike_events生成平地站稳后的抬膝、前踢、收腿与落地，不直接覆盖仍在移动的支撑计划；agent_contact_interactions.contact_events在当前链基础姿态上平滑接触、跟随、释放，可让多人或双手绑定同一物体的不同握点，人物脚步和物品轨迹仍按原文另行规划；agent_ground_motion.ground_motion_events把兼容本地单人地面动作先验映射到原Beta，编译倒地/起身与实际支撑，需按当前动作衔接并检查地面。它们仍返回开放事件，须register_interaction和协调commit；改变基础动画后重新编译相关接触。motion_check和后台重载默认复查已登记ground_motion的实际皮肤对地及末尾站姿，不能只看手脚点到位。没有兼容源或需要其他动作时继续自由FK/IK，保留近似与缺口。
 先按原文设置真实FPS、帧范围与分辨率，再登记全部事件并统一commit。程序段使用实际keyframes/targets登记后再commit；直接编辑Action/约束后用motion_commit(capture=True, event_id=..., frame_start=..., frame_end=...)捕获成果，普通commit只重放已登记计划，不能用来保存未登记的直接编辑。
 接口报错是实际执行反馈；修复人物加载、绑定或片段，不用无关动作或简化人物代替。最终保存会检查新任务的人物身份和绑定。角色检查与媒体通过并不证明自然度；观看实际帧并保留真实缺口。
+动作过程与结束状态分别核对：先抬手防守要有从较低手位抬起的过程，不以首帧已经护架代替抬手。拳击素材也不保证全程握拳；明确要求时检查指骨/真实皮肤，必要时先commit全身素材，再用agent_hand_pose.hand_pose_events编译只覆盖手指的局部层，登记后统一commit并看真实手部。不要为修手指替换素材全身运动；手势闭合不证明抓物接触。
 手持/搬运/推拉/接触物品时，按原文选择物品轨迹驱动手部IK，或手部驱动物品随动；整个接触窗口内实际手部与物品握点须保持接触。可使用：①骨骼parent，先保存物品世界矩阵，将parent设为真实armature、parent_type='BONE'、parent_bone=实际手骨名，更新求值后恢复世界矩阵，松手解除随动并保持当帧世界矩阵；②CHILD_OF等约束跟随实际手骨；③物品使用真实关键帧轨迹，手部二骨IK每帧解到其实际握点，适用于多人持有同一物品。PoseBone世界矩阵是armature.matrix_world @ hand.matrix。
-IK必须先求值，再烘焙真实姿态，正确烘焙后允许mute约束。通过targets.binding与contact窗口登记接触，相关人物先登记事件再motion_commit(job_id,[相关actor_id])统一求同帧目标。瞬时击打命中后释放并收招，持续持有则保持握点跟随。motion_check和后台重载按实际手部皮肤到目标表面/握点的距离复查；约0.03米是容差起点，按实际抓法调整并说明。analysis记录驱动方式、窗口、实测误差及未完成内容，空接触记录不能证明原文要求已满足。为物品设置prop_id或wm_object_role='prop'，人物保持原Beta蒙皮。
+IK必须先求值，再烘焙真实姿态，正确烘焙后允许mute约束。通过targets.binding与contact窗口登记接触，相关人物先登记事件再motion_commit(job_id,[相关actor_id])统一求同帧目标。瞬时击打命中后释放并收招，持续持有则保持握点跟随。motion_check和后台重载按实际手部皮肤到目标表面/握点的距离复查；约0.03米是容差起点，按实际抓法调整并说明。analysis记录驱动方式、窗口、实测误差及未完成内容，空接触记录不能证明原文要求已满足。为物品设置prop_id或wm_object_role='prop'，人物保持当前登记角色的原始蒙皮。
 第一视角使用wm_agent_camera_pov，actor_id是出拳和持有眼位的人，target_actor_id是被观察者。先完成并烘焙双方运动，再烘焙相机；改变运动后重新生成该镜头。复用双人recipe时先设camera.policy=fixed_full再adopt/capture，避免旧cinematic拆分人物身体。第一视角段检查本人的出拳手臂和对方确实入画，切回全景再检查双方全身；只在全景的帧范围调用check_camera=True，不把第一视角误判为全身失败。
 </动作库机器人与混合运动>
 
 选择实现方式：
-- 可以直接execute_code使用bpy网格、材质、FK/IK、约束、动作曲线和关键帧，在已有Beta机器人上构建任何人数的当前场景。动作、接触、起收势、身体根轨迹、朝向、物品状态和镜头均由完整提示词决定；不要用T姿态、无关招式或瞬移填补衔接。
+- 可以直接execute_code使用bpy网格、材质、FK/IK、约束、动作曲线和关键帧，在已有登记人物上构建任何人数的当前场景。动作、接触、起收势、身体根轨迹、朝向、物品状态和镜头均由完整提示词决定；不要用T姿态、无关招式或瞬移填补衔接。
 - 已校准recipe适合时，可调用print(bpy.wm_agent_build({job}, single_plan=..., scene_plan=..., duel_plan=...))，只传选中的实际计划。该构建异步运行，调用print(bpy.wm_agent_build_status({job}))查看进度；ok=true仅表示查询成功，只有status=complete且scene_available=True才是成功完成，building/not_started/interrupted都不能当成功。不重复启动同一构建，不在execute_code里长时间循环等待。recipe报错时按反馈修正或改用直接构建，报错不等于整条用户需求不可执行；failed/interrupted若确有scene文件可load用于修复，不把它当合格产物。
 - recipe构建成功后必须调用print(bpy.wm_agent_load({job}))加载真正生成的scene，再检查、补充或修改它。只有计划文件或build成功标记，不代表当前MCP场景已加载或满足提示词。原场景、物品和动作可以继续编辑；不要提交仍是空白或上个任务的场景。
 
-人物必须使用固定Beta的原始skin mesh及正确绑定。ARMATURE骨架、骨骼显示和custom_shape仅用于视口，不是可渲染人物；bone-parent几何、CURVE或其它表示可用于物品和辅助目标，不能替代机器人的身体。检查对象的hide_render、所属collection和view layer可见性。不能只创建PersonA/B/C骨架后把actor_count自述当三个人已出现在视频中。动画、接触和全身事实要依据evaluated/deformed可见mesh的姿态与真实渲染帧，不只检查armature.location、骨骼关键帧或视口overlay；要求举手招呼时检查实际手部几何确有清晰抬手和招呼轨迹。
+人物必须使用当前登记角色的原始skin mesh及正确绑定（本机Beta或公开CC0人物）。ARMATURE骨架、骨骼显示和custom_shape仅用于视口，不是可渲染人物；bone-parent几何、CURVE或其它表示可用于物品和辅助目标，不能替代机器人的身体。检查对象的hide_render、所属collection和view layer可见性。不能只创建PersonA/B/C骨架后把actor_count自述当三个人已出现在视频中。动画、接触和全身事实要依据evaluated/deformed可见mesh的姿态与真实渲染帧，不只检查armature.location、骨骼关键帧或视口overlay；要求举手招呼时检查实际手部几何确有清晰抬手和招呼轨迹。
 
 agent_rig_geometry.attach_rest_proxy保留作隔离诊断，分段刚性代理不能替代默认机器人成片。人物缺身体时修复机器人资产加载和真实skin绑定；实际执行器中的可见身体与骨架身份必须一致。
 
