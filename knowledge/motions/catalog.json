@@ -7,16 +7,24 @@
   "entry_counts": {
     "character_asset": 2,
     "collection_candidate": 8,
-    "motion": 71,
+    "motion": 76,
     "motion_file_candidate": 80
   },
   "legacy_main_motion_count": 66,
   "bundled_core_motion_ids": [
+    "quaternius.punch_jab",
+    "quaternius.death01",
+    "quaternius.punch_cross",
     "quaternius.idle_loop",
     "quaternius.walk_loop",
-    "quaternius.sprint_loop"
+    "quaternius.sprint_loop",
+    "cmu.02_01",
+    "cmu.07_01",
+    "cmu.02_03",
+    "cmu.79_08",
+    "cmu.80_10"
   ],
-  "unique_asset_file_count": 156,
+  "unique_asset_file_count": 161,
   "staging_file_count": 92,
   "staging_fbx_count": 87,
   "staging_glb_count": 5,
@@ -9955,6 +9963,1061 @@
         "side",
         "phases",
         "root_metadata",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.02_01",
+      "name": "CMU 02_01 walk",
+      "asset": "bundled_assets/animations/cmu/02_01.fbx",
+      "asset_sha256": "302a397454f567bab9c0e2ffb423c45c32ca5e312d63887a019fc7f1f9961673",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "普通行走（真人动捕，Beta/CC0原速身体采样已验证；具体招式、支撑、接触和恢复仍待核查）",
+      "aliases": [
+        "走路",
+        "普通走路",
+        "步行",
+        "行走",
+        "walk",
+        "cmu.02_01",
+        "02_01"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        86.0
+      ],
+      "source_action": "02_01|02_01|02_01",
+      "duration_s": 2.8333333333333335,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "walk",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_not_naturalness",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "imported_source_frame_1",
+        "extraction": "planar_only_vertical_pelvis_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012245630194307265,
+            "end_displacement_m": [
+              0.048780541867017746,
+              -3.983386516571045,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.09941589832305908,
+            "extraction_equivalence_max_error_m": 1.4317526995497124e-06
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010765364059683166,
+            "end_displacement_m": [
+              0.04288389906287193,
+              -3.5018701553344727,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.08739840984344482,
+            "extraction_equivalence_max_error_m": 7.251217997429632e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        2.8333333333333335
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        2.8333333333333335
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.02_01",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original-speed source frames 2 through source end verified on Beta and CC0. Foot support, recovery, contact and naturalness remain unverified."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/02_01.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            2.8333333333333335
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric sampling of every motion source frame after calibration; not foot support or naturalness certification"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_motion_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end",
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "visual_status": "not_yet_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin sampled every 10 source frames; positive values indicate ground clearance, negative values penetration. This is not a foot-support solve.",
+        "measurements": {
+          "beta": {
+            "sampled_skin_floor_range_m": [
+              0.03180762752890587,
+              0.10042204707860947
+            ],
+            "maximum_walk_wrist_over_shoulder_m": -0.3145850896835327,
+            "arm_extension_range": {
+              "Left": [
+                0.8145752853838856,
+                0.9913289428958955
+              ],
+              "Right": [
+                0.891423946809849,
+                0.9965471603093662
+              ]
+            }
+          },
+          "quaternius_mannequin_f": {
+            "sampled_skin_floor_range_m": [
+              0.02317514270544052,
+              0.09604013711214066
+            ],
+            "maximum_walk_wrist_over_shoulder_m": -0.25924384593963623,
+            "arm_extension_range": {
+              "Left": [
+                0.8071972504771527,
+                0.9890824764920428
+              ],
+              "Right": [
+                0.8851030015340934,
+                0.9950385802741476
+              ]
+            }
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.07_01",
+      "name": "CMU 07_01 walk",
+      "asset": "bundled_assets/animations/cmu/07_01.fbx",
+      "asset_sha256": "758cad8621d790ce8a9481a4b7781266ede907740a37630be74728e15c03b265",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "行走（真人动捕，Beta/CC0原速身体采样已验证；具体招式、支撑、接触和恢复仍待核查）",
+      "aliases": [
+        "走路",
+        "普通走路",
+        "步行",
+        "行走",
+        "walk",
+        "cmu.07_01",
+        "07_01"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        79.0
+      ],
+      "source_action": "07_01|07_01|07_01",
+      "duration_s": 2.6,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "walk",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_not_naturalness",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "imported_source_frame_1",
+        "extraction": "planar_only_vertical_pelvis_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012787182075043622,
+            "end_displacement_m": [
+              0.010116915218532085,
+              -4.447948932647705,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.11234581470489502,
+            "extraction_equivalence_max_error_m": 7.257339752844525e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.011241452514162484,
+            "end_displacement_m": [
+              0.00889303907752037,
+              -3.910276174545288,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.0987653136253357,
+            "extraction_equivalence_max_error_m": 5.364418029785156e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        2.6
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        2.6
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.07_01",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original-speed source frames 2 through source end verified on Beta and CC0. Foot support, recovery, contact and naturalness remain unverified."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/07_01.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            2.6
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric sampling of every motion source frame after calibration; not foot support or naturalness certification"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_motion_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end",
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": false,
+        "visual_status": "not_yet_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin sampled every 10 source frames; positive values indicate ground clearance, negative values penetration. This is not a foot-support solve.",
+        "measurements": {
+          "beta": {
+            "sampled_skin_floor_range_m": [
+              0.034287627786397934,
+              0.12952297925949097
+            ],
+            "maximum_walk_wrist_over_shoulder_m": -0.29825687408447266,
+            "arm_extension_range": {
+              "Left": [
+                0.9075222998659005,
+                0.9997424913502653
+              ],
+              "Right": [
+                0.9048178863985555,
+                0.9937121797112819
+              ]
+            }
+          },
+          "quaternius_mannequin_f": {
+            "sampled_skin_floor_range_m": [
+              0.01540878415107727,
+              0.11147965490818024
+            ],
+            "maximum_walk_wrist_over_shoulder_m": -0.24581265449523926,
+            "arm_extension_range": {
+              "Left": [
+                0.9015305775736301,
+                0.9991892240195603
+              ],
+              "Right": [
+                0.8987720688646957,
+                0.9917598027628185
+              ]
+            }
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.02_03",
+      "name": "CMU 02_03 run/jog",
+      "asset": "bundled_assets/animations/cmu/02_03.fbx",
+      "asset_sha256": "3c85f27a4296287ac5cba94e6dbd6480db7eebd87ce5fdbbcc0f1f5d31b03cb6",
+      "provider": "cmu_fbx",
+      "category": "locomotion",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "跑步或慢跑（真人动捕，Beta/CC0原速身体采样已验证；具体招式、支撑、接触和恢复仍待核查）",
+      "aliases": [
+        "跑步",
+        "奔跑",
+        "慢跑",
+        "run",
+        "jog",
+        "cmu.02_03",
+        "02_03"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        44.0
+      ],
+      "source_action": "02_03|02_03|02_03",
+      "duration_s": 1.4333333333333333,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "run/jog",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "locomotion"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_not_naturalness",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "imported_source_frame_1",
+        "extraction": "planar_only_vertical_pelvis_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012245631291474273,
+            "end_displacement_m": [
+              -0.013517499901354313,
+              -4.4202117919921875,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.21242094039916992,
+            "extraction_equivalence_max_error_m": 9.629425061585611e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010765365024223341,
+            "end_displacement_m": [
+              -0.011883489787578583,
+              -3.885891914367676,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.18674319982528687,
+            "extraction_equivalence_max_error_m": 5.364418029785156e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        1.4333333333333333
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        1.4333333333333333
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.02_03",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original-speed source frames 2 through source end verified on Beta and CC0. Foot support, recovery, contact and naturalness remain unverified."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/02_03.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            1.4333333333333333
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric sampling of every motion source frame after calibration; not foot support or naturalness certification"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_motion_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end",
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": false,
+        "visual_status": "not_yet_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin sampled every 10 source frames; positive values indicate ground clearance, negative values penetration. This is not a foot-support solve.",
+        "measurements": {
+          "beta": {
+            "sampled_skin_floor_range_m": [
+              0.031873006373643875,
+              0.057279471307992935
+            ],
+            "maximum_walk_wrist_over_shoulder_m": null,
+            "arm_extension_range": {
+              "Left": [
+                0.5322812342738532,
+                0.7516953595959066
+              ],
+              "Right": [
+                0.5558894735506389,
+                0.8357407032091264
+              ]
+            }
+          },
+          "quaternius_mannequin_f": {
+            "sampled_skin_floor_range_m": [
+              0.01658584177494049,
+              0.05506903678178787
+            ],
+            "maximum_walk_wrist_over_shoulder_m": null,
+            "arm_extension_range": {
+              "Left": [
+                0.5259838634639457,
+                0.743964715715721
+              ],
+              "Right": [
+                0.5493290642511444,
+                0.8285932733830067
+              ]
+            }
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.79_08",
+      "name": "CMU 79_08 boxing",
+      "asset": "bundled_assets/animations/cmu/79_08.fbx",
+      "asset_sha256": "3ebda8d3c776ffebfde3d7d6fdd41541943c0f35bc1145295491191077ea8417",
+      "provider": "cmu_fbx",
+      "category": "unarmed",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "拳击空击（真人动捕，Beta/CC0原速身体采样已验证；具体招式、支撑、接触和恢复仍待核查）",
+      "aliases": [
+        "拳击",
+        "空击",
+        "拳击训练",
+        "出拳",
+        "boxing",
+        "cmu.79_08",
+        "79_08"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        111.0
+      ],
+      "source_action": "79_08|79_08|79_08",
+      "duration_s": 3.6666666666666665,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "boxing",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "unarmed"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_not_naturalness",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "imported_source_frame_1",
+        "extraction": "planar_only_vertical_pelvis_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.012375898762683187,
+            "end_displacement_m": [
+              0.0047788540832698345,
+              -0.004261911381036043,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.08954960107803345,
+            "extraction_equivalence_max_error_m": 1.228781230931777e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.010879885610787371,
+            "end_displacement_m": [
+              0.00420118123292923,
+              -0.0037467260845005512,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.07872474193572998,
+            "extraction_equivalence_max_error_m": 1.7881393432617188e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        3.6666666666666665
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        3.6666666666666665
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.79_08",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original-speed source frames 2 through source end verified on Beta and CC0. Foot support, recovery, contact and naturalness remain unverified."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/79_08.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            3.6666666666666665
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric sampling of every motion source frame after calibration; not foot support or naturalness certification"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_motion_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end",
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": true,
+        "visual_status": "not_yet_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin sampled every 10 source frames; positive values indicate ground clearance, negative values penetration. This is not a foot-support solve.",
+        "measurements": {
+          "beta": {
+            "sampled_skin_floor_range_m": [
+              0.0017223414033651352,
+              0.024029292166233063
+            ],
+            "maximum_walk_wrist_over_shoulder_m": null,
+            "arm_extension_range": {
+              "Left": [
+                0.3780933598461291,
+                0.9514094006166967
+              ],
+              "Right": [
+                0.34860635001378865,
+                0.9316936108287356
+              ]
+            }
+          },
+          "quaternius_mannequin_f": {
+            "sampled_skin_floor_range_m": [
+              0.003364101517945528,
+              0.018491216003894806
+            ],
+            "maximum_walk_wrist_over_shoulder_m": null,
+            "arm_extension_range": {
+              "Left": [
+                0.37658053953880316,
+                0.9467353346052493
+              ],
+              "Right": [
+                0.34771525883319676,
+                0.9263269953584256
+              ]
+            }
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
+        "support_metadata",
+        "recovery_metadata"
+      ],
+      "naturalness_verified": false
+    },
+    {
+      "motion_id": "cmu.80_10",
+      "name": "CMU 80_10 boxing",
+      "asset": "bundled_assets/animations/cmu/80_10.fbx",
+      "asset_sha256": "3239161a7cb8eb46bf9cb8f56b1855bd69db108683c01207d52339e700dfc531",
+      "provider": "cmu_fbx",
+      "category": "unarmed",
+      "collection": "cmu_bundled",
+      "entry_kind": "motion",
+      "description": "拳击空击（真人动捕，Beta/CC0原速身体采样已验证；具体招式、支撑、接触和恢复仍待核查）",
+      "aliases": [
+        "拳击",
+        "空击",
+        "拳击训练",
+        "出拳",
+        "boxing",
+        "cmu.80_10",
+        "80_10"
+      ],
+      "registered_ids": [],
+      "source_fps": 30.0,
+      "key_timebase_fps": 30.0,
+      "source_fps_basis": "actual_blender_fbx_import",
+      "source_frame_range": [
+        1.0,
+        194.0
+      ],
+      "source_action": "80_10|80_10|80_10",
+      "duration_s": 6.433333333333334,
+      "scan_status": "actual_fbx_import_inspected",
+      "skeleton": {
+        "bone_count": 43,
+        "root": "hip",
+        "finger_animation": false
+      },
+      "semantic_status": "source_metadata_label_candidate",
+      "semantic_annotations": {
+        "source_label": "boxing",
+        "basis": "mirror_metadata_csv_not_visual_action_or_contact_review"
+      },
+      "style_hints": [
+        "unarmed"
+      ],
+      "style_hint_basis": "source_metadata_label",
+      "compatibility": {
+        "method": "cmu_to_registered_character_rest_space",
+        "mapped_bones": 19,
+        "source_bone_count": 43,
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "detail_scope": "Captured body only; static fingers, toes and extra Spine1 inherit mapped parents"
+      },
+      "source_sampling_status": "verified_selected_sources_and_profiles",
+      "visual_status": "not_reviewed",
+      "quality_status": "sampler_verified_not_naturalness",
+      "side": null,
+      "phases": null,
+      "root_metadata": {
+        "space": "character_local_meters",
+        "reference": "imported_source_frame_1",
+        "extraction": "planar_only_vertical_pelvis_retained",
+        "by_character": {
+          "beta": {
+            "retarget_scale": 0.01264159927725375,
+            "end_displacement_m": [
+              -0.03678565099835396,
+              0.008256602101027966,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.025513410568237305,
+            "extraction_equivalence_max_error_m": 1.3328003749250113e-07
+          },
+          "quaternius_mannequin_f": {
+            "retarget_scale": 0.01111346793565024,
+            "end_displacement_m": [
+              -0.032338958233594894,
+              0.007258533500134945,
+              0.0
+            ],
+            "pelvis_vertical_range_m": 0.022429227828979492,
+            "extraction_equivalence_max_error_m": 2.457562461863554e-07
+          }
+        }
+      },
+      "support_metadata": null,
+      "recovery_metadata": null,
+      "loop_allowed": false,
+      "loop_validation": "not_measured",
+      "use_status": "compatible_source_selected_profiles",
+      "requires_source_window": true,
+      "valid_motion_window_seconds": [
+        0.03333333333333333,
+        6.433333333333334
+      ],
+      "suggested_source_window_seconds": [
+        0.03333333333333333,
+        6.433333333333334
+      ],
+      "calibration_metadata": {
+        "t_pose_at_source_zero": true,
+        "calibration_source_frames": [
+          1
+        ],
+        "first_motion_source_frame": 2,
+        "note": "Exclude source frame 1; time zero is the imported Action first frame."
+      },
+      "execution": {
+        "available": true,
+        "function": "agent_motion.prepare_motion / agent_motion.sample_motion",
+        "motion_id": "cmu.80_10",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "reason": "Original-speed source frames 2 through source end verified on Beta and CC0. Foot support, recovery, contact and naturalness remain unverified."
+      },
+      "license": {
+        "id": "CMU-Mocap",
+        "status": "redistributable_with_source_conditions_not_CC0",
+        "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+        "raw_animation_resale_allowed": false,
+        "pass_conditions_to_recipients": true
+      },
+      "source_provenance": {
+        "source_url": "https://mocap.cs.cmu.edu/",
+        "capture_method": "human_optical_motion_capture",
+        "bvh_conversion_url": "https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture",
+        "fbx_conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+        "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+        "download_url": "https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/80_10.fbx",
+        "mirror_role": "third_party_distributor_not_original_author",
+        "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+        "basis": "source_terms_mirror_metadata_and_actual_fbx_import"
+      },
+      "validated_playback_windows": [
+        {
+          "source_window": [
+            0.03333333333333333,
+            6.433333333333334
+          ],
+          "time_scale": 1.0,
+          "target_profiles": [
+            "beta",
+            "quaternius_mannequin_f"
+          ],
+          "scope": "Numeric sampling of every motion source frame after calibration; not foot support or naturalness certification"
+        }
+      ],
+      "validation_scope": {
+        "verification_script": "tests/test_agent_cmu_motion_blender.py",
+        "target_profiles": [
+          "beta",
+          "quaternius_mannequin_f"
+        ],
+        "source_frames": "2 through imported source end",
+        "temporary_source_cleanup_validated": true,
+        "original_skin_preserved": true,
+        "timeline_saved_reload_validated": false,
+        "visual_status": "not_yet_reviewed_by_project_owner",
+        "contact_validated": false,
+        "foot_support_validated": false,
+        "recovery_validated": false,
+        "naturalness_verified": false,
+        "surface_floor_note": "Lowest evaluated skin sampled every 10 source frames; positive values indicate ground clearance, negative values penetration. This is not a foot-support solve.",
+        "measurements": {
+          "beta": {
+            "sampled_skin_floor_range_m": [
+              -0.005652816500514746,
+              0.029809558764100075
+            ],
+            "maximum_walk_wrist_over_shoulder_m": null,
+            "arm_extension_range": {
+              "Left": [
+                0.3243280064258097,
+                0.9956225584792691
+              ],
+              "Right": [
+                0.28713097755121847,
+                0.9933453133622684
+              ]
+            }
+          },
+          "quaternius_mannequin_f": {
+            "sampled_skin_floor_range_m": [
+              -0.01431549247354269,
+              0.013124026358127594
+            ],
+            "maximum_walk_wrist_over_shoulder_m": null,
+            "arm_extension_range": {
+              "Left": [
+                0.3276413000240243,
+                0.993960288422223
+              ],
+              "Right": [
+                0.28904038730854076,
+                0.9913378406188527
+              ]
+            }
+          }
+        }
+      },
+      "metadata_gaps": [
+        "side",
+        "phases",
         "support_metadata",
         "recovery_metadata"
       ],

@@ -115,6 +115,90 @@ CORE_CLIPS = {
     'Walk_Loop': ['走路', '普通走路', '步行', '行走', 'walk'],
     'Sprint_Loop': ['跑步', '奔跑', '冲刺', '疾跑', 'sprint'],
 }
+CMU_CLIPS = {
+    '02_01': {'label': 'walk', 'last_frame': 86, 'description': '普通行走',
+              'aliases': ['走路', '普通走路', '步行', '行走', 'walk'], 'style': 'locomotion'},
+    '07_01': {'label': 'walk', 'last_frame': 79, 'description': '行走',
+              'aliases': ['走路', '普通走路', '步行', '行走', 'walk'], 'style': 'locomotion'},
+    '02_03': {'label': 'run/jog', 'last_frame': 44, 'description': '跑步或慢跑',
+              'aliases': ['跑步', '奔跑', '慢跑', 'run', 'jog'], 'style': 'locomotion'},
+    '79_08': {'label': 'boxing', 'last_frame': 111, 'description': '拳击空击',
+              'aliases': ['拳击', '空击', '拳击训练', '出拳', 'boxing'], 'style': 'unarmed'},
+    '80_10': {'label': 'boxing', 'last_frame': 194, 'description': '拳击空击',
+              'aliases': ['拳击', '空击', '拳击训练', '出拳', 'boxing'], 'style': 'unarmed'},
+}
+
+
+def _cmu_entries(previous):
+    """Register selected human sources, retaining measured adapter annotations."""
+    entries = []
+    for source_id, clip in CMU_CLIPS.items():
+        identifier = 'cmu.'+source_id
+        relative = 'bundled_assets/animations/cmu/'+source_id+'.fbx'
+        path = PROJECT / relative
+        if not path.is_file():
+            if identifier in previous:
+                entries.append(previous[identifier])
+            continue
+        duration = (clip['last_frame']-1)/30.
+        entry = {
+            'motion_id': identifier, 'name': 'CMU '+source_id+' '+clip['label'],
+            'asset': relative, 'asset_sha256': _sha(path), 'provider': 'cmu_fbx',
+            'category': clip['style'], 'collection': 'cmu_bundled',
+            'entry_kind': 'motion_file_candidate',
+            'description': clip['description']+'（真人动捕，原始标签候选；具体招式、支撑和恢复待实际核查）',
+            'aliases': clip['aliases']+[identifier, source_id], 'registered_ids': [],
+            'source_fps': 30., 'key_timebase_fps': 30.,
+            'source_fps_basis': 'actual_blender_fbx_import',
+            'source_frame_range': [1., float(clip['last_frame'])],
+            'source_action': source_id+'|'+source_id+'|'+source_id,
+            'duration_s': duration, 'scan_status': 'actual_fbx_import_inspected',
+            'skeleton': {'bone_count': 43, 'root': 'hip', 'finger_animation': False},
+            'semantic_status': 'source_metadata_label_candidate',
+            'semantic_annotations': {'source_label': clip['label'],
+                                     'basis': 'mirror_metadata_csv_not_visual_action_or_contact_review'},
+            'style_hints': [clip['style']], 'style_hint_basis': 'source_metadata_label',
+            'compatibility': None, 'source_sampling_status': 'adapter_not_validated',
+            'visual_status': 'not_reviewed', 'quality_status': 'not_visually_verified',
+            'side': None, 'phases': None, 'root_metadata': None,
+            'support_metadata': None, 'recovery_metadata': None,
+            'loop_allowed': False, 'loop_validation': 'not_measured',
+            'use_status': 'candidate_needs_validation', 'requires_source_window': True,
+            'valid_motion_window_seconds': [1/30., duration],
+            'suggested_source_window_seconds': [1/30., duration],
+            'calibration_metadata': {'t_pose_at_source_zero': True,
+                                     'calibration_source_frames': [1],
+                                     'first_motion_source_frame': 2,
+                                     'note': 'Exclude source frame 1; time zero is the imported Action first frame.'},
+            'execution': {'available': False,
+                          'function': 'agent_motion.prepare_motion / agent_motion.sample_motion',
+                          'motion_id': identifier,
+                          'reason': 'Actual 43-bone import known; ordinary target-profile sampling requires validation.'},
+            'license': {'id': 'CMU-Mocap', 'status': 'redistributable_with_source_conditions_not_CC0',
+                        'license_file': 'bundled_assets/animations/cmu/LICENSE.txt',
+                        'raw_animation_resale_allowed': False,
+                        'pass_conditions_to_recipients': True},
+            'source_provenance': {
+                'source_url': 'https://mocap.cs.cmu.edu/',
+                'capture_method': 'human_optical_motion_capture',
+                'bvh_conversion_url': 'https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture',
+                'fbx_conversion_url': 'https://rancidmilk.itch.io/free-character-animations',
+                'download_mirror': 'https://huggingface.co/datasets/gbionics/cmu-fbx',
+                'download_url': 'https://huggingface.co/datasets/gbionics/cmu-fbx/resolve/main/animations/'+source_id+'.fbx',
+                'mirror_role': 'third_party_distributor_not_original_author',
+                'source_notice': 'bundled_assets/animations/cmu/SOURCES.md',
+                'basis': 'source_terms_mirror_metadata_and_actual_fbx_import'},
+        }
+        old = previous.get(identifier, {})
+        if old.get('asset_sha256') == entry['asset_sha256']:
+            for field in ('entry_kind', 'description', 'compatibility', 'source_sampling_status',
+                          'visual_status', 'quality_status', 'semantic_status', 'semantic_annotations',
+                          'side', 'phases', 'root_metadata', 'support_metadata', 'recovery_metadata',
+                          'use_status', 'execution', 'validated_playback_windows', 'validation_scope'):
+                if field in old:
+                    entry[field] = old[field]
+        entries.append(entry)
+    return entries
 
 
 def _core_entries(previous):
@@ -423,6 +507,7 @@ def build_catalog(scan_report=None, validation_report=None):
     entries.extend(entry for identifier, entry in previous.items()
                    if identifier not in indexed and entry.get('collection', 'main') == 'main')
     main_count = len(entries)
+    entries.extend(_cmu_entries(previous))
     entries.extend(_staging_entries(previous))
     indexed = {entry['motion_id'] for entry in entries}
     entries.extend(entry for identifier, entry in previous.items() if identifier not in indexed)
@@ -434,7 +519,8 @@ def build_catalog(scan_report=None, validation_report=None):
             'procedural_allowed': True, 'fbx_count': sum(e['provider'] == 'fbx' for e in entries),
             'main_motion_count': main_count, 'entry_counts': kinds,
             'legacy_main_motion_count': 66, 'bundled_core_motion_ids': [
-                'quaternius.'+_slug(clip) for clip in CORE_CLIPS],
+                entry['motion_id'] for entry in entries
+                if entry['provider'] in ('quaternius_glb', 'cmu_fbx')],
             'unique_asset_file_count': len({entry['asset'] for entry in entries}),
             'staging_file_count': len(staging_entries),
             'staging_fbx_count': sum(entry['asset'].lower().endswith('.fbx') for entry in staging_entries),

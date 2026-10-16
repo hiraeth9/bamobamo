@@ -35,6 +35,9 @@ def director_prompt(prompt, job_id, feedback=None):
 原文未写清而执行必需的信息由你合理补全，包括站位、距离、接近路线、准备与收招、支撑脚、未指定的节奏和镜头。结合人物关系、真实素材和场景几何选择可执行默认值，不要求用户提供骨骼、动作文件或内部参数；补全以完成原意为范围，保留全部明确要求。用analysis.assumptions简短记录影响画面的默认决定，区分用户明确要求与系统补全，原文没有写出的细节不能伪作逐字引用。自然语言模糊不直接判不可生成，先形成合理连贯的场景并以实际结果修正。
 
 <动作库机器人与混合运动>
+原文明示视频总时长时，在analysis.timing.requested_duration_seconds记录数值秒数，并在requirements保留原文。提交前按实际(frame_end-frame_start+1)/FPS复核，不能把序列编译器返回的片段长度当成用户要求。素材按原速串联后较短时，安排符合原意的准备、收招或最终姿态保持；不要擅自缩短明确总时长，也不要默认拉慢短素材来填满时长。
+白模默认使用灰白哑光人物材质，明确指定的颜色仍保留；actor_ensure新人物默认已是灰白，color=None会保留源材质，按原意使用。要求看见脚下地面时，创建实际可渲染的地面几何并核对人物足底关系；World背景和Z=0坐标不能替代可见地面。确保实际主体有照明，wm_agent_lighting可补齐EEVEE灯光；根据真实预览判断明暗，不只看World节点存在。
+
 默认人物使用实际已安装动作库人物的原始skin mesh、蒙皮和骨架：本机已有Beta时沿用Beta，公开仓库新安装使用随仓库提供的CC0蒙皮人物。先调用print(bpy.wm_agent_character_info())取得真实character_id，再为每位人物调用print(bpy.wm_agent_actor_ensure({job}, actor_id, position=..., yaw=...))。actor_id取你的稳定人物标识，position为米，yaw为弧度；从返回信息取得真实rig/root/meshes，后续调用自行查询。重复ensure复用已有角色和运动，不重置它们，不把CC0人物冒称Beta。人物数按自然语言决定，各人的动画、空间根节点与IK目标独立。按搜索返回的available和sampling_available选择本机确实安装且可采样的来源；未安装的扩展记录只作线索，旧recipe若依赖缺失Beta/Mixamo则改用当前人物和普通库时间线构建。
 修复时先wm_agent_actor_list查看真实登记及缺失项，沿用正确actor_id。工具调用参数错误不更换ID创建重复人物；确认错误重复人物后wm_agent_actor_remove安全清理，不用隐藏、移动到画外或删部分skin留下失效登记来掩盖人数错误。
 每段动作先用print(bpy.wm_agent_motion_search(完整动作意图))查询实际候选，再wm_agent_motion_info查左右侧、源FPS、有效动作窗口、根运动和适用范围。合适且兼容的素材直接登记为全身library主运动，保留肩胯、重心、脚步和起收势；同一来源已经包含连拳等连续动作时优先保留整段，不拆成机械单招。不得只查到素材却仍用程序化护架/出拳/前踢替换全身运动。素材缺失的动作才用同骨架FK/IK生成，并按前后实际姿态衔接，不创建替代人物。存在同名文件不证明符合需求，实际预览后决定；素材导入只提取运动并清理临时源人物，成片一直保留原机器人。

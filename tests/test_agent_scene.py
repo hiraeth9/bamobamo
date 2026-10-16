@@ -149,6 +149,33 @@ class AgentSceneTests(unittest.TestCase):
         self.assertEqual(warnings, agent_scene.appearance_warnings({'render_engine': 'CYCLES', 'light_count': 0,
                                                                     'actor_count': 5000}))
 
+    def test_eevee_world_and_emission_do_not_stand_in_for_diffuse_lighting(self):
+        for engine in ('BLENDER_EEVEE', 'BLENDER_EEVEE_NEXT'):
+            scene = SimpleNamespace(objects=[], world=object(), render=SimpleNamespace(engine=engine))
+            with self.subTest(engine=engine), patch.object(agent_scene, '_world_background', return_value=(1., [.3, .3, .3])), \
+                    patch.object(agent_scene, '_emissive_material_count', return_value=1):
+                facts = agent_scene.illumination_facts(scene)
+            self.assertFalse(facts['illuminated'])
+            self.assertEqual(facts['world_background_strength'], 1.)
+            self.assertEqual(facts['emissive_material_count'], 1)
+
+    def test_cycles_world_and_workbench_display_lighting_remain_available(self):
+        for engine in ('CYCLES', 'BLENDER_WORKBENCH'):
+            scene = SimpleNamespace(objects=[], world=object(), render=SimpleNamespace(engine=engine))
+            with self.subTest(engine=engine), patch.object(agent_scene, '_world_background', return_value=(1., [.3, .3, .3])), \
+                    patch.object(agent_scene, '_emissive_material_count', return_value=0):
+                self.assertTrue(agent_scene.illumination_facts(scene)['illuminated'])
+                self.assertFalse(agent_scene.ensure_scene_lighting(scene)['applied'])
+
+    def test_existing_eevee_render_light_is_kept(self):
+        light = SimpleNamespace(type='LIGHT', hide_render=False)
+        scene = SimpleNamespace(objects=[light], world=object(), render=SimpleNamespace(engine='BLENDER_EEVEE'))
+        with patch.object(agent_scene, '_world_background', return_value=(1., [.3, .3, .3])), \
+                patch.object(agent_scene, '_emissive_material_count', return_value=0):
+            self.assertEqual(agent_scene.illumination_facts(scene)['render_enabled_light_count'], 1)
+            self.assertEqual(agent_scene.ensure_scene_lighting(scene),
+                             {'applied': False, 'reason': 'already_lit', 'created': []})
+
     def test_robot_policy_cannot_be_removed_from_new_submission(self):
         path = self.manifest()
         request_path = self.folder / 'request.json'

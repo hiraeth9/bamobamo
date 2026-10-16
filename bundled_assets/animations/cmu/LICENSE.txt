@@ -1,0 +1,31 @@
+CMU motion-capture data — redistribution terms (not CC0)
+
+These five FBX motion files contain human motion-capture data originally
+created by the Carnegie Mellon University Graphics Lab. The database received
+funding from NSF grant EIA-0196217. cgspeed supplied a BVH conversion; RancidMilk
+converted those animations to FBX. This project obtained the bones-only files
+from the gbionics/cmu-fbx mirror on Hugging Face, which is not the original
+data author or the converter.
+
+The CMU database permits using, copying, modifying and redistributing the data
+without requesting permission, including use in commercial products. Direct
+sale of the motion data itself is prohibited, including sale after conversion
+to another format. RancidMilk also permits use, modification and redistribution
+of its converted animations, including modified versions and other formats,
+subject to the same restriction on selling the animations themselves.
+Redistributors must make these conditions apparent to recipients and pass them
+along. Keep this notice with these files when redistributing them.
+
+This is a summary of the source terms, not a CC0 dedication or a new license.
+The source permissions and restriction apply to the motion files listed below.
+RancidMilk's separate GPLv3 converter scripts are not included in this bundle.
+No character mesh is present in these five bones-only FBX files.
+
+Files covered: 02_01.fbx, 07_01.fbx, 02_03.fbx, 79_08.fbx, 80_10.fbx.
+
+Original data and terms: https://mocap.cs.cmu.edu/
+BVH conversion source: https://sites.google.com/a/cgspeed.com/cgspeed/motion-capture
+FBX converter and redistribution terms:
+https://rancidmilk.itch.io/free-character-animations
+Download mirror and its provenance / CMU license notice:
+https://huggingface.co/datasets/gbionics/cmu-fbx

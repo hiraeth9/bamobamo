@@ -1,4 +1,4 @@
-"""Install the bundled CC0 starter assets without changing local extensions.
+"""Install the bundled licensed starter assets without changing local extensions.
 
 No download, model call, rendering or scene generation is involved. Existing
 destination files are kept. --check only reads the runtime paths.
@@ -37,7 +37,7 @@ def bootstrap_assets(project=None, *, profile='core', check=False):
                             **({'bundled_source': asset['bundled_source']} if source is not None else {})})
     return {'ok': not missing, 'profile': profile, 'check_only': check,
             'installed': installed, 'retained': retained, 'missing': missing,
-            'scope': 'Bundled CC0 runtime files only; Mixamo/Rokoko extensions are not downloaded or overwritten.'}
+            'scope': 'Bundled runtime files under their individual source terms; Mixamo/Rokoko extensions are not downloaded or overwritten.'}
 
 
 def main(argv=None):

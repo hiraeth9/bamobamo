@@ -1,7 +1,7 @@
 ---
 name: white-model-director
 description: "Direct white-model reference videos from complete natural-language requests: analyze, construct and repair editable Blender scenes through MCP, with calibrated action recipes available as optional building blocks."
-version: 9.9.0
+version: 9.10.0
 author: WorkBuddy Intelligent Design Assistant
 license: MIT
 platforms: [linux]
@@ -37,6 +37,10 @@ metadata:
 把全部明确要求逐项解释，包含人物数量与身份、动作、顺序、目标与接触、时长、镜头、环境、风格和声音。使用宽松analysis dict，建议记录actors、requirements（原文逐字source_text与解释）、timeline、camera、implementation、approximate、unfulfilled、warnings。字段是建议，不是拒绝请求的固定动作schema。调用`print(bpy.wm_agent_analyze(job_id, analysis))`保存。困难要求也保留，说明构建方法或近似缺口；分析记录和自述不能作为完成证据。
 
 ## 固定动作库机器人与混合动作
+
+原文明示总时长时，在`analysis.timing.requested_duration_seconds`记录数值秒数，同时保留原文需求。提交前核对实际`(frame_end-frame_start+1)/FPS`，原速素材序列长度不自动替代用户总时长。序列较短时，安排符合原意的准备、收招或末态保持；较长时重新选窗和编排，不默认拉伸或忽略明确时长。
+
+白模默认采用灰白哑光材质；明确的颜色要求保持。新人物`actor_ensure`默认灰白，显式`color=None`才保留源材质。要求看见脚下地面时，要创建实际可渲染的地面几何并检查足底关系，World背景和Z=0坐标不能替代地面。EEVEE主体需要实际照明，调用`wm_agent_lighting`并查看预览，不能只凭World非黑便认定画面明亮。
 
 默认人物使用实际安装的动作库人物原始网格、蒙皮与骨架。本机Beta已安装时沿用Beta；公开仓库新安装使用随仓库提供的CC0蒙皮人物。先查询`bpy.wm_agent_character_info()`取得真实`character_id`，根据自然语言人数分别调用`bpy.wm_agent_actor_ensure(job_id, actor_id, position=..., yaw=...)`。position为米，yaw为弧度。使用稳定actor_id和工具返回的真实对象名；重复ensure不清除正确动作或材质。修复时先查看已有登记和真实对象，沿用原actor_id；接口调用报错先检查签名与参数，不更换actor_id创建重复人物。不要重新创建分段proxy替代机器人，不把CC0人物冒称Beta。
 

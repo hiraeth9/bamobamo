@@ -372,6 +372,8 @@ def _source_sample(armature, event, frame, fps, context=None,operation=None):
         info=info_cache[event['motion_id']]
         duration = info.get('duration_s',info.get('duration_seconds',0))
         window = event.get('source_window')
+        if window is None:
+            window = info.get('default_source_window')
         span = window[1]-window[0] if window else duration
         elapsed = (frame-event['start_frame']) / fps
         if event.get('time_scale') is not None:

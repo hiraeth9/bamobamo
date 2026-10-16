@@ -28,7 +28,9 @@ cp .env.example .env
 
 按[六阶段实施计划](素材优先动作生成框架六阶段实施计划.md)推进：素材 → 单人基础 → 单人打斗 → 双人基础 → 双人打斗 → 多人。主运动优先复用合适的全身素材，保留原速、准备和收招，再平滑连接；IK 主要修正局部接触与支撑。Hermes 根据自然语言选择素材，合理补全未说明的必要细节，并在 `analysis.assumptions` 中记录影响画面的默认决定。
 
-`bundled_assets/` 保存允许公开再分发的 Quaternius CC0 核心素材和真实蒙皮人物，来源与安装目标见 `knowledge/assets/distribution.json`。这些提供可运行的公开起点，不代表全部动作都已满足真人自然度。现有本机已安装 Beta 时继续使用 Beta；新安装使用独立的 CC0 人物身份，已有任务的人物保持原样。
+`bundled_assets/` 保存允许公开再分发的 Quaternius CC0 人物和启动素材，以及 CMU 真人动捕的走路、跑步和拳击来源；来源、各自许可与安装目标见 `knowledge/assets/distribution.json`。CMU 动作允许使用、修改和再分发，禁止直接转卖原始动作，须传递相应条件，见[转换作者说明](https://rancidmilk.itch.io/free-character-animations)。这些提供可运行的公开起点，不代表全部动作都已满足真人自然度。现有本机已安装 Beta 时继续使用 Beta；新安装使用独立的 CC0 人物身份，已有任务的人物保持原样。新人物默认灰白哑光，显式颜色按要求使用。
+
+CMU 首批 5 个来源已支持在两个人物上按原速采样，播放排除校准 T 帧。保留的原运动仍需后续足支撑适配：抽测走路离地约 2–13 厘米，局部穿地最高约 1.43 厘米；拳击没有捕捉手指，不把这些来源标为接触或自然度已通过。目录把可采样、实际预览、足支撑和交互分别记录。
 
 本机的 Mixamo 和 Rokoko 扩展不会因本次整理删除。它们的原始文件不直接随公开仓库分发：[Mixamo 许可说明](https://community.adobe.com/questions-696/mixamo-faq-licensing-royalties-ownership-eula-and-tos-589400?lang=en)和 [Rokoko 条款](https://www.rokoko.com/terms-of-use)约束原始资产的转发。扩展目录保留检索信息，但运行时按实际文件和适配情况报告可用性，缺文件不会冒称已安装。若自行获取并放回对应路径，仍可作为本机扩展使用。
 

@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "purpose": "Offline CC0 starter profile for a fresh checkout; original private motion packs remain optional local extensions.",
+  "purpose": "Offline redistributable starter profile for a fresh checkout; each source retains its own license and private packs remain optional local extensions.",
   "profiles": {
     "core": {
-      "description": "Quaternius CC0 character and animation libraries; setup restores the legacy GLB paths used by registered motion IDs.",
+      "description": "Quaternius CC0 character and libraries plus five CMU human motion clips under CMU/RancidMilk redistribution terms; setup restores registered runtime paths without replacing local extensions.",
       "character_id": "quaternius_mannequin_f",
       "assets": [
         {
@@ -51,6 +51,44 @@
         {
           "id": "character_original_license",
           "path": "bundled_assets/characters/quaternius_mannequin_f/LICENSE.txt"
+        },
+        {
+          "id": "cmu_02_01",
+          "path": "bundled_assets/animations/cmu/02_01.fbx",
+          "license": "CMU-Mocap",
+          "license_file": "bundled_assets/animations/cmu/LICENSE.txt"
+        },
+        {
+          "id": "cmu_07_01",
+          "path": "bundled_assets/animations/cmu/07_01.fbx",
+          "license": "CMU-Mocap",
+          "license_file": "bundled_assets/animations/cmu/LICENSE.txt"
+        },
+        {
+          "id": "cmu_02_03",
+          "path": "bundled_assets/animations/cmu/02_03.fbx",
+          "license": "CMU-Mocap",
+          "license_file": "bundled_assets/animations/cmu/LICENSE.txt"
+        },
+        {
+          "id": "cmu_79_08",
+          "path": "bundled_assets/animations/cmu/79_08.fbx",
+          "license": "CMU-Mocap",
+          "license_file": "bundled_assets/animations/cmu/LICENSE.txt"
+        },
+        {
+          "id": "cmu_80_10",
+          "path": "bundled_assets/animations/cmu/80_10.fbx",
+          "license": "CMU-Mocap",
+          "license_file": "bundled_assets/animations/cmu/LICENSE.txt"
+        },
+        {
+          "id": "cmu_redistribution_terms",
+          "path": "bundled_assets/animations/cmu/LICENSE.txt"
+        },
+        {
+          "id": "cmu_source_notice",
+          "path": "bundled_assets/animations/cmu/SOURCES.md"
         }
       ],
       "motion_ids": [
@@ -59,7 +97,12 @@
         "quaternius.death01",
         "quaternius.idle_loop",
         "quaternius.walk_loop",
-        "quaternius.sprint_loop"
+        "quaternius.sprint_loop",
+        "cmu.02_01",
+        "cmu.07_01",
+        "cmu.02_03",
+        "cmu.79_08",
+        "cmu.80_10"
       ]
     }
   },
@@ -81,19 +124,45 @@
       "original_license": "bundled_assets/animations/quaternius/UAL2_License.txt",
       "original_readme": "bundled_assets/animations/quaternius/UAL2_README.txt",
       "scope": "The bundled UAL2 Standard GLB files and its Female Mannequin; the project cache retains that CC0 character."
+    },
+    {
+      "name": "CMU Graphics Lab human motion data / RancidMilk FBX conversion",
+      "source_url": "https://mocap.cs.cmu.edu/",
+      "conversion_url": "https://rancidmilk.itch.io/free-character-animations",
+      "download_mirror": "https://huggingface.co/datasets/gbionics/cmu-fbx",
+      "mirror_role": "Third-party distributor, not the original data author or converter",
+      "license": "CMU-Mocap",
+      "license_file": "bundled_assets/animations/cmu/LICENSE.txt",
+      "source_notice": "bundled_assets/animations/cmu/SOURCES.md",
+      "permissions": [
+        "use",
+        "modify",
+        "redistribute",
+        "include_in_commercial_products"
+      ],
+      "restrictions": [
+        "Do not sell the motion data itself, including format-converted versions.",
+        "Make the same conditions apparent to recipients and pass them along."
+      ],
+      "scope": "Only the five listed bones-only CMU FBX files; not CC0, no converter code, character mesh, whole-library compatibility or contact claim."
     }
   ],
   "optional_local_extensions": [
     {
       "name": "Existing Mixamo library and Beta",
-      "paths": ["mixamo_fbx", "assets/characters/beta"],
+      "paths": [
+        "mixamo_fbx",
+        "assets/characters/beta"
+      ],
       "source_url": "https://www.mixamo.com/",
       "distribution": "Not bundled or installed by bootstrap; restore your own authorized local copies.",
       "scope": "Existing catalog IDs remain searchable when files are absent; availability is checked at query time."
     },
     {
       "name": "Rokoko/Movella and other staged local downloads",
-      "paths": ["rokoko_staging"],
+      "paths": [
+        "rokoko_staging"
+      ],
       "local_source_record": "rokoko_staging/manifest.json",
       "distribution": "Raw staged files are not included as part of this profile. Review each original pack's terms for local use and redistribution.",
       "scope": "File discovery, rig compatibility and visual naturalness are separate statuses; no whole-pack compatibility claim."

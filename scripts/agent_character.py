@@ -16,6 +16,7 @@ REGISTRY_KEY = 'wm_actor_registry'
 JOB_KEY = 'wm_actor_job_id'
 ACTOR_PATTERN = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$')
 PREFIX = 'mixamorig:'
+DEFAULT_ACTOR_COLOR = (.82, .82, .84, 1.)
 
 
 def _bpy():
@@ -590,8 +591,12 @@ def _finite_sequence(value, length, name):
     return tuple(float(v) for v in value)
 
 
-def actor_ensure(job_id, actor_id, character_id=None, position=(0, 0, 0), yaw=0, color=None):
-    """Idempotent create; repeat calls preserve existing position and animation."""
+def actor_ensure(job_id, actor_id, character_id=None, position=(0, 0, 0), yaw=0,
+                 color=DEFAULT_ACTOR_COLOR):
+    """Create a matte white actor; explicit None retains source materials.
+
+    Repeat calls preserve an existing actor's appearance, position and motion.
+    """
     _validate_actor(actor_id)
     position = _finite_sequence(position, 3, 'position')
     if isinstance(yaw, bool) or not isinstance(yaw, (float, int)) or not math.isfinite(yaw):

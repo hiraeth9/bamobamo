@@ -209,8 +209,12 @@ def appearance_warnings(facts):
                             '其它约束关联未判定，此项仅提示。')
     if facts.get('render_engine') in ('BLENDER_EEVEE', 'BLENDER_EEVEE_NEXT', 'CYCLES'):
         if facts.get('render_enabled_light_count', facts.get('light_count', 0)) == 0:
-            warnings.append('EEVEE/Cycles 场景没有可渲染 LIGHT；请确认 World 环境或 emission 发光提供照明。'
-                            '环境/发光照明可以合法出片，此项仅提示。')
+            if facts.get('render_engine') == 'CYCLES':
+                warnings.append('Cycles 场景没有可渲染 LIGHT；请确认 World 环境或 emission 发光提供照明。'
+                                '环境/发光照明可以合法出片，此项仅提示。')
+            else:
+                warnings.append('EEVEE 场景没有可渲染 LIGHT；非黑 World 背景或普通 emission 材质的存在'
+                                '不足以证明漫反射人物已有可用照明，请打灯并查看真实预览。此项仅提示。')
     return warnings
 
 
@@ -239,7 +243,7 @@ def _world_background(world):
 
 
 def _emissive_material_count():
-    """Count materials with a real emission shader (EEVEE/Cycles light source)."""
+    """Count emission shaders; EEVEE needs indirect-light setup to light others."""
     import bpy
     count = 0
     for material in getattr(bpy.data, 'materials', []):
@@ -268,33 +272,38 @@ def _emissive_material_count():
 
 
 def illumination_facts(scene):
-    """Collection/render flags and shader inputs only; not pixel brightness."""
+    """Engine-compatible lighting inputs only; not a pixel brightness check.
+
+    An EEVEE World background or an emission material alone does not establish
+    usable diffuse-scene illumination. Use renderable LIGHTs for the automatic
+    fallback decision; Cycles natively samples World/emission lighting.
+    """
     enabled = _render_enabled_objects(scene)
     render_enabled = sum(
         obj.type == 'LIGHT' and (obj.as_pointer() if hasattr(obj, 'as_pointer') else id(obj)) in enabled
         for obj in scene.objects)
     strength, color = _world_background(scene.world)
-    world_lit = bool(scene.world is not None and strength is not None
+    world_lit = bool(scene.render.engine == 'CYCLES' and scene.world is not None and strength is not None
                      and strength > _LIGHT_EPSILON
                      and max(color or [0.0, 0.0, 0.0]) > _LIGHT_EPSILON)
     emissive = _emissive_material_count()
     needs_light = scene.render.engine in LIT_ENGINES
-    illuminated = (not needs_light) or render_enabled > 0 or world_lit or emissive > 0
+    illuminated = (not needs_light) or render_enabled > 0 or world_lit or (scene.render.engine == 'CYCLES' and emissive > 0)
     return {'render_enabled_light_count': int(render_enabled),
             'world_present': scene.world is not None,
             'world_background_strength': strength,
             'world_background_color': color,
             'emissive_material_count': int(emissive),
             'illuminated': bool(illuminated),
-            'illumination_scope': 'collection/render flags and shader inputs; not pixel brightness'}
+            'illumination_scope': 'engine-compatible collection/render flags and shader inputs; not pixel brightness'}
 
 
 def ensure_scene_lighting(scene, force=False):
     """Last-resort default World + three-point light for an EEVEE/Cycles scene.
 
-    Runs only when the scene has no usable illumination at all, so a fully
-    unlit scene can never render as a black video.  Everything it creates is
-    reported back to the caller instead of being a silent success.
+    Runs when no engine-compatible light source is detected. EEVEE's default
+    nonblack World alone is insufficient. Everything created is reported;
+    actual image brightness still needs a rendered preview.
     """
     if scene.render.engine not in LIT_ENGINES:
         return {'applied': False, 'reason': 'engine_uses_display_lighting', 'created': []}
@@ -314,7 +323,9 @@ def ensure_scene_lighting(scene, force=False):
         scene.world = world
         background = world.node_tree.nodes.get('Background')
         created.append('World')
-    if background is not None:
+    strength, color = _world_background(world)
+    if background is not None and (strength is None or strength <= _LIGHT_EPSILON
+                                   or max(color or [0., 0., 0.]) <= _LIGHT_EPSILON):
         background.inputs[0].default_value = (0.05, 0.05, 0.055, 1.0)
         background.inputs[1].default_value = 1.0
 
@@ -338,6 +349,7 @@ def ensure_scene_lighting(scene, force=False):
         data.size = size
         obj = bpy.data.objects.new(name, data)
         obj.location = location
+        obj.rotation_euler = (Vector((cx, cy, zmin + height * .5)) - obj.location).to_track_quat('-Z', 'Y').to_euler()
         scene.collection.objects.link(obj)
         created.append(name)
 
@@ -345,6 +357,20 @@ def ensure_scene_lighting(scene, force=False):
     add_light('AutoFill', (cx - scale * 2, cy - scale * 2, zmin + scale * 1.2), scale * scale * 40, scale * 2.5)
     add_light('AutoRim', (cx, cy + scale * 2, zmin + scale * 3), scale * scale * 60, scale * 1.5)
     return {'applied': True, 'reason': 'scene_had_no_illumination', 'created': created}
+
+
+def validate_requested_timing(analysis, facts):
+    """Check explicit timing against real frames; leave unspecified timing open."""
+    timing = analysis.get('timing')
+    if not isinstance(timing, dict) or timing.get('requested_duration_seconds') is None:
+        return
+    value = timing['requested_duration_seconds']
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
+        raise ValueError('analysis.timing.requested_duration_seconds 请填写原文要求的正数秒数')
+    actual = facts['duration_seconds']
+    if abs(actual-value) > 1/facts['fps']+1e-6:
+        raise ValueError('原文要求总时长 %g 秒，实际场景为 %g 秒（%s 帧）；请补足符合原意的准备、收招或末态保持，并保持明确总时长，不要仅按素材序列长度缩短视频。'
+                         % (value, actual, facts['frame_count']))
 
 
 def scene_facts(scene):
@@ -569,10 +595,10 @@ def submit_scene(job_id, analysis=None):
             # Finalize scene changes before recording the state checked after reload.
             lighting = ensure_scene_lighting(scene)
             if lighting.get('applied'):
-                warnings.append('场景完全没有可渲染照明（无可见灯光、World 为空或全黑、无自发光）；'
-                                '为保证成片不黑屏，已自动补默认 World 与三点光：'
+                warnings.append('场景缺少当前渲染引擎可直接使用的照明；'
+                                '已补默认三点光（必要时添加 World，既有非黑背景保留）：'
                                 + ', '.join(lighting.get('created', []))
-                                + '。建议在场景中主动打灯以控制画面效果。')
+                                + '。建议主动打灯并查看真实预览以确认画面效果。')
             bpy.context.view_layer.update()
             execution = robot_execution_facts(job_id, request, document['analysis'])
             sample_frames = execution_sample_frames(scene, execution)
@@ -580,6 +606,7 @@ def submit_scene(job_id, analysis=None):
             scene.frame_set(scene.frame_start)
             bpy.context.view_layer.update()
             facts = scene_facts(scene)
+            validate_requested_timing(document['analysis'], facts)
             contact_contract = contact_requirements_manifest(job_id)
             camera_visibility = camera_visibility_manifest(job_id)
             if camera_visibility['camera_visibility_status'] not in ('registered', 'ready'):

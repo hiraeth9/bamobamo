@@ -78,3 +78,28 @@ def test_character_source_and_cache_are_required_and_are_not_rebuilt(project):
 def test_unknown_profile_has_an_actionable_error(project):
     with pytest.raises(ValueError, match='Unknown asset profile'):
         bootstrap.bootstrap_assets(project, profile='unknown')
+
+
+def test_real_core_manifest_includes_small_cmu_sources_with_their_own_terms():
+    project = Path(__file__).resolve().parents[1]
+    manifest = json.loads((project/bootstrap.MANIFEST).read_text())
+    core = manifest['profiles']['core']
+    sources = [asset for asset in core['assets'] if asset.get('license') == 'CMU-Mocap']
+    assert {asset['id'] for asset in sources} == {'cmu_02_01', 'cmu_07_01', 'cmu_02_03', 'cmu_79_08', 'cmu_80_10'}
+    assert sum((project/asset['path']).stat().st_size for asset in sources) < 1_000_000
+    assert {'cmu.02_01', 'cmu.07_01', 'cmu.02_03', 'cmu.79_08', 'cmu.80_10'} <= set(core['motion_ids'])
+    terms = (project/'bundled_assets/animations/cmu/LICENSE.txt').read_text()
+    assert 'not CC0' in terms and 'Direct\nsale of the motion data itself is prohibited' in terms
+    assert 'pass them\nalong' in terms
+    provenance = next(source for source in manifest['sources'] if source['license'] == 'CMU-Mocap')
+    assert provenance['source_url'] == 'https://mocap.cs.cmu.edu/'
+    assert provenance['download_mirror'].startswith('https://huggingface.co/')
+    assert 'not the original' in provenance['mirror_role']
+    assert {'bundled_assets/animations/cmu/LICENSE.txt', 'bundled_assets/animations/cmu/SOURCES.md'} <= {
+        asset['path'] for asset in core['assets']}
+
+
+def test_bootstrap_reports_licensed_runtime_scope_without_relabeling_all_sources_cc0(project):
+    result = bootstrap.bootstrap_assets(project)
+    assert 'individual source terms' in result['scope']
+    assert 'CC0 runtime files only' not in result['scope']

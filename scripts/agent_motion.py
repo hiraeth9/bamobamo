@@ -259,6 +259,53 @@ def _mixamo_root(source, setup):
             if setup['hips_source'] else source.matrix_world.translation.copy())
 
 
+def _cmu_body_mapping(source_names, target_names):
+    """Map captured body channels; CMU's static finger rig is not finger mocap."""
+    names = {'Hips': 'hip', 'Spine': 'abdomen', 'Spine2': 'chest',
+             'Neck': 'neck', 'Head': 'head'}
+    for side, prefix in (('Left', 'l'), ('Right', 'r')):
+        for target, source in (('Shoulder', 'Collar'), ('Arm', 'Shldr'),
+                               ('ForeArm', 'ForeArm'), ('Hand', 'Hand'),
+                               ('UpLeg', 'Thigh'), ('Leg', 'Shin'), ('Foot', 'Foot')):
+            names[side+target] = prefix+source
+    missing = [name for name in names.values() if name not in source_names]
+    if missing:
+        raise ValueError('CMU FBX source needs the named body mapping; missing: '+', '.join(missing))
+    missing_target = [name for name in names if name not in target_names]
+    if missing_target:
+        raise ValueError('CMU retarget target needs semantic body bones; missing: '+', '.join(missing_target))
+    return {target_names[name]: source for name, source in names.items()}
+
+
+def _cmu_retarget_setup(source, target):
+    """Calibrate the 43-bone CMU export without changing its motion timing.
+
+    Frame one is the export's standing reference, not an action frame. World
+    positions are centimetre sized; measured hip-height scaling converts the
+    source stature to the existing character. No ground snapping is applied.
+    """
+    target_names = {bone.name.split(':')[-1]: bone.name for bone in target.data.bones}
+    mapping = _cmu_body_mapping(source.data.bones.keys(), target_names)
+    source_basis, target_basis = source.matrix_world.copy(), target.matrix_basis.copy()
+    source_hip = source_basis @ source.pose.bones['hip'].head
+    target_hip = target_basis @ target.data.bones[target_names['Hips']].head_local
+    if source_hip.z <= 0 or target_hip.z <= 0:
+        raise ValueError('CMU FBX needs the standing frame-one calibration above the floor')
+    return {'mapping': mapping, 'hips_source': 'hip', 'target_hips': target_names['Hips'],
+            'source_basis': source_basis, 'target_inverse': target_basis.to_3x3().inverted(),
+            'target_rotation': target_basis.to_quaternion(),
+            'source_rest': {b.name: (source_basis @ b.matrix_local).to_quaternion() for b in source.data.bones},
+            'target_rest': {b.name: (target_basis @ b.matrix_local).to_quaternion() for b in target.data.bones},
+            'source_hip': source_hip, 'scale': target_hip.z/source_hip.z,
+            'heading_alignment': _heading_alignment(source, target, 'lShldr', 'rShldr',
+                target_names['LeftArm'], target_names['RightArm'], source_basis, target_basis),
+            'compatibility': {'method': 'cmu_to_registered_character_rest_space',
+                'mapped_bones': len(mapping), 'unmapped_bones': [b.name for b in target.data.bones if b.name not in mapping],
+                'source_bone_count': len(source.data.bones), 'hips_source': 'bone',
+                'detail_scope': 'Captured body only; fingers and toes inherit their mapped parent',
+                'source_rig_signature': _rig_signature(source), 'target_rig_signature': _rig_signature(target)}}
+
+
 def _mixamo_retarget_pose(source, target, setup, root_origin, extract_root):
     """Preserve source heading/height; extract only planar root translation."""
     from mathutils import Vector
@@ -302,7 +349,7 @@ def _import_samples(target, info):
     before = {kind: set(getattr(bpy.data, kind)) for kind in kinds}
     try:
         with contextlib.redirect_stdout(io.StringIO()):
-            if info['provider'] in ('fbx', 'rokoko_mixamo_fbx'):
+            if info['provider'] in ('fbx', 'rokoko_mixamo_fbx', 'cmu_fbx'):
                 bpy.ops.import_scene.fbx(filepath=str(asset_path(info['asset'])))
             elif info['provider'] == 'quaternius_glb':
                 scene.render.fps, scene.render.fps_base = 30, 1.0
@@ -315,7 +362,7 @@ def _import_samples(target, info):
             raise ValueError('Motion source must provide one unambiguous source armature')
         source = arms[0]
         source_actions = set(bpy.data.actions) - before['actions']
-        if info['provider'] in ('fbx', 'rokoko_mixamo_fbx'):
+        if info['provider'] in ('fbx', 'rokoko_mixamo_fbx', 'cmu_fbx'):
             action = source.animation_data.action if source.animation_data else None
             if action is None:
                 raise ValueError('FBX source has no active bone animation')
@@ -332,17 +379,17 @@ def _import_samples(target, info):
         slot = _bind(action, source)
         sample_fps = float(scene.render.fps / scene.render.fps_base)
         source_fps = info.get('source_fps') or (float(scene.render.fps)
-            if info['provider'] == 'rokoko_mixamo_fbx' else sample_fps)
+            if info['provider'] in ('rokoko_mixamo_fbx', 'cmu_fbx') else sample_fps)
         start, end = (float(value) for value in action.frame_range)
         if end <= start:
             raise ValueError('Source Action has no duration')
         # Imported FBX key time conversion uses scene.render.fps (not fps_base).
         # Use that actual key timebase; source_fps remains separate provenance.
         key_fps = float(scene.render.fps)
-        if info['provider'] == 'rokoko_mixamo_fbx':
+        if info['provider'] in ('rokoko_mixamo_fbx', 'cmu_fbx'):
             scene.frame_set(math.floor(start), subframe=start-math.floor(start))
             bpy.context.view_layer.update()
-            setup = _mixamo_retarget_setup(source, target)
+            setup = (_cmu_retarget_setup if info['provider'] == 'cmu_fbx' else _mixamo_retarget_setup)(source, target)
             compatibility = setup['compatibility']
         frames = [start + i for i in range(math.floor(end - start) + 1)]
         if frames[-1] < end - 1e-7:
@@ -353,11 +400,11 @@ def _import_samples(target, info):
             scene.frame_set(math.floor(time), subframe=time - math.floor(time))
             bpy.context.view_layer.update()
             if setup:
-                rokoko = info['provider'] == 'rokoko_mixamo_fbx'
-                current_root = _mixamo_root(source, setup) if rokoko else source.matrix_world @ source.pose.bones['root'].head
+                body_fbx = info['provider'] in ('rokoko_mixamo_fbx', 'cmu_fbx')
+                current_root = _mixamo_root(source, setup) if body_fbx else source.matrix_world @ source.pose.bones['root'].head
                 if origin is None:
                     origin = current_root.copy()
-                sampler = _mixamo_retarget_pose if rokoko else _retarget_pose
+                sampler = _mixamo_retarget_pose if body_fbx else _retarget_pose
                 pose, root = sampler(source, target, setup, origin, True)
                 unextracted, _ = sampler(source, target, setup, origin, False)
             else:
@@ -432,6 +479,8 @@ def prepare_motion(actor_arm, motion_id):
             'loop_allowed': info.get('loop_allowed', False), 'compatibility': dict(data['compatibility']),
             'retarget_scale': data['retarget_scale'], 'root_space': 'actor_root_local_meters',
             'root_reference': 'source_clip_first_frame', 'skin_replaced': False,
+            **({'default_source_window': info['valid_motion_window_seconds'][:]}
+               if info.get('requires_source_window') else {}),
             'quality_scope': 'Rig-compatible source sampling; contact and naturalness remain unverified'}
 
 

@@ -19,7 +19,7 @@ cp .env.example .env
 
 这三个设置对应用户自备的 OpenAI 兼容 Chat Completions 模型服务。启动本身不调用模型、不生成视频；在网页提交任务之后才会使用该账号。生成速度取决于 CPU/GPU、片长和渲染设置。
 
-首次执行会准备网页虚拟环境 `.venv`，恢复项目指定的 Hermes，安装 Blender 内置 Python 的依赖，准备 FFmpeg，安装项目 Skill，并调用 `scripts/bootstrap_assets.py --profile core` 恢复随仓库提供的素材。缺少必须素材时会报告具体路径，保留已完成安装并停止启动服务；处理后可再次执行。Mixamo、Rokoko 等扩展素材的账号和许可要求以素材清单为准。
+首次执行会准备网页虚拟环境 `.venv`，恢复项目指定的 Hermes，安装 Blender 内置 Python 的依赖，准备 FFmpeg，安装项目 Skill，并调用 `scripts/bootstrap_assets.py --profile core` 恢复随仓库提供的素材。核心包含分别遵守自身许可的 Quaternius CC0 人物/动作及 CMU 真人动捕，详见 `knowledge/assets/distribution.json`。缺少必须素材时会报告具体路径，保留已完成安装并停止启动服务；处理后可再次执行。Mixamo、Rokoko 等扩展素材的账号和许可要求以素材清单为准。
 
 网页地址通常为 `http://localhost:8090`。需要改端口时在 `.env` 设置 `PORT`；Blender MCP 使用本机 9876，虚拟显示默认 `:99`，可用 `BAMO_DISPLAY` 修改。已运行的监听端口会被沿用，启动脚本不会终止其他进程。
 

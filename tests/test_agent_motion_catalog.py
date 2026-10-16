@@ -111,7 +111,7 @@ class MotionCatalogTests(unittest.TestCase):
         self.assertEqual(self.catalog['main_motion_count'], 69)
         self.assertEqual(self.catalog['entry_counts']['character_asset'], 2)
         self.assertEqual(self.catalog['entry_counts']['collection_candidate'], 8)
-        self.assertEqual(self.catalog['unique_asset_file_count'], 156)
+        self.assertEqual(self.catalog['unique_asset_file_count'], 161)
 
     def test_collections_and_models_do_not_become_callable_actions(self):
         collections = motion.search_motions('UAL1', catalog=self.catalog)['candidates']
@@ -246,7 +246,7 @@ class MotionCatalogTests(unittest.TestCase):
                 refreshed = motion.write_catalog(path=index)
                 self.assertEqual({entry['motion_id'] for entry in refreshed['entries']},
                                  {entry['motion_id'] for entry in self.catalog['entries']})
-                self.assertEqual(len(refreshed['entries']), 161)
+                self.assertEqual(len(refreshed['entries']), 166)
                 self.assertEqual(motion.search_motions('走路', usable_only=True, catalog=refreshed)['candidates'], [])
                 discovered = motion.search_motions('走路', limit=100, catalog=refreshed)['candidates']
                 self.assertTrue(discovered)
@@ -255,8 +255,94 @@ class MotionCatalogTests(unittest.TestCase):
                 self.assertEqual(by_id['rokoko.mixamo.boxing_mixamo']['source_fps'], 24.)
                 self.assertEqual(by_id['rokoko.mixamo.getup_wipebloodfrommouth_mixamo_769']['execution']['function'],
                                  'agent_ground_motion.ground_motion_events')
+                self.assertEqual(by_id['cmu.02_01']['source_fps'], 30.)
+                self.assertEqual(by_id['cmu.80_10']['calibration_metadata']['first_motion_source_frame'], 2)
                 self.assertTrue(all('available' not in entry and 'sampling_available' not in entry
                                     for entry in json.loads(index.read_text())['entries']))
+
+    def test_cmu_selected_sources_keep_actual_import_facts_and_clear_license(self):
+        cmu = [entry for entry in self.catalog['entries'] if entry['provider'] == 'cmu_fbx']
+        self.assertEqual({entry['motion_id'] for entry in cmu},
+                         {'cmu.02_01', 'cmu.07_01', 'cmu.02_03', 'cmu.79_08', 'cmu.80_10'})
+        last_frames = {'cmu.02_01': 86, 'cmu.07_01': 79, 'cmu.02_03': 44,
+                       'cmu.79_08': 111, 'cmu.80_10': 194}
+        for entry in cmu:
+            self.assertEqual(entry['source_fps'], 30.)
+            self.assertEqual(entry['key_timebase_fps'], 30.)
+            self.assertEqual(entry['skeleton']['bone_count'], 43)
+            self.assertFalse(entry['skeleton']['finger_animation'])
+            self.assertEqual(entry['source_frame_range'], [1., last_frames[entry['motion_id']]])
+            self.assertAlmostEqual(entry['duration_s'], (last_frames[entry['motion_id']]-1)/30.)
+            self.assertEqual(entry['valid_motion_window_seconds'], [1/30., entry['duration_s']])
+            self.assertTrue(entry['calibration_metadata']['t_pose_at_source_zero'])
+            self.assertFalse(entry['naturalness_verified'])
+            self.assertFalse(entry['loop_allowed'])
+            self.assertNotEqual(entry['license']['id'], 'CC0-1.0')
+            self.assertFalse(entry['license']['raw_animation_resale_allowed'])
+            self.assertTrue(entry['license']['pass_conditions_to_recipients'])
+            provenance = entry['source_provenance']
+            self.assertEqual(provenance['source_url'], 'https://mocap.cs.cmu.edu/')
+            self.assertEqual(provenance['capture_method'], 'human_optical_motion_capture')
+            self.assertIn('rancidmilk.itch.io', provenance['fbx_conversion_url'])
+            self.assertEqual(provenance['mirror_role'], 'third_party_distributor_not_original_author')
+            self.assertIn('animations/'+entry['motion_id'][4:]+'.fbx', provenance['download_url'])
+
+    def test_bundled_core_index_matches_offline_distribution_motion_ids(self):
+        manifest = json.loads((Path(__file__).resolve().parents[1]/'knowledge/assets/distribution.json').read_text())
+        self.assertEqual(set(self.catalog['bundled_core_motion_ids']),
+                         set(manifest['profiles']['core']['motion_ids']))
+
+    def test_cmu_sampler_scope_keeps_contact_and_floor_quality_separate(self):
+        for entry in self.catalog['entries']:
+            if entry['provider'] != 'cmu_fbx':
+                continue
+            self.assertTrue(entry['execution']['available'])
+            self.assertEqual(set(entry['execution']['target_profiles']), {'beta', 'quaternius_mannequin_f'})
+            self.assertEqual(entry['compatibility']['mapped_bones'], 19)
+            self.assertEqual(entry['source_sampling_status'], 'verified_selected_sources_and_profiles')
+            scope = entry['validation_scope']
+            self.assertFalse(scope['contact_validated'])
+            self.assertFalse(scope['foot_support_validated'])
+            self.assertFalse(scope['recovery_validated'])
+            self.assertFalse(scope['naturalness_verified'])
+            self.assertEqual(scope['timeline_saved_reload_validated'],
+                             entry['motion_id'] in ('cmu.02_01', 'cmu.79_08'))
+            self.assertEqual(set(scope['measurements']), {'beta', 'quaternius_mannequin_f'})
+            self.assertIsNone(entry['support_metadata'])
+            self.assertIsNone(entry['recovery_metadata'])
+
+    def test_cmu_labels_are_discoverable_without_claiming_contact_or_compatibility(self):
+        for query, expected in (('普通走路', {'cmu.02_01', 'cmu.07_01'}),
+                                ('慢跑', {'cmu.02_03'}), ('拳击', {'cmu.79_08', 'cmu.80_10'})):
+            result = motion.search_motions(query, limit=100, catalog=self.catalog)['candidates']
+            self.assertTrue(expected <= {entry['motion_id'] for entry in result})
+        candidate = copy.deepcopy(next(entry for entry in self.catalog['entries']
+                                       if entry['motion_id'] == 'cmu.79_08'))
+        candidate['execution']['available'] = False
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory)
+            source = project/candidate['asset']; source.parent.mkdir(parents=True)
+            source.write_bytes(b'Discovery-only candidate, not an adapted source')
+            with patch.object(motion, 'PROJECT', project):
+                result = motion.search_motions('拳击', catalog={'entries': [candidate]})['candidates'][0]
+                self.assertTrue(result['available'])
+                self.assertFalse(result['sampling_available'])
+                self.assertEqual(motion.search_motions('拳击', usable_only=True,
+                                                     catalog={'entries': [candidate]})['candidates'], [])
+
+    def test_cmu_refresh_preserves_measured_profile_scope_without_erasing_existing_ids(self):
+        previous = copy.deepcopy(self.catalog['entries'])
+        source = next(entry for entry in previous if entry['motion_id'] == 'cmu.02_01')
+        source['execution']['available'] = True
+        source['source_sampling_status'] = 'verified_selected_profiles'
+        source['validation_scope'] = {'target_profiles': ['test_profile'], 'contact_validated': False}
+        with patch.object(motion, '_previous_entries', return_value={entry['motion_id']: entry for entry in previous}):
+            refreshed = motion.build_catalog()
+        by_id = {entry['motion_id']: entry for entry in refreshed['entries']}
+        self.assertEqual(set(by_id), {entry['motion_id'] for entry in self.catalog['entries']})
+        self.assertEqual(by_id['cmu.02_01']['validation_scope'], source['validation_scope'])
+        self.assertEqual(by_id['cmu.02_01']['execution'], source['execution'])
+        self.assertEqual(by_id['cmu.02_01']['source_sampling_status'], 'verified_selected_profiles')
 
 
 if __name__ == '__main__':
